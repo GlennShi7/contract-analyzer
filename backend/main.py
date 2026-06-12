@@ -1,6 +1,9 @@
 from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 from openai import OpenAI
+import shutil
+import os
+from parser import extract_text
 
 app = FastAPI()
 
@@ -36,4 +39,18 @@ def analyze(request: ContractRequest):
 
 @app.post("/upload")
 async def upload(file: UploadFile = File(...)):
-    return {"filename": file.filename}
+    # 把上传的文件临时保存到本地
+    temp_path = f"temp_{file.filename}"
+    with open(temp_path, "wb") as f:
+        shutil.copyfileobj(file.file, f)
+    
+    # 提取文本
+    text = extract_text(temp_path)
+    
+    # 删除临时文件
+    os.remove(temp_path)
+    
+    return {
+        "filename": file.filename,
+        "preview": text[:200]
+    }
