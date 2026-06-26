@@ -23,3 +23,14 @@ def store_chunks(chunks: list[str], doc_id: str):
         ids=[f"{doc_id}_chunk_{i}" for i in range(len(chunks))]
     )
     return collection.count()
+
+def search_chunks(query: str, n_results: int = 3):
+    collection = client.get_or_create_collection(
+        name="contracts",
+        embedding_function=embedding_fn
+    )
+    results = collection.query(
+        query_texts=[query],
+        n_results=n_results
+    )
+    return results["documents"][0]
