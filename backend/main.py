@@ -6,6 +6,9 @@ import os
 from parser import extract_text
 from embedder import search_chunks
 
+from chunker import chunk_text
+from embedder import store_chunks
+
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()
@@ -43,7 +46,7 @@ def analyze(request: ContractRequest):
             },
             {
                 "role": "user",
-                "content": f"请分析这段合同条款的风险：{request.text}"
+                "content": f"请分析这段合同条款的风险，针对租金这些风险条款项，教我一些实用，具体的实际面对面谈判技巧，：{request.text}"
             }
         ]
     )
@@ -59,13 +62,17 @@ async def upload(file: UploadFile = File(...)):
     
     # 提取文本
     text = extract_text(temp_path)
+        # 切块并存入向量库，供 /ask 检索
+    chunks = chunk_text(text)
+    store_chunks(chunks, doc_id=file.filename)
     
     # 删除临时文件
     os.remove(temp_path)
     
     return {
         "filename": file.filename,
-        "preview": text[:200]
+        "preview": text[:200],
+        "text": text
     }
 
 class AskRequest(BaseModel):

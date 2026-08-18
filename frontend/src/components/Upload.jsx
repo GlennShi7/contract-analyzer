@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function Upload() {
+function Upload({ onTextExtracted }) {
   const [selectedFile, setSelectedFile] = useState(null)
   const [uploading, setUploading] = useState(false)
   const [preview, setPreview] = useState('')
@@ -21,6 +21,8 @@ function Upload() {
       })
       const data = await res.json()
       setPreview(data.preview)
+      onTextExtracted(data.text)
+      setPreview(data.preview)
     } catch (err) {
       console.error(err)
     } finally {
@@ -38,6 +40,7 @@ function Upload() {
       </button>
 
       {preview && <p>{preview}</p>}
+      
     </div>
   )
 }
