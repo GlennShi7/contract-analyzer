@@ -12,27 +12,7 @@ LLM: DeepSeek API
 RAG: Hand-written implementation (no LangChain) 手写实现（不使用LangChain）
 Vector DB 向量数据库: ChromaDB
 Embedding Model 向量模型: paraphrase-multilingual-MiniLM-L12-v2 (local)
-PDF Parsing PDF解析: pdfplumber
-
-## Current Progress 当前进度
-
-### Backend 后端 (Complete 已完成)
-
-- [x] FastAPI project setup 项目搭建
-- [x] DeepSeek API integration, `/analyze` endpoint for contract risk analysis
-- [x] `/upload` endpoint, PDF upload and text extraction PDF上传与文本提取
-- [x] Text chunking with overlap 文本切块（带重叠）
-- [x] ChromaDB vector storage 向量存储
-- [x] Semantic search 语义检索
-- [x] `/ask` RAG-based Q&A endpoint 基于RAG的问答接口
-- [x] API key managed via environment variables 使用环境变量管理密钥
-
-### Frontend 前端 (In Progress 开发中)
-
-- [ ] React project setup 项目初始化
-- [ ] File upload component 文件上传组件
-- [ ] Risk report display 风险报告展示
-- [ ] Q&A chat interface 问答界面
+PDF Parsing PDF解析: pdfplumber(not finished yet)
 
 ## Run Locally 本地运行
 
