@@ -1,0 +1,4412 @@
+{
+ "model": "paraphrase-multilingual-MiniLM-L12-v2",
+ "max_seq_length": 128,
+ "k": 3,
+ "main": {
+  "chunk_size": 500,
+  "overlap": 50,
+  "shared_collection": true,
+  "questions": 56,
+  "chunks_per_contract": {
+   "labor_zh": 8,
+   "lease_en": 24,
+   "lease_zh": 9
+  },
+  "k_production": 3,
+  "hit": {
+   "1": 0.5,
+   "3": 0.7321428571428571,
+   "5": 0.8928571428571429
+  },
+  "random": {
+   "1": 0.10689484126984128,
+   "3": 0.3088537045252884,
+   "5": 0.4950381420684216
+  },
+  "mrr": 0.6348214285714285,
+  "visible_fraction": 0.7494973723253143,
+  "foreign_share": 0.0,
+  "by_contract": {
+   "labor_zh": {
+    "n": 18,
+    "hit": {
+     "1": 0.4444444444444444,
+     "3": 0.7222222222222222,
+     "5": 0.8333333333333334
+    }
+   },
+   "lease_en": {
+    "n": 20,
+    "hit": {
+     "1": 0.65,
+     "3": 0.75,
+     "5": 0.85
+    }
+   },
+   "lease_zh": {
+    "n": 18,
+    "hit": {
+     "1": 0.3888888888888889,
+     "3": 0.7222222222222222,
+     "5": 1.0
+    }
+   }
+  },
+  "by_lang": {
+   "en": {
+    "n": 10,
+    "hit": {
+     "1": 0.5,
+     "3": 0.7,
+     "5": 0.8
+    }
+   },
+   "zh": {
+    "n": 46,
+    "hit": {
+     "1": 0.5,
+     "3": 0.7391304347826086,
+     "5": 0.9130434782608695
+    }
+   }
+  },
+  "rows": [
+   {
+    "id": "zl01",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "退房以后押金要多久之内去申请？过了时间会怎么样？",
+    "answer": [
+     "乙方应在退租之日起90日内书面申请退还押金"
+    ],
+    "rank": 1,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": true,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "付时状况良好。  第三条 租赁期限 租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应"
+     }
+    ]
+   },
+   {
+    "id": "zl02",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "押金扣多少钱是谁说了算？",
+    "answer": [
+     "押金的扣除项目及扣除金额由甲方根据房屋状况确定"
+    ],
+    "rank": 1,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": true,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 8,
+      "hit": false,
+      "head": "：2026年8月20日 "
+     }
+    ]
+   },
+   {
+    "id": "zl03",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "房租晚交几天会被罚多少钱？",
+    "answer": [
+     "按当月租金的百分之五向甲方支付滞纳金"
+    ],
+    "rank": 3,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "付时状况良好。  第三条 租赁期限 租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应"
+     }
+    ]
+   },
+   {
+    "id": "zl04",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "房东能不能在租期中间涨房租？",
+    "answer": [
+     "甲方有权参照周边房屋租金水平调整租金"
+    ],
+    "rank": 2,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "付时状况良好。  第三条 租赁期限 租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     }
+    ]
+   },
+   {
+    "id": "zl05",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "我想提前搬走，要付出什么代价？",
+    "answer": [
+     "并支付相当于三个月租金的违约金",
+     "本合同提前解除的，经纪服务费不予退还"
+    ],
+    "rank": 1,
+    "n_chunks": 9,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.2222222222222222,
+     "3": 0.5833333333333333,
+     "5": 0.8333333333333334
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": true,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "付时状况良好。  第三条 租赁期限 租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应"
+     }
+    ]
+   },
+   {
+    "id": "zl06",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "房东不打招呼就进我房间，合同里允许吗？",
+    "answer": [
+     "有权随时进入该房屋，无需提前通知乙方"
+    ],
+    "rank": 1,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 3,
+      "hit": true,
+      "head": "得要求减免租金。因乙方未及时通知造成损失扩大的，乙方应承担扩大部分的损失。  第九条 甲方进入房屋 为检查房屋使用情况及设施状况，甲方或其委"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "住房租赁合同  出租人（以下简称甲方）：张某某 承租人（以下简称乙方）：李某某  根据《中华人民共和国民法典》及有关法律、法规的规定，甲乙双"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     }
+    ]
+   },
+   {
+    "id": "zl07",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "热水器坏了谁出钱修？",
+    "answer": [
+     "无论损坏原因，维修费用一律由乙方承担"
+    ],
+    "rank": 5,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 6,
+      "hit": false,
+      "head": "第二十条 争议解决 本合同履行过程中发生争议的，双方应协商解决；协商不成的，任何一方均可向该房屋所在地人民法院提起诉讼。  第二十一条 物业"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 8,
+      "hit": false,
+      "head": "：2026年8月20日 "
+     }
+    ]
+   },
+   {
+    "id": "zl08",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "可以在房子里养猫吗？",
+    "answer": [
+     "乙方不得在该房屋内饲养宠物"
+    ],
+    "rank": 2,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 3,
+      "hit": true,
+      "head": "得要求减免租金。因乙方未及时通知造成损失扩大的，乙方应承担扩大部分的损失。  第九条 甲方进入房屋 为检查房屋使用情况及设施状况，甲方或其委"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "住房租赁合同  出租人（以下简称甲方）：张某某 承租人（以下简称乙方）：李某某  根据《中华人民共和国民法典》及有关法律、法规的规定，甲乙双"
+     }
+    ]
+   },
+   {
+    "id": "zl09",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "我能把次卧租给同学住吗？",
+    "answer": [
+     "不得将该房屋全部或部分转租、转借给他人"
+    ],
+    "rank": 5,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "付时状况良好。  第三条 租赁期限 租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "住房租赁合同  出租人（以下简称甲方）：张某某 承租人（以下简称乙方）：李某某  根据《中华人民共和国民法典》及有关法律、法规的规定，甲乙双"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     }
+    ]
+   },
+   {
+    "id": "zl10",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "朋友过来住一段时间，需要跟房东说吗？",
+    "answer": [
+     "连续留宿超过七日的，应事先告知甲方"
+    ],
+    "rank": 4,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "住房租赁合同  出租人（以下简称甲方）：张某某 承租人（以下简称乙方）：李某某  根据《中华人民共和国民法典》及有关法律、法规的规定，甲乙双"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "付时状况良好。  第三条 租赁期限 租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     }
+    ]
+   },
+   {
+    "id": "zl11",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "物业费和暖气费是谁交？",
+    "answer": [
+     "有线电视费、物业管理费及供暖费"
+    ],
+    "rank": 4,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 6,
+      "hit": false,
+      "head": "第二十条 争议解决 本合同履行过程中发生争议的，双方应协商解决；协商不成的，任何一方均可向该房屋所在地人民法院提起诉讼。  第二十一条 物业"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "住房租赁合同  出租人（以下简称甲方）：张某某 承租人（以下简称乙方）：李某某  根据《中华人民共和国民法典》及有关法律、法规的规定，甲乙双"
+     }
+    ]
+   },
+   {
+    "id": "zl12",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "退房的时候要打扫吗？不打扫会扣多少？",
+    "answer": [
+     "甲方有权从押金中扣除保洁费800元"
+    ],
+    "rank": 1,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": true,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 3,
+      "hit": false,
+      "head": "得要求减免租金。因乙方未及时通知造成损失扩大的，乙方应承担扩大部分的损失。  第九条 甲方进入房屋 为检查房屋使用情况及设施状况，甲方或其委"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     }
+    ]
+   },
+   {
+    "id": "zl13",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "合同到期了我还想接着住，要怎么办？",
+    "answer": [
+     "应于租赁期满前三十日向甲方提出书面续租要求"
+    ],
+    "rank": 4,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "交付的钥匙及门禁卡，遗失的应及时告知甲方并自费补办。乙方不得私自复制钥匙交给本合同约定以外的人员使用。租赁期满或合同解除时，乙方应将全部钥匙"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     }
+    ]
+   },
+   {
+    "id": "zl14",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "房东要卖房子让我搬走，会赔我钱吗？",
+    "answer": [
+     "甲方因出售房屋或自住需要提前收回房屋的"
+    ],
+    "rank": 2,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": true,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     }
+    ]
+   },
+   {
+    "id": "zl15",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "搬走时没带走的东西会被怎么处理？",
+    "answer": [
+     "超过三日未搬离的，视为乙方放弃"
+    ],
+    "rank": 1,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": true,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     }
+    ]
+   },
+   {
+    "id": "zl16",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "我能自己换一把门锁吗？",
+    "answer": [
+     "或增设附属设施，不得更换门锁"
+    ],
+    "rank": 2,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "交付的钥匙及门禁卡，遗失的应及时告知甲方并自费补办。乙方不得私自复制钥匙交给本合同约定以外的人员使用。租赁期满或合同解除时，乙方应将全部钥匙"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 3,
+      "hit": true,
+      "head": "得要求减免租金。因乙方未及时通知造成损失扩大的，乙方应承担扩大部分的损失。  第九条 甲方进入房屋 为检查房屋使用情况及设施状况，甲方或其委"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     }
+    ]
+   },
+   {
+    "id": "zl17",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "邻居投诉我太吵，房东会怎么处理？",
+    "answer": [
+     "邻居或物业对乙方提出投诉达到两次的"
+    ],
+    "rank": 3,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "住房租赁合同  出租人（以下简称甲方）：张某某 承租人（以下简称乙方）：李某某  根据《中华人民共和国民法典》及有关法律、法规的规定，甲乙双"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 3,
+      "hit": false,
+      "head": "得要求减免租金。因乙方未及时通知造成损失扩大的，乙方应承担扩大部分的损失。  第九条 甲方进入房屋 为检查房屋使用情况及设施状况，甲方或其委"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": true,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     }
+    ]
+   },
+   {
+    "id": "zl18",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "跟房东有纠纷的话去哪里起诉？",
+    "answer": [
+     "向该房屋所在地人民法院提起诉讼"
+    ],
+    "rank": 1,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 6,
+      "hit": true,
+      "head": "第二十条 争议解决 本合同履行过程中发生争议的，双方应协商解决；协商不成的，任何一方均可向该房屋所在地人民法院提起诉讼。  第二十一条 物业"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "住房租赁合同  出租人（以下简称甲方）：张某某 承租人（以下简称乙方）：李某某  根据《中华人民共和国民法典》及有关法律、法规的规定，甲乙双"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 3,
+      "hit": false,
+      "head": "得要求减免租金。因乙方未及时通知造成损失扩大的，乙方应承担扩大部分的损失。  第九条 甲方进入房屋 为检查房屋使用情况及设施状况，甲方或其委"
+     }
+    ]
+   },
+   {
+    "id": "zj01",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "试用期有多长？",
+    "answer": [
+     "其中试用期为六个月"
+    ],
+    "rank": 5,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     }
+    ]
+   },
+   {
+    "id": "zj02",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "试用期的工资打几折？",
+    "answer": [
+     "乙方试用期月工资为转正后工资的百分之七十"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     }
+    ]
+   },
+   {
+    "id": "zj03",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "加班有没有加班费？",
+    "answer": [
+     "乙方的月工资中已包含全部加班费"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.25,
+     "3": 0.6428571428571428,
+     "5": 0.8928571428571429
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     }
+    ]
+   },
+   {
+    "id": "zj04",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "公司能不能把我调到外地去上班？",
+    "answer": [
+     "包括派驻外地分支机构"
+    ],
+    "rank": 3,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 0,
+      "hit": true,
+      "head": "劳动合同书  用人单位（以下简称甲方）：某某科技有限公司 劳动者（以下简称乙方）：王某某  根据《中华人民共和国劳动法》《中华人民共和国劳动"
+     }
+    ]
+   },
+   {
+    "id": "zj05",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "公司不给我交五险一金，合同里是怎么写的？",
+    "answer": [
+     "乙方自愿选择不缴纳社会保险和住房公积金的"
+    ],
+    "rank": null,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "劳动合同书  用人单位（以下简称甲方）：某某科技有限公司 劳动者（以下简称乙方）：王某某  根据《中华人民共和国劳动法》《中华人民共和国劳动"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 3,
+      "hit": false,
+      "head": "作任务完成的发明创造、软件、作品等，其知识产权归甲方所有。乙方在职期间业余时间完成的、与甲方业务相关的成果，其知识产权亦归甲方所有。  第十"
+     }
+    ]
+   },
+   {
+    "id": "zj06",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "辞职要提前多久跟公司说？",
+    "answer": [
+     "应当提前六十日以书面形式通知甲方"
+    ],
+    "rank": null,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "劳动合同书  用人单位（以下简称甲方）：某某科技有限公司 劳动者（以下简称乙方）：王某某  根据《中华人民共和国劳动法》《中华人民共和国劳动"
+     }
+    ]
+   },
+   {
+    "id": "zj07",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "离职以后还能去同行业的公司上班吗？",
+    "answer": [
+     "乙方在职期间及离职后两年内，不得到与甲方"
+    ],
+    "rank": 4,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "劳动合同书  用人单位（以下简称甲方）：某某科技有限公司 劳动者（以下简称乙方）：王某某  根据《中华人民共和国劳动法》《中华人民共和国劳动"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 3,
+      "hit": false,
+      "head": "作任务完成的发明创造、软件、作品等，其知识产权归甲方所有。乙方在职期间业余时间完成的、与甲方业务相关的成果，其知识产权亦归甲方所有。  第十"
+     }
+    ]
+   },
+   {
+    "id": "zj08",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "不让我去竞争对手那里，公司给不给补偿？",
+    "answer": [
+     "甲方在竞业限制期间不向乙方支付经济补偿"
+    ],
+    "rank": null,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 3,
+      "hit": false,
+      "head": "作任务完成的发明创造、软件、作品等，其知识产权归甲方所有。乙方在职期间业余时间完成的、与甲方业务相关的成果，其知识产权亦归甲方所有。  第十"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "劳动合同书  用人单位（以下简称甲方）：某某科技有限公司 劳动者（以下简称乙方）：王某某  根据《中华人民共和国劳动法》《中华人民共和国劳动"
+     }
+    ]
+   },
+   {
+    "id": "zj09",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "公司出钱送我去培训，之后我走人要赔多少？",
+    "answer": [
+     "违约金数额为培训费用的三倍"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": true,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     }
+    ]
+   },
+   {
+    "id": "zj10",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "每个月几号发工资？",
+    "answer": [
+     "甲方于每月25日以银行转账方式支付乙方上月工资"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     }
+    ]
+   },
+   {
+    "id": "zj11",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "绩效工资是按什么标准算的？",
+    "answer": [
+     "考核标准由甲方制定并可随时调整"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     }
+    ]
+   },
+   {
+    "id": "zj12",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "什么时候才能休年假？",
+    "answer": [
+     "乙方连续工作满一年后，方可申请带薪年休假"
+    ],
+    "rank": 2,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     }
+    ]
+   },
+   {
+    "id": "zj13",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "我下班时间自己写的软件归谁所有？",
+    "answer": [
+     "乙方在职期间业余时间完成的、与甲方业务相关的成果"
+    ],
+    "rank": 3,
+    "n_chunks": 8,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.25,
+     "3": 0.6428571428571428,
+     "5": 0.8928571428571429
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 6,
+      "hit": false,
+      "head": "户、供应商或竞争对手提供有偿服务。乙方的近亲属在甲方的客户或供应商处任职的，乙方应主动向甲方申报。  第二十二条 员工个人信息 乙方应如实向"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "劳动合同书  用人单位（以下简称甲方）：某某科技有限公司 劳动者（以下简称乙方）：王某某  根据《中华人民共和国劳动法》《中华人民共和国劳动"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": true,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     }
+    ]
+   },
+   {
+    "id": "zj14",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "绩效不好会被开除吗？",
+    "answer": [
+     "连续两个季度绩效考核不合格的"
+    ],
+    "rank": 3,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 3,
+      "hit": true,
+      "head": "作任务完成的发明创造、软件、作品等，其知识产权归甲方所有。乙方在职期间业余时间完成的、与甲方业务相关的成果，其知识产权亦归甲方所有。  第十"
+     }
+    ]
+   },
+   {
+    "id": "zj15",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "违反合同的话要交多少违约金？",
+    "answer": [
+     "应当向甲方支付违约金人民币一万元"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.25,
+     "3": 0.6428571428571428,
+     "5": 0.8928571428571429
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": true,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 3,
+      "hit": true,
+      "head": "作任务完成的发明创造、软件、作品等，其知识产权归甲方所有。乙方在职期间业余时间完成的、与甲方业务相关的成果，其知识产权亦归甲方所有。  第十"
+     }
+    ]
+   },
+   {
+    "id": "zj16",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "离职的时候公司能扣着我的工资不发吗？",
+    "answer": [
+     "甲方有权扣发乙方当月工资",
+     "甲方有权暂缓发放乙方的剩余工资"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.25,
+     "3": 0.6428571428571428,
+     "5": 0.8928571428571429
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": true,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     }
+    ]
+   },
+   {
+    "id": "zj17",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "上班的时候受伤了怎么处理？",
+    "answer": [
+     "按照《工伤保险条例》的规定处理"
+    ],
+    "rank": 2,
+    "n_chunks": 8,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.25,
+     "3": 0.6428571428571428,
+     "5": 0.8928571428571429
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": true,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     }
+    ]
+   },
+   {
+    "id": "zj18",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "跟公司闹了纠纷，应该怎么解决？",
+    "answer": [
+     "劳动争议仲裁委员会申请仲裁"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": true,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 3,
+      "hit": false,
+      "head": "作任务完成的发明创造、软件、作品等，其知识产权归甲方所有。乙方在职期间业余时间完成的、与甲方业务相关的成果，其知识产权亦归甲方所有。  第十"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "劳动合同书  用人单位（以下简称甲方）：某某科技有限公司 劳动者（以下简称乙方）：王某某  根据《中华人民共和国劳动法》《中华人民共和国劳动"
+     }
+    ]
+   },
+   {
+    "id": "el01",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "When do I get my security deposit back after I move out?",
+    "answer": [
+     "Within 45 days after Tenant vacates"
+    ],
+    "rank": 3,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 3,
+      "hit": false,
+      "head": "y 11:59 p.m. on the fifth day of the month, Tenant shall pay an initia"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 21,
+      "hit": false,
+      "head": " not available to a new tenant.  25. MOVE-IN CONDITION REPORT. Within "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 4,
+      "hit": true,
+      "head": " Tenant as payment of the last month's rent. Landlord may deduct from "
+     }
+    ]
+   },
+   {
+    "id": "el02",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "How much do I owe if my rent is a few days late?",
+    "answer": [
+     "an initial late charge of $50.00 plus $10.00"
+    ],
+    "rank": 5,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 18,
+      "hit": false,
+      "head": "f $85.00 shall apply.  21. DEFAULT. If Tenant fails to pay rent when d"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 2,
+      "hit": false,
+      "head": "le for the delay.  3. RENT. Tenant shall pay monthly rent of $1,250.00"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     }
+    ]
+   },
+   {
+    "id": "el03",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Can the landlord come into my apartment without telling me first?",
+    "answer": [
+     "after giving Tenant at least 24 hours' notice"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.08333333333333337,
+     "3": 0.23913043478260865,
+     "5": 0.3804347826086957
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 8,
+      "hit": true,
+      "head": "iving Tenant at least 24 hours' notice by email or a notice posted on "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 15,
+      "hit": false,
+      "head": "ATIONS. Tenant shall not paint, wallpaper, install fixtures, change lo"
+     }
+    ]
+   },
+   {
+    "id": "el04",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Who pays when something in the apartment breaks?",
+    "answer": [
+     "Tenant shall pay the first $150.00 of the cost of each repair call"
+    ],
+    "rank": null,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 17,
+      "hit": false,
+      "head": " responsible for loss of or damage to Tenant's property from theft, fi"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": false,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 5,
+      "hit": false,
+      "head": "d the estimated or actual cost of repair, with paid receipts or copies"
+     }
+    ]
+   },
+   {
+    "id": "el05",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "What happens if I forget to tell them I am not staying another year?",
+    "answer": [
+     "This Lease shall automatically renew for an additional twelve-month term"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 11,
+      "hit": true,
+      "head": "h the termination date. Tenant shall not be entitled to a refund of an"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 8,
+      "hit": false,
+      "head": "iving Tenant at least 24 hours' notice by email or a notice posted on "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 4,
+      "hit": false,
+      "head": " Tenant as payment of the last month's rent. Landlord may deduct from "
+     }
+    ]
+   },
+   {
+    "id": "el06",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Can I break the lease early, and what will it cost me?",
+    "answer": [
+     "paying an early termination fee equal to two months' rent"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 10,
+      "hit": true,
+      "head": "'s rental criteria. If Landlord approves a sublease, Tenant shall pay "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 11,
+      "hit": false,
+      "head": "h the termination date. Tenant shall not be entitled to a refund of an"
+     }
+    ]
+   },
+   {
+    "id": "el07",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Am I on the hook if my roommate stops paying rent?",
+    "answer": [
+     "each Tenant is jointly and severally liable"
+    ],
+    "rank": null,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 18,
+      "hit": false,
+      "head": "f $85.00 shall apply.  21. DEFAULT. If Tenant fails to pay rent when d"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 10,
+      "hit": false,
+      "head": "'s rental criteria. If Landlord approves a sublease, Tenant shall pay "
+     }
+    ]
+   },
+   {
+    "id": "el08",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Can my girlfriend stay with me for two weeks?",
+    "answer": [
+     "more than seven consecutive nights"
+    ],
+    "rank": 2,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 11,
+      "hit": false,
+      "head": "h the termination date. Tenant shall not be entitled to a refund of an"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 8,
+      "hit": true,
+      "head": "iving Tenant at least 24 hours' notice by email or a notice posted on "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     }
+    ]
+   },
+   {
+    "id": "el09",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Will they charge me for cleaning the carpet when I leave?",
+    "answer": [
+     "A professional carpet cleaning charge of $175.00"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": true,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 14,
+      "hit": false,
+      "head": "in 25 feet of the building. Tenant shall pay a $300.00 cleaning charge"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 20,
+      "hit": false,
+      "head": "condition of the carpet. Any personal property left in the Premises af"
+     }
+    ]
+   },
+   {
+    "id": "el10",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Am I allowed to paint the walls of my room?",
+    "answer": [
+     "Tenant shall not paint, wallpaper"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.08333333333333337,
+     "3": 0.23913043478260865,
+     "5": 0.3804347826086957
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 15,
+      "hit": true,
+      "head": "ATIONS. Tenant shall not paint, wallpaper, install fixtures, change lo"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 14,
+      "hit": true,
+      "head": "in 25 feet of the building. Tenant shall pay a $300.00 cleaning charge"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 20,
+      "hit": false,
+      "head": "condition of the carpet. Any personal property left in the Premises af"
+     }
+    ]
+   },
+   {
+    "id": "el11",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "我可以把房间转租给别人吗？",
+    "answer": [
+     "Tenant shall not sublet the Premises"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": true,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": false,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 20,
+      "hit": false,
+      "head": "condition of the carpet. Any personal property left in the Premises af"
+     }
+    ]
+   },
+   {
+    "id": "el12",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "偷偷养宠物被发现了会被罚多少钱？",
+    "answer": [
+     "Tenant shall pay a fine of $500.00 per occurrence"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 13,
+      "hit": true,
+      "head": "ily, without Landlord's prior written consent. If an unauthorized anim"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 12,
+      "hit": false,
+      "head": "NT AND SEVERAL LIABILITY. If more than one person signs this Lease as "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 17,
+      "hit": false,
+      "head": " responsible for loss of or damage to Tenant's property from theft, fi"
+     }
+    ]
+   },
+   {
+    "id": "el13",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "水电网费里哪些要我自己交？",
+    "answer": [
+     "pay for electricity, gas, internet, and cable television"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 5,
+      "hit": true,
+      "head": "d the estimated or actual cost of repair, with paid receipts or copies"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 2,
+      "hit": false,
+      "head": "le for the delay.  3. RENT. Tenant shall pay monthly rent of $1,250.00"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 3,
+      "hit": false,
+      "head": "y 11:59 p.m. on the fifth day of the month, Tenant shall pay an initia"
+     }
+    ]
+   },
+   {
+    "id": "el14",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "如果闹到打官司，律师费谁出？",
+    "answer": [
+     "Tenant shall pay Landlord's reasonable attorney's fees"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.08333333333333337,
+     "3": 0.23913043478260865,
+     "5": 0.3804347826086957
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": true,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 16,
+      "hit": false,
+      "head": "th under a separate parking agreement. Vehicles parked without a valid"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 23,
+      "hit": false,
+      "head": "alid, the remaining provisions shall remain in effect. This Lease shal"
+     }
+    ]
+   },
+   {
+    "id": "el15",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "一定要买租客保险吗？",
+    "answer": [
+     "Tenant shall maintain renter's insurance"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 16,
+      "hit": true,
+      "head": "th under a separate parking agreement. Vehicles parked without a valid"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 2,
+      "hit": false,
+      "head": "le for the delay.  3. RENT. Tenant shall pay monthly rent of $1,250.00"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 18,
+      "hit": false,
+      "head": "f $85.00 shall apply.  21. DEFAULT. If Tenant fails to pay rent when d"
+     }
+    ]
+   },
+   {
+    "id": "el16",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "钥匙丢了怎么办？要花多少钱？",
+    "answer": [
+     "Lost keys shall be replaced at a charge of $75.00 per key"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 17,
+      "hit": true,
+      "head": " responsible for loss of or damage to Tenant's property from theft, fi"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 5,
+      "hit": false,
+      "head": "d the estimated or actual cost of repair, with paid receipts or copies"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": false,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     }
+    ]
+   },
+   {
+    "id": "el17",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "冬天出门的时候可以把暖气关掉吗？",
+    "answer": [
+     "keep heat at no less than 55 degrees Fahrenheit"
+    ],
+    "rank": 4,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 6,
+      "hit": false,
+      "head": "enant shall be responsible for any damage caused by frozen pipes if th"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 8,
+      "hit": false,
+      "head": "iving Tenant at least 24 hours' notice by email or a notice posted on "
+     }
+    ]
+   },
+   {
+    "id": "el18",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "租约到期了我还没搬走会怎么样？",
+    "answer": [
+     "rent for each day of holdover at a rate of 150 percent"
+    ],
+    "rank": null,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 11,
+      "hit": false,
+      "head": "h the termination date. Tenant shall not be entitled to a refund of an"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 1,
+      "hit": false,
+      "head": " the Move-In Condition Report. The Premises shall be used only as a pr"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 10,
+      "hit": false,
+      "head": "'s rental criteria. If Landlord approves a sublease, Tenant shall pay "
+     }
+    ]
+   },
+   {
+    "id": "el19",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "刚入住时发现房子有损坏，我应该做什么？",
+    "answer": [
+     "complete and return the Move-In Condition Report describing any existing damage"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 21,
+      "hit": true,
+      "head": " not available to a new tenant.  25. MOVE-IN CONDITION REPORT. Within "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 4,
+      "hit": false,
+      "head": " Tenant as payment of the last month's rent. Landlord may deduct from "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 20,
+      "hit": false,
+      "head": "condition of the carpet. Any personal property left in the Premises af"
+     }
+    ]
+   },
+   {
+    "id": "el20",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "押金能不能直接抵最后一个月的房租？",
+    "answer": [
+     "may not be used by Tenant as payment of the last month's rent"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.08333333333333337,
+     "3": 0.23913043478260865,
+     "5": 0.3804347826086957
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 4,
+      "hit": true,
+      "head": " Tenant as payment of the last month's rent. Landlord may deduct from "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 11,
+      "hit": false,
+      "head": "h the termination date. Tenant shall not be entitled to a refund of an"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 3,
+      "hit": true,
+      "head": "y 11:59 p.m. on the fifth day of the month, Tenant shall pay an initia"
+     }
+    ]
+   }
+  ],
+  "document_filter": true,
+  "retrieval_path": "production store_chunks/search_chunks"
+ },
+ "shared_collection": {
+  "chunk_size": 500,
+  "overlap": 50,
+  "shared_collection": true,
+  "questions": 56,
+  "chunks_per_contract": {
+   "labor_zh": 8,
+   "lease_en": 24,
+   "lease_zh": 9
+  },
+  "k_production": 3,
+  "hit": {
+   "1": 0.3392857142857143,
+   "3": 0.5892857142857143,
+   "5": 0.6964285714285714
+  },
+  "random": {
+   "1": 0.10689484126984128,
+   "3": 0.3088537045252884,
+   "5": 0.4950381420684216
+  },
+  "mrr": 0.46369047619047615,
+  "visible_fraction": null,
+  "foreign_share": 0.43452380952380953,
+  "by_contract": {
+   "labor_zh": {
+    "n": 18,
+    "hit": {
+     "1": 0.3333333333333333,
+     "3": 0.7222222222222222,
+     "5": 0.7777777777777778
+    }
+   },
+   "lease_en": {
+    "n": 20,
+    "hit": {
+     "1": 0.6,
+     "3": 0.7,
+     "5": 0.75
+    }
+   },
+   "lease_zh": {
+    "n": 18,
+    "hit": {
+     "1": 0.05555555555555555,
+     "3": 0.3333333333333333,
+     "5": 0.5555555555555556
+    }
+   }
+  },
+  "by_lang": {
+   "en": {
+    "n": 10,
+    "hit": {
+     "1": 0.5,
+     "3": 0.6,
+     "5": 0.7
+    }
+   },
+   "zh": {
+    "n": 46,
+    "hit": {
+     "1": 0.30434782608695654,
+     "3": 0.5869565217391305,
+     "5": 0.6956521739130435
+    }
+   }
+  },
+  "rows": [
+   {
+    "id": "zl01",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "退房以后押金要多久之内去申请？过了时间会怎么样？",
+    "answer": [
+     "乙方应在退租之日起90日内书面申请退还押金"
+    ],
+    "rank": 3,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": true,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     }
+    ]
+   },
+   {
+    "id": "zl02",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "押金扣多少钱是谁说了算？",
+    "answer": [
+     "押金的扣除项目及扣除金额由甲方根据房屋状况确定"
+    ],
+    "rank": 3,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 3,
+      "hit": false,
+      "head": "y 11:59 p.m. on the fifth day of the month, Tenant shall pay an initia"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": true,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     }
+    ]
+   },
+   {
+    "id": "zl03",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "房租晚交几天会被罚多少钱？",
+    "answer": [
+     "按当月租金的百分之五向甲方支付滞纳金"
+    ],
+    "rank": null,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 2,
+      "hit": false,
+      "head": "le for the delay.  3. RENT. Tenant shall pay monthly rent of $1,250.00"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 10,
+      "hit": false,
+      "head": "'s rental criteria. If Landlord approves a sublease, Tenant shall pay "
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     }
+    ]
+   },
+   {
+    "id": "zl04",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "房东能不能在租期中间涨房租？",
+    "answer": [
+     "甲方有权参照周边房屋租金水平调整租金"
+    ],
+    "rank": 5,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 3,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 18,
+      "hit": false,
+      "head": "f $85.00 shall apply.  21. DEFAULT. If Tenant fails to pay rent when d"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 10,
+      "hit": false,
+      "head": "'s rental criteria. If Landlord approves a sublease, Tenant shall pay "
+     }
+    ]
+   },
+   {
+    "id": "zl05",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "我想提前搬走，要付出什么代价？",
+    "answer": [
+     "并支付相当于三个月租金的违约金",
+     "本合同提前解除的，经纪服务费不予退还"
+    ],
+    "rank": 4,
+    "n_chunks": 9,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.2222222222222222,
+     "3": 0.5833333333333333,
+     "5": 0.8333333333333334
+    },
+    "foreign": 3,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 2,
+      "hit": false,
+      "head": "le for the delay.  3. RENT. Tenant shall pay monthly rent of $1,250.00"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 1,
+      "hit": false,
+      "head": " the Move-In Condition Report. The Premises shall be used only as a pr"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": false,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     }
+    ]
+   },
+   {
+    "id": "zl06",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "房东不打招呼就进我房间，合同里允许吗？",
+    "answer": [
+     "有权随时进入该房屋，无需提前通知乙方"
+    ],
+    "rank": 1,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 3,
+      "hit": true,
+      "head": "得要求减免租金。因乙方未及时通知造成损失扩大的，乙方应承担扩大部分的损失。  第九条 甲方进入房屋 为检查房屋使用情况及设施状况，甲方或其委"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 8,
+      "hit": false,
+      "head": "iving Tenant at least 24 hours' notice by email or a notice posted on "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     }
+    ]
+   },
+   {
+    "id": "zl07",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "热水器坏了谁出钱修？",
+    "answer": [
+     "无论损坏原因，维修费用一律由乙方承担"
+    ],
+    "rank": null,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 6,
+      "hit": false,
+      "head": "enant shall be responsible for any damage caused by frozen pipes if th"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 5,
+      "hit": false,
+      "head": "d the estimated or actual cost of repair, with paid receipts or copies"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     }
+    ]
+   },
+   {
+    "id": "zl08",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "可以在房子里养猫吗？",
+    "answer": [
+     "乙方不得在该房屋内饲养宠物"
+    ],
+    "rank": 3,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 12,
+      "hit": false,
+      "head": "NT AND SEVERAL LIABILITY. If more than one person signs this Lease as "
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 3,
+      "hit": true,
+      "head": "得要求减免租金。因乙方未及时通知造成损失扩大的，乙方应承担扩大部分的损失。  第九条 甲方进入房屋 为检查房屋使用情况及设施状况，甲方或其委"
+     }
+    ]
+   },
+   {
+    "id": "zl09",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "我能把次卧租给同学住吗？",
+    "answer": [
+     "不得将该房屋全部或部分转租、转借给他人"
+    ],
+    "rank": null,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 8,
+      "hit": false,
+      "head": "iving Tenant at least 24 hours' notice by email or a notice posted on "
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "付时状况良好。  第三条 租赁期限 租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应"
+     }
+    ]
+   },
+   {
+    "id": "zl10",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "朋友过来住一段时间，需要跟房东说吗？",
+    "answer": [
+     "连续留宿超过七日的，应事先告知甲方"
+    ],
+    "rank": null,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 3,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 8,
+      "hit": false,
+      "head": "iving Tenant at least 24 hours' notice by email or a notice posted on "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 18,
+      "hit": false,
+      "head": "f $85.00 shall apply.  21. DEFAULT. If Tenant fails to pay rent when d"
+     }
+    ]
+   },
+   {
+    "id": "zl11",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "物业费和暖气费是谁交？",
+    "answer": [
+     "有线电视费、物业管理费及供暖费"
+    ],
+    "rank": null,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 5,
+      "hit": false,
+      "head": "d the estimated or actual cost of repair, with paid receipts or copies"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 6,
+      "hit": false,
+      "head": "第二十条 争议解决 本合同履行过程中发生争议的，双方应协商解决；协商不成的，任何一方均可向该房屋所在地人民法院提起诉讼。  第二十一条 物业"
+     }
+    ]
+   },
+   {
+    "id": "zl12",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "退房的时候要打扫吗？不打扫会扣多少？",
+    "answer": [
+     "甲方有权从押金中扣除保洁费800元"
+    ],
+    "rank": 3,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": false,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 14,
+      "hit": false,
+      "head": "in 25 feet of the building. Tenant shall pay a $300.00 cleaning charge"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": true,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     }
+    ]
+   },
+   {
+    "id": "zl13",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "合同到期了我还想接着住，要怎么办？",
+    "answer": [
+     "应于租赁期满前三十日向甲方提出书面续租要求"
+    ],
+    "rank": null,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "交付的钥匙及门禁卡，遗失的应及时告知甲方并自费补办。乙方不得私自复制钥匙交给本合同约定以外的人员使用。租赁期满或合同解除时，乙方应将全部钥匙"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 11,
+      "hit": false,
+      "head": "h the termination date. Tenant shall not be entitled to a refund of an"
+     }
+    ]
+   },
+   {
+    "id": "zl14",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "房东要卖房子让我搬走，会赔我钱吗？",
+    "answer": [
+     "甲方因出售房屋或自住需要提前收回房屋的"
+    ],
+    "rank": 5,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": false,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 18,
+      "hit": false,
+      "head": "f $85.00 shall apply.  21. DEFAULT. If Tenant fails to pay rent when d"
+     }
+    ]
+   },
+   {
+    "id": "zl15",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "搬走时没带走的东西会被怎么处理？",
+    "answer": [
+     "超过三日未搬离的，视为乙方放弃"
+    ],
+    "rank": 2,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 21,
+      "hit": false,
+      "head": " not available to a new tenant.  25. MOVE-IN CONDITION REPORT. Within "
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": true,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 20,
+      "hit": false,
+      "head": "condition of the carpet. Any personal property left in the Premises af"
+     }
+    ]
+   },
+   {
+    "id": "zl16",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "我能自己换一把门锁吗？",
+    "answer": [
+     "或增设附属设施，不得更换门锁"
+    ],
+    "rank": 5,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 3,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 17,
+      "hit": false,
+      "head": " responsible for loss of or damage to Tenant's property from theft, fi"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": false,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 15,
+      "hit": false,
+      "head": "ATIONS. Tenant shall not paint, wallpaper, install fixtures, change lo"
+     }
+    ]
+   },
+   {
+    "id": "zl17",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "邻居投诉我太吵，房东会怎么处理？",
+    "answer": [
+     "邻居或物业对乙方提出投诉达到两次的"
+    ],
+    "rank": null,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 3,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 14,
+      "hit": false,
+      "head": "in 25 feet of the building. Tenant shall pay a $300.00 cleaning charge"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 18,
+      "hit": false,
+      "head": "f $85.00 shall apply.  21. DEFAULT. If Tenant fails to pay rent when d"
+     }
+    ]
+   },
+   {
+    "id": "zl18",
+    "contract": "lease_zh",
+    "lang": "zh",
+    "question": "跟房东有纠纷的话去哪里起诉？",
+    "answer": [
+     "向该房屋所在地人民法院提起诉讼"
+    ],
+    "rank": null,
+    "n_chunks": 9,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.11111111111111116,
+     "3": 0.33333333333333337,
+     "5": 0.5555555555555556
+    },
+    "foreign": 3,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 16,
+      "hit": false,
+      "head": "th under a separate parking agreement. Vehicles parked without a valid"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 18,
+      "hit": false,
+      "head": "f $85.00 shall apply.  21. DEFAULT. If Tenant fails to pay rent when d"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": false,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     }
+    ]
+   },
+   {
+    "id": "zj01",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "试用期有多长？",
+    "answer": [
+     "其中试用期为六个月"
+    ],
+    "rank": null,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "付时状况良好。  第三条 租赁期限 租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     }
+    ]
+   },
+   {
+    "id": "zj02",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "试用期的工资打几折？",
+    "answer": [
+     "乙方试用期月工资为转正后工资的百分之七十"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     }
+    ]
+   },
+   {
+    "id": "zj03",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "加班有没有加班费？",
+    "answer": [
+     "乙方的月工资中已包含全部加班费"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.25,
+     "3": 0.6428571428571428,
+     "5": 0.8928571428571429
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     }
+    ]
+   },
+   {
+    "id": "zj04",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "公司能不能把我调到外地去上班？",
+    "answer": [
+     "包括派驻外地分支机构"
+    ],
+    "rank": 3,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 0,
+      "hit": true,
+      "head": "劳动合同书  用人单位（以下简称甲方）：某某科技有限公司 劳动者（以下简称乙方）：王某某  根据《中华人民共和国劳动法》《中华人民共和国劳动"
+     }
+    ]
+   },
+   {
+    "id": "zj05",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "公司不给我交五险一金，合同里是怎么写的？",
+    "answer": [
+     "乙方自愿选择不缴纳社会保险和住房公积金的"
+    ],
+    "rank": null,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "交付的钥匙及门禁卡，遗失的应及时告知甲方并自费补办。乙方不得私自复制钥匙交给本合同约定以外的人员使用。租赁期满或合同解除时，乙方应将全部钥匙"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     }
+    ]
+   },
+   {
+    "id": "zj06",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "辞职要提前多久跟公司说？",
+    "answer": [
+     "应当提前六十日以书面形式通知甲方"
+    ],
+    "rank": null,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 11,
+      "hit": false,
+      "head": "h the termination date. Tenant shall not be entitled to a refund of an"
+     }
+    ]
+   },
+   {
+    "id": "zj07",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "离职以后还能去同行业的公司上班吗？",
+    "answer": [
+     "乙方在职期间及离职后两年内，不得到与甲方"
+    ],
+    "rank": 4,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "劳动合同书  用人单位（以下简称甲方）：某某科技有限公司 劳动者（以下简称乙方）：王某某  根据《中华人民共和国劳动法》《中华人民共和国劳动"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 3,
+      "hit": false,
+      "head": "作任务完成的发明创造、软件、作品等，其知识产权归甲方所有。乙方在职期间业余时间完成的、与甲方业务相关的成果，其知识产权亦归甲方所有。  第十"
+     }
+    ]
+   },
+   {
+    "id": "zj08",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "不让我去竞争对手那里，公司给不给补偿？",
+    "answer": [
+     "甲方在竞业限制期间不向乙方支付经济补偿"
+    ],
+    "rank": null,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 3,
+      "hit": false,
+      "head": "作任务完成的发明创造、软件、作品等，其知识产权归甲方所有。乙方在职期间业余时间完成的、与甲方业务相关的成果，其知识产权亦归甲方所有。  第十"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 6,
+      "hit": false,
+      "head": "第二十条 争议解决 本合同履行过程中发生争议的，双方应协商解决；协商不成的，任何一方均可向该房屋所在地人民法院提起诉讼。  第二十一条 物业"
+     }
+    ]
+   },
+   {
+    "id": "zj09",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "公司出钱送我去培训，之后我走人要赔多少？",
+    "answer": [
+     "违约金数额为培训费用的三倍"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": true,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     }
+    ]
+   },
+   {
+    "id": "zj10",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "每个月几号发工资？",
+    "answer": [
+     "甲方于每月25日以银行转账方式支付乙方上月工资"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     }
+    ]
+   },
+   {
+    "id": "zj11",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "绩效工资是按什么标准算的？",
+    "answer": [
+     "考核标准由甲方制定并可随时调整"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     }
+    ]
+   },
+   {
+    "id": "zj12",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "什么时候才能休年假？",
+    "answer": [
+     "乙方连续工作满一年后，方可申请带薪年休假"
+    ],
+    "rank": 2,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": true,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 8,
+      "hit": false,
+      "head": "iving Tenant at least 24 hours' notice by email or a notice posted on "
+     }
+    ]
+   },
+   {
+    "id": "zj13",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "我下班时间自己写的软件归谁所有？",
+    "answer": [
+     "乙方在职期间业余时间完成的、与甲方业务相关的成果"
+    ],
+    "rank": 3,
+    "n_chunks": 8,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.25,
+     "3": 0.6428571428571428,
+     "5": 0.8928571428571429
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 6,
+      "hit": false,
+      "head": "户、供应商或竞争对手提供有偿服务。乙方的近亲属在甲方的客户或供应商处任职的，乙方应主动向甲方申报。  第二十二条 员工个人信息 乙方应如实向"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "劳动合同书  用人单位（以下简称甲方）：某某科技有限公司 劳动者（以下简称乙方）：王某某  根据《中华人民共和国劳动法》《中华人民共和国劳动"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": true,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     }
+    ]
+   },
+   {
+    "id": "zj14",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "绩效不好会被开除吗？",
+    "answer": [
+     "连续两个季度绩效考核不合格的"
+    ],
+    "rank": 3,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 3,
+      "hit": true,
+      "head": "作任务完成的发明创造、软件、作品等，其知识产权归甲方所有。乙方在职期间业余时间完成的、与甲方业务相关的成果，其知识产权亦归甲方所有。  第十"
+     }
+    ]
+   },
+   {
+    "id": "zj15",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "违反合同的话要交多少违约金？",
+    "answer": [
+     "应当向甲方支付违约金人民币一万元"
+    ],
+    "rank": 2,
+    "n_chunks": 8,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.25,
+     "3": 0.6428571428571428,
+     "5": 0.8928571428571429
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": true,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     }
+    ]
+   },
+   {
+    "id": "zj16",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "离职的时候公司能扣着我的工资不发吗？",
+    "answer": [
+     "甲方有权扣发乙方当月工资",
+     "甲方有权暂缓发放乙方的剩余工资"
+    ],
+    "rank": 1,
+    "n_chunks": 8,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.25,
+     "3": 0.6428571428571428,
+     "5": 0.8928571428571429
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": true,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "偿 依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计"
+     }
+    ]
+   },
+   {
+    "id": "zj17",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "上班的时候受伤了怎么处理？",
+    "answer": [
+     "按照《工伤保险条例》的规定处理"
+    ],
+    "rank": 2,
+    "n_chunks": 8,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.25,
+     "3": 0.6428571428571428,
+     "5": 0.8928571428571429
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 2,
+      "hit": true,
+      "head": "，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。  第七条 培训与服务期 甲方出资对乙方进行专业技术培"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     }
+    ]
+   },
+   {
+    "id": "zj18",
+    "contract": "labor_zh",
+    "lang": "zh",
+    "question": "跟公司闹了纠纷，应该怎么解决？",
+    "answer": [
+     "劳动争议仲裁委员会申请仲裁"
+    ],
+    "rank": 2,
+    "n_chunks": 8,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.125,
+     "3": 0.375,
+     "5": 0.625
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 6,
+      "hit": false,
+      "head": "第二十条 争议解决 本合同履行过程中发生争议的，双方应协商解决；协商不成的，任何一方均可向该房屋所在地人民法院提起诉讼。  第二十一条 物业"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": true,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "交付的钥匙及门禁卡，遗失的应及时告知甲方并自费补办。乙方不得私自复制钥匙交给本合同约定以外的人员使用。租赁期满或合同解除时，乙方应将全部钥匙"
+     }
+    ]
+   },
+   {
+    "id": "el01",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "When do I get my security deposit back after I move out?",
+    "answer": [
+     "Within 45 days after Tenant vacates"
+    ],
+    "rank": 5,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 3,
+      "hit": false,
+      "head": "y 11:59 p.m. on the fifth day of the month, Tenant shall pay an initia"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 21,
+      "hit": false,
+      "head": " not available to a new tenant.  25. MOVE-IN CONDITION REPORT. Within "
+     }
+    ]
+   },
+   {
+    "id": "el02",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "How much do I owe if my rent is a few days late?",
+    "answer": [
+     "an initial late charge of $50.00 plus $10.00"
+    ],
+    "rank": null,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 18,
+      "hit": false,
+      "head": "f $85.00 shall apply.  21. DEFAULT. If Tenant fails to pay rent when d"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 2,
+      "hit": false,
+      "head": "le for the delay.  3. RENT. Tenant shall pay monthly rent of $1,250.00"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     }
+    ]
+   },
+   {
+    "id": "el03",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Can the landlord come into my apartment without telling me first?",
+    "answer": [
+     "after giving Tenant at least 24 hours' notice"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.08333333333333337,
+     "3": 0.23913043478260865,
+     "5": 0.3804347826086957
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 8,
+      "hit": true,
+      "head": "iving Tenant at least 24 hours' notice by email or a notice posted on "
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 3,
+      "hit": false,
+      "head": "得要求减免租金。因乙方未及时通知造成损失扩大的，乙方应承担扩大部分的损失。  第九条 甲方进入房屋 为检查房屋使用情况及设施状况，甲方或其委"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     }
+    ]
+   },
+   {
+    "id": "el04",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Who pays when something in the apartment breaks?",
+    "answer": [
+     "Tenant shall pay the first $150.00 of the cost of each repair call"
+    ],
+    "rank": null,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 17,
+      "hit": false,
+      "head": " responsible for loss of or damage to Tenant's property from theft, fi"
+     }
+    ]
+   },
+   {
+    "id": "el05",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "What happens if I forget to tell them I am not staying another year?",
+    "answer": [
+     "This Lease shall automatically renew for an additional twelve-month term"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 11,
+      "hit": true,
+      "head": "h the termination date. Tenant shall not be entitled to a refund of an"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     }
+    ]
+   },
+   {
+    "id": "el06",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Can I break the lease early, and what will it cost me?",
+    "answer": [
+     "paying an early termination fee equal to two months' rent"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 10,
+      "hit": true,
+      "head": "'s rental criteria. If Landlord approves a sublease, Tenant shall pay "
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "付时状况良好。  第三条 租赁期限 租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应"
+     }
+    ]
+   },
+   {
+    "id": "el07",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Am I on the hook if my roommate stops paying rent?",
+    "answer": [
+     "each Tenant is jointly and severally liable"
+    ],
+    "rank": null,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 18,
+      "hit": false,
+      "head": "f $85.00 shall apply.  21. DEFAULT. If Tenant fails to pay rent when d"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": false,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 10,
+      "hit": false,
+      "head": "'s rental criteria. If Landlord approves a sublease, Tenant shall pay "
+     }
+    ]
+   },
+   {
+    "id": "el08",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Can my girlfriend stay with me for two weeks?",
+    "answer": [
+     "more than seven consecutive nights"
+    ],
+    "rank": 3,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "付时状况良好。  第三条 租赁期限 租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 11,
+      "hit": false,
+      "head": "h the termination date. Tenant shall not be entitled to a refund of an"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 8,
+      "hit": true,
+      "head": "iving Tenant at least 24 hours' notice by email or a notice posted on "
+     }
+    ]
+   },
+   {
+    "id": "el09",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Will they charge me for cleaning the carpet when I leave?",
+    "answer": [
+     "A professional carpet cleaning charge of $175.00"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": true,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 14,
+      "hit": false,
+      "head": "in 25 feet of the building. Tenant shall pay a $300.00 cleaning charge"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 20,
+      "hit": false,
+      "head": "condition of the carpet. Any personal property left in the Premises af"
+     }
+    ]
+   },
+   {
+    "id": "el10",
+    "contract": "lease_en",
+    "lang": "en",
+    "question": "Am I allowed to paint the walls of my room?",
+    "answer": [
+     "Tenant shall not paint, wallpaper"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.08333333333333337,
+     "3": 0.23913043478260865,
+     "5": 0.3804347826086957
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 15,
+      "hit": true,
+      "head": "ATIONS. Tenant shall not paint, wallpaper, install fixtures, change lo"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 3,
+      "hit": false,
+      "head": "得要求减免租金。因乙方未及时通知造成损失扩大的，乙方应承担扩大部分的损失。  第九条 甲方进入房屋 为检查房屋使用情况及设施状况，甲方或其委"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 14,
+      "hit": true,
+      "head": "in 25 feet of the building. Tenant shall pay a $300.00 cleaning charge"
+     }
+    ]
+   },
+   {
+    "id": "el11",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "我可以把房间转租给别人吗？",
+    "answer": [
+     "Tenant shall not sublet the Premises"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 9,
+      "hit": true,
+      "head": "ore than fourteen nights in any calendar month without Landlord's prio"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": false,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "住房租赁合同  出租人（以下简称甲方）：张某某 承租人（以下简称乙方）：李某某  根据《中华人民共和国民法典》及有关法律、法规的规定，甲乙双"
+     }
+    ]
+   },
+   {
+    "id": "el12",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "偷偷养宠物被发现了会被罚多少钱？",
+    "answer": [
+     "Tenant shall pay a fine of $500.00 per occurrence"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 0,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 13,
+      "hit": true,
+      "head": "ily, without Landlord's prior written consent. If an unauthorized anim"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 12,
+      "hit": false,
+      "head": "NT AND SEVERAL LIABILITY. If more than one person signs this Lease as "
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 17,
+      "hit": false,
+      "head": " responsible for loss of or damage to Tenant's property from theft, fi"
+     }
+    ]
+   },
+   {
+    "id": "el13",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "水电网费里哪些要我自己交？",
+    "answer": [
+     "pay for electricity, gas, internet, and cable television"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 5,
+      "hit": true,
+      "head": "d the estimated or actual cost of repair, with paid receipts or copies"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 2,
+      "hit": false,
+      "head": "le for the delay.  3. RENT. Tenant shall pay monthly rent of $1,250.00"
+     }
+    ]
+   },
+   {
+    "id": "el14",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "如果闹到打官司，律师费谁出？",
+    "answer": [
+     "Tenant shall pay Landlord's reasonable attorney's fees"
+    ],
+    "rank": 2,
+    "n_chunks": 24,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.08333333333333337,
+     "3": 0.23913043478260865,
+     "5": 0.3804347826086957
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_zh",
+      "chunk": 6,
+      "hit": false,
+      "head": "第二十条 争议解决 本合同履行过程中发生争议的，双方应协商解决；协商不成的，任何一方均可向该房屋所在地人民法院提起诉讼。  第二十一条 物业"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 19,
+      "hit": true,
+      "head": "Lease, Tenant shall pay Landlord's reasonable attorney's fees and cour"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 4,
+      "hit": false,
+      "head": "当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。  第十五条 离职交接 本合同解除或终止时，乙方应在离职前"
+     }
+    ]
+   },
+   {
+    "id": "el15",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "一定要买租客保险吗？",
+    "answer": [
+     "Tenant shall maintain renter's insurance"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 16,
+      "hit": true,
+      "head": "th under a separate parking agreement. Vehicles parked without a valid"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 2,
+      "hit": false,
+      "head": "le for the delay.  3. RENT. Tenant shall pay monthly rent of $1,250.00"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 0,
+      "hit": false,
+      "head": "住房租赁合同  出租人（以下简称甲方）：张某某 承租人（以下简称乙方）：李某某  根据《中华人民共和国民法典》及有关法律、法规的规定，甲乙双"
+     }
+    ]
+   },
+   {
+    "id": "el16",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "钥匙丢了怎么办？要花多少钱？",
+    "answer": [
+     "Lost keys shall be replaced at a charge of $75.00 per key"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 17,
+      "hit": true,
+      "head": " responsible for loss of or damage to Tenant's property from theft, fi"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 7,
+      "hit": false,
+      "head": "交付的钥匙及门禁卡，遗失的应及时告知甲方并自费补办。乙方不得私自复制钥匙交给本合同约定以外的人员使用。租赁期满或合同解除时，乙方应将全部钥匙"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 5,
+      "hit": false,
+      "head": "d the estimated or actual cost of repair, with paid receipts or copies"
+     }
+    ]
+   },
+   {
+    "id": "el17",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "冬天出门的时候可以把暖气关掉吗？",
+    "answer": [
+     "keep heat at no less than 55 degrees Fahrenheit"
+    ],
+    "rank": null,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 6,
+      "hit": false,
+      "head": "enant shall be responsible for any damage caused by frozen pipes if th"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "labor_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三"
+     }
+    ]
+   },
+   {
+    "id": "el18",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "租约到期了我还没搬走会怎么样？",
+    "answer": [
+     "rent for each day of holdover at a rate of 150 percent"
+    ],
+    "rank": null,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 11,
+      "hit": false,
+      "head": "h the termination date. Tenant shall not be entitled to a refund of an"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 1,
+      "hit": false,
+      "head": " the Move-In Condition Report. The Premises shall be used only as a pr"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     }
+    ]
+   },
+   {
+    "id": "el19",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "刚入住时发现房子有损坏，我应该做什么？",
+    "answer": [
+     "complete and return the Move-In Condition Report describing any existing damage"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 1,
+    "random": {
+     "1": 0.04166666666666663,
+     "3": 0.125,
+     "5": 0.20833333333333337
+    },
+    "foreign": 1,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 21,
+      "hit": true,
+      "head": " not available to a new tenant.  25. MOVE-IN CONDITION REPORT. Within "
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 5,
+      "hit": false,
+      "head": "管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担"
+     },
+     {
+      "contract": "lease_en",
+      "chunk": 4,
+      "hit": false,
+      "head": " Tenant as payment of the last month's rent. Landlord may deduct from "
+     }
+    ]
+   },
+   {
+    "id": "el20",
+    "contract": "lease_en",
+    "lang": "zh",
+    "question": "押金能不能直接抵最后一个月的房租？",
+    "answer": [
+     "may not be used by Tenant as payment of the last month's rent"
+    ],
+    "rank": 1,
+    "n_chunks": 24,
+    "relevant_chunks": 2,
+    "random": {
+     "1": 0.08333333333333337,
+     "3": 0.23913043478260865,
+     "5": 0.3804347826086957
+    },
+    "foreign": 2,
+    "top": [
+     {
+      "contract": "lease_en",
+      "chunk": 4,
+      "hit": true,
+      "head": " Tenant as payment of the last month's rent. Landlord may deduct from "
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 2,
+      "hit": false,
+      "head": "两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋"
+     },
+     {
+      "contract": "lease_zh",
+      "chunk": 1,
+      "hit": false,
+      "head": "付时状况良好。  第三条 租赁期限 租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应"
+     }
+    ]
+   }
+  ],
+  "document_filter": false,
+  "retrieval_path": "evaluation-only query"
+ },
+ "sweep": []
+}

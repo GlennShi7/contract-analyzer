@@ -1,27 +1,27 @@
 """Retrieval hit rate of the /ask path, measured with the project's own chunker and embedding model.
 
 For every labeled question: chunk the contract with chunker.chunk_text, embed the chunks with
-embedder.embedding_fn into a throwaway Chroma collection, retrieve the top k chunks, and count a hit
+embedder.get_embedding_function() into a throwaway Chroma collection, retrieve the top k chunks, and count a hit
 when one of them covers at least half of the sentence that answers the question.
 
     cd backend
-    python -m eval.retrieval_eval            # the configuration /ask uses today
+    python -m eval.retrieval_eval            # document-filtered production retrieval
     python -m eval.retrieval_eval --sweep    # also compare chunk sizes
 
-Nothing is written to ./chroma_db. Results are saved to eval/results/.
+Evaluation collections are in memory; no production database is opened.
+Results are saved to eval/results/.
 """
 import argparse
 import inspect
 import json
-import os
 import pathlib
 import sys
 import time
 from math import comb
+from uuid import uuid4
 
 HERE = pathlib.Path(__file__).resolve().parent
 BACKEND = HERE.parent
-os.chdir(BACKEND)                      # embedder.py opens ./chroma_db relative to the working directory
 sys.path.insert(0, str(BACKEND))
 
 from chunker import chunk_text         # noqa: E402  the production chunker
@@ -82,12 +82,9 @@ def random_hit_rate(n_chunks, n_relevant, k):
 
 def production_embedding():
     import embedder
-    fn = embedder.embedding_fn
-    name = None
-    for attr in ("model_name", "_model_name"):
-        name = name or getattr(fn, attr, None)
+    fn = embedder.get_embedding_function()
     k = inspect.signature(embedder.search_chunks).parameters["n_results"].default
-    return fn, name or "paraphrase-multilingual-MiniLM-L12-v2", k
+    return fn, embedder.MODEL_NAME, k
 
 
 def visible_fraction_fn(model_name):
@@ -117,19 +114,25 @@ def chunked(text, size, overlap):
         return chunk_text(text)
 
 
-def evaluate(contracts, questions, embed_fn, size, overlap, k_prod, shared=False, visible=None):
+def evaluate(contracts, questions, embed_fn, size, overlap, k_prod, shared=False, visible=None, filtered=False):
     import chromadb
+    from embedder import search_chunks, store_chunks
 
+    if filtered:
+        shared = True
     client = chromadb.EphemeralClient()
-    tag = f"s{size}o{overlap}{'x' if shared else ''}_{int(time.time() * 1000) % 10**8}"
+    tag = f"s{size}o{overlap}_{uuid4().hex[:12]}"
     chunks = {c: chunked(t, size, overlap) for c, t in contracts.items()}
     spans = {c: chunk_spans(contracts[c], chunks[c]) for c in contracts}
 
     cols = {}
-    if shared:                                              # every contract in one collection, as embedder.py stores them
+    if shared:
         col = client.create_collection(f"eval_{tag}_all", embedding_function=embed_fn)
         for c in contracts:
-            col.add(documents=chunks[c], ids=[f"{c}::{i}" for i in range(len(chunks[c]))])
+            if filtered:
+                store_chunks(chunks[c], c, collection=col)
+            else:
+                col.add(documents=chunks[c], ids=[f"{c}::{i}" for i in range(len(chunks[c]))])
         cols = {c: col for c in contracts}
     else:
         for c in contracts:
@@ -140,11 +143,14 @@ def evaluate(contracts, questions, embed_fn, size, overlap, k_prod, shared=False
     rows = []
     for q in questions:
         c = q["contract"]
-        res = cols[c].query(query_texts=[q["question"]], n_results=min(kmax, cols[c].count()))
+        if filtered:
+            retrieved = search_chunks(q["question"], c, n_results=kmax, collection=cols[c])
+            candidates = [(source["doc_id"], source["chunk"]) for source in retrieved]
+        else:
+            res = cols[c].query(query_texts=[q["question"]], n_results=min(kmax, cols[c].count()))
+            candidates = [(rid.split("::")[0], int(rid.split("::")[1])) for rid in res["ids"][0]]
         ranked = []
-        for rid in res["ids"][0]:
-            src, i = rid.split("::")
-            i = int(i)
+        for src, i in candidates:
             hit = src == c and is_hit(chunks[src][i], spans[src][i] if spans[src] else None, q)
             ranked.append({"contract": src, "chunk": i, "hit": hit, "head": chunks[src][i][:70].replace("\n", " ")})
         n = len(chunks[c])
@@ -159,7 +165,12 @@ def evaluate(contracts, questions, embed_fn, size, overlap, k_prod, shared=False
     if visible:
         allchunks = [ch for c in contracts for ch in chunks[c]]
         vis = sum(map(visible, allchunks)) / len(allchunks)
-    return summarize(rows, k_prod, size, overlap, shared, vis, {c: len(v) for c, v in chunks.items()})
+    result = summarize(rows, k_prod, size, overlap, shared, vis, {c: len(v) for c, v in chunks.items()})
+    result["document_filter"] = filtered
+    result["retrieval_path"] = "production store_chunks/search_chunks" if filtered else "evaluation-only query"
+    for col in {value.name: value for value in cols.values()}.values():
+        client.delete_collection(col.name)
+    return result
 
 
 def summarize(rows, k_prod, size, overlap, shared, vis, n_chunks):
@@ -173,7 +184,7 @@ def summarize(rows, k_prod, size, overlap, shared, vis, n_chunks):
            "random": {k: sum(r["random"][k] for r in rows) / len(rows) for k in ks},
            "mrr": sum(1 / r["rank"] for r in rows if r["rank"]) / len(rows),
            "visible_fraction": vis,
-           "foreign_share": sum(r["foreign"] for r in rows) / (len(rows) * k_prod),
+           "foreign_share": sum(r["foreign"] for r in rows) / max(1, sum(len(r["top"]) for r in rows)),
            "by_contract": {}, "by_lang": {}, "rows": rows}
     for key, field in (("by_contract", "contract"), ("by_lang", "lang")):
         for v in sorted({r[field] for r in rows}):
@@ -189,19 +200,19 @@ def pct(x):
 
 
 def report(main, shared, sweep, k):
-    print(f"\n== /ask retrieval as configured today: chunk_size={main['chunk_size']}, overlap={main['overlap']}, "
+    print(f"\n== document-filtered production retrieval: chunk_size={main['chunk_size']}, overlap={main['overlap']}, "
           f"top {k} chunks, {main['questions']} questions")
     print(f"   chunks per contract: {main['chunks_per_contract']}")
     for kk in sorted(main["hit"]):
         print(f"   hit@{kk}: {pct(main['hit'][kk])}   (random chunks: {pct(main['random'][kk])})")
     print(f"   MRR: {main['mrr']:.3f}")
+    print(f"   retrieved chunks from the wrong contract: {pct(main['foreign_share'])}")
     if main["visible_fraction"] is not None:
         print(f"   share of each chunk the embedding model reads: {pct(main['visible_fraction'])}")
     print("   by contract: " + ", ".join(f"{c} {pct(v['hit'][k])} (n={v['n']})" for c, v in main["by_contract"].items()))
     print("   by question language: " + ", ".join(f"{c} {pct(v['hit'][k])} (n={v['n']})" for c, v in main["by_lang"].items()))
     if shared:
-        print(f"\n== all three contracts in one collection (embedder.py stores every upload in 'contracts' and "
-              f"search_chunks does not filter by document)")
+        print("\n== unfiltered comparison: all three contracts in one collection, simulating the old bug")
         print(f"   hit@{k}: {pct(shared['hit'][k])}   retrieved chunks from the wrong contract: {pct(shared['foreign_share'])}")
     misses = [r for r in main["rows"] if not (r["rank"] and r["rank"] <= k)]
     if misses:
@@ -236,9 +247,9 @@ def main():
     print(f"model {model_name} (reads at most {max_len} tokens per chunk), "
           f"{len(contracts)} contracts, {len(questions)} questions")
 
-    main_res = evaluate(contracts, questions, embed_fn, size, overlap, k, visible=visible)
+    main_res = evaluate(contracts, questions, embed_fn, size, overlap, k, visible=visible, filtered=True)
     shared_res = evaluate(contracts, questions, embed_fn, size, overlap, k, shared=True)
-    sweep = [evaluate(contracts, questions, embed_fn, s, o, k, visible=visible) for s, o in SWEEP] if args.sweep else []
+    sweep = [evaluate(contracts, questions, embed_fn, s, o, k, visible=visible, filtered=True) for s, o in SWEEP] if args.sweep else []
     report(main_res, shared_res, sweep, k)
 
     out = HERE / "results"
