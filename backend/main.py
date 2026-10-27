@@ -46,7 +46,7 @@ def analyze(request: ContractRequest):
             },
             {
                 "role": "user",
-                "content": f"请分析这段合同条款的风险，针对租金这些风险条款项，教我一些实用，具体的实际面对面谈判技巧，：{request.text}"
+                "content": f"请分析这段合同条款的风险项，尤其帮我注意隐形费用收取和退房后押金退还，扣除的部分：{request.text}"
             }
         ]
     )

@@ -1,0 +1,20 @@
+# Local credentials; publish only the empty example.
+.env
+.env.*
+!.env.example
+
+# Local environments, caches, and generated output.
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+node_modules/
+dist/
+chroma_db/
+data/
+temp_*
+
+# Private project notes and handoffs.
+PROJECT_CONTEXT.md
+HANDOFF*.md

@@ -1,0 +1,56 @@
+{"id": "zl01", "contract": "lease_zh", "lang": "zh", "question": "退房以后押金要多久之内去申请？过了时间会怎么样？", "answer": ["乙方应在退租之日起90日内书面申请退还押金"]}
+{"id": "zl02", "contract": "lease_zh", "lang": "zh", "question": "押金扣多少钱是谁说了算？", "answer": ["押金的扣除项目及扣除金额由甲方根据房屋状况确定"]}
+{"id": "zl03", "contract": "lease_zh", "lang": "zh", "question": "房租晚交几天会被罚多少钱？", "answer": ["按当月租金的百分之五向甲方支付滞纳金"]}
+{"id": "zl04", "contract": "lease_zh", "lang": "zh", "question": "房东能不能在租期中间涨房租？", "answer": ["甲方有权参照周边房屋租金水平调整租金"]}
+{"id": "zl05", "contract": "lease_zh", "lang": "zh", "question": "我想提前搬走，要付出什么代价？", "answer": ["并支付相当于三个月租金的违约金", "本合同提前解除的，经纪服务费不予退还"]}
+{"id": "zl06", "contract": "lease_zh", "lang": "zh", "question": "房东不打招呼就进我房间，合同里允许吗？", "answer": ["有权随时进入该房屋，无需提前通知乙方"]}
+{"id": "zl07", "contract": "lease_zh", "lang": "zh", "question": "热水器坏了谁出钱修？", "answer": ["无论损坏原因，维修费用一律由乙方承担"]}
+{"id": "zl08", "contract": "lease_zh", "lang": "zh", "question": "可以在房子里养猫吗？", "answer": ["乙方不得在该房屋内饲养宠物"]}
+{"id": "zl09", "contract": "lease_zh", "lang": "zh", "question": "我能把次卧租给同学住吗？", "answer": ["不得将该房屋全部或部分转租、转借给他人"]}
+{"id": "zl10", "contract": "lease_zh", "lang": "zh", "question": "朋友过来住一段时间，需要跟房东说吗？", "answer": ["连续留宿超过七日的，应事先告知甲方"]}
+{"id": "zl11", "contract": "lease_zh", "lang": "zh", "question": "物业费和暖气费是谁交？", "answer": ["有线电视费、物业管理费及供暖费"]}
+{"id": "zl12", "contract": "lease_zh", "lang": "zh", "question": "退房的时候要打扫吗？不打扫会扣多少？", "answer": ["甲方有权从押金中扣除保洁费800元"]}
+{"id": "zl13", "contract": "lease_zh", "lang": "zh", "question": "合同到期了我还想接着住，要怎么办？", "answer": ["应于租赁期满前三十日向甲方提出书面续租要求"]}
+{"id": "zl14", "contract": "lease_zh", "lang": "zh", "question": "房东要卖房子让我搬走，会赔我钱吗？", "answer": ["甲方因出售房屋或自住需要提前收回房屋的"]}
+{"id": "zl15", "contract": "lease_zh", "lang": "zh", "question": "搬走时没带走的东西会被怎么处理？", "answer": ["超过三日未搬离的，视为乙方放弃"]}
+{"id": "zl16", "contract": "lease_zh", "lang": "zh", "question": "我能自己换一把门锁吗？", "answer": ["或增设附属设施，不得更换门锁"]}
+{"id": "zl17", "contract": "lease_zh", "lang": "zh", "question": "邻居投诉我太吵，房东会怎么处理？", "answer": ["邻居或物业对乙方提出投诉达到两次的"]}
+{"id": "zl18", "contract": "lease_zh", "lang": "zh", "question": "跟房东有纠纷的话去哪里起诉？", "answer": ["向该房屋所在地人民法院提起诉讼"]}
+{"id": "zj01", "contract": "labor_zh", "lang": "zh", "question": "试用期有多长？", "answer": ["其中试用期为六个月"]}
+{"id": "zj02", "contract": "labor_zh", "lang": "zh", "question": "试用期的工资打几折？", "answer": ["乙方试用期月工资为转正后工资的百分之七十"]}
+{"id": "zj03", "contract": "labor_zh", "lang": "zh", "question": "加班有没有加班费？", "answer": ["乙方的月工资中已包含全部加班费"]}
+{"id": "zj04", "contract": "labor_zh", "lang": "zh", "question": "公司能不能把我调到外地去上班？", "answer": ["包括派驻外地分支机构"]}
+{"id": "zj05", "contract": "labor_zh", "lang": "zh", "question": "公司不给我交五险一金，合同里是怎么写的？", "answer": ["乙方自愿选择不缴纳社会保险和住房公积金的"]}
+{"id": "zj06", "contract": "labor_zh", "lang": "zh", "question": "辞职要提前多久跟公司说？", "answer": ["应当提前六十日以书面形式通知甲方"]}
+{"id": "zj07", "contract": "labor_zh", "lang": "zh", "question": "离职以后还能去同行业的公司上班吗？", "answer": ["乙方在职期间及离职后两年内，不得到与甲方"]}
+{"id": "zj08", "contract": "labor_zh", "lang": "zh", "question": "不让我去竞争对手那里，公司给不给补偿？", "answer": ["甲方在竞业限制期间不向乙方支付经济补偿"]}
+{"id": "zj09", "contract": "labor_zh", "lang": "zh", "question": "公司出钱送我去培训，之后我走人要赔多少？", "answer": ["违约金数额为培训费用的三倍"]}
+{"id": "zj10", "contract": "labor_zh", "lang": "zh", "question": "每个月几号发工资？", "answer": ["甲方于每月25日以银行转账方式支付乙方上月工资"]}
+{"id": "zj11", "contract": "labor_zh", "lang": "zh", "question": "绩效工资是按什么标准算的？", "answer": ["考核标准由甲方制定并可随时调整"]}
+{"id": "zj12", "contract": "labor_zh", "lang": "zh", "question": "什么时候才能休年假？", "answer": ["乙方连续工作满一年后，方可申请带薪年休假"]}
+{"id": "zj13", "contract": "labor_zh", "lang": "zh", "question": "我下班时间自己写的软件归谁所有？", "answer": ["乙方在职期间业余时间完成的、与甲方业务相关的成果"]}
+{"id": "zj14", "contract": "labor_zh", "lang": "zh", "question": "绩效不好会被开除吗？", "answer": ["连续两个季度绩效考核不合格的"]}
+{"id": "zj15", "contract": "labor_zh", "lang": "zh", "question": "违反合同的话要交多少违约金？", "answer": ["应当向甲方支付违约金人民币一万元"]}
+{"id": "zj16", "contract": "labor_zh", "lang": "zh", "question": "离职的时候公司能扣着我的工资不发吗？", "answer": ["甲方有权扣发乙方当月工资", "甲方有权暂缓发放乙方的剩余工资"]}
+{"id": "zj17", "contract": "labor_zh", "lang": "zh", "question": "上班的时候受伤了怎么处理？", "answer": ["按照《工伤保险条例》的规定处理"]}
+{"id": "zj18", "contract": "labor_zh", "lang": "zh", "question": "跟公司闹了纠纷，应该怎么解决？", "answer": ["劳动争议仲裁委员会申请仲裁"]}
+{"id": "el01", "contract": "lease_en", "lang": "en", "question": "When do I get my security deposit back after I move out?", "answer": ["Within 45 days after Tenant vacates"]}
+{"id": "el02", "contract": "lease_en", "lang": "en", "question": "How much do I owe if my rent is a few days late?", "answer": ["an initial late charge of $50.00 plus $10.00"]}
+{"id": "el03", "contract": "lease_en", "lang": "en", "question": "Can the landlord come into my apartment without telling me first?", "answer": ["after giving Tenant at least 24 hours' notice"]}
+{"id": "el04", "contract": "lease_en", "lang": "en", "question": "Who pays when something in the apartment breaks?", "answer": ["Tenant shall pay the first $150.00 of the cost of each repair call"]}
+{"id": "el05", "contract": "lease_en", "lang": "en", "question": "What happens if I forget to tell them I am not staying another year?", "answer": ["This Lease shall automatically renew for an additional twelve-month term"]}
+{"id": "el06", "contract": "lease_en", "lang": "en", "question": "Can I break the lease early, and what will it cost me?", "answer": ["paying an early termination fee equal to two months' rent"]}
+{"id": "el07", "contract": "lease_en", "lang": "en", "question": "Am I on the hook if my roommate stops paying rent?", "answer": ["each Tenant is jointly and severally liable"]}
+{"id": "el08", "contract": "lease_en", "lang": "en", "question": "Can my girlfriend stay with me for two weeks?", "answer": ["more than seven consecutive nights"]}
+{"id": "el09", "contract": "lease_en", "lang": "en", "question": "Will they charge me for cleaning the carpet when I leave?", "answer": ["A professional carpet cleaning charge of $175.00"]}
+{"id": "el10", "contract": "lease_en", "lang": "en", "question": "Am I allowed to paint the walls of my room?", "answer": ["Tenant shall not paint, wallpaper"]}
+{"id": "el11", "contract": "lease_en", "lang": "zh", "question": "我可以把房间转租给别人吗？", "answer": ["Tenant shall not sublet the Premises"]}
+{"id": "el12", "contract": "lease_en", "lang": "zh", "question": "偷偷养宠物被发现了会被罚多少钱？", "answer": ["Tenant shall pay a fine of $500.00 per occurrence"]}
+{"id": "el13", "contract": "lease_en", "lang": "zh", "question": "水电网费里哪些要我自己交？", "answer": ["pay for electricity, gas, internet, and cable television"]}
+{"id": "el14", "contract": "lease_en", "lang": "zh", "question": "如果闹到打官司，律师费谁出？", "answer": ["Tenant shall pay Landlord's reasonable attorney's fees"]}
+{"id": "el15", "contract": "lease_en", "lang": "zh", "question": "一定要买租客保险吗？", "answer": ["Tenant shall maintain renter's insurance"]}
+{"id": "el16", "contract": "lease_en", "lang": "zh", "question": "钥匙丢了怎么办？要花多少钱？", "answer": ["Lost keys shall be replaced at a charge of $75.00 per key"]}
+{"id": "el17", "contract": "lease_en", "lang": "zh", "question": "冬天出门的时候可以把暖气关掉吗？", "answer": ["keep heat at no less than 55 degrees Fahrenheit"]}
+{"id": "el18", "contract": "lease_en", "lang": "zh", "question": "租约到期了我还没搬走会怎么样？", "answer": ["rent for each day of holdover at a rate of 150 percent"]}
+{"id": "el19", "contract": "lease_en", "lang": "zh", "question": "刚入住时发现房子有损坏，我应该做什么？", "answer": ["complete and return the Move-In Condition Report describing any existing damage"]}
+{"id": "el20", "contract": "lease_en", "lang": "zh", "question": "押金能不能直接抵最后一个月的房租？", "answer": ["may not be used by Tenant as payment of the last month's rent"]}
