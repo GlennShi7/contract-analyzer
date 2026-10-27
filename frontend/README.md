@@ -1,8 +1,10 @@
 # Contract Risk Analyzer frontend
 
-React + Vite interface for PDF upload, extracted-text preview, and plain-text risk reports.
+React + Vite interface for PDF upload, extracted-text preview, structured risk cards, and expandable official legal references.
 
 The app keeps the returned `doc_id` and submits it to `/analyze`. Full contract text stays on the backend. Selecting or uploading another document clears the previous report.
+
+The region selector defaults to other/unknown. Confirm Chinese mainland jurisdiction to enable statutory references for recognized labor or lease contracts. Cards distinguish matched quotes from quotes requiring manual review; the risk score is a model-generated hint, not a legal determination.
 
 From this directory:
 

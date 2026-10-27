@@ -1,0 +1,242 @@
+[
+  {
+    "id": "民法典-496",
+    "law": "中华人民共和国民法典",
+    "article": "第四百九十六条",
+    "text": "格式条款是当事人为了重复使用而预先拟定，并在订立合同时未与对方协商的条款。\n采用格式条款订立合同的，提供格式条款的一方应当遵循公平原则确定当事人之间的权利和义务，并采取合理的方式提示对方注意免除或者减轻其责任等与对方有重大利害关系的条款，按照对方的要求，对该条款予以说明。提供格式条款的一方未履行提示或者说明义务，致使对方没有注意或者理解与其有重大利害关系的条款的，对方可以主张该条款不成为合同的内容。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "a72d99b2d4e192f6d5f217bac5ef7055172f216d0b3fbf6c8f54c611234cdfb9"
+  },
+  {
+    "id": "民法典-497",
+    "law": "中华人民共和国民法典",
+    "article": "第四百九十七条",
+    "text": "有下列情形之一的，该格式条款无效：\n（一）具有本法第一编第六章第三节和本法第五百零六条规定的无效情形；\n（二）提供格式条款一方不合理地免除或者减轻其责任、加重对方责任、限制对方主要权利；\n（三）提供格式条款一方排除对方主要权利。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "4259fb67497ee1869c93c9e5437ecd6a608faec3c56da967e6fd7a6a2aad188a"
+  },
+  {
+    "id": "民法典-585",
+    "law": "中华人民共和国民法典",
+    "article": "第五百八十五条",
+    "text": "当事人可以约定一方违约时应当根据违约情况向对方支付一定数额的违约金，也可以约定因违约产生的损失赔偿额的计算方法。\n约定的违约金低于造成的损失的，人民法院或者仲裁机构可以根据当事人的请求予以增加；约定的违约金过分高于造成的损失的，人民法院或者仲裁机构可以根据当事人的请求予以适当减少。\n当事人就迟延履行约定违约金的，违约方支付违约金后，还应当履行债务。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "ec5d687861b2c484e2c491ce9906bbb3d9381b6076f50f533656ed78947de0cf"
+  },
+  {
+    "id": "民法典-703",
+    "law": "中华人民共和国民法典",
+    "article": "第七百零三条",
+    "text": "租赁合同是出租人将租赁物交付承租人使用、收益，承租人支付租金的合同。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "e87313b861504f8d9202a7e215f3644a1cc21b7d883c8f75bfa16a376085d482"
+  },
+  {
+    "id": "民法典-705",
+    "law": "中华人民共和国民法典",
+    "article": "第七百零五条",
+    "text": "租赁期限不得超过二十年。超过二十年的，超过部分无效。\n租赁期限届满，当事人可以续订租赁合同；但是，约定的租赁期限自续订之日起不得超过二十年。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "e707c6a5e90b272b7717799de7c5219155baebe2574b6cd9e964925c4b0c3b76"
+  },
+  {
+    "id": "民法典-708",
+    "law": "中华人民共和国民法典",
+    "article": "第七百零八条",
+    "text": "出租人应当按照约定将租赁物交付承租人，并在租赁期限内保持租赁物符合约定的用途。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "3886369e3001c69210951976c8ccc90a0760309d6514d8579206cb57019b2678"
+  },
+  {
+    "id": "民法典-710",
+    "law": "中华人民共和国民法典",
+    "article": "第七百一十条",
+    "text": "承租人按照约定的方法或者根据租赁物的性质使用租赁物，致使租赁物受到损耗的，不承担赔偿责任。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "a693760635a535e9de7f97012e1700310ac2e0b69bafae3cfb6e8b63e0218077"
+  },
+  {
+    "id": "民法典-711",
+    "law": "中华人民共和国民法典",
+    "article": "第七百一十一条",
+    "text": "承租人未按照约定的方法或者未根据租赁物的性质使用租赁物，致使租赁物受到损失的，出租人可以解除合同并请求赔偿损失。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "9422db9e7525de1a986aad18f1d8a538f4690dbb449240f8ae9623c1d237133e"
+  },
+  {
+    "id": "民法典-712",
+    "law": "中华人民共和国民法典",
+    "article": "第七百一十二条",
+    "text": "出租人应当履行租赁物的维修义务，但是当事人另有约定的除外。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "ebc073c4de3535ae33879ee871790fe8093a888de13b7b836e548f284f42b57a"
+  },
+  {
+    "id": "民法典-713",
+    "law": "中华人民共和国民法典",
+    "article": "第七百一十三条",
+    "text": "承租人在租赁物需要维修时可以请求出租人在合理期限内维修。出租人未履行维修义务的，承租人可以自行维修，维修费用由出租人负担。因维修租赁物影响承租人使用的，应当相应减少租金或者延长租期。\n因承租人的过错致使租赁物需要维修的，出租人不承担前款规定的维修义务。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "1ba3191f26ba8c7a1c6c2450950e67e5ee1f8fdc8f286caf3f8369457cea0db5"
+  },
+  {
+    "id": "民法典-715",
+    "law": "中华人民共和国民法典",
+    "article": "第七百一十五条",
+    "text": "承租人经出租人同意，可以对租赁物进行改善或者增设他物。\n承租人未经出租人同意，对租赁物进行改善或者增设他物的，出租人可以请求承租人恢复原状或者赔偿损失。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "9cd50cfc936ad266c8d782b9be63b7fe5e0939538b4525845ba9f1d3d085c1bf"
+  },
+  {
+    "id": "民法典-716",
+    "law": "中华人民共和国民法典",
+    "article": "第七百一十六条",
+    "text": "承租人经出租人同意，可以将租赁物转租给第三人。承租人转租的，承租人与出租人之间的租赁合同继续有效；第三人造成租赁物损失的，承租人应当赔偿损失。\n承租人未经出租人同意转租的，出租人可以解除合同。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "c57fcd7b9a1c06cd5d1ce8dbcc1243493efbbbbfdaa163d4e60168b14e6a919f"
+  },
+  {
+    "id": "民法典-721",
+    "law": "中华人民共和国民法典",
+    "article": "第七百二十一条",
+    "text": "承租人应当按照约定的期限支付租金。对支付租金的期限没有约定或者约定不明确，依据本法第五百一十条的规定仍不能确定，租赁期限不满一年的，应当在租赁期限届满时支付；租赁期限一年以上的，应当在每届满一年时支付，剩余期限不满一年的，应当在租赁期限届满时支付。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "f7d3d7a557bb75edd8807605fb605a4460250a649188f5af7b1bc413938758fa"
+  },
+  {
+    "id": "民法典-722",
+    "law": "中华人民共和国民法典",
+    "article": "第七百二十二条",
+    "text": "承租人无正当理由未支付或者迟延支付租金的，出租人可以请求承租人在合理期限内支付；承租人逾期不支付的，出租人可以解除合同。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "9ff7c4891f1cf4ce2c58022a988bfa50d70ded62cbfccc598ddadfc8d7b7c7a8"
+  },
+  {
+    "id": "民法典-725",
+    "law": "中华人民共和国民法典",
+    "article": "第七百二十五条",
+    "text": "租赁物在承租人按照租赁合同占有期限内发生所有权变动的，不影响租赁合同的效力。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "2ed9ef5b6ec1e6fc36f7bd23bb8dc65b39d767241260521257f6bf5756471283"
+  },
+  {
+    "id": "民法典-726",
+    "law": "中华人民共和国民法典",
+    "article": "第七百二十六条",
+    "text": "出租人出卖租赁房屋的，应当在出卖之前的合理期限内通知承租人，承租人享有以同等条件优先购买的权利；但是，房屋按份共有人行使优先购买权或者出租人将房屋出卖给近亲属的除外。\n出租人履行通知义务后，承租人在十五日内未明确表示购买的，视为承租人放弃优先购买权。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "5d32e4336445c95ab2d022bbafd92fffc712621527e9cf0c559b644a45a65e11"
+  },
+  {
+    "id": "民法典-733",
+    "law": "中华人民共和国民法典",
+    "article": "第七百三十三条",
+    "text": "租赁期限届满，承租人应当返还租赁物。返还的租赁物应当符合按照约定或者根据租赁物的性质使用后的状态。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "fd7f4f800f3afb27f7040baf9c2d4241daa04c5a200f1a072f5791541ef287c9"
+  },
+  {
+    "id": "民法典-734",
+    "law": "中华人民共和国民法典",
+    "article": "第七百三十四条",
+    "text": "租赁期限届满，承租人继续使用租赁物，出租人没有提出异议的，原租赁合同继续有效，但是租赁期限为不定期。\n租赁期限届满，房屋承租人享有以同等条件优先承租的权利。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+    "source_version": "2020-05-28 adopted",
+    "checked_on": "2026-10-27",
+    "text_sha256": "f4900f820e24fa12df4d9596141e42454e1148f1626e8199d1a7b8eb07d2fcb2"
+  },
+  {
+    "id": "住房租赁条例-2",
+    "law": "住房租赁条例",
+    "article": "第二条",
+    "text": "城镇国有土地上住房租赁活动及其监督管理，适用本条例。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+    "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+    "checked_on": "2026-10-27",
+    "text_sha256": "96b4c1760028760f939f9c744cc001f06ab2d63b72eac18f12e0a5393e923316"
+  },
+  {
+    "id": "住房租赁条例-7",
+    "law": "住房租赁条例",
+    "article": "第七条",
+    "text": "用于出租的住房应当符合建筑、消防、燃气、室内装饰装修等方面的法律、法规、规章和强制性标准，不得危及人身安全和健康。\n厨房、卫生间、阳台、过道、地下储藏室、车库等非居住空间，不得单独出租用于居住。\n租赁住房单间租住人数上限和人均最低租住面积，应当符合设区的市级以上地方人民政府规定的标准。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+    "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+    "checked_on": "2026-10-27",
+    "text_sha256": "610c7fdd549e128518a759137d4b8517a230d9392ee5b98326740fe9b4a1264b"
+  },
+  {
+    "id": "住房租赁条例-8",
+    "law": "住房租赁条例",
+    "article": "第八条",
+    "text": "出租人和承租人应当使用实名签订住房租赁合同。\n出租人应当按照规定，通过住房租赁管理服务平台等方式将住房租赁合同向租赁住房所在地房产管理部门备案。房产管理部门应当提高住房租赁合同备案服务水平，不得就住房租赁合同备案收取任何费用。\n出租人未办理住房租赁合同备案的，承租人可以办理备案。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+    "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+    "checked_on": "2026-10-27",
+    "text_sha256": "323b561b07c4b675725f5e7c8cb79a94d75981aa99a78a1cab2c9f60394ee5ce"
+  },
+  {
+    "id": "住房租赁条例-9",
+    "law": "住房租赁条例",
+    "article": "第九条",
+    "text": "出租人应当遵守下列规定：\n（一）向承租人出示身份证明材料、拟出租住房的不动产权属证书或者其他证明其具有合法出租权利的材料，并配合承租人依法查询、核实拟出租住房有关信息；\n（二）核验承租人的身份证明材料，不得将住房出租给拒绝出示身份证明材料的单位或者个人；\n（三）不得擅自进入租赁住房，但是经承租人同意或者依法可以进入的除外。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+    "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+    "checked_on": "2026-10-27",
+    "text_sha256": "3f7350f242ef3346f208fba8aa7c052051829ccb32f0ec8070eb508eadc389ac"
+  },
+  {
+    "id": "住房租赁条例-10",
+    "law": "住房租赁条例",
+    "article": "第十条",
+    "text": "出租人收取押金的，应当在住房租赁合同中约定押金的数额、返还时间以及扣减押金的情形等事项。除住房租赁合同约定的情形以外，出租人无正当理由不得扣减押金。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+    "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+    "checked_on": "2026-10-27",
+    "text_sha256": "79ea1248fb57f9fba1e1596dc000d0f6a33cc2eac5564739e6881d3857e75c8a"
+  },
+  {
+    "id": "住房租赁条例-12",
+    "law": "住房租赁条例",
+    "article": "第十二条",
+    "text": "出租人依法解除住房租赁合同的，应当通知承租人，并为承租人腾退租赁住房留出合理时间。\n出租人不得采取暴力、威胁或者其他非法方式迫使承租人解除住房租赁合同或者腾退租赁住房。",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+    "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+    "checked_on": "2026-10-27",
+    "text_sha256": "b8a41aa2313037fc9b0b74f917fc6cd09d485b83cd366741fab5db1d9cf0c419"
+  }
+]

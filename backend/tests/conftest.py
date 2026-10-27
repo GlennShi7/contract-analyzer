@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 import sys
 from types import SimpleNamespace
 from uuid import uuid4
@@ -50,7 +51,14 @@ def api(monkeypatch, tmp_path, collection):
 
     def complete(**kwargs):
         calls.append(kwargs)
-        return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content="Test answer"))])
+        if kwargs.get("response_format"):
+            from analyzer import classify_contract
+            text = json.loads(kwargs["messages"][1]["content"])["contract_text"]
+            content = json.dumps({"contract_type": classify_contract(text), "risk_score": 5,
+                                  "summary": "Test summary", "cards": []})
+        else:
+            content = "Test answer"
+        return SimpleNamespace(choices=[SimpleNamespace(finish_reason="stop", message=SimpleNamespace(content=content))])
 
     client = SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=complete)))
     monkeypatch.setattr(main, "get_llm_client", lambda: client)

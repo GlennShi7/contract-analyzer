@@ -1,0 +1,98 @@
+{
+  "sources": [
+    {
+      "law": "中华人民共和国劳动合同法",
+      "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+      "version": "2012-12-28 amendment",
+      "checked_on": "2026-10-27",
+      "source_html_sha256": "1bb1e3833fd6b4b21ed255e0443f6a485ec88a81332a1a4a2f5dd05c3bc695bf",
+      "selected_articles": [
+        10,
+        17,
+        19,
+        20,
+        22,
+        23,
+        24,
+        25,
+        26,
+        30,
+        31,
+        35,
+        37,
+        38,
+        39,
+        40,
+        46,
+        47,
+        82,
+        87
+      ]
+    },
+    {
+      "law": "中华人民共和国社会保险法",
+      "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_e81d115419b4463ebb59ec46467fb136.html",
+      "version": "2018-12-29 amendment",
+      "checked_on": "2026-10-27",
+      "source_html_sha256": "66f0eed344d80e7c05bbaad78be002442a48d63e9cfb6e59fd6a210ead44e24c",
+      "selected_articles": [
+        58,
+        60
+      ]
+    },
+    {
+      "law": "中华人民共和国劳动法",
+      "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_d9aa750028b14b99a776cb93726a360d.html",
+      "version": "2018-12-29 amendment",
+      "checked_on": "2026-10-27",
+      "source_html_sha256": "93d73159b50d9175f16bbb55d2019d023d00cac594ebebc74d71e4feb2042df4",
+      "selected_articles": [
+        44,
+        50
+      ]
+    },
+    {
+      "law": "中华人民共和国民法典",
+      "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+      "version": "2020-05-28 adopted",
+      "checked_on": "2026-10-27",
+      "source_html_sha256": "f4afe1baf586372184a671c1abb98d8af6a8741799e888c25aee624c5f037df2",
+      "selected_articles": [
+        496,
+        497,
+        585,
+        703,
+        705,
+        708,
+        710,
+        711,
+        712,
+        713,
+        715,
+        716,
+        721,
+        722,
+        725,
+        726,
+        733,
+        734
+      ]
+    },
+    {
+      "law": "住房租赁条例",
+      "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+      "version": "2025-07-16 promulgated; effective 2025-09-15",
+      "checked_on": "2026-10-27",
+      "source_html_sha256": "471c7b88f549e34bad80262f59084e9eff24f0c1a9ad37f41e2e60c25a9c8e3c",
+      "selected_articles": [
+        2,
+        7,
+        8,
+        9,
+        10,
+        12
+      ]
+    }
+  ],
+  "extraction": "Official HTML paragraph text; leading/trailing whitespace and repeated blank lines normalized; no prose rewritten."
+}

@@ -12,6 +12,7 @@ from pdfminer.psexceptions import PSException
 from pdfplumber.utils.exceptions import MalformedPDFException, PdfminerException
 from pydantic import BaseModel, Field
 
+from analyzer import AnalysisOutputError, AnalysisResult, Jurisdiction, analyze_contract, model_name
 from chunker import chunk_text
 from documents import DOC_ID_PATTERN, load_document, save_document
 from embedder import search_chunks, store_chunks
@@ -34,11 +35,19 @@ def get_llm_client():
     key = os.environ.get("DEEPSEEK_API_KEY")
     if not key:
         raise HTTPException(status_code=503, detail="服务端尚未配置 DeepSeek API key")
-    return OpenAI(api_key=key, base_url="https://api.deepseek.com")
+    return OpenAI(api_key=key, base_url="https://api.deepseek.com", timeout=60, max_retries=0)
 
 
 class ContractRequest(BaseModel):
     doc_id: str = Field(pattern=DOC_ID_PATTERN)
+
+
+class AnalysisRequest(ContractRequest):
+    jurisdiction: Jurisdiction = "unknown"
+
+
+class AnalysisResponse(ContractRequest):
+    result: AnalysisResult
 
 
 class AskRequest(ContractRequest):
@@ -58,26 +67,16 @@ def hello():
     return {"message": "合同防踩坑工具 API 启动成功 🎉"}
 
 
-@app.post("/analyze")
-def analyze(request: ContractRequest):
+@app.post("/analyze", response_model=AnalysisResponse)
+def analyze(request: AnalysisRequest):
     text = contract_text(request.doc_id)
     try:
-        response = get_llm_client().chat.completions.create(
-            model="deepseek-chat",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "你是一个专业的合同分析助手，帮助普通用户识别合同中的风险条款，用简单易懂的语言解释。",
-                },
-                {
-                    "role": "user",
-                    "content": f"请分析这份合同的风险项，尤其注意隐形费用和押金退还：\n{text}",
-                },
-            ],
-        )
+        result = analyze_contract(text, get_llm_client(), jurisdiction=request.jurisdiction)
+    except AnalysisOutputError:
+        raise HTTPException(status_code=502, detail="分析结果未通过格式校验，请重试") from None
     except OpenAIError:
         raise HTTPException(status_code=502, detail="分析服务暂时不可用，请稍后重试") from None
-    return {"doc_id": request.doc_id, "result": response.choices[0].message.content}
+    return {"doc_id": request.doc_id, "result": result}
 
 
 @app.post("/upload")
@@ -122,7 +121,9 @@ def ask(request: AskRequest):
     context = "\n\n".join(source["text"] for source in sources)
     try:
         response = get_llm_client().chat.completions.create(
-            model="deepseek-chat",
+            model=model_name(),
+            max_tokens=1200,
+            extra_body={"thinking": {"type": "disabled"}},
             messages=[
                 {
                     "role": "system",

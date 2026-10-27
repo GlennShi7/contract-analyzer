@@ -1,19 +1,21 @@
 # Contract Risk Analyzer / 合同防踩坑工具
 
-A full-stack prototype that extracts text from PDF contracts, generates plain-language risk reports with DeepSeek, and supports semantic clause Q&A through a FastAPI endpoint.
+A full-stack prototype that extracts text from PDF contracts, generates structured risk cards with DeepSeek, and supports semantic clause Q&A through a FastAPI endpoint.
 
 Built to help people understand unfavorable terms in rental and employment contracts before signing, and find relevant contract clauses when questions arise afterward.
 
 ## Implemented
 
-- React frontend: upload a PDF, preview extracted text, and request a text risk report.
+- React frontend: upload a PDF, select the applicable region, and view risk cards, quoted clauses, and expandable official legal sources.
 - FastAPI backend: PDF extraction with pdfplumber and whole-document analysis through the DeepSeek API.
 - Hand-written RAG: overlapping character chunks, multilingual MiniLM embeddings, persistent ChromaDB, and document-filtered top-3 retrieval.
 - Stable SHA-256 document IDs, server-side text persistence, repeat-upload replacement, and source excerpts in Q&A responses.
 - Retrieval evaluation: 56 labeled questions across three synthetic contracts, including Chinese questions about an English lease.
 - API credentials loaded from a local `.env` file.
+- Curated Chinese mainland labor and tenancy statutes: 24 selected articles per group, copied from official sources with version and provenance metadata.
+- JSON mode, Pydantic validation, one correction retry, contract-quote matching, and filtering of unknown legal reference IDs.
 
-The Q&A frontend, injected legal sources, and structured risk cards are not implemented yet.
+The Q&A frontend is not implemented yet. Chinese statutes are injected only after the user selects Chinese mainland jurisdiction and the contract type is recognized.
 
 ## Architecture
 
@@ -24,7 +26,9 @@ PDF -> /upload -> SHA-256 document ID + pdfplumber text extraction
               -> multilingual embeddings + doc_id metadata -> ChromaDB
               -> doc_id, filename, preview, n_chunks -> frontend
 
-doc_id            -> /analyze -> load full text -> DeepSeek -> text report
+doc_id + region   -> /analyze -> full text + selected statutes -> DeepSeek JSON
+                             -> schema validation -> quote and reference checks
+                             -> risk cards + official legal sources
 doc_id + question -> /ask -> retrieve up to 3 chunks from this document
                          -> excerpts + question -> DeepSeek -> answer + sources
 ```
@@ -50,6 +54,8 @@ cp .env.example .env
 
 Set `DEEPSEEK_API_KEY` in `backend/.env`, then start the backend:
 
+`DEEPSEEK_MODEL` defaults to `deepseek-flash`, as documented by the [current DeepSeek API guide](https://api-docs.deepseek.com/). It can be overridden in `.env`. Generation uses non-thinking mode; structured analysis permits at most two requests, and SDK automatic retries are disabled.
+
 ```bash
 uvicorn main:app --reload
 ```
@@ -62,7 +68,7 @@ npm ci
 npm run dev
 ```
 
-Open [the frontend](http://localhost:5173). Select a text-based PDF, click upload, then click analyze. The frontend defaults to `http://127.0.0.1:8000`; set `VITE_API_URL` to override it. The backend currently allows the frontend CORS origin `http://localhost:5173`.
+Open [the frontend](http://localhost:5173). Upload a text-based PDF, confirm the applicable region, then click analyze. The region defaults to other/unknown; choosing Chinese mainland enables relevant statutory references when the contract type is recognized. The frontend defaults to `http://127.0.0.1:8000`; set `VITE_API_URL` to override it. The backend currently allows the frontend CORS origin `http://localhost:5173`.
 
 ## API
 
@@ -70,12 +76,36 @@ Open [the frontend](http://localhost:5173). Select a text-based PDF, click uploa
 | --- | --- | --- |
 | `GET /hello` | None | Startup message |
 | `POST /upload` | Multipart field `file` containing a PDF | `doc_id`, `filename`, `preview`, `n_chunks` |
-| `POST /analyze` | `{"doc_id": "<64-character lowercase SHA-256>"}` | `doc_id`, `result` (plain-text report) |
+| `POST /analyze` | `{"doc_id": "<64-character lowercase SHA-256>", "jurisdiction": "cn"}` | `doc_id`, structured `result` |
 | `POST /ask` | `{"doc_id": "<SHA-256>", "question": "When is the deposit returned?"}` | `doc_id`, `answer`, `sources` |
 
 The Q&A endpoint can be tried through `/docs`; it is not connected to the React interface yet.
 
 Each source has `doc_id`, a zero-based `chunk` index, and the retrieved `text`. Invalid or textless PDFs return 400; unknown document IDs return 404; a missing index returns 409; malformed request fields return 422; DeepSeek request failures return 502. An unconfigured API key returns 503 when generation is requested.
+
+`/analyze` accepts `jurisdiction` as `cn` or `unknown` (the default). Its result includes `contract_type`, `risk_score` (1-10), `summary`, `cards`, `legal_sources`, `legal_scope`, `grounding`, `model`, and `attempts`. Each card contains a title, contract quote, risk level, explanation, legal reference IDs, suggestion, and server-computed quote-matching fields. Invalid model output is retried once; another failure returns 502.
+
+## Structured analysis and citation checks
+
+The [curated law library](backend/laws/README.md) records official URLs, versions, checked dates, and checksums. Only the selected contract type's articles are injected. Unsupported foreign contracts, including the Illinois evaluation lease, receive text-based hints without Chinese statutory references.
+
+The analyzer requests [JSON output](https://api-docs.deepseek.com/guides/json_mode/) and validates its fields with Pydantic. Exact quotes and conservative whitespace matches are marked `verified`. Approximate matches remain unverified: changing a negation or number can preserve high text similarity while changing meaning. English word boundaries are preserved. Unknown law IDs are removed, and only the referenced official articles are returned to the frontend.
+
+`grounding` reports quote-verification and legal-ID membership counts before unknown references are filtered. Rates are `null` when there are no cards or references. These are structural checks, not measures of legal correctness, applicability, or risk recall. Scores are model-generated hints and are not calibrated legal-risk probabilities.
+
+Offline tests cover parsing, invalid fields, correction limits, reference filtering, region routing, endpoint errors, and quote changes. The actual React interface was checked in headless Edge using a local mock API. Live structured-analysis metrics have not been measured; no live analysis result is claimed.
+
+An optional script is available for explicitly authorized, billable verification on the three synthetic contracts:
+
+```bash
+cd backend
+source venv/Scripts/activate
+python -m eval.analysis_eval --help
+# Only when you intend to make billable API requests:
+python -m eval.analysis_eval --live
+```
+
+It sends only the three existing synthetic evaluation contracts, permits at most two requests per contract, and saves model, usage, citation counts, and structured responses. It does not measure legal correctness.
 
 ## Retrieval evaluation
 
@@ -103,7 +133,8 @@ python -m eval.retrieval_eval
 
 - Document filtering is not user authentication or access control. The prototype has no accounts; use synthetic documents for development.
 - Scanned PDFs require OCR, which is not implemented.
-- Reports are free text, without injected statutes or verified legal citations.
+- The statute library is selective and omits local regulations and judicial interpretations. Matching a quote or allowing a law ID does not establish that the law supports the model's explanation.
+- No live structured-analysis quality result has been measured. The model may still make mistakes or miss risks, and its scores are not calibrated.
 - The evaluation set is small and synthetic; it excludes PDF extraction and LLM generation quality.
 
 This is a development prototype, not legal advice.
