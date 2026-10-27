@@ -40,7 +40,7 @@ function Upload({ onTextExtracted }) {
       </button>
 
       {preview && <p>{preview}</p>}
-      
+
     </div>
   )
 }

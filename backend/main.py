@@ -59,16 +59,16 @@ async def upload(file: UploadFile = File(...)):
     temp_path = f"temp_{file.filename}"
     with open(temp_path, "wb") as f:
         shutil.copyfileobj(file.file, f)
-    
+
     # 提取文本
     text = extract_text(temp_path)
         # 切块并存入向量库，供 /ask 检索
     chunks = chunk_text(text)
     store_chunks(chunks, doc_id=file.filename)
-    
+
     # 删除临时文件
     os.remove(temp_path)
-    
+
     return {
         "filename": file.filename,
         "preview": text[:200],
@@ -83,7 +83,7 @@ def ask(request: AskRequest):
     try:
         relevant_chunks = search_chunks(request.question, n_results=2)
         context = "\n".join(relevant_chunks)
-        
+
         response = client.chat.completions.create(
             model="deepseek-chat",
             messages=[
