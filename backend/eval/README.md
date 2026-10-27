@@ -50,3 +50,9 @@ Filtered random@3 is 30.9%. The [2026-10-19 result](results/retrieval_20261019-1
 `questions.jsonl` contains 56 questions with labeled answer passages. The English lease has 20 questions: ten in English and ten in Chinese. Answer passages are checked for an unambiguous occurrence in the specified contract.
 
 Inputs are plain text, so retrieval evaluation excludes PDF extraction. Separate endpoint tests exercise real PDF parsing and real Chroma filters with deterministic test embeddings and mocked LLM responses. The dataset is small, and document filtering does not provide user authentication.
+
+## Separate live structured-analysis check
+
+The [2026-10-27 live analysis result](results/analysis_20261027-152735.json) covers the three synthetic contracts with three actual DeepSeek requests. It records 29/29 exact contract quotes and 43/43 references to injected law IDs. The Illinois sample has no statutory references, so its legal-ID rate is undefined, not 100%.
+
+This is separate from the 56-question retrieval experiment. It does not establish legal correctness or completeness. See the [qualitative review](ANALYSIS_REVIEW_2026-10-27.md), including observed unsupported legal generalizations and the discrepancy between the original natural-language card-count request and schema limit.

@@ -1,0 +1,785 @@
+{
+  "evaluated_at_utc": "2026-10-27T20:27:35.995961+00:00",
+  "model": "deepseek-flash",
+  "dataset": "three existing synthetic evaluation contracts; not real signed contracts",
+  "law_sources_sha256": "30cb74f0208427bccdad43c96e427b1552f4e368ad811898cd476bd62af38bdc",
+  "summary": {
+    "contracts": 3,
+    "requests": 3,
+    "cards": 29,
+    "verified_quotes": 29,
+    "quote_verification_rate": 1.0,
+    "law_references": 43,
+    "valid_law_references": 43,
+    "law_reference_validity_rate": 1.0
+  },
+  "limitations": "Checks quote matching and injected-ID membership before filtering; does not validate legal applicability, analysis correctness, risk scores, or recall.",
+  "requests": [
+    {
+      "model": "deepseek-flash",
+      "usage": {
+        "completion_tokens": 2190,
+        "prompt_tokens": 4889,
+        "total_tokens": 7079,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4889
+      }
+    },
+    {
+      "model": "deepseek-flash",
+      "usage": {
+        "completion_tokens": 2202,
+        "prompt_tokens": 5217,
+        "total_tokens": 7419,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5217
+      }
+    },
+    {
+      "model": "deepseek-flash",
+      "usage": {
+        "completion_tokens": 1487,
+        "prompt_tokens": 3128,
+        "total_tokens": 4615,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 3128
+      }
+    }
+  ],
+  "rows": [
+    {
+      "contract": "lease_zh",
+      "text_sha256": "bf261d0079c4724c8869e47c1db5247cb47fea3a78306a5a7ebc5ad5731e8501",
+      "jurisdiction": "cn",
+      "result": {
+        "contract_type": "lease",
+        "risk_score": 9,
+        "summary": "该合同为出租方预先拟定的格式文本，多处条款明显偏向甲方：租金可由甲方单方调整、押金退还设90日申请期限且扣减由甲方单方决定、维修费用一律由乙方承担、甲方可随时进入房屋、乙方提前退租违约金高达三个月租金且剩余租金押金不退、甲方提前收回房屋几乎不担责、逾期交还按三倍日租金计费等。部分条款可能构成不合理加重乙方责任或排除乙方主要权利，可主张不成为合同内容或无效，但需结合提示说明情况和具体情形判断，不宜直接断言全部无效。另有多处事项需核实：房屋权属与抵押查封状况、甲方身份、租赁备案、经纪费承担、宠物与居住人数限制等。",
+        "cards": [
+          {
+            "title": "租金可由甲方单方调整",
+            "clause_text": "租赁期间，如遇市场行情变化，甲方有权参照周边房屋租金水平调整租金，调整幅度由甲方确定，甲方应提前十五日通知乙方。乙方不同意调整的，可以解除本合同，但应按照本合同第十三条的约定承担提前解约的责任。",
+            "risk_level": "high",
+            "explanation": "该条赋予甲方单方确定涨幅的权利，乙方只能接受或解约，而解约还要承担第十三条的高额违约金，实质把租金上涨风险全部转给乙方。该条属于与乙方有重大利害关系的格式条款，若甲方未合理提示说明，乙方可主张其不成为合同内容；是否属于不合理加重对方责任、限制主要权利而无效，需结合具体情形判断。",
+            "legal_basis": [
+              "民法典-496",
+              "民法典-497"
+            ],
+            "suggestion": "签前要求删除单方调租条款，或改为租赁期内租金固定、续租时另行协商；如保留调租，应约定涨幅上限并明确乙方不同意时无责解约。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "押金退还期限过短且扣减由甲方单方决定",
+            "clause_text": "乙方应在退租之日起90日内书面申请退还押金，逾期未申请的，视为乙方自愿放弃押金。押金的扣除项目及扣除金额由甲方根据房屋状况确定，乙方对扣除金额有异议的，以甲方意见为准。",
+            "risk_level": "high",
+            "explanation": "押金扣减完全由甲方单方认定，乙方异议无效，等于排除乙方对押金返还的争议权利；90日申请期限届满即视为放弃押金，对乙方明显不利。押金数额、返还时间及扣减情形应在合同中明确约定，除约定情形外出租人无正当理由不得扣减。该条可能构成不合理加重乙方责任、排除主要权利，可主张不成为合同内容或无效，但需结合提示说明情况判断。",
+            "legal_basis": [
+              "住房租赁条例-10",
+              "民法典-496",
+              "民法典-497"
+            ],
+            "suggestion": "要求明确押金扣减的具体情形和金额标准，删除“以甲方意见为准”和“逾期视为放弃”，改为退租验收后约定期限内无息退还，争议可协商或诉讼解决。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "维修费用一律由乙方承担",
+            "clause_text": "房屋及附属设施发生损坏或故障的，无论损坏原因，维修费用一律由乙方承担。房屋主体结构出现安全隐患的，乙方应及时通知甲方，甲方在接到通知后三十日内安排修缮，修缮期间乙方不得要求减免租金。",
+            "risk_level": "high",
+            "explanation": "该条把自然损耗、房屋本身老化及主体结构问题的维修费用也转嫁给乙方，与出租人应履行维修义务的一般规则相反（当事人另有约定除外），且修缮期间不得减租，进一步加重乙方负担。该条属于格式条款中不合理加重对方责任的情形，可主张不成为合同内容或无效，但需结合提示说明情况判断。",
+            "legal_basis": [
+              "民法典-712",
+              "民法典-713",
+              "民法典-496",
+              "民法典-497"
+            ],
+            "suggestion": "要求区分自然损耗/房屋本身问题与乙方过错损坏，前者由甲方维修并承担费用；因维修影响使用的应相应减租或延长租期。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "甲方可随时进入房屋且看房不得拒绝",
+            "clause_text": "为检查房屋使用情况及设施状况，甲方或其委托的人员有权随时进入该房屋，无需提前通知乙方。租赁期满前两个月内，甲方带领意向承租人或购房者看房的，乙方应予以配合，不得拒绝或设置障碍。",
+            "risk_level": "high",
+            "explanation": "“随时进入、无需通知”严重侵扰乙方居住安宁和隐私，出租人不得擅自进入租赁住房，经承租人同意或依法可以进入的除外。该条排除乙方对进入的同意权，可能构成不合理限制乙方主要权利，可主张不成为合同内容或无效，但需结合提示说明情况判断。",
+            "legal_basis": [
+              "住房租赁条例-9",
+              "民法典-496",
+              "民法典-497"
+            ],
+            "suggestion": "改为甲方需提前合理时间（如24小时）书面通知并取得乙方同意，紧急情况除外；看房应约定固定时段并尊重乙方作息。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "乙方提前退租违约金过高且剩余租金押金不退",
+            "clause_text": "租赁期间，乙方需提前退租的，应提前六十日书面通知甲方，并支付相当于三个月租金的违约金，已付的剩余租金及押金不予退还。",
+            "risk_level": "high",
+            "explanation": "三个月租金违约金叠加不退剩余租金和押金，可能远超甲方实际损失；约定违约金过分高于损失的，可请求法院或仲裁机构适当减少。该条是否过高需结合实际损失判断，不宜直接认定无效，但签约时对乙方风险很大。",
+            "legal_basis": [
+              "民法典-585"
+            ],
+            "suggestion": "要求降低违约金标准（如一个月租金），并明确剩余租金按实际居住天数结算退还、押金在扣除约定费用后退还；保留实际损失证据以便日后主张调整。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "甲方提前收回房屋几乎不承担责任",
+            "clause_text": "甲方因出售房屋或自住需要提前收回房屋的，应提前三十日通知乙方，并退还乙方已付的剩余租金，甲方不承担其他任何责任。",
+            "risk_level": "high",
+            "explanation": "甲方可因出售或自住随时收回房屋且不承担违约金、搬家损失等任何责任，与乙方提前退租承担三个月违约金形成明显不对等。该条可能构成不合理免除甲方责任、加重乙方责任，可主张不成为合同内容或无效，但需结合提示说明情况判断。买卖不破租赁规则下，出售本身不一定能成为收回房屋的理由。",
+            "legal_basis": [
+              "民法典-725",
+              "民法典-496",
+              "民法典-497"
+            ],
+            "suggestion": "要求对等约定甲方提前解约的违约金和搬迁补偿，并明确出售房屋不影响乙方在租期内继续承租。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "逾期交还按三倍日租金计费且遗留物品三日即视为放弃",
+            "clause_text": "乙方逾期交还房屋的，每逾期一日应按日租金的三倍支付房屋占用费。乙方在房屋内遗留的物品，自交还房屋之日起超过三日未搬离的，视为乙方放弃，甲方有权自行处置。",
+            "risk_level": "medium",
+            "explanation": "三倍日租金占用费可能被认定为过高，可请求适当减少；遗留物品三日即视为放弃并任由甲方处置，可能使乙方丧失贵重物品且难以追偿，条款对乙方明显不利。此类约定是否有效需结合公平原则和具体情形判断。",
+            "legal_basis": [
+              "民法典-585",
+              "民法典-497"
+            ],
+            "suggestion": "要求降低占用费标准并给予合理搬离期限（如15日），约定甲方处置前应书面通知并妥善保管，处置所得扣除费用后返还乙方。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "交付后七日未书面告知瑕疵即视为状况良好",
+            "clause_text": "乙方在交付后七日内发现房屋存在交付时未记载的瑕疵的，应及时书面告知甲方，逾期未告知的，视为房屋交付时状况良好。",
+            "risk_level": "medium",
+            "explanation": "七日短期限且要求书面告知，逾期即视为交付状况良好，可能使乙方日后难以就隐蔽瑕疵（如漏水、电路老化）主张权利。该条属于加重乙方举证负担的格式条款，可主张不成为合同内容，但需结合提示说明情况判断。",
+            "legal_basis": [
+              "民法典-496",
+              "民法典-497"
+            ],
+            "suggestion": "交付时逐项拍照录像并详细记录设施状况，发现瑕疵及时书面（微信+短信）告知并保留证据；要求延长隐蔽瑕疵告知期限。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "投诉两次即可解除合同",
+            "clause_text": "（五）邻居或物业对乙方提出投诉达到两次的。",
+            "risk_level": "medium",
+            "explanation": "投诉达到两次即可解除合同，未区分投诉是否属实、是否因乙方过错，甲方可借此轻易解约并主张赔偿，对乙方稳定性不利。该条可能构成不合理加重乙方责任，可主张不成为合同内容，但需结合提示说明情况判断。",
+            "legal_basis": [
+              "民法典-496",
+              "民法典-497"
+            ],
+            "suggestion": "要求限定为经核实属乙方过错且经书面催告后仍不改正的投诉，并给予乙方申辩和整改机会。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "经纪服务费由乙方承担且提前解约不退",
+            "clause_text": "经纪服务费为人民币4500元，由乙方在签订本合同时一次性支付给经纪机构，本合同提前解除的，经纪服务费不予退还。",
+            "risk_level": "low",
+            "explanation": "经纪费全部由乙方承担且提前解约不退，属于费用分担的商业安排，本身不一定违法，但乙方需确认服务内容和收费依据是否合理、是否已实际提供居间服务。",
+            "legal_basis": [],
+            "suggestion": "签前核实经纪机构资质和收费明细，争取双方分担或由甲方承担部分；保留付款凭证和居间服务记录。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          }
+        ],
+        "legal_sources": [
+          {
+            "id": "民法典-496",
+            "law": "中华人民共和国民法典",
+            "article": "第四百九十六条",
+            "text": "格式条款是当事人为了重复使用而预先拟定，并在订立合同时未与对方协商的条款。\n采用格式条款订立合同的，提供格式条款的一方应当遵循公平原则确定当事人之间的权利和义务，并采取合理的方式提示对方注意免除或者减轻其责任等与对方有重大利害关系的条款，按照对方的要求，对该条款予以说明。提供格式条款的一方未履行提示或者说明义务，致使对方没有注意或者理解与其有重大利害关系的条款的，对方可以主张该条款不成为合同的内容。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "a72d99b2d4e192f6d5f217bac5ef7055172f216d0b3fbf6c8f54c611234cdfb9"
+          },
+          {
+            "id": "民法典-497",
+            "law": "中华人民共和国民法典",
+            "article": "第四百九十七条",
+            "text": "有下列情形之一的，该格式条款无效：\n（一）具有本法第一编第六章第三节和本法第五百零六条规定的无效情形；\n（二）提供格式条款一方不合理地免除或者减轻其责任、加重对方责任、限制对方主要权利；\n（三）提供格式条款一方排除对方主要权利。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "4259fb67497ee1869c93c9e5437ecd6a608faec3c56da967e6fd7a6a2aad188a"
+          },
+          {
+            "id": "民法典-585",
+            "law": "中华人民共和国民法典",
+            "article": "第五百八十五条",
+            "text": "当事人可以约定一方违约时应当根据违约情况向对方支付一定数额的违约金，也可以约定因违约产生的损失赔偿额的计算方法。\n约定的违约金低于造成的损失的，人民法院或者仲裁机构可以根据当事人的请求予以增加；约定的违约金过分高于造成的损失的，人民法院或者仲裁机构可以根据当事人的请求予以适当减少。\n当事人就迟延履行约定违约金的，违约方支付违约金后，还应当履行债务。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "ec5d687861b2c484e2c491ce9906bbb3d9381b6076f50f533656ed78947de0cf"
+          },
+          {
+            "id": "民法典-712",
+            "law": "中华人民共和国民法典",
+            "article": "第七百一十二条",
+            "text": "出租人应当履行租赁物的维修义务，但是当事人另有约定的除外。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "ebc073c4de3535ae33879ee871790fe8093a888de13b7b836e548f284f42b57a"
+          },
+          {
+            "id": "民法典-713",
+            "law": "中华人民共和国民法典",
+            "article": "第七百一十三条",
+            "text": "承租人在租赁物需要维修时可以请求出租人在合理期限内维修。出租人未履行维修义务的，承租人可以自行维修，维修费用由出租人负担。因维修租赁物影响承租人使用的，应当相应减少租金或者延长租期。\n因承租人的过错致使租赁物需要维修的，出租人不承担前款规定的维修义务。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "1ba3191f26ba8c7a1c6c2450950e67e5ee1f8fdc8f286caf3f8369457cea0db5"
+          },
+          {
+            "id": "民法典-725",
+            "law": "中华人民共和国民法典",
+            "article": "第七百二十五条",
+            "text": "租赁物在承租人按照租赁合同占有期限内发生所有权变动的，不影响租赁合同的效力。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "2ed9ef5b6ec1e6fc36f7bd23bb8dc65b39d767241260521257f6bf5756471283"
+          },
+          {
+            "id": "住房租赁条例-9",
+            "law": "住房租赁条例",
+            "article": "第九条",
+            "text": "出租人应当遵守下列规定：\n（一）向承租人出示身份证明材料、拟出租住房的不动产权属证书或者其他证明其具有合法出租权利的材料，并配合承租人依法查询、核实拟出租住房有关信息；\n（二）核验承租人的身份证明材料，不得将住房出租给拒绝出示身份证明材料的单位或者个人；\n（三）不得擅自进入租赁住房，但是经承租人同意或者依法可以进入的除外。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+            "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+            "checked_on": "2026-10-27",
+            "text_sha256": "3f7350f242ef3346f208fba8aa7c052051829ccb32f0ec8070eb508eadc389ac"
+          },
+          {
+            "id": "住房租赁条例-10",
+            "law": "住房租赁条例",
+            "article": "第十条",
+            "text": "出租人收取押金的，应当在住房租赁合同中约定押金的数额、返还时间以及扣减押金的情形等事项。除住房租赁合同约定的情形以外，出租人无正当理由不得扣减押金。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+            "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+            "checked_on": "2026-10-27",
+            "text_sha256": "79ea1248fb57f9fba1e1596dc000d0f6a33cc2eac5564739e6881d3857e75c8a"
+          }
+        ],
+        "legal_scope": "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。",
+        "disclaimer": "仅供理解合同，不构成法律意见。原文匹配和法条引用核对不保证法律适用或分析结论正确。",
+        "grounding": {
+          "cards_total": 10,
+          "cards_verified": 10,
+          "quote_verification_rate": 1.0,
+          "law_references_total": 22,
+          "law_references_valid": 22,
+          "law_reference_validity_rate": 1.0
+        },
+        "model": "deepseek-flash",
+        "attempts": 1
+      }
+    },
+    {
+      "contract": "labor_zh",
+      "text_sha256": "189a2d9736ee155dc4c088e7d695c705aae7695197c561da898e3b854ac2d932",
+      "jurisdiction": "cn",
+      "result": {
+        "contract_type": "labor",
+        "risk_score": 9,
+        "summary": "该合同为三年期固定期限劳动合同，试用期六个月处于法定上限，但试用期工资约定为转正工资的70%，低于法定80%标准；合同存在多处对劳动者不利且可能违法的条款：工资中已包含全部加班费、自愿放弃社保并领取现金补贴、竞业限制不支付经济补偿、服务期违约金为培训费三倍并返还工资、普通违约一律支付一万元违约金、离职需提前六十日通知、扣发工资作为违约救济、连续两季度考核不合格即可解除等。此外，岗位和地点可单方调整、绩效工资占比高且考核标准由甲方单方随时调整、规章制度公示即视为知悉、业余相关成果知识产权归甲方等条款也增加不确定性。建议签约前就上述条款逐项协商修改，并保留合同文本及沟通记录。",
+        "cards": [
+          {
+            "title": "试用期工资低于法定下限",
+            "clause_text": "乙方试用期月工资为转正后工资的百分之七十。",
+            "risk_level": "high",
+            "explanation": "合同约定试用期工资为转正工资的70%，低于劳动合同法第二十条规定的“不得低于劳动合同约定工资的百分之八十”的下限。该约定对劳动者不利，且与法定标准不符，劳动者有权主张按不低于约定工资80%且不低于当地最低工资标准支付。",
+            "legal_basis": [
+              "劳动合同法-20"
+            ],
+            "suggestion": "签约前要求将试用期工资修改为不低于转正工资的80%，并确认不低于当地最低工资标准；如已按70%发放，保留工资条、银行流水等证据，可向劳动监察部门投诉或申请仲裁主张差额。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "工资已包含全部加班费",
+            "clause_text": "因项目需要，乙方应当服从甲方的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。",
+            "risk_level": "high",
+            "explanation": "该条款将加班费打包进月工资并排除另行支付，可能规避劳动法第四十四条关于延长工作时间、休息日、法定休假日加班工资标准的规定。该约定对劳动者不利，其效力存在争议，不能仅凭此条认定劳动者已足额获得加班费。",
+            "legal_basis": [
+              "劳动法-44",
+              "劳动合同法-31"
+            ],
+            "suggestion": "签约前要求明确加班审批和加班费计算方式，删除“已包含全部加班费”表述；签后注意保存考勤记录、加班通知、工作沟通记录，以便主张加班费差额。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "自愿放弃社会保险并领取现金补贴",
+            "clause_text": "乙方自愿选择不缴纳社会保险和住房公积金的，甲方每月向乙方发放现金补贴500元，乙方承诺不就此向甲方主张任何权利。",
+            "risk_level": "high",
+            "explanation": "社会保险缴纳涉及法定义务，用人单位应当自用工之日起三十日内办理社会保险登记并按时足额缴纳。合同以“自愿放弃”加现金补贴方式排除社保缴纳，对劳动者不利，且“承诺不主张任何权利”不能当然免除用人单位的法定义务。",
+            "legal_basis": [
+              "社会保险法-58",
+              "社会保险法-60",
+              "劳动合同法-26"
+            ],
+            "suggestion": "签约前要求甲方依法办理社会保险登记并缴纳社会保险费，不接受以现金补贴替代社保；如已签署，保留工资条和补贴发放记录，可向社保经办机构或劳动监察部门反映。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "竞业限制无经济补偿且违约金过高",
+            "clause_text": "甲方在竞业限制期间不向乙方支付经济补偿。乙方违反竞业限制约定的，应当向甲方支付违约金人民币二十万元。",
+            "risk_level": "high",
+            "explanation": "合同对离职后两年竞业限制不约定任何经济补偿，却约定二十万元违约金，权利义务明显失衡。竞业限制条款要求用人单位在竞业限制期限内按月给予经济补偿；无补偿的竞业限制对劳动者约束力存疑，但违约金数额仍可能被主张，需结合岗位是否属于竞业限制人员范围判断。",
+            "legal_basis": [
+              "劳动合同法-23",
+              "劳动合同法-24"
+            ],
+            "suggestion": "签约前要求明确竞业限制的适用人员范围、地域、期限，并按月约定合理经济补偿；如不接受竞业限制，应书面删除该条。离职时如公司要求履行竞业限制，注意保留其未支付补偿的证据。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "服务期违约金为培训费三倍并返还工资",
+            "clause_text": "乙方在服务期内离职的，应当向甲方支付违约金，违约金数额为培训费用的三倍，并返还培训期间甲方支付的全部工资。",
+            "risk_level": "high",
+            "explanation": "服务期违约金不得超过用人单位提供的培训费用，且不得超过服务期尚未履行部分所应分摊的培训费用；要求返还培训期间全部工资缺乏依据。该条款明显加重劳动者责任，超出法定上限部分对劳动者不利。",
+            "legal_basis": [
+              "劳动合同法-22",
+              "劳动合同法-25"
+            ],
+            "suggestion": "签约前要求将违约金限定为实际培训费用并按未履行服务期比例分摊，删除返还培训期间工资的约定；保留培训费用凭证和培训协议，避免签署空白培训协议。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "普通违约一律支付一万元违约金",
+            "clause_text": "乙方违反本合同约定的，除本合同另有约定外，应当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。",
+            "risk_level": "high",
+            "explanation": "劳动合同法第二十五条规定，除服务期和竞业限制两种情形外，用人单位不得与劳动者约定由劳动者承担违约金。该条对一般违约行为普遍设定一万元违约金，适用范围过宽，对劳动者不利，相关约定可能被认定无效，但可能被甲方用于施压。",
+            "legal_basis": [
+              "劳动合同法-25",
+              "劳动合同法-26"
+            ],
+            "suggestion": "签约前要求删除一般违约条款或将其限定于法律允许的服务期、竞业限制情形；如已签署，发生争议时可就该条款效力提出抗辩，并保留相关沟通记录。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "离职需提前六十日通知并扣发工资",
+            "clause_text": "乙方提前解除本合同的，应当提前六十日以书面形式通知甲方，并办理完毕工作交接。乙方未提前通知擅自离职的，应当赔偿甲方由此造成的全部损失，并且甲方有权扣发乙方当月工资。",
+            "risk_level": "high",
+            "explanation": "劳动者提前解除劳动合同的法定通知期为三十日（试用期三日），合同将通知期延长至六十日，加重了劳动者义务。以未提前通知为由扣发当月工资，涉及工资支付问题，工资不得随意克扣，该约定对劳动者不利。",
+            "legal_basis": [
+              "劳动合同法-37",
+              "劳动法-50"
+            ],
+            "suggestion": "签约前要求将通知期改为三十日；离职时按法定程序书面通知并保留送达证据，如公司扣发工资，可向劳动监察部门投诉或申请仲裁。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "连续两季度考核不合格即可解除",
+            "clause_text": "（四）连续两个季度绩效考核不合格的；",
+            "risk_level": "high",
+            "explanation": "该条将“连续两个季度绩效考核不合格”直接列为甲方可解除合同且不支付经济补偿的情形，但考核标准由甲方单方制定并可随时调整，劳动者难以预期。该约定可能被用于规避法定解除条件，对劳动者不利，其效力存在争议。",
+            "legal_basis": [
+              "劳动合同法-39",
+              "劳动合同法-40",
+              "劳动合同法-46"
+            ],
+            "suggestion": "签约前要求明确绩效考核标准、考核程序和申诉机制，删除或限制该解除情形；签后保留考核结果、绩效沟通记录，如被据此解除，注意收集证据并主张相应权利。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "岗位和工作地点可单方调整",
+            "clause_text": "甲方可根据经营需要调整乙方的工作岗位和工作地点，包括派驻外地分支机构，乙方应当服从安排，拒不服从的视为严重违反规章制度。",
+            "risk_level": "medium",
+            "explanation": "该条赋予甲方单方调整岗位和地点的广泛权利，并将拒不服从直接视为严重违纪，可能导致劳动者在未协商一致的情况下被调岗调地甚至被解除合同。变更劳动合同内容应协商一致并采用书面形式，该约定对劳动者不利。",
+            "legal_basis": [
+              "劳动合同法-35"
+            ],
+            "suggestion": "签约前要求将调岗调地限定为合理需要并需协商一致，明确不得降低薪酬待遇；如遇单方调岗，保留书面通知和沟通记录，及时提出异议。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "绩效工资占比高且考核标准单方调整",
+            "clause_text": "绩效工资根据甲方的考核结果发放，考核标准由甲方制定并可随时调整。",
+            "risk_level": "medium",
+            "explanation": "月工资15000元中绩效工资占12000元，且考核标准由甲方单方制定并可随时调整，劳动者实际收入存在较大不确定性。该约定可能使劳动报酬被实质削减，对劳动者不利，建议明确考核规则和发放条件。",
+            "legal_basis": [
+              "劳动合同法-17",
+              "劳动合同法-30"
+            ],
+            "suggestion": "签约前要求明确绩效工资的计算方式、考核指标和调整程序，并写入合同或附件；每月核对工资条，保留考核结果和工资发放记录。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "规章制度公示即视为知悉",
+            "clause_text": "甲方的规章制度可通过公司内网、电子邮件等方式公示，公示即视为乙方已知悉。",
+            "risk_level": "medium",
+            "explanation": "该条以公示即视为知悉的方式使规章制度对劳动者产生约束，但劳动者可能未实际阅读或未参与制定。规章制度涉及劳动报酬、工作时间、劳动纪律等直接切身利益事项，其制定和公示程序是否合法影响其约束力，该约定增加不确定性。",
+            "legal_basis": [
+              "劳动合同法-26"
+            ],
+            "suggestion": "签约前要求提供员工手册、考勤制度、薪酬制度等附件并留存签收记录；关注制度内容是否合理，对不合理制度及时书面提出异议。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          }
+        ],
+        "legal_sources": [
+          {
+            "id": "劳动合同法-17",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第十七条",
+            "text": "劳动合同应当具备以下条款:\n（一）用人单位的名称、住所和法定代表人或者主要负责人；\n（二）劳动者的姓名、住址和居民身份证或者其他有效身份证件号码；\n（三）劳动合同期限；\n（四）工作内容和工作地点；\n（五）工作时间和休息休假；\n（六）劳动报酬；\n（七）社会保险；\n（八）劳动保护、劳动条件和职业危害防护；\n（九）法律、法规规定应当纳入劳动合同的其他事项。\n劳动合同除前款规定的必备条款外，用人单位与劳动者可以约定试用期、培训、保守秘密、补充保险和福利待遇等其他事项。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "27cb3bfeb058756da4fdecaaaa92e9c834ed0fd2d2adeb7e07fb508bbc547efa"
+          },
+          {
+            "id": "劳动合同法-20",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十条",
+            "text": "劳动者在试用期的工资不得低于本单位相同岗位最低档工资或者劳动合同约定工资的百分之八十，并不得低于用人单位所在地的最低工资标准。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "e16bd36223a2700a45e785c2b8cfecd498e338d631e7b59a4cf3923868ffdb0d"
+          },
+          {
+            "id": "劳动合同法-22",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十二条",
+            "text": "用人单位为劳动者提供专项培训费用，对其进行专业技术培训的，可以与该劳动者订立协议，约定服务期。\n劳动者违反服务期约定的，应当按照约定向用人单位支付违约金。违约金的数额不得超过用人单位提供的培训费用。用人单位要求劳动者支付的违约金不得超过服务期尚未履行部分所应分摊的培训费用。\n用人单位与劳动者约定服务期的，不影响按照正常的工资调整机制提高劳动者在服务期期间的劳动报酬。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "d5d4ffbc258c2a795f563d9e8b529cef924c89745d9e71097722dfc883d7c160"
+          },
+          {
+            "id": "劳动合同法-23",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十三条",
+            "text": "用人单位与劳动者可以在劳动合同中约定保守用人单位的商业秘密和与知识产权相关的保密事项。\n对负有保密义务的劳动者，用人单位可以在劳动合同或者保密协议中与劳动者约定竞业限制条款，并约定在解除或者终止劳动合同后，在竞业限制期限内按月给予劳动者经济补偿。劳动者违反竞业限制约定的，应当按照约定向用人单位支付违约金。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "6b2c1e0a13fbc3a38ff7c1f431a6063bbf362a0564e233fd1a96f8f0f4b73952"
+          },
+          {
+            "id": "劳动合同法-24",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十四条",
+            "text": "竞业限制的人员限于用人单位的高级管理人员、高级技术人员和其他负有保密义务的人员。竞业限制的范围、地域、期限由用人单位与劳动者约定，竞业限制的约定不得违反法律、法规的规定。\n在解除或者终止劳动合同后，前款规定的人员到与本单位生产或者经营同类产品、从事同类业务的有竞争关系的其他用人单位，或者自己开业生产或者经营同类产品、从事同类业务的竞业限制期限，不得超过二年。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "ccb3bc37bd592ba8e5ae9c19190435ff651bcdc31bdc098076f5d605a64d32dc"
+          },
+          {
+            "id": "劳动合同法-25",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十五条",
+            "text": "除本法第二十二条和第二十三条规定的情形外，用人单位不得与劳动者约定由劳动者承担违约金。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "1ab86f303bfda3bd33fe623dfe0b90ad428550d90a6b928a9945da72b7b13f21"
+          },
+          {
+            "id": "劳动合同法-26",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十六条",
+            "text": "下列劳动合同无效或者部分无效:\n（一）以欺诈、胁迫的手段或者乘人之危，使对方在违背真实意思的情况下订立或者变更劳动合同的；\n（二）用人单位免除自己的法定责任、排除劳动者权利的；\n（三）违反法律、行政法规强制性规定的。\n对劳动合同的无效或者部分无效有争议的，由劳动争议仲裁机构或者人民法院确认。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "ac1ea33ba2516bba29567840cf595b1560b8da70abc46f69778d59bef7277fb0"
+          },
+          {
+            "id": "劳动合同法-30",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第三十条",
+            "text": "用人单位应当按照劳动合同约定和国家规定，向劳动者及时足额支付劳动报酬。\n用人单位拖欠或者未足额支付劳动报酬的，劳动者可以依法向当地人民法院申请支付令，人民法院应当依法发出支付令。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "6eb6864b0d1827657f63cfc2d19ed1c6bfbc9290fffed0fff39f4e3defb37aad"
+          },
+          {
+            "id": "劳动合同法-31",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第三十一条",
+            "text": "用人单位应当严格执行劳动定额标准，不得强迫或者变相强迫劳动者加班。用人单位安排加班的，应当按照国家有关规定向劳动者支付加班费。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "b26daad3ddefa19cfc1a129ce7f2a9de0c029bcc858e80b28a9ce22a72802a00"
+          },
+          {
+            "id": "劳动合同法-35",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第三十五条",
+            "text": "用人单位与劳动者协商一致，可以变更劳动合同约定的内容。变更劳动合同，应当采用书面形式。\n变更后的劳动合同文本由用人单位和劳动者各执一份。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "23dfb94b6b593f33bdd0cab637d10c2a000e0fd84af742800e5916ad27c17e20"
+          },
+          {
+            "id": "劳动合同法-37",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第三十七条",
+            "text": "劳动者提前三十日以书面形式通知用人单位，可以解除劳动合同。劳动者在试用期内提前三日通知用人单位，可以解除劳动合同。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "825ae38cc5e3facacd41e92a4cf14e697c2dd30587da4da15364b03adce4e837"
+          },
+          {
+            "id": "劳动合同法-39",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第三十九条",
+            "text": "劳动者有下列情形之一的，用人单位可以解除劳动合同:\n（一）在试用期间被证明不符合录用条件的；\n（二）严重违反用人单位的规章制度的；\n（三）严重失职，营私舞弊，给用人单位造成重大损害的；\n（四）劳动者同时与其他用人单位建立劳动关系，对完成本单位的工作任务造成严重影响，或者经用人单位提出，拒不改正的；\n（五）因本法第二十六条第一款第一项规定的情形致使劳动合同无效的；\n（六）被依法追究刑事责任的。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "b6c43d948c188a252c10e73fe58d9400e76a894a2d99de1c778df88450a8accc"
+          },
+          {
+            "id": "劳动合同法-40",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第四十条",
+            "text": "有下列情形之一的，用人单位提前三十日以书面形式通知劳动者本人或者额外支付劳动者一个月工资后，可以解除劳动合同:\n（一）劳动者患病或者非因工负伤，在规定的医疗期满后不能从事原工作，也不能从事由用人单位另行安排的工作的；\n（二）劳动者不能胜任工作，经过培训或者调整工作岗位，仍不能胜任工作的；\n（三）劳动合同订立时所依据的客观情况发生重大变化，致使劳动合同无法履行，经用人单位与劳动者协商，未能就变更劳动合同内容达成协议的。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "622b63a010705e051a4be068517bbde7d8010445fcc53a2e8ab6a257e60a05e4"
+          },
+          {
+            "id": "劳动合同法-46",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第四十六条",
+            "text": "有下列情形之一的，用人单位应当向劳动者支付经济补偿:\n（一）劳动者依照本法第三十八条规定解除劳动合同的；\n（二）用人单位依照本法第三十六条规定向劳动者提出解除劳动合同并与劳动者协商一致解除劳动合同的；\n（三）用人单位依照本法第四十条规定解除劳动合同的；\n（四）用人单位依照本法第四十一条第一款规定解除劳动合同的；\n（五）除用人单位维持或者提高劳动合同约定条件续订劳动合同，劳动者不同意续订的情形外，依照本法第四十四条第一项规定终止固定期限劳动合同的；\n（六）依照本法第四十四条第四项、第五项规定终止劳动合同的；\n（七）法律、行政法规规定的其他情形。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "6bd537e8ccfb2458579c8af7d200aef208eb186dcf72fb670b16b13a3be314f7"
+          },
+          {
+            "id": "社会保险法-58",
+            "law": "中华人民共和国社会保险法",
+            "article": "第五十八条",
+            "text": "用人单位应当自用工之日起三十日内为其职工向社会保险经办机构申请办理社会保险登记。未办理社会保险登记的，由社会保险经办机构核定其应当缴纳的社会保险费。\n自愿参加社会保险的无雇工的个体工商户、未在用人单位参加社会保险的非全日制从业人员以及其他灵活就业人员，应当向社会保险经办机构申请办理社会保险登记。\n国家建立全国统一的个人社会保障号码。个人社会保障号码为公民身份号码。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_e81d115419b4463ebb59ec46467fb136.html",
+            "source_version": "2018-12-29 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "f74183a9e10ff729872d4347166cb86113331eebb201580445d5a00801daaec7"
+          },
+          {
+            "id": "社会保险法-60",
+            "law": "中华人民共和国社会保险法",
+            "article": "第六十条",
+            "text": "用人单位应当自行申报、按时足额缴纳社会保险费，非因不可抗力等法定事由不得缓缴、减免。职工应当缴纳的社会保险费由用人单位代扣代缴，用人单位应当按月将缴纳社会保险费的明细情况告知本人。\n无雇工的个体工商户、未在用人单位参加社会保险的非全日制从业人员以及其他灵活就业人员，可以直接向社会保险费征收机构缴纳社会保险费。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_e81d115419b4463ebb59ec46467fb136.html",
+            "source_version": "2018-12-29 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "a6efb0fc29ea24b77fbdc30c7a38203a69c85117db44ebb69d914c831c7c6954"
+          },
+          {
+            "id": "劳动法-44",
+            "law": "中华人民共和国劳动法",
+            "article": "第四十四条",
+            "text": "有下列情形之一的，用人单位应当按照下列标准支付高于劳动者正常工作时间工资的工资报酬：\n（一）安排劳动者延长工作时间的，支付不低于工资的百分之一百五十的工资报酬；\n（二）休息日安排劳动者工作又不能安排补休的，支付不低于工资的百分之二百的工资报酬；\n（三）法定休假日安排劳动者工作的，支付不低于工资的百分之三百的工资报酬。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_d9aa750028b14b99a776cb93726a360d.html",
+            "source_version": "2018-12-29 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "41d71c3a748fd61ce80d2a2875f5568a76a5a3126b4e83a483c1e00f90b354dc"
+          },
+          {
+            "id": "劳动法-50",
+            "law": "中华人民共和国劳动法",
+            "article": "第五十条",
+            "text": "工资应当以货币形式按月支付给劳动者本人。不得克扣或者无故拖欠劳动者的工资。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_d9aa750028b14b99a776cb93726a360d.html",
+            "source_version": "2018-12-29 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "cd06368a511d6af7cd7cd100775c92c7f143feae056d03a8948f9bd4a19e12a0"
+          }
+        ],
+        "legal_scope": "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。",
+        "disclaimer": "仅供理解合同，不构成法律意见。原文匹配和法条引用核对不保证法律适用或分析结论正确。",
+        "grounding": {
+          "cards_total": 11,
+          "cards_verified": 11,
+          "quote_verification_rate": 1.0,
+          "law_references_total": 21,
+          "law_references_valid": 21,
+          "law_reference_validity_rate": 1.0
+        },
+        "model": "deepseek-flash",
+        "attempts": 1
+      }
+    },
+    {
+      "contract": "lease_en",
+      "text_sha256": "37cb966a241936620870ab5aa51a6297f7eec215ec694070e649161481cf02ab",
+      "jurisdiction": "unknown",
+      "result": {
+        "contract_type": "other",
+        "risk_score": 8,
+        "summary": "这是一份美国伊利诺伊州厄巴纳市的住宅租赁合同，租期2026年8月15日至2027年7月31日，月租1250美元。合同存在多处对租客不利的条款：维修费自付150美元（不分原因）、提前解约需付两个月租金且不退预付租金、自动续约且续约租金由房东按市场价单方确定、地毯清洁费175美元无条件扣除、逾期费按日累加、律师费单向由租客承担、房东延迟交房仅免租金不担其他责任、遗留物品视为放弃等。此外，合同未明确押金存放账户、维修响应时限、续约租金上限等事项，建议签约前逐条核实并保留书面证据。",
+        "cards": [
+          {
+            "title": "维修费自付150美元且不分原因",
+            "clause_text": "Tenant shall pay the first $150.00 of the cost of each repair call, regardless of the cause, unless the repair is required by an emergency affecting health or safety.",
+            "risk_level": "high",
+            "explanation": "该条款要求租客承担每次维修的前150美元，且明确“不论原因”，意味着即使维修是因房屋老化、设备正常损耗或房东责任引起，租客也可能被收费。这可能与房东法定维修义务相冲突，但合同文字本身并不当然无效，需结合当地法律判断。",
+            "legal_basis": [],
+            "suggestion": "签约前书面确认哪些维修属于房东责任、哪些属于租客自付，并要求列明“正常损耗”不收费；每次报修保留记录和照片，对收费项目要求提供明细和收据。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "提前解约费用高且不退预付租金",
+            "clause_text": "Tenant may terminate this Lease before the end of the term only by giving Landlord at least 60 days' written notice and paying an early termination fee equal to two months' rent. The early termination fee is in addition to rent due through the termination date. Tenant shall not be entitled to a refund of any rent or fees paid in advance.",
+            "risk_level": "high",
+            "explanation": "提前解约需提前60天通知并支付相当于两个月租金的违约金，且已预付租金和费用不退。这大幅提高中途搬离的成本，且“不退任何预付租金”可能涵盖已支付但尚未到期的租金，对租客不利。",
+            "legal_basis": [],
+            "suggestion": "签约前评估租期稳定性；如可能提前搬离，尝试协商降低违约金或增加因工作调动、转租成功等情形的减免条款；保留所有付款凭证。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "自动续约且续约租金由房东单方确定",
+            "clause_text": "This Lease shall automatically renew for an additional twelve-month term at the then-current market rent set by Landlord unless either party gives written notice of non-renewal at least 60 days before the end of the term. Landlord shall inform Tenant of the renewal rent at least 75 days before the end of the term.",
+            "risk_level": "high",
+            "explanation": "合同到期自动续约一年，续约租金由房东按“当时市场租金”单方设定，租客若未在到期前60天书面通知不续约，将被锁定新租期和新租金。通知期限较长，容易错过。",
+            "legal_basis": [],
+            "suggestion": "在日历中标注不续约通知截止日（到期前60天）；要求房东在通知续约租金时提供市场租金依据；如不接受新租金，务必在期限内书面通知不续约并保留送达证据。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "地毯清洁费无条件从押金扣除",
+            "clause_text": "A professional carpet cleaning charge of $175.00 shall be deducted from the security deposit at move-out regardless of the condition of the carpet.",
+            "risk_level": "high",
+            "explanation": "无论地毯状况如何，退租时都扣除175美元专业清洁费。这属于固定扣费，可能与押金仅用于弥补实际损失的原则不符，但合同明确约定，租客签约即可能受其约束。",
+            "legal_basis": [],
+            "suggestion": "签约前询问能否删除或改为“仅在超出正常磨损时按实际费用扣除”；入住时拍照记录地毯状况；退租时保留清洁前后照片。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "逾期费按日累加且金额较高",
+            "clause_text": "If any rent is not received by 11:59 p.m. on the fifth day of the month, Tenant shall pay an initial late charge of $50.00 plus $10.00 for each additional day until rent is paid in full.",
+            "risk_level": "medium",
+            "explanation": "租金逾期后先收50美元，再按每天10美元累加，没有上限。长期逾期可能产生高额费用，且“未收到”以房东系统为准，可能存在支付延迟风险。",
+            "legal_basis": [],
+            "suggestion": "设置提前付款提醒，尽量在每月1日前支付；保留付款成功截图；如遇系统故障，立即书面通知房东并保留证据。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "律师费单向由租客承担",
+            "clause_text": "In any legal action to enforce this Lease, Tenant shall pay Landlord's reasonable attorney's fees and court costs, whether or not the action proceeds to judgment.",
+            "risk_level": "high",
+            "explanation": "无论诉讼结果如何，租客都需承担房东的律师费和诉讼费。这是单向条款，可能使租客在争议中处于不利地位，即使租客胜诉也可能面临费用负担。",
+            "legal_basis": [],
+            "suggestion": "签约前尝试协商改为“败诉方承担”或双向对等条款；如无法修改，评估争议成本并保留所有沟通记录。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "房东延迟交房仅免租金不担其他责任",
+            "clause_text": "If Landlord is unable to deliver possession on the start date because a prior occupant has not vacated, rent shall be abated on a daily basis until possession is delivered, and Landlord shall not otherwise be liable for the delay.",
+            "risk_level": "medium",
+            "explanation": "若前租客未搬离导致房东无法按时交房，租客只能按日免租，房东不承担其他责任（如临时住宿费用、搬家损失）。租客可能面临无处居住的实际困难。",
+            "legal_basis": [],
+            "suggestion": "签约前确认前租客搬离安排；如可能，协商增加延迟交房时的替代住宿补偿或解约权；保留因延迟产生的额外费用凭证。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "遗留物品视为放弃且房东可无责处置",
+            "clause_text": "Any personal property left in the Premises after Tenant vacates shall be considered abandoned and may be disposed of by Landlord without liability.",
+            "risk_level": "medium",
+            "explanation": "退租后遗留的任何个人物品均视为放弃，房东可无责处置。若租客因搬迁匆忙遗留贵重物品，可能难以追回。",
+            "legal_basis": [],
+            "suggestion": "退租前仔细清点物品并拍照；与房东书面确认交房时间和物品清单；如确有遗留，尽快书面联系房东协商取回。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          }
+        ],
+        "legal_sources": [],
+        "legal_scope": "未注入适用法律，仅提供合同文字风险提示。",
+        "disclaimer": "仅供理解合同，不构成法律意见。原文匹配和法条引用核对不保证法律适用或分析结论正确。",
+        "grounding": {
+          "cards_total": 8,
+          "cards_verified": 8,
+          "quote_verification_rate": 1.0,
+          "law_references_total": 0,
+          "law_references_valid": 0,
+          "law_reference_validity_rate": null
+        },
+        "model": "deepseek-flash",
+        "attempts": 1
+      }
+    }
+  ]
+}

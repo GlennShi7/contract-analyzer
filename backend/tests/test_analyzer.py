@@ -7,7 +7,7 @@ import pytest
 from pydantic import ValidationError
 
 from analyzer import (
-    AnalysisOutputError, GeneratedAnalysis, analyze_contract, classify_contract,
+    AnalysisOutputError, GeneratedAnalysis, MAX_CARDS, analyze_contract, classify_contract,
     ground_analysis, load_laws, match_quote, model_name, parse_analysis,
 )
 
@@ -61,6 +61,7 @@ def test_json_and_code_fence_parse_to_the_same_schema():
 @pytest.mark.parametrize("change", [
     {"risk_score": 11}, {"risk_score": True}, {"risk_score": "7"},
     {"summary": " "}, {"cards": [{"risk_level": "urgent"}]}, {"invented": "field"},
+    {"cards": sample_output()["cards"] * (MAX_CARDS + 1)},
 ])
 def test_schema_rejects_missing_invalid_and_extra_fields(change):
     with pytest.raises(ValidationError):
@@ -129,6 +130,7 @@ def test_json_mode_injects_only_the_selected_law_group():
     assert sent["response_format"] == {"type": "json_object"}
     assert sent["extra_body"] == {"thinking": {"type": "disabled"}}
     assert "住房租赁条例-10" in sent["messages"][0]["content"]
+    assert f"至多{MAX_CARDS}个重要风险" in sent["messages"][0]["content"]
     assert "劳动合同法-19" not in sent["messages"][0]["content"]
     assert report.cards[0].verified is True
 

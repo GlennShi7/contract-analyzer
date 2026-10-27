@@ -93,7 +93,18 @@ The analyzer requests [JSON output](https://api-docs.deepseek.com/guides/json_mo
 
 `grounding` reports quote-verification and legal-ID membership counts before unknown references are filtered. Rates are `null` when there are no cards or references. These are structural checks, not measures of legal correctness, applicability, or risk recall. Scores are model-generated hints and are not calibrated legal-risk probabilities.
 
-Offline tests cover parsing, invalid fields, correction limits, reference filtering, region routing, endpoint errors, and quote changes. The actual React interface was checked in headless Edge using a local mock API. Live structured-analysis metrics have not been measured; no live analysis result is claimed.
+Offline tests cover parsing, invalid fields, correction limits, reference filtering, region routing, endpoint errors, and quote changes. The actual React interface was checked in headless Edge using a local mock API.
+
+The [2026-10-27 live run](backend/eval/results/analysis_20261027-152735.json) used `deepseek-flash` on the three existing synthetic contracts, with one request each and no correction retries:
+
+| Contract | Risk cards | Quotes matched exactly | References to injected law IDs |
+| --- | --- | --- | --- |
+| Chinese lease | 10 | 10/10 | 22/22 |
+| Chinese employment contract | 11 | 11/11 | 21/21 |
+| English Illinois lease | 8 | 8/8 | No statutory references |
+| Total | 29 | 29/29 | 43/43 |
+
+These are quote-matching and ID-membership checks, not legal-accuracy results. Qualitative inspection found unsupported legal generalizations in the English sample despite the absence of injected laws. The model can also overstate what a correctly identified statute supports. See [the run review and limitations](backend/eval/ANALYSIS_REVIEW_2026-10-27.md).
 
 An optional script is available for explicitly authorized, billable verification on the three synthetic contracts:
 
@@ -134,8 +145,8 @@ python -m eval.retrieval_eval
 - Document filtering is not user authentication or access control. The prototype has no accounts; use synthetic documents for development.
 - Scanned PDFs require OCR, which is not implemented.
 - The statute library is selective and omits local regulations and judicial interpretations. Matching a quote or allowing a law ID does not establish that the law supports the model's explanation.
-- No live structured-analysis quality result has been measured. The model may still make mistakes or miss risks, and its scores are not calibrated.
-- The evaluation set is small and synthetic; it excludes PDF extraction and LLM generation quality.
+- Live analysis has been checked on only three synthetic contracts. Quote and ID checks do not measure legal correctness or risk recall; unsupported legal generalizations were observed in the English sample.
+- The evaluation set is small and synthetic. Retrieval metrics exclude PDF extraction and LLM generation; the separate live analysis check measures only structural citation properties. Scores are not calibrated.
 
 This is a development prototype, not legal advice.
 
