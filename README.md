@@ -109,6 +109,8 @@ These are quote-matching and ID-membership checks, not legal-accuracy results. Q
 
 The table above records the earlier unknown-region baseline, before the Urbana profile was added.
 
+The [2026-10-28 Urbana-profile run](backend/eval/results/analysis_20261028-161231.json) analyzed only the existing synthetic English lease: one request, no retry, 12/12 exact contract quotes and 18/18 references to supplied IDs. It used 26,207 total tokens. [Source spot-checks and limitations](backend/eval/URBANA_ANALYSIS_REVIEW_2026-10-28.md) document remaining errors, including treating consent-based subletting as a prohibition, overstating proof requirements for maintenance agreements, and assuming city boundaries from an address. These counts do not establish legal accuracy or completeness.
+
 An optional script is available for explicitly authorized, billable verification on the three synthetic contracts:
 
 ```bash
