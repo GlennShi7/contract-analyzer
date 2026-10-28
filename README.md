@@ -13,9 +13,10 @@ Built to help people understand unfavorable terms in rental and employment contr
 - Retrieval evaluation: 56 labeled questions across three synthetic contracts, including Chinese questions about an English lease.
 - API credentials loaded from a local `.env` file.
 - Curated Chinese mainland labor and tenancy statutes: 24 selected articles per group, copied from official sources with version and provenance metadata.
+- Urbana, Illinois residential lease profile: 21 municipal, 15 state, and 7 federal provisions with applicability notes and official-source metadata.
 - JSON mode, Pydantic validation, one correction retry, contract-quote matching, and filtering of unknown legal reference IDs.
 
-The Q&A frontend is not implemented yet. Chinese statutes are injected only after the user selects Chinese mainland jurisdiction and the contract type is recognized.
+The Q&A frontend is not implemented yet. Legal profiles require an explicit region choice and a recognized contract type. English and Chinese keywords classify the contract type; language does not select governing law.
 
 ## Architecture
 
@@ -68,7 +69,7 @@ npm ci
 npm run dev
 ```
 
-Open [the frontend](http://localhost:5173). Upload a text-based PDF, confirm the applicable region, then click analyze. The region defaults to other/unknown; choosing Chinese mainland enables relevant statutory references when the contract type is recognized. The frontend defaults to `http://127.0.0.1:8000`; set `VITE_API_URL` to override it. The backend currently allows the frontend CORS origin `http://localhost:5173`.
+Open [the frontend](http://localhost:5173). Upload a text-based PDF, confirm the applicable region, then click analyze. The region defaults to other/unknown; choose Chinese mainland or Urbana, Illinois to enable a supported legal profile. The frontend defaults to `http://127.0.0.1:8000`; set `VITE_API_URL` to override it. The backend currently allows the frontend CORS origin `http://localhost:5173`.
 
 ## API
 
@@ -83,11 +84,11 @@ The Q&A endpoint can be tried through `/docs`; it is not connected to the React 
 
 Each source has `doc_id`, a zero-based `chunk` index, and the retrieved `text`. Invalid or textless PDFs return 400; unknown document IDs return 404; a missing index returns 409; malformed request fields return 422; DeepSeek request failures return 502. An unconfigured API key returns 503 when generation is requested.
 
-`/analyze` accepts `jurisdiction` as `cn` or `unknown` (the default). Its result includes `contract_type`, `risk_score` (1-10), `summary`, `cards`, `legal_sources`, `legal_scope`, `grounding`, `model`, and `attempts`. Each card contains a title, contract quote, risk level, explanation, legal reference IDs, suggestion, and server-computed quote-matching fields. Invalid model output is retried once; another failure returns 502.
+`/analyze` accepts `jurisdiction` as `cn`, `us_il_urbana`, or `unknown` (the default). Its result includes `contract_type`, `risk_score` (1-10), `summary`, `cards`, `legal_sources`, `legal_scope`, `grounding`, `model`, and `attempts`. Each card contains a title, contract quote, risk level, explanation, legal reference IDs, suggestion, and server-computed quote-matching fields. Invalid model output is retried once; another failure returns 502.
 
 ## Structured analysis and citation checks
 
-The [curated law library](backend/laws/README.md) records official URLs, versions, checked dates, and checksums. Only the selected contract type's articles are injected. Unsupported foreign contracts, including the Illinois evaluation lease, receive text-based hints without Chinese statutory references.
+The [curated law library](backend/laws/README.md) records official URLs, versions, checked dates, and checksums. Only the selected contract type's articles are injected. The Urbana profile applies only to residential leases within Urbana city limits, not neighboring Champaign or Chicago. Recognized location conflicts suppress legal injection; the keyword check is not address verification. Unknown regions and unsupported contract types receive text-based hints without statutory citations.
 
 The analyzer requests [JSON output](https://api-docs.deepseek.com/guides/json_mode/) and validates its fields with Pydantic. Exact quotes and conservative whitespace matches are marked `verified`. Approximate matches remain unverified: changing a negation or number can preserve high text similarity while changing meaning. English word boundaries are preserved. Unknown law IDs are removed, and only the referenced official articles are returned to the frontend.
 
@@ -106,6 +107,8 @@ The [2026-10-27 live run](backend/eval/results/analysis_20261027-152735.json) us
 
 These are quote-matching and ID-membership checks, not legal-accuracy results. Qualitative inspection found unsupported legal generalizations in the English sample despite the absence of injected laws. The model can also overstate what a correctly identified statute supports. See [the run review and limitations](backend/eval/ANALYSIS_REVIEW_2026-10-27.md).
 
+The table above records the earlier unknown-region baseline, before the Urbana profile was added.
+
 An optional script is available for explicitly authorized, billable verification on the three synthetic contracts:
 
 ```bash
@@ -113,10 +116,10 @@ cd backend
 source venv/Scripts/activate
 python -m eval.analysis_eval --help
 # Only when you intend to make billable API requests:
-python -m eval.analysis_eval --live
+python -m eval.analysis_eval --live --contracts lease_en --english-jurisdiction us_il_urbana --max-requests 2
 ```
 
-It sends only the three existing synthetic evaluation contracts, permits at most two requests per contract, and saves model, usage, citation counts, and structured responses. It does not measure legal correctness.
+It sends only selected fixtures from the three existing synthetic evaluation contracts, permits at most two requests per contract and enforces an explicit total request limit, and saves model, usage, citation counts, and structured responses. It does not measure legal correctness.
 
 ## Retrieval evaluation
 
@@ -144,7 +147,7 @@ python -m eval.retrieval_eval
 
 - Document filtering is not user authentication or access control. The prototype has no accounts; use synthetic documents for development.
 - Scanned PDFs require OCR, which is not implemented.
-- The statute library is selective and omits local regulations and judicial interpretations. Matching a quote or allowing a law ID does not establish that the law supports the model's explanation.
+- The statute library is selective and omits many laws, local rules, judicial interpretations, and technical standards. The Urbana municipal text comes from a user-supplied official export labeled 20260417; later amendments must be checked. Its Chapter 5 technical codes are not reproduced in that export. Matching a quote or allowing a law ID does not establish that the law supports the model's explanation.
 - Live analysis has been checked on only three synthetic contracts. Quote and ID checks do not measure legal correctness or risk recall; unsupported legal generalizations were observed in the English sample.
 - The evaluation set is small and synthetic. Retrieval metrics exclude PDF extraction and LLM generation; the separate live analysis check measures only structural citation properties. Scores are not calibrated.
 

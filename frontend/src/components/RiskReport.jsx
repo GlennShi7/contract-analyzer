@@ -3,6 +3,7 @@ import { useState } from 'react'
 const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 const riskLabels = { high: '高风险', medium: '中风险', low: '低风险' }
 const riskColors = { high: '#b42318', medium: '#9a6700', low: '#175cd3' }
+const lawLevels = { national: '国家法律', municipal: 'Urbana 市条例', state: '伊利诺伊州法', federal: '美国联邦法' }
 
 function RiskReport({ docId }) {
   const [report, setReport] = useState(null)
@@ -47,10 +48,11 @@ function RiskReport({ docId }) {
           <select value={jurisdiction} onChange={handleJurisdictionChange} disabled={analyzing}>
             <option value="unknown">其他 / 不确定</option>
             <option value="cn">中国大陆</option>
+            <option value="us_il_urbana">美国 · Urbana, Illinois</option>
           </select>
         </label>
       </p>
-      <p>确认适用中国大陆法律后，可查看对应法条参考；不确定时先分析合同文字风险。</p>
+      <p>确认合同所在地区后可查看对应法条。Urbana 不包括 Champaign 或 Chicago；不确定时先分析文字风险。</p>
       <button onClick={handleAnalyze} disabled={!docId || analyzing}>
         {analyzing ? '分析中...' : '分析风险'}
       </button>
@@ -75,6 +77,8 @@ function RiskReport({ docId }) {
                   <details key={id}>
                     <summary>{law.law} {law.article}</summary>
                     <p style={{ whiteSpace: 'pre-wrap' }}>{law.text}</p>
+                    <p>{lawLevels[law.authority_level] || '法律条文'}</p>
+                    {law.applicability && <p>适用条件：{law.applicability}</p>}
                     <a href={law.source_url} target="_blank" rel="noreferrer">查看官方原文</a>
                     <p>来源核对日期：{law.checked_on}</p>
                   </details>

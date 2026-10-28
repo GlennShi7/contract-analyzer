@@ -36,8 +36,8 @@ def test_classifier_keeps_illinois_lease_out_of_chinese_law_library():
     assert classify_contract("出租人甲，承租人乙，租金按月支付，押金。") == "lease"
     assert classify_contract("用人单位与劳动者订立劳动合同，工资及试用期。") == "labor"
     english = (Path(__file__).resolve().parents[1] / "eval/contracts/lease_en.txt").read_text(encoding="utf-8")
-    assert classify_contract(english) == "other"
-    assert classify_contract("Illinois 出租人和承租人约定租金。") == "other"
+    assert classify_contract(english) == "lease"
+    assert classify_contract("Illinois 出租人和承租人约定租金。") == "lease"
 
 
 def test_official_law_library_is_complete_for_selected_sources():

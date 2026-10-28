@@ -13,7 +13,10 @@ sys.path.insert(0, str(HERE.parent))
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--live", action="store_true", help="send the three synthetic contracts to the configured DeepSeek API (billable; at most two requests per contract)")
+    parser.add_argument("--live", action="store_true", help="enable billable DeepSeek requests for selected synthetic fixtures")
+    parser.add_argument("--contracts", nargs="+", choices=("lease_zh", "labor_zh", "lease_en"), default=["lease_zh", "labor_zh", "lease_en"])
+    parser.add_argument("--english-jurisdiction", choices=("unknown", "us_il_urbana"), default="unknown")
+    parser.add_argument("--max-requests", type=int, choices=range(1, 7), default=6, help="hard limit including correction attempts and failed requests")
     args = parser.parse_args()
     if not args.live:
         parser.error("Pass --live explicitly to enable API requests; no requests were made.")
@@ -28,18 +31,22 @@ def main():
     requests = []
 
     def complete(**kwargs):
+        if len(requests) >= args.max_requests:
+            raise RuntimeError("Explicit live-request limit reached; no further request sent.")
+        record = {"status": "started"}
+        requests.append(record)
         response = client.chat.completions.create(**kwargs)
-        requests.append({"model": response.model, "usage": response.usage.model_dump() if response.usage else None})
+        record.update(status="completed", model=response.model, usage=response.usage.model_dump() if response.usage else None)
         return response
 
     counted = SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=complete)))
     rows = []
-    for name in ("lease_zh", "labor_zh", "lease_en"):
+    for name in dict.fromkeys(args.contracts):
         text = (HERE / "contracts" / f"{name}.txt").read_text(encoding="utf-8")
-        jurisdiction = "cn" if name.endswith("_zh") else "unknown"
+        jurisdiction = "cn" if name.endswith("_zh") else args.english_jurisdiction
         try:
             report = analyze_contract(text, counted, jurisdiction=jurisdiction)
-        except (OpenAIError, AnalysisOutputError) as error:
+        except (OpenAIError, AnalysisOutputError, RuntimeError) as error:
             raise SystemExit(f"Live verification failed: {type(error).__name__}, HTTP {getattr(error, 'status_code', None)}; no metrics saved.") from None
         rows.append({"contract": name, "text_sha256": sha256(text.encode()).hexdigest(),
                      "jurisdiction": jurisdiction, "result": report.model_dump(mode="json")})
@@ -54,8 +61,11 @@ def main():
     valid = sum(item["law_references_valid"] for item in metrics)
     result = {
         "evaluated_at_utc": datetime.now(timezone.utc).isoformat(), "model": model_name(),
-        "dataset": "three existing synthetic evaluation contracts; not real signed contracts",
+        "analyzer_sha256": sha256((HERE.parent / "analyzer.py").read_bytes()).hexdigest(),
+        "dataset": "selected existing synthetic evaluation contracts; not real signed contracts",
+        "selected_contracts": list(dict.fromkeys(args.contracts)), "max_requests": args.max_requests,
         "law_sources_sha256": sha256((HERE.parent / "laws/SOURCES.json").read_bytes()).hexdigest(),
+        "urbana_law_sources_sha256": sha256((HERE.parent / "laws/SOURCES_US_URBANA.json").read_bytes()).hexdigest(),
         "summary": {"contracts": len(rows), "requests": len(requests), "cards": cards,
                     "verified_quotes": verified, "quote_verification_rate": verified / cards if cards else None,
                     "law_references": references, "valid_law_references": valid,

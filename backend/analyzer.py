@@ -1,5 +1,6 @@
 """Structured contract analysis with curated statutes and citation checks."""
 from difflib import SequenceMatcher
+from datetime import date
 from functools import lru_cache
 from hashlib import sha256
 import json
@@ -8,15 +9,18 @@ import os
 from pathlib import Path
 import re
 from typing import Literal
+from urllib.parse import urlsplit
 
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator
 
 DEFAULT_MODEL = "deepseek-flash"
 MAX_CARDS = 12
 LAWS_DIR = Path(__file__).resolve().parent / "laws"
 logger = logging.getLogger(__name__)
 ContractType = Literal["lease", "labor", "other"]
-Jurisdiction = Literal["cn", "unknown"]
+Jurisdiction = Literal["cn", "us_il_urbana", "unknown"]
+LAW_SNAPSHOT_DATE = date(2026, 10, 28)
+OFFICIAL_SOURCE_HOSTS = {"www.samr.gov.cn", "www.ilga.gov", "ilga.gov", "uscode.house.gov", "www.govinfo.gov", "www.ecfr.gov", "www.urbanail.gov", "www.urbanaillinois.us", "library.municode.com"}
 
 
 class LawArticle(BaseModel):
@@ -25,10 +29,25 @@ class LawArticle(BaseModel):
     law: str
     article: str
     text: str
-    source_url: str = Field(pattern=r"^https://www\.samr\.gov\.cn/")
+    source_url: str
     source_version: str
     checked_on: str
     text_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    jurisdiction: Literal["cn", "us_il_urbana"] = "cn"
+    authority_level: Literal["national", "municipal", "state", "federal"] = "national"
+    applicability: str = "具体适用条件以条文原文为准。"
+    effective_from: date | None = None
+    effective_until: date | None = None
+    source_row: str | None = None
+    source_status: Literal["verified_snapshot", "historical_unverified"] = "verified_snapshot"
+
+    @field_validator("source_url")
+    @classmethod
+    def official_source_only(cls, value):
+        url = urlsplit(value)
+        if url.scheme != "https" or url.hostname not in OFFICIAL_SOURCE_HOSTS or url.username or url.password or url.port not in (None, 443):
+            raise ValueError("A curated official HTTPS source is required")
+        return value
 
 
 class GeneratedRiskCard(BaseModel):
@@ -84,10 +103,11 @@ def model_name() -> str:
 
 def classify_contract(text: str) -> ContractType:
     # Conservative routing, not a determination of the contract's governing law.
-    if re.search(r"\b(illinois|urbana|united states|england|singapore|hong kong)\b|伊利诺伊|美国法律|香港法律|澳门法律|台湾法律", text, re.IGNORECASE):
-        return "other"
     labor = sum(term in text for term in ("劳动合同", "用人单位", "劳动者", "试用期", "工资"))
     lease = sum(term in text for term in ("租赁合同", "出租人", "承租人", "租金", "押金"))
+    lower = text.lower()
+    labor += sum(term in lower for term in ("employment agreement", "employer", "employee", "salary", "probation"))
+    lease += sum(term in lower for term in ("residential lease", "landlord", "tenant", "security deposit", "monthly rent"))
     if labor >= 2 and labor > lease:
         return "labor"
     if lease >= 2 and lease > labor:
@@ -95,11 +115,25 @@ def classify_contract(text: str) -> ContractType:
     return "other"
 
 
-@lru_cache(maxsize=2)
-def load_laws(contract_type: ContractType) -> tuple[LawArticle, ...]:
-    if contract_type == "other":
+def jurisdiction_conflict(text: str, jurisdiction: Jurisdiction) -> bool:
+    if jurisdiction == "cn":
+        return bool(re.search(r"\b(illinois|urbana|united states|england|singapore|hong kong)\b|伊利诺伊|美国法律|香港法律|澳门法律|台湾法律", text, re.IGNORECASE))
+    if jurisdiction == "us_il_urbana":
+        if re.search(r"中华人民共和国|中国大陆|\b(england|singapore|hong kong)\b", text, re.IGNORECASE):
+            return True
+        address = re.search(r"(?:located at|property address|premises address)[^\n]{0,240}", text, re.IGNORECASE)
+        if address and re.search(r"\b(chicago|champaign|evanston|new york|london)\b", address.group(), re.IGNORECASE):
+            return not bool(re.search(r"\burbana\b", address.group(), re.IGNORECASE))
+    return False
+
+
+@lru_cache(maxsize=12)
+def load_laws(contract_type: ContractType, jurisdiction: Jurisdiction = "cn", *, as_of: date = LAW_SNAPSHOT_DATE) -> tuple[LawArticle, ...]:
+    if contract_type == "other" or jurisdiction == "unknown":
         return ()
-    filename = "labor.json" if contract_type == "labor" else "tenancy.json"
+    if jurisdiction == "us_il_urbana" and contract_type != "lease":
+        return ()
+    filename = "tenancy_us_il_urbana.json" if jurisdiction == "us_il_urbana" else ("labor.json" if contract_type == "labor" else "tenancy.json")
     rows = json.loads((LAWS_DIR / filename).read_text(encoding="utf-8"))
     articles = tuple(LawArticle.model_validate(row) for row in rows)
     if len({row.id for row in articles}) != len(articles):
@@ -107,7 +141,9 @@ def load_laws(contract_type: ContractType) -> tuple[LawArticle, ...]:
     for row in articles:
         if sha256(row.text.encode("utf-8")).hexdigest() != row.text_sha256:
             raise ValueError(f"Curated law text checksum differs: {row.id}")
-    return articles
+    return tuple(row for row in articles if row.jurisdiction == jurisdiction and row.source_status == "verified_snapshot"
+                 and (row.effective_from is None or row.effective_from <= as_of)
+                 and (row.effective_until is None or as_of < row.effective_until))
 
 
 def parse_analysis(raw: str | None) -> GeneratedAnalysis:
@@ -170,7 +206,10 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
         law_references_total=references_total, law_references_valid=references_valid,
         law_reference_validity_rate=references_valid / references_total if references_total else None,
     )
-    scope = "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。" if laws else "未注入适用法律，仅提供合同文字风险提示。"
+    if laws and laws[0].jurisdiction == "us_il_urbana":
+        scope = "Urbana, Illinois 住宅租赁：市条例、伊利诺伊州法及联邦法参考。房产须在 Urbana 市界内；市条例采用文件标识为 20260417 的官方导出版本，需核对后续修订及各条适用条件。"
+    else:
+        scope = "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。" if laws else "未注入适用法律，仅提供合同文字风险提示。"
     logger.info("analysis_grounding model=%s metrics=%s", model, metrics.model_dump())
     return AnalysisResult(
         **(generated.model_dump() | {"cards": cards}), legal_sources=[law for law in laws if law.id in used],
@@ -182,9 +221,10 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
 
 def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown", model: str | None = None) -> AnalysisResult:
     kind = classify_contract(text)
-    laws = load_laws(kind) if jurisdiction == "cn" else ()
+    conflict = jurisdiction_conflict(text, jurisdiction)
+    laws = load_laws(kind, jurisdiction) if not conflict else ()
     selected_model = model or model_name()
-    law_context = [{key: getattr(law, key) for key in ("id", "law", "article", "text")} for law in laws]
+    law_context = [law.model_dump(mode="json", include={"id", "law", "article", "text", "jurisdiction", "authority_level", "applicability", "effective_from", "effective_until", "source_version"}) for law in laws]
     example = {
         "contract_type": kind, "risk_score": 5, "summary": "简要概括风险与不确定性。",
         "cards": [{"title": "风险标题", "clause_text": "从合同中逐字复制的原文", "risk_level": "medium",
@@ -198,6 +238,10 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
         "legal_basis 只能列出所提供法条的 id；不确定时留空，不得凭记忆增加法律、司法解释或条号。"
         "引用条文时注意适用条件、例外和但书；不能把对用户不利直接等同于违法或无效。"
         "如果法条列表为空，只讨论合同文字及应核实事项，不得断言法定权利、义务或法律效力。"
+        f"用户选择的地区为 {jurisdiction}，法条资料核对日为 {LAW_SNAPSHOT_DATE.isoformat()}。"
+        "英文不代表适用美国法，中文也不代表适用中国法。Urbana 不等于 Champaign 或 Chicago，禁止套用芝加哥租赁条例。"
+        "州法、市条例与联邦法可同时适用，不能只因保护标准不同就认定冲突。逐条注意地域、单位数量、房龄、租约签订时间、适用例外和通知程序。"
+        "缺少房龄、楼栋单位数等事实时标为需核实，不能推断违法；不得建议未经法定通知程序直接停付租金。"
         f"contract_type 必须是 {kind}。JSON 示例：{json.dumps(example, ensure_ascii=False)}\n"
         f"JSON schema：{json.dumps(GeneratedAnalysis.model_json_schema(), ensure_ascii=False)}\n"
         f"可引用的法条：{json.dumps(law_context, ensure_ascii=False)}"
@@ -220,7 +264,10 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
             generated = parse_analysis(raw)
             if generated.contract_type != kind:
                 raise ValueError("contract_type does not match the supplied type")
-            return ground_analysis(generated, text, laws, model=selected_model, attempts=attempt)
+            result = ground_analysis(generated, text, laws, model=selected_model, attempts=attempt)
+            if conflict:
+                result.legal_scope = "合同中的地点信息与所选地区不一致，未注入法条；请核实房产地址和地区。"
+            return result
         except ValueError as error:
             if attempt == 2:
                 raise AnalysisOutputError("Invalid structured analysis after one retry") from error

@@ -4,7 +4,7 @@ React + Vite interface for PDF upload, extracted-text preview, structured risk c
 
 The app keeps the returned `doc_id` and submits it to `/analyze`. Full contract text stays on the backend. Selecting or uploading another document clears the previous report.
 
-The region selector defaults to other/unknown. Confirm Chinese mainland jurisdiction to enable statutory references for recognized labor or lease contracts. Cards distinguish matched quotes from quotes requiring manual review; the risk score is a model-generated hint, not a legal determination.
+The region selector defaults to other/unknown. Choose Chinese mainland for supported labor/lease contracts, or Urbana, Illinois for residential leases inside Urbana city limits. Other Illinois cities are outside this municipal profile. Expanded sources show government level and applicability conditions. Cards distinguish matched quotes from quotes requiring manual review; the risk score is a model-generated hint, not a legal determination.
 
 From this directory:
 

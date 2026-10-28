@@ -1,0 +1,148 @@
+{
+  "checked_on": "2026-10-28",
+  "sources": [
+    {
+      "source": "Urbana municipal code",
+      "url": "https://www.urbanail.gov/city-clerk/page/city-code",
+      "publisher_url": "https://library.municode.com/il/urbana/codes/code_of_ordinances",
+      "supplied_filename": "UrbanaILCodeofOrdinancesEXPORT20260417.xlsx",
+      "workbook_sha256": "326a7433270fe3e07be1b7cdc189de75aabf9fcb762306f53382859d8668901c",
+      "export_label": "20260417",
+      "workbook_created_utc": "2026-10-28T20:54:52Z",
+      "selected_sections": [
+        "12.5-2",
+        "12.5-3",
+        "12.5-4",
+        "12.5-6",
+        "12.5-7",
+        "12.5-10",
+        "12.5-11",
+        "12.5-13",
+        "12.5-14",
+        "12.5-15",
+        "12.5-16",
+        "12.5-17",
+        "12.5-18",
+        "12.5-19",
+        "12.5-20",
+        "12.5-21",
+        "12.5-22",
+        "12.5-23",
+        "12.5-24",
+        "12.5-25",
+        "12.5-26"
+      ],
+      "version_limit": "Snapshot supplied by the user; label is not proof that no later uncodified amendments exist."
+    },
+    {
+      "source": "Landlord and Tenant Act",
+      "url": "https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2201&ChapterID=62",
+      "html_sha256": "f8ee9cb4437171b08f761a091c455143d267f0546c3a9e05bd4da29c93051b90",
+      "selected_sections": [
+        "765 ILCS 705/1",
+        "765 ILCS 705/3.5",
+        "765 ILCS 705/4"
+      ]
+    },
+    {
+      "source": "Security Deposit Return Act",
+      "url": "https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2202&ChapterID=62",
+      "html_sha256": "1ebf4eee139e77d2fe8a5db15b0615a843d59ada72500b15e83055add6cba2b1",
+      "selected_sections": [
+        "765 ILCS 710/1"
+      ]
+    },
+    {
+      "source": "Security Deposit Interest Act",
+      "url": "https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2203&ChapterID=62",
+      "html_sha256": "442ba59a564c4c6bde2b68b8a289d85a4ebe75838d53886710a86d6aab58403f",
+      "selected_sections": [
+        "765 ILCS 715/1",
+        "765 ILCS 715/2",
+        "765 ILCS 715/3"
+      ]
+    },
+    {
+      "source": "Residential Tenants' Right to Repair Act",
+      "url": "https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2605&ChapterID=62",
+      "html_sha256": "24b2e9598b43d453edff9854fa2985a55025ef7d7be114c113be29ae47b138ee",
+      "selected_sections": [
+        "765 ILCS 742/5",
+        "765 ILCS 742/10",
+        "765 ILCS 742/15"
+      ]
+    },
+    {
+      "source": "Landlord Retaliation Act",
+      "url": "https://www.ilga.gov/Legislation/ILCS/Articles?ActID=4532&ChapterID=62&Print=True",
+      "html_sha256": "21de104fd68026f41a1566ac4e84702ae773ae5f7a3729e4da3144f6db1a7ac3",
+      "selected_sections": [
+        "765 ILCS 721/5",
+        "765 ILCS 721/10",
+        "765 ILCS 721/15",
+        "765 ILCS 721/20"
+      ]
+    },
+    {
+      "source": "Code of Civil Procedure",
+      "url": "https://www.ilga.gov/documents/legislation/ilcs/documents/073500050K9-213.1.htm",
+      "html_sha256": "67634028e4097003348fbb35e21de4ca61be3eb02e6b7822d09bcbffd83274e9",
+      "selected_sections": [
+        "735 ILCS 5/9-213.1"
+      ]
+    },
+    {
+      "source": "42 U.S.C. 3603",
+      "url": "https://uscode.house.gov/us/usc/119-124/t42/s3603/",
+      "html_sha256": "2700ad51d572c24422b8ff451eac8f7332bce3a8b8fbc6b23a31788e2f3ba2d1",
+      "selector": "complete statutory-body container"
+    },
+    {
+      "source": "42 U.S.C. 3604",
+      "url": "https://uscode.house.gov/us/usc/119-124/t42/s3604/",
+      "html_sha256": "14f148ef7848815be227cb192da4e043c5db7ceea191c3c16c588765594f0143",
+      "selector": "complete statutory-body container"
+    },
+    {
+      "source": "42 U.S.C. 3607",
+      "url": "https://uscode.house.gov/us/usc/119-124/t42/s3607/",
+      "html_sha256": "6302c84c13fb811175fdf9a3665a192f57a7c63d023d1776713e268c82a8450b",
+      "selector": "complete statutory-body container"
+    },
+    {
+      "source": "42 U.S.C. 4851b(27)",
+      "url": "https://uscode.house.gov/us/usc/119-124/t42/s4851b/",
+      "html_sha256": "0eb3bb16bdb6a72a5522366b1d18c0ebaeb20211ccb4ac4bcacf8d3af1a96ef3",
+      "selector": "27"
+    },
+    {
+      "source": "42 U.S.C. 4852d(a)(1)",
+      "url": "https://uscode.house.gov/us/usc/119-124/t42/s4852d/",
+      "html_sha256": "64bbd189b4c690daace57b875fe0d4766d2c147283e6ed107bea7a8394d9a081",
+      "selector": "a-1"
+    },
+    {
+      "source": "42 U.S.C. 4852d(a)(4)",
+      "url": "https://uscode.house.gov/us/usc/119-124/t42/s4852d/",
+      "html_sha256": "64bbd189b4c690daace57b875fe0d4766d2c147283e6ed107bea7a8394d9a081",
+      "selector": "a-4"
+    },
+    {
+      "source": "42 U.S.C. 4852d(c)",
+      "url": "https://uscode.house.gov/us/usc/119-124/t42/s4852d/",
+      "html_sha256": "64bbd189b4c690daace57b875fe0d4766d2c147283e6ed107bea7a8394d9a081",
+      "selector": "c"
+    }
+  ],
+  "excluded": [
+    {
+      "citation": "765 ILCS 705/35",
+      "reason": "P.A. 104-479 takes effect 2027-01-01; not treated as current for the 2026 sample."
+    },
+    {
+      "citation": "765 ILCS 720",
+      "reason": "Repealed effective 2025-01-01; the selected current retaliation source is 765 ILCS 721."
+    }
+  ],
+  "method": "Verbatim source text; paragraph whitespace normalized. Urbana comes from user-supplied publisher export with workbook hash and exact cell references; other text comes from official HTTPS pages. No model-generated statutory text."
+}
