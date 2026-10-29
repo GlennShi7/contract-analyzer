@@ -62,6 +62,8 @@ Document IDs use the complete SHA-256 hash of the uploaded PDF bytes. Renaming t
 
 For a container-based demo, see [Docker Compose setup](DEPLOYMENT.md). It serves the app at `http://localhost:8080` with a same-origin API proxy and persistent named volumes. The [CI workflow](.github/workflows/ci.yml) checks backend tests, frontend build/lint/browser behavior, and container startup without paid model calls.
 
+Container checks also exercise actual PDF parsing and CPU embeddings with two identical-text synthetic documents, followed by offline retrieval after recreating the containers without another upload. See [the real-embedding smoke commands](DEPLOYMENT.md#checks-without-paid-calls). This fixed-question persistence check is separate from the retrieval benchmark and does not measure answer quality.
+
 The existing backend environment uses Python 3.14.5. The existing frontend environment uses Node.js 26.5.1 and npm 11.17.0. These record the development environment, rather than a compatibility guarantee for every platform.
 
 Commands below use Windows Git Bash. The first embedding request may download model weights.

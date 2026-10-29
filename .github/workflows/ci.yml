@@ -64,6 +64,12 @@ jobs:
       - run: docker compose --progress plain build
       - run: docker compose up -d --wait --wait-timeout 120
       - run: python3 scripts/smoke_stack.py
+      - name: Real PDF upload and embeddings
+        run: python3 scripts/smoke_embeddings.py --state "$RUNNER_TEMP/embedding-smoke.json"
+      - name: Recreate containers with existing volumes
+        run: docker compose up -d --force-recreate --wait --wait-timeout 120
+      - name: Verify persistence without another upload
+        run: python3 scripts/smoke_embeddings.py --state "$RUNNER_TEMP/embedding-smoke.json" --verify-only
       - if: failure()
         run: docker compose logs --no-color --tail 100
       - if: always()

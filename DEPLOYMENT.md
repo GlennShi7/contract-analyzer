@@ -41,13 +41,25 @@ python scripts/smoke_stack.py
 
 Use `config --quiet` to validate configuration without printing resolved environment variables. The smoke check covers the served app, proxy, health, API schema/docs prefix, invalid request validation and invalid PDF parsing. It deliberately avoids valid-document generation and model downloads. Separate backend tests exercise document isolation with deterministic test embeddings and mocked model responses.
 
+For the real embedding path, run the following from the repository root:
+
+```bash
+python scripts/smoke_embeddings.py --state embedding-smoke.json
+docker compose up -d --force-recreate --wait --wait-timeout 120
+python scripts/smoke_embeddings.py --state embedding-smoke.json --verify-only
+```
+
+The first command uploads the committed synthetic PDF, repeats it under another filename, and uploads a second byte variant with identical parsed text. It checks full-file IDs, exact stored chunks, actual 384-dimensional CPU embeddings, document-filtered top-3 results and the existing labeled query `el01`. Model weights may download from Hugging Face during initial upload. This adds two synthetic documents to the current stack's volumes; it does not read other documents or call `/ask`, `/analyze` or an LLM provider, even if an API key is configured.
+
+The second command recreates the demo containers while retaining named volumes. The final command makes no upload: it reads both saved documents and the vector index inside the new backend container, with `HF_HUB_OFFLINE=1`, and requires the same text hashes and retrieval results using the cached model. Its JSON state records runtime package versions, the model cache revision when available, chunk IDs and before/after results. This is a smoke assertion for one fixed question, not a new retrieval benchmark or legal-accuracy score. The previously recorded 56-question retrieval evaluation remains separate.
+
 ## GitHub Actions
 
 The CI workflow runs on pushes to `master`, pull requests and manual dispatch. Its jobs are:
 
 - Ubuntu / Python 3.13: install the CPU dependency profile and run backend tests with model downloads disabled.
 - Windows / Node 24: clean npm installation, lint, production build and the actual Q&A browser checks in isolated Edge with a local mock API.
-- Ubuntu / Docker Compose: build both runtime images, wait for backend health, start Nginx and run the HTTP smoke check with a blank API key.
+- Ubuntu / Docker Compose: build both runtime images, wait for backend health, start Nginx, run the HTTP smoke check, then test real synthetic-PDF upload/embeddings and verify persisted retrieval after container recreation. The API key remains blank.
 
 No DeepSeek secret is supplied, and the live-analysis evaluator is never run by CI. GitHub Actions are pinned to verified commits. Node/Python image minor versions and direct Python dependencies are specified; this is not a complete lock of all transitive Python dependencies or image digests.
 

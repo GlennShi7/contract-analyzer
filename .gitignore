@@ -18,3 +18,6 @@ temp_*
 # Private project notes and handoffs.
 PROJECT_CONTEXT.md
 HANDOFF*.md
+
+# Local synthetic container smoke evidence.
+/embedding-smoke.json
