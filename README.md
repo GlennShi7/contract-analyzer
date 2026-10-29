@@ -56,6 +56,8 @@ doc_id + question -> /ask -> retrieve up to 3 chunks from this document
 
 The frontend retains the document ID instead of receiving and resubmitting the full text. `/analyze` loads the stored text; `/ask` filters on the document ID. The embedding model runs locally; generation uses the DeepSeek API.
 
+PDF uploads are limited to **20 MiB, 200 pages and 100,000 extracted characters**. The browser checks file size before uploading; the native handler checks file contents again, and the parser limits pages and extracted text. Whole-document analysis also rejects oversized legacy text before generation. Page text is separated by blank lines to preserve English word boundaries. Re-upload earlier PDFs to apply this parsing change to their saved text and chunks.
+
 Document IDs use the complete SHA-256 hash of the uploaded PDF bytes. Renaming the same file preserves its ID; different contents with the same filename receive different IDs. Re-uploading replaces its indexed chunks and removes stale chunks. Local data is excluded from Git. PDFs uploaded before this change need to be uploaded again to create the stored text and document metadata.
 
 ## Run locally
@@ -101,7 +103,7 @@ After uploading, use **问问这份合同** to ask about deposit returns, paymen
 
 Switching files clears the question and answer and aborts the pending browser fetch. Cancellation does not guarantee that server-side generation or billing has stopped. Blank submissions and concurrent duplicate submissions are blocked. Responses with empty answers or mismatched document/source IDs are rejected. Empty or truncated model responses return 502 rather than a successful blank answer. Retrieved excerpts still need human review: finding a passage does not prove that it supports the answer, and other relevant terms may be missing.
 
-Validation: 81 backend tests passed; frontend build and lint passed; isolated headless Edge checks exercised the actual React interface with a local mock API, including errors, source isolation, literal-text rendering, file changes during pending requests, and mobile width. No paid API request was made for this feature. Reproduce browser checks with `npm run check:qa-ui` in `frontend`; see [frontend instructions](frontend/README.md).
+Validation: 100 backend tests passed; frontend build and lint passed; isolated headless Edge checks exercised the actual React interface with a local mock API, including upload limits, HTML proxy errors, incomplete upload results, source isolation, literal-text rendering, file changes during pending requests, and mobile width. No paid API request was made for this feature. Reproduce browser checks with `npm run check:qa-ui` in `frontend`; see [frontend instructions](frontend/README.md).
 
 ## API
 
@@ -114,7 +116,7 @@ Validation: 81 backend tests passed; frontend build and lint passed; isolated he
 
 The Q&A endpoint is connected to the React interface and can also be tried through `/docs`. It makes one generation request per question, with SDK retries disabled.
 
-Each source has `doc_id`, a zero-based `chunk` index, and the retrieved `text`. Invalid or textless PDFs return 400; unknown document IDs return 404; a missing index returns 409; malformed request fields return 422; DeepSeek request failures return 502. An unconfigured API key returns 503 when generation is requested.
+Each source has `doc_id`, a zero-based `chunk` index, and the retrieved `text`. Invalid, password-protected or textless PDFs return 400; unknown document IDs return 404; a missing index returns 409; file/page/text limits return 413; malformed request fields return 422; DeepSeek failures or incomplete answers return 502. Unavailable embedding models, indexes or storage return 503, as does an unconfigured API key when generation is requested. Failed model initialization is not cached as a success, so a later manual retry can recover. Temporary PDF copies are removed on rejected/failed requests. Text saving and indexing are not one transaction; re-uploading safely replaces indexed chunks if a prior text-save step failed.
 
 `/analyze` accepts `jurisdiction` as `cn`, `us_il_urbana`, or `unknown` (the default). Its result includes `contract_type`, `risk_score` (1-10), `summary`, `cards`, `legal_sources`, `legal_scope`, `grounding`, `model`, and `attempts`. Each card contains a title, contract quote, risk level, explanation, legal reference IDs, suggestion, and server-computed quote-matching fields. Invalid model output is retried once; another failure returns 502.
 

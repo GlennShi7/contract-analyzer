@@ -1,4 +1,5 @@
 from functools import lru_cache
+import logging
 from pathlib import Path
 
 import chromadb
@@ -6,11 +7,20 @@ from chromadb.utils import embedding_functions
 
 MODEL_NAME = "paraphrase-multilingual-MiniLM-L12-v2"
 DATABASE_DIR = Path(__file__).resolve().parent / "chroma_db"
+logger = logging.getLogger(__name__)
+
+
+class EmbeddingUnavailableError(RuntimeError):
+    """The configured local embedding model could not be initialized."""
 
 
 @lru_cache(maxsize=1)
 def get_embedding_function():
-    return embedding_functions.SentenceTransformerEmbeddingFunction(model_name=MODEL_NAME)
+    try:
+        return embedding_functions.SentenceTransformerEmbeddingFunction(model_name=MODEL_NAME)
+    except (OSError, RuntimeError, ValueError) as exc:
+        logger.exception("Embedding model initialization failed")
+        raise EmbeddingUnavailableError("Local embedding model unavailable") from exc
 
 
 @lru_cache(maxsize=1)

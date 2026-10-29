@@ -4,6 +4,8 @@ React + Vite interface for PDF upload, extracted-text preview, structured risk c
 
 The app keeps the returned `doc_id` and submits it to `/analyze`. Full contract text stays on the backend. Selecting or uploading another document clears the previous report.
 
+The upload control rejects files larger than 20 MiB before sending a request and blocks duplicate pending uploads. The backend also caps PDFs at 200 pages and 100,000 extracted characters. HTML proxy errors, model/index 503 errors and incomplete upload responses produce readable messages. Page boundaries now preserve whitespace; upload earlier PDFs again to refresh their saved text and chunks.
+
 The region selector defaults to other/unknown. Choose Chinese mainland for supported labor/lease contracts, or Urbana, Illinois for residential leases inside Urbana city limits. Other Illinois cities are outside this municipal profile. Expanded sources show government level and applicability conditions. Cards distinguish matched quotes from quotes requiring manual review; the risk score is a model-generated hint, not a legal determination.
 
 From this directory:

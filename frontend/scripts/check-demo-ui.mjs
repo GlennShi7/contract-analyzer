@@ -83,7 +83,8 @@ try {
   await evaluate('const el = document.querySelector("select"); el.value = "us_il_urbana"; el.dispatchEvent(new Event("change", {bubbles:true}));');
   await evaluate('Array.from(document.querySelectorAll("button")).find(el => el.textContent === "分析风险").click()');
   await until('document.querySelectorAll("section[aria-label=合同风险报告] article").length === 12');
-  await capture('demo-overview.png', { x: 0, y: 0, width: 1200, height: 1230 });
+  const overviewHeight = await evaluate('Math.ceil(document.querySelector("section[aria-label=合同风险报告] article").getBoundingClientRect().bottom + scrollY + 16)');
+  await capture('demo-overview.png', { x: 0, y: 0, width: 1200, height: overviewHeight });
   await question('其他问题');
   await until('document.querySelector(".contract-questions [role=alert]")?.textContent.includes("预设问题")');
   await question('押金多久退还？');

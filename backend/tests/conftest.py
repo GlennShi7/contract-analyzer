@@ -70,15 +70,21 @@ def api(monkeypatch, tmp_path, collection):
 def pdf_factory():
     def make_pdf(text):
         # Minimal real PDF: use the actual PDF parser in endpoint tests, without extra dependencies.
-        escaped = text.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
-        stream = f"BT /F1 12 Tf 72 720 Td ({escaped}) Tj ET".encode("ascii")
+        pages = [text] if isinstance(text, str) else text
+        font_id = 3 + 2 * len(pages)
+        kids = " ".join(f"{3 + 2 * i} 0 R" for i in range(len(pages)))
         objects = [
             b"<< /Type /Catalog /Pages 2 0 R >>",
-            b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
-            b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>",
-            b"<< /Length " + str(len(stream)).encode() + b" >>\nstream\n" + stream + b"\nendstream",
-            b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+            f"<< /Type /Pages /Kids [{kids}] /Count {len(pages)} >>".encode(),
         ]
+        for i, page_text in enumerate(pages):
+            escaped = page_text.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+            stream = f"BT /F1 12 Tf 72 720 Td ({escaped}) Tj ET".encode("ascii")
+            objects.extend([
+                f"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 {font_id} 0 R >> >> /Contents {4 + 2 * i} 0 R >>".encode(),
+                b"<< /Length " + str(len(stream)).encode() + b" >>\nstream\n" + stream + b"\nendstream",
+            ])
+        objects.append(b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>")
         data = bytearray(b"%PDF-1.4\n")
         offsets = [0]
         for i, obj in enumerate(objects, start=1):

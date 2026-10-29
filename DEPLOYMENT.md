@@ -18,7 +18,9 @@ Open [the app](http://localhost:8080) or [API documentation](http://localhost:80
 
 The first build installs CPU-only PyTorch and the application dependencies. The first valid PDF upload may download the multilingual embedding model. Health checks do not download weights or call DeepSeek; a healthy process does not mean that the model is cached or credentials have been validated. Generation requests remain billable when an API key is configured.
 
-The proxy accepts request bodies up to 20 MiB and permits up to 180 seconds between backend response reads. This does not add a native-backend upload size limit. The existing textless/scanned-PDF limitation remains.
+Individual PDFs are limited to **20 MiB, 200 pages and 100,000 extracted characters**, including in native development. The proxy allows 21 MiB per request to leave room for multipart framing around a 20 MiB file, and permits up to 180 seconds between backend response reads. The native handler checks the file before copying when its size is known, and counts bytes during copying as a fallback; multipart parsing itself occurs before that handler. Page/text limits are checked during PDF extraction. Oversized input returns 413; password-protected PDFs need unlocking, and scanned/textless PDFs remain unsupported.
+
+Model initialization/index errors and unavailable storage return readable 503 responses. Initial model download still requires a usable network connection; complete caches support later offline operation. The client does not automatically retry uploads. If text saving fails after indexing, a manual re-upload replaces the same document's chunks rather than duplicating them.
 
 ## Persisted data
 

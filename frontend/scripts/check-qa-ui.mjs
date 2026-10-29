@@ -1,7 +1,7 @@
 // Actual React UI checks against a local mock API. No paid model calls.
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
-import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, open, readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
@@ -12,6 +12,8 @@ await mkdir(out, { recursive: true });
 const requests = [];
 const browserErrors = [];
 let uploads = 0;
+let uploadRequests = 0;
+let uploadMode = 'ok';
 let delayed;
 let aborted = false;
 const api = createServer(async (req, res) => {
@@ -23,6 +25,14 @@ const api = createServer(async (req, res) => {
   for await (const chunk of req) chunks.push(chunk);
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   if (req.url === '/upload') {
+    uploadRequests++;
+    if (uploadMode === 'html413') {
+      res.setHeader('Content-Type', 'text/html'); res.writeHead(413); res.end('<h1>Request too large</h1>'); return;
+    }
+    if (uploadMode === 'index503') {
+      res.writeHead(503); res.end(JSON.stringify({ detail: '合同索引服务暂时不可用，首次使用需要下载嵌入模型' })); return;
+    }
+    if (uploadMode === 'invalid') { res.end(JSON.stringify({ preview: 'Incomplete response' })); return; }
     const doc_id = (++uploads === 1 ? 'a' : 'b').repeat(64);
     res.end(JSON.stringify({ doc_id, filename: 'lease.pdf', preview: 'Synthetic contract preview', n_chunks: 2 }));
     return;
@@ -89,15 +99,22 @@ async function submit(question) {
   await fill(question);
   await evaluate('document.querySelector(".contract-questions form").requestSubmit()');
 }
-async function upload(filename) {
+async function upload(filename, expectedError) {
   const fixture = path.join(out, filename);
   await writeFile(fixture, '%PDF-1.4\nSynthetic browser fixture. PDF parsing is covered separately.');
   const doc = await send('DOM.getDocument');
   const input = await send('DOM.querySelector', { nodeId: doc.root.nodeId, selector: 'input[type=file]' });
   await send('DOM.setFileInputFiles', { nodeId: input.nodeId, files: [fixture] });
   if (await evaluate('Boolean(document.querySelector(".contract-questions"))')) throw new Error('Selecting another file retained Q&A');
-  await evaluate('Array.from(document.querySelectorAll("button")).find(b => b.textContent === "上传").click()');
-  await until('Boolean(document.querySelector("#contract-question"))');
+  const before = uploadRequests;
+  await evaluate('(() => { const b = Array.from(document.querySelectorAll("button")).find(b => b.textContent === "上传"); b.click(); b.click(); })()');
+  if (expectedError) {
+    await until(`Array.from(document.querySelectorAll('[role=alert]')).some(el => el.textContent.includes(${JSON.stringify(expectedError)}))`);
+    if (await evaluate('Boolean(document.querySelector("#contract-question"))')) throw new Error('Failed upload created document UI');
+  } else {
+    await until('Boolean(document.querySelector("#contract-question"))');
+  }
+  if (uploadRequests !== before + 1) throw new Error('Duplicate upload request');
 }
 
 try {
@@ -143,6 +160,22 @@ try {
   await send('Page.navigate', { url: 'http://127.0.0.1:18764' });
   await until('Boolean(document.querySelector("input[type=file]"))');
   if (await evaluate('Boolean(document.querySelector(".contract-questions"))')) throw new Error('Q&A shown before upload');
+  const oversized = path.join(out, 'oversized.pdf');
+  const oversizedFile = await open(oversized, 'w');
+  await oversizedFile.truncate(20 * 1024 * 1024 + 1);
+  await oversizedFile.close();
+  const initialDoc = await send('DOM.getDocument');
+  const initialInput = await send('DOM.querySelector', { nodeId: initialDoc.root.nodeId, selector: 'input[type=file]' });
+  await send('DOM.setFileInputFiles', { nodeId: initialInput.nodeId, files: [oversized] });
+  await until('document.querySelector("[role=alert]")?.textContent.includes("20 MiB")');
+  if (uploadRequests !== 0 || !(await evaluate('Array.from(document.querySelectorAll("button")).find(b => b.textContent === "上传").disabled'))) throw new Error('Oversized file sent to API');
+  uploadMode = 'html413';
+  await upload('proxy-limit.pdf', '文件或请求过大');
+  uploadMode = 'index503';
+  await upload('cache-error.pdf', '嵌入模型');
+  uploadMode = 'invalid';
+  await upload('invalid-response.pdf', '上传结果不完整');
+  uploadMode = 'ok';
   await upload('first.pdf');
   if (!(await evaluate('document.querySelector(".contract-questions button").disabled'))) throw new Error('Empty question enabled');
   await submit('   ');
@@ -178,7 +211,7 @@ try {
   if (!(await evaluate('(() => { const r = document.querySelector(".contract-questions").getBoundingClientRect(); return r.left >= 0 && r.right <= window.innerWidth + 1; })()'))) throw new Error('Q&A overflows mobile viewport');
   await screenshot('qa-mobile.png');
   if (browserErrors.length) throw new Error('Browser errors: ' + browserErrors.join('\n'));
-  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['upload required', 'trimmed questions', 'whitespace rejected', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears state and aborts pending fetch', 'new document ID sent', 'mobile width'], requests }, null, 2));
+  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears state and aborts pending fetch', 'new document ID sent', 'mobile width'], requests }, null, 2));
   console.log('PASS: actual contract Q&A UI checks; no paid API calls.');
   console.log('Artifacts:', out);
 } finally {
