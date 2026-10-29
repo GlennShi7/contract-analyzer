@@ -49,6 +49,8 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: npm run check:qa-ui
+      - run: npm run test:demo
+      - run: npm run check:demo-ui
 
   containers:
     runs-on: ubuntu-24.04

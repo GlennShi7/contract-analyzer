@@ -1,0 +1,39 @@
+{
+  "mode": "recorded analysis plus scripted Q&A; no model or embedding calls",
+  "pdf_sha256": "e75e76bbf01fb7ef9a39539a0330a9b7ff6901a525b9dcceb6e64ba0836b4271",
+  "text_sha256": "37cb966a241936620870ab5aa51a6297f7eec215ec694070e649161481cf02ab",
+  "text_source": "backend/eval/contracts/lease_en.txt",
+  "analysis_source": "backend/eval/results/analysis_20261028-161231.json",
+  "preview": "RESIDENTIAL LEASE AGREEMENT\n\nThis Residential Lease Agreement (\"Lease\") is made between Prairie Lane Properties LLC (\"Landlord\") and the undersigned resident or residents (\"Tenant\"). Each person who s",
+  "n_chunks": 24,
+  "questions": [
+    {
+      "question": "押金多久退还？",
+      "answer": "预设示例：合同第5条写明，搬离后45日内返还押金，扣除合法扣款；损坏扣款须提供逐项说明。这里描述合同约定，不判断它是否满足法律要求。【合同原文1】",
+      "sources": [
+        {
+          "chunk": 4,
+          "text": " Tenant as payment of the last month's rent. Landlord may deduct from the security deposit unpaid rent, unpaid utilities, and the cost of repairing damage beyond ordinary wear and tear. Within 45 days after Tenant vacates, Landlord shall return the security deposit, less any lawful deductions, to the forwarding address provided by Tenant in writing. If any deduction is made for damage, Landlord shall provide an itemized statement of the damage and the estimated or actual cost of repair, with pai"
+        },
+        {
+          "chunk": 5,
+          "text": "d the estimated or actual cost of repair, with paid receipts or copies of them when available.\n\n6. UTILITIES. Tenant shall establish service in Tenant's own name and pay for electricity, gas, internet, and cable television. Landlord shall provide water, sewer, and trash collection, and the cost of these services is included in the rent. Tenant shall keep heat at no less than 55 degrees Fahrenheit at all times to prevent pipes from freezing, and Tenant shall be responsible for any damage caused b"
+        }
+      ]
+    },
+    {
+      "question": "会自动续租吗？",
+      "answer": "预设示例：合同第12条写有自动续租一年、按房东确定的市场租金续租的约定，除非一方至少提前60日书面通知不续租。这里不判断该条款的法律效力。【合同原文1】",
+      "sources": [
+        {
+          "chunk": 11,
+          "text": "h the termination date. Tenant shall not be entitled to a refund of any rent or fees paid in advance.\n\n12. AUTOMATIC RENEWAL. This Lease shall automatically renew for an additional twelve-month term at the then-current market rent set by Landlord unless either party gives written notice of non-renewal at least 60 days before the end of the term. Landlord shall inform Tenant of the renewal rent at least 75 days before the end of the term.\n\n13. JOINT AND SEVERAL LIABILITY. If more than one person "
+        },
+        {
+          "chunk": 12,
+          "text": "NT AND SEVERAL LIABILITY. If more than one person signs this Lease as Tenant, each Tenant is jointly and severally liable for all obligations under this Lease, including the full amount of rent and any damages, regardless of which Tenant caused the obligation. The move-out of one Tenant does not release that Tenant from this Lease.\n\n14. PETS. No animals of any kind, including animals belonging to guests, may be kept in the Premises, even temporarily, without Landlord's prior written consent. If "
+        }
+      ]
+    }
+  ]
+}

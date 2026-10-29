@@ -1,0 +1,13 @@
+.demo-notice {
+  max-width: 52rem;
+  margin: 0 auto 1.5rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  text-align: left;
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  background: var(--accent-bg);
+}
+.demo-notice p { margin: 0.5rem 0; }
+.demo-notice a { color: var(--text-h); }
+@media (max-width: 600px) { .demo-notice { margin-inline: 1rem; } }

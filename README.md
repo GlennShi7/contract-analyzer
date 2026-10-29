@@ -6,6 +6,24 @@ A full-stack prototype that extracts text from PDF contracts, generates structur
 
 Built to help people understand unfavorable terms in rental and employment contracts before signing, and find relevant contract clauses when questions arise afterward.
 
+## Try the replay without an API key
+
+```bash
+cd frontend
+npm ci
+npm run demo
+```
+
+Open `http://127.0.0.1:5174`, download and upload the supplied synthetic PDF, choose Urbana, and explore the recorded risk report. Two preset questions demonstrate answers with source excerpts. This mode makes no model calls: analysis replays a saved run with known reasoning errors, and Q&A is scripted. See [the walkthrough, scope and reproduction instructions](demo/README.md). Use the normal app below for actual PDF parsing, retrieval and new generation.
+
+Captured from the actual replay UI; the banner identifies the historical output and its limitations:
+
+![Recorded risk report in the replay UI](docs/images/demo-overview.png)
+
+Scripted Q&A with exact original-text chunks:
+
+![Scripted contract question and source excerpts](docs/images/demo-questions.png)
+
 ## Implemented
 
 - React frontend: upload a PDF, select the applicable region, view risk cards and official legal sources, and ask questions with expandable contract excerpts.

@@ -1,0 +1,2 @@
+# Optional: only needed to regenerate the committed demo PDF.
+reportlab==4.4.9
