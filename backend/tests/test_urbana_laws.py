@@ -87,3 +87,28 @@ def test_legal_sources_reject_untrusted_urls(url):
     template = load_laws("lease", "us_il_urbana")[0].model_dump(mode="json")
     with pytest.raises(ValidationError):
         LawArticle.model_validate(template | {"source_url": url})
+
+
+def test_address_and_model_summary_cannot_mark_city_boundary_verified():
+    text = "Residential Lease. Landlord and Tenant. Property located at 1 Main Street, Urbana, Illinois. Security deposit."
+    output = sample_output() | {"summary": "已核实位于 Urbana 市界内。"}
+    client, _ = stub_client([(json.dumps(output), "stop")])
+    report = analyze_contract(text, client, jurisdiction="us_il_urbana")
+    # Scope is computed by the server, even when a model overclaims in its summary.
+    assert "尚未核验市界" in report.legal_scope
+    assert "邮寄地址或地区选择不等于市界确认" in report.legal_scope
+
+
+def test_live_request_limit_also_blocks_a_correction_request(monkeypatch):
+    import sys
+    import main
+    from eval.analysis_eval import main as run_live_eval
+
+    client, calls = stub_client([("invalid json", "stop")])
+    monkeypatch.setattr(main, "get_llm_client", lambda: client)
+    monkeypatch.setattr(sys, "argv", ["analysis_eval", "--live", "--contracts", "lease_en",
+                                     "--english-jurisdiction", "us_il_urbana", "--max-requests", "1"])
+    with pytest.raises(SystemExit) as error:
+        run_live_eval()
+    assert len(calls) == 1
+    assert "after 1 request(s)" in str(error.value)

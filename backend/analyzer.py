@@ -207,7 +207,7 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
         law_reference_validity_rate=references_valid / references_total if references_total else None,
     )
     if laws and laws[0].jurisdiction == "us_il_urbana":
-        scope = "Urbana, Illinois 住宅租赁：市条例、伊利诺伊州法及联邦法参考。房产须在 Urbana 市界内；市条例采用文件标识为 20260417 的官方导出版本，需核对后续修订及各条适用条件。"
+        scope = "Urbana, Illinois 住宅租赁：市条例、伊利诺伊州法及联邦法参考。房产须在 Urbana 市界内；本工具尚未核验市界，邮寄地址或地区选择不等于市界确认。市条例采用文件标识为 20260417 的官方导出版本，需核对后续修订及各条适用条件。"
     else:
         scope = "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。" if laws else "未注入适用法律，仅提供合同文字风险提示。"
     logger.info("analysis_grounding model=%s metrics=%s", model, metrics.model_dump())
@@ -237,11 +237,15 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
         "每张卡片的 clause_text 必须逐字引用合同，不能改写、拼接或编造；没有对应原文的事项可在 summary 中提示核实。"
         "legal_basis 只能列出所提供法条的 id；不确定时留空，不得凭记忆增加法律、司法解释或条号。"
         "引用条文时注意适用条件、例外和但书；不能把对用户不利直接等同于违法或无效。"
+        "区分合同已经写明的事实、尚未核实的事实与附条件的法律判断；标题、summary、explanation 和 suggestion 必须保持相同的限定，不能正文说待核实却在标题断言违法。"
+        "条件限制不等于绝对禁止；合同固定收费金额不等于已证明超过实际成本。不得把某种初步证据写成唯一法定形式，也不得省略会改变结论的例外。"
         "如果法条列表为空，只讨论合同文字及应核实事项，不得断言法定权利、义务或法律效力。"
         f"用户选择的地区为 {jurisdiction}，法条资料核对日为 {LAW_SNAPSHOT_DATE.isoformat()}。"
         "英文不代表适用美国法，中文也不代表适用中国法。Urbana 不等于 Champaign 或 Chicago，禁止套用芝加哥租赁条例。"
         "州法、市条例与联邦法可同时适用，不能只因保护标准不同就认定冲突。逐条注意地域、单位数量、房龄、租约签订时间、适用例外和通知程序。"
         "缺少房龄、楼栋单位数等事实时标为需核实，不能推断违法；不得建议未经法定通知程序直接停付租金。"
+        "没有提供市界查询证据，不得凭地址、邮编、合同自述或用户地区选择声称房产已核实位于 Urbana 市界内；可以说明在确属市界且符合例外条件时的规则。"
+        "先检查全部合同条款，再按后果严重程度选择风险；关注进入住宅、人身安全、驱逐、维修、费用和续租等实际存在的条款，不为凑满卡片而重复同一问题。卡片上限不代表已穷尽所有风险。"
         f"contract_type 必须是 {kind}。JSON 示例：{json.dumps(example, ensure_ascii=False)}\n"
         f"JSON schema：{json.dumps(GeneratedAnalysis.model_json_schema(), ensure_ascii=False)}\n"
         f"可引用的法条：{json.dumps(law_context, ensure_ascii=False)}"

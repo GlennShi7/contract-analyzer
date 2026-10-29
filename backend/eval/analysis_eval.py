@@ -47,7 +47,7 @@ def main():
         try:
             report = analyze_contract(text, counted, jurisdiction=jurisdiction)
         except (OpenAIError, AnalysisOutputError, RuntimeError) as error:
-            raise SystemExit(f"Live verification failed: {type(error).__name__}, HTTP {getattr(error, 'status_code', None)}; no metrics saved.") from None
+            raise SystemExit(f"Live verification failed after {len(requests)} request(s): {type(error).__name__}, HTTP {getattr(error, 'status_code', None)}; no metrics saved.") from None
         rows.append({"contract": name, "text_sha256": sha256(text.encode()).hexdigest(),
                      "jurisdiction": jurisdiction, "result": report.model_dump(mode="json")})
         metrics = report.grounding
@@ -66,6 +66,8 @@ def main():
         "selected_contracts": list(dict.fromkeys(args.contracts)), "max_requests": args.max_requests,
         "law_sources_sha256": sha256((HERE.parent / "laws/SOURCES.json").read_bytes()).hexdigest(),
         "urbana_law_sources_sha256": sha256((HERE.parent / "laws/SOURCES_US_URBANA.json").read_bytes()).hexdigest(),
+        "law_library_sha256": {name: sha256((HERE.parent / "laws" / name).read_bytes()).hexdigest()
+                               for name in ("labor.json", "tenancy.json", "tenancy_us_il_urbana.json")},
         "summary": {"contracts": len(rows), "requests": len(requests), "cards": cards,
                     "verified_quotes": verified, "quote_verification_rate": verified / cards if cards else None,
                     "law_references": references, "valid_law_references": valid,

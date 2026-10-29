@@ -27,7 +27,8 @@ def stub_client(outputs):
         # Copy messages, because the production correction path appends to its list.
         calls.append(kwargs | {"messages": [dict(message) for message in kwargs["messages"]]})
         content, finish = next(iterator)
-        return SimpleNamespace(choices=[SimpleNamespace(finish_reason=finish, message=SimpleNamespace(content=content))])
+        return SimpleNamespace(model="test-model", usage=None,
+                               choices=[SimpleNamespace(finish_reason=finish, message=SimpleNamespace(content=content))])
 
     return SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=create))), calls
 
