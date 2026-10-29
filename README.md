@@ -1,12 +1,12 @@
 # Contract Risk Analyzer / 合同防踩坑工具
 
-A full-stack prototype that extracts text from PDF contracts, generates structured risk cards with DeepSeek, and supports semantic clause Q&A through a FastAPI endpoint.
+A full-stack prototype that extracts text from PDF contracts, generates structured risk cards with DeepSeek, and supports semantic clause Q&A in the browser and through a FastAPI endpoint.
 
 Built to help people understand unfavorable terms in rental and employment contracts before signing, and find relevant contract clauses when questions arise afterward.
 
 ## Implemented
 
-- React frontend: upload a PDF, select the applicable region, and view risk cards, quoted clauses, and expandable official legal sources.
+- React frontend: upload a PDF, select the applicable region, view risk cards and official legal sources, and ask questions with expandable contract excerpts.
 - FastAPI backend: PDF extraction with pdfplumber and whole-document analysis through the DeepSeek API.
 - Hand-written RAG: overlapping character chunks, multilingual MiniLM embeddings, persistent ChromaDB, and document-filtered top-3 retrieval.
 - Stable SHA-256 document IDs, server-side text persistence, repeat-upload replacement, and source excerpts in Q&A responses.
@@ -16,7 +16,7 @@ Built to help people understand unfavorable terms in rental and employment contr
 - Urbana, Illinois residential lease profile: 21 municipal, 15 state, and 7 federal provisions with applicability notes and official-source metadata.
 - JSON mode, Pydantic validation, one correction retry, contract-quote matching, and filtering of unknown legal reference IDs.
 
-The Q&A frontend is not implemented yet. Legal profiles require an explicit region choice and a recognized contract type. English and Chinese keywords classify the contract type; language does not select governing law.
+Legal profiles require an explicit region choice and a recognized contract type. English and Chinese keywords classify the contract type; language does not select governing law.
 
 ## Architecture
 
@@ -71,6 +71,14 @@ npm run dev
 
 Open [the frontend](http://localhost:5173). Upload a text-based PDF, confirm the applicable region, then click analyze. The region defaults to other/unknown; choose Chinese mainland or Urbana, Illinois to enable a supported legal profile. The frontend defaults to `http://127.0.0.1:8000`; set `VITE_API_URL` to override it. The backend currently allows the frontend CORS origin `http://localhost:5173`.
 
+## Contract Q&A
+
+After uploading, use **问问这份合同** to ask about deposit returns, payment deadlines, repairs or other contract terms. The browser sends the current document ID and question to `/ask`, then displays the latest answer and expandable numbered contract excerpts. Q&A is independent of the legal-region selector; it interprets retrieved contract text without injecting statutes or establishing legal validity. Each question stands alone, without prior conversation history.
+
+Switching files clears the question and answer and aborts the pending browser fetch. Cancellation does not guarantee that server-side generation or billing has stopped. Blank submissions and concurrent duplicate submissions are blocked. Responses with empty answers or mismatched document/source IDs are rejected. Empty or truncated model responses return 502 rather than a successful blank answer. Retrieved excerpts still need human review: finding a passage does not prove that it supports the answer, and other relevant terms may be missing.
+
+Validation: 81 backend tests passed; frontend build and lint passed; isolated headless Edge checks exercised the actual React interface with a local mock API, including errors, source isolation, literal-text rendering, file changes during pending requests, and mobile width. No paid API request was made for this feature. Reproduce browser checks with `npm run check:qa-ui` in `frontend`; see [frontend instructions](frontend/README.md).
+
 ## API
 
 | Endpoint | Request | Response |
@@ -80,7 +88,7 @@ Open [the frontend](http://localhost:5173). Upload a text-based PDF, confirm the
 | `POST /analyze` | `{"doc_id": "<64-character lowercase SHA-256>", "jurisdiction": "cn"}` | `doc_id`, structured `result` |
 | `POST /ask` | `{"doc_id": "<SHA-256>", "question": "When is the deposit returned?"}` | `doc_id`, `answer`, `sources` |
 
-The Q&A endpoint can be tried through `/docs`; it is not connected to the React interface yet.
+The Q&A endpoint is connected to the React interface and can also be tried through `/docs`. It makes one generation request per question, with SDK retries disabled.
 
 Each source has `doc_id`, a zero-based `chunk` index, and the retrieved `text`. Invalid or textless PDFs return 400; unknown document IDs return 404; a missing index returns 409; malformed request fields return 422; DeepSeek request failures return 502. An unconfigured API key returns 503 when generation is requested.
 

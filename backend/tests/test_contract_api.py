@@ -155,3 +155,28 @@ def test_invalid_structured_analysis_returns_502_after_one_retry(api, monkeypatc
     assert response.status_code == 502
     assert "格式校验" in response.json()["detail"]
     assert len(calls) == 2
+
+
+@pytest.mark.parametrize("content,finish,empty_choices", [
+    (None, "stop", False), ("   ", "stop", False),
+    ("unfinished", "length", False), ("blocked", "content_filter", False),
+    ("unused", "stop", True),
+])
+def test_ask_rejects_empty_or_incomplete_model_answers_without_retry(api, monkeypatch, content, finish, empty_choices):
+    from types import SimpleNamespace
+    import main
+    client, _ = api
+    calls = []
+    monkeypatch.setattr(main, "contract_text", lambda doc_id: "Contract text.")
+    monkeypatch.setattr(main, "search_chunks", lambda question, doc_id, **kwargs: [{"text": "clause", "doc_id": doc_id, "chunk": 0}])
+
+    def complete(**kwargs):
+        calls.append(kwargs)
+        choices = [] if empty_choices else [SimpleNamespace(finish_reason=finish, message=SimpleNamespace(content=content))]
+        return SimpleNamespace(choices=choices)
+
+    monkeypatch.setattr(main.get_llm_client().chat.completions, "create", complete)
+    response = client.post("/ask", json={"doc_id": "a" * 64, "question": "deposit?"})
+    assert response.status_code == 502
+    assert "完整有效" in response.json()["detail"]
+    assert len(calls) == 1

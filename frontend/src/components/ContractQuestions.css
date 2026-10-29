@@ -1,0 +1,47 @@
+.contract-questions {
+  text-align: left;
+  width: 100%;
+  max-width: 52rem;
+  box-sizing: border-box;
+  margin: 2rem auto;
+  padding: 1.25rem;
+  border-top: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+
+.contract-questions p { margin: 0.75rem 0; }
+.contract-questions form { display: grid; gap: 0.65rem; margin: 1rem 0; }
+.contract-questions textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 6rem;
+  resize: vertical;
+  padding: 0.75rem;
+  font: inherit;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.contract-questions button {
+  justify-self: start;
+  padding: 0.55rem 1.1rem;
+  font: inherit;
+  color: var(--bg);
+  background: var(--text-h);
+  border: 1px solid var(--text-h);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.contract-questions button:disabled { opacity: 0.55; cursor: default; }
+.contract-questions :is(textarea, button, summary):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.contract-questions details { margin: 0.75rem 0; }
+.contract-questions summary { cursor: pointer; }
+.contract-questions blockquote {
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  background: var(--code-bg);
+  white-space: pre-wrap;
+}
+.contract-answer { white-space: pre-wrap; }
+.contract-questions-note { font-size: 0.9rem; }
