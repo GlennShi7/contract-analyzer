@@ -111,6 +111,8 @@ The table above records the earlier unknown-region baseline, before the Urbana p
 
 The [2026-10-28 Urbana-profile run](backend/eval/results/analysis_20261028-161231.json) analyzed only the existing synthetic English lease: one request, no retry, 12/12 exact contract quotes and 18/18 references to supplied IDs. It used 26,207 total tokens. [Source spot-checks and limitations](backend/eval/URBANA_ANALYSIS_REVIEW_2026-10-28.md) document remaining errors, including treating consent-based subletting as a prohibition, overstating proof requirements for maintenance agreements, and assuming city boundaries from an address. These counts do not establish legal accuracy or completeness.
 
+The [interpretation follow-up](backend/eval/URBANA_REASONING_FOLLOWUP_2026-10-28.md) adds more precise applicability guidance and an explicit unverified-boundary notice. Its one-request live rerun produced no validated report; the request cap blocked a correction attempt. No reasoning improvement is claimed. The evaluator now preserves rejected-response diagnostics with no success metrics. Local tests: 76 passed.
+
 An optional script is available for explicitly authorized, billable verification on the three synthetic contracts:
 
 ```bash

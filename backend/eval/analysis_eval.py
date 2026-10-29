@@ -11,6 +11,15 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 
 
+def save_result(result, *, prefix="analysis"):
+    out = HERE / "results"
+    out.mkdir(exist_ok=True)
+    path = out / f"{prefix}_{datetime.now().strftime('%Y%m%d-%H%M%S-%f')}.json"
+    path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("Saved", path.relative_to(HERE.parent))
+    return path
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--live", action="store_true", help="enable billable DeepSeek requests for selected synthetic fixtures")
@@ -29,6 +38,7 @@ def main():
     from openai import OpenAIError
     client = get_llm_client()
     requests = []
+    responses = []
 
     def complete(**kwargs):
         if len(requests) >= args.max_requests:
@@ -37,6 +47,8 @@ def main():
         requests.append(record)
         response = client.chat.completions.create(**kwargs)
         record.update(status="completed", model=response.model, usage=response.usage.model_dump() if response.usage else None)
+        responses.append({"choices": [{"finish_reason": choice.finish_reason, "content": choice.message.content}
+                                       for choice in response.choices]})
         return response
 
     counted = SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=complete)))
@@ -47,7 +59,15 @@ def main():
         try:
             report = analyze_contract(text, counted, jurisdiction=jurisdiction)
         except (OpenAIError, AnalysisOutputError, RuntimeError) as error:
-            raise SystemExit(f"Live verification failed after {len(requests)} request(s): {type(error).__name__}, HTTP {getattr(error, 'status_code', None)}; no metrics saved.") from None
+            save_result({"status": "failed", "evaluated_at_utc": datetime.now(timezone.utc).isoformat(),
+                         "contract": name, "text_sha256": sha256(text.encode()).hexdigest(),
+                         "jurisdiction": jurisdiction, "max_requests": args.max_requests,
+                         "analyzer_sha256": sha256((HERE.parent / "analyzer.py").read_bytes()).hexdigest(),
+                         "failure_type": type(error).__name__, "http_status": getattr(error, "status_code", None),
+                         "requests": requests, "responses": responses, "completed_rows": rows,
+                         "metrics": None, "note": "Synthetic fixtures only. Raw responses are diagnostics, not validated reports or legal-accuracy results."},
+                        prefix="analysis_failed")
+            raise SystemExit(f"Live verification failed after {len(requests)} request(s): {type(error).__name__}, HTTP {getattr(error, 'status_code', None)}; diagnostics saved, no success metrics.") from None
         rows.append({"contract": name, "text_sha256": sha256(text.encode()).hexdigest(),
                      "jurisdiction": jurisdiction, "result": report.model_dump(mode="json")})
         metrics = report.grounding
@@ -75,12 +95,8 @@ def main():
         "limitations": "Checks quote matching and injected-ID membership before filtering; does not validate legal applicability, analysis correctness, risk scores, or recall.",
         "requests": requests, "rows": rows,
     }
-    out = HERE / "results"
-    out.mkdir(exist_ok=True)
-    path = out / f"analysis_{datetime.now().strftime('%Y%m%d-%H%M%S')}.json"
-    path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result["summary"], ensure_ascii=False))
-    print("Saved", path.relative_to(HERE.parent))
+    save_result(result)
 
 
 if __name__ == "__main__":

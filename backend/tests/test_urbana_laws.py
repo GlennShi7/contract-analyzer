@@ -89,7 +89,7 @@ def test_legal_sources_reject_untrusted_urls(url):
         LawArticle.model_validate(template | {"source_url": url})
 
 
-def test_address_and_model_summary_cannot_mark_city_boundary_verified():
+def test_server_scope_keeps_city_boundary_unverified_when_model_overclaims():
     text = "Residential Lease. Landlord and Tenant. Property located at 1 Main Street, Urbana, Illinois. Security deposit."
     output = sample_output() | {"summary": "已核实位于 Urbana 市界内。"}
     client, _ = stub_client([(json.dumps(output), "stop")])
@@ -102,9 +102,12 @@ def test_address_and_model_summary_cannot_mark_city_boundary_verified():
 def test_live_request_limit_also_blocks_a_correction_request(monkeypatch):
     import sys
     import main
+    import eval.analysis_eval as live_eval
     from eval.analysis_eval import main as run_live_eval
 
     client, calls = stub_client([("invalid json", "stop")])
+    saved = []
+    monkeypatch.setattr(live_eval, "save_result", lambda result, **kwargs: saved.append(result))
     monkeypatch.setattr(main, "get_llm_client", lambda: client)
     monkeypatch.setattr(sys, "argv", ["analysis_eval", "--live", "--contracts", "lease_en",
                                      "--english-jurisdiction", "us_il_urbana", "--max-requests", "1"])
@@ -112,3 +115,24 @@ def test_live_request_limit_also_blocks_a_correction_request(monkeypatch):
         run_live_eval()
     assert len(calls) == 1
     assert "after 1 request(s)" in str(error.value)
+    assert len(saved) == 1
+    assert saved[0]["status"] == "failed"
+    assert saved[0]["metrics"] is None
+    assert saved[0]["responses"][0]["choices"][0]["content"] == "invalid json"
+
+
+def test_truncated_response_diagnostic_preserves_finish_reason(monkeypatch):
+    import sys
+    import main
+    import eval.analysis_eval as live_eval
+
+    client, calls = stub_client([('{"summary": "unfinished', "length")])
+    saved = []
+    monkeypatch.setattr(main, "get_llm_client", lambda: client)
+    monkeypatch.setattr(live_eval, "save_result", lambda result, **kwargs: saved.append(result))
+    monkeypatch.setattr(sys, "argv", ["analysis_eval", "--live", "--contracts", "lease_en", "--max-requests", "1"])
+    with pytest.raises(SystemExit):
+        live_eval.main()
+    assert len(calls) == 1
+    assert saved[0]["responses"][0]["choices"][0]["finish_reason"] == "length"
+    assert saved[0]["metrics"] is None
