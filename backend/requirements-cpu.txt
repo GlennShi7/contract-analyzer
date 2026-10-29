@@ -1,0 +1,4 @@
+# CPU-only runtime for Linux containers and CI; direct application pins remain shared.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.12.1+cpu
+-r requirements.txt

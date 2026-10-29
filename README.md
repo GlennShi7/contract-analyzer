@@ -1,5 +1,7 @@
 # Contract Risk Analyzer / 合同防踩坑工具
 
+[![CI](https://github.com/GlennShi7/contract-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/GlennShi7/contract-analyzer/actions/workflows/ci.yml)
+
 A full-stack prototype that extracts text from PDF contracts, generates structured risk cards with DeepSeek, and supports semantic clause Q&A in the browser and through a FastAPI endpoint.
 
 Built to help people understand unfavorable terms in rental and employment contracts before signing, and find relevant contract clauses when questions arise afterward.
@@ -39,6 +41,8 @@ The frontend retains the document ID instead of receiving and resubmitting the f
 Document IDs use the complete SHA-256 hash of the uploaded PDF bytes. Renaming the same file preserves its ID; different contents with the same filename receive different IDs. Re-uploading replaces its indexed chunks and removes stale chunks. Local data is excluded from Git. PDFs uploaded before this change need to be uploaded again to create the stored text and document metadata.
 
 ## Run locally
+
+For a container-based demo, see [Docker Compose setup](DEPLOYMENT.md). It serves the app at `http://localhost:8080` with a same-origin API proxy and persistent named volumes. The [CI workflow](.github/workflows/ci.yml) checks backend tests, frontend build/lint/browser behavior, and container startup without paid model calls.
 
 The existing backend environment uses Python 3.14.5. The existing frontend environment uses Node.js 26.5.1 and npm 11.17.0. These record the development environment, rather than a compatibility guarantee for every platform.
 

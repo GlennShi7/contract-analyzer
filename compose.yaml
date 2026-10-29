@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./backend
+    env_file: ./backend/.env
+    volumes:
+      - contracts:/app/data
+      - vectors:/app/chroma_db
+      - model-cache:/app/model_cache
+  frontend:
+    build: ./frontend
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+        restart: true
+
+volumes:
+  contracts:
+  vectors:
+  model-cache:

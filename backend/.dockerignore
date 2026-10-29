@@ -1,0 +1,11 @@
+**
+!requirements.txt
+!requirements-cpu.txt
+!analyzer.py
+!chunker.py
+!documents.py
+!embedder.py
+!main.py
+!parser.py
+!laws/
+!laws/**
