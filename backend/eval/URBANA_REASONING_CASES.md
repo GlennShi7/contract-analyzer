@@ -12,3 +12,7 @@ These are short synthetic counterexamples for reviewing the distinctions observe
 | Mailing address | `Premises: 1 Main Street, Urbana, IL.` User selects Urbana; no boundary evidence supplied. | Say municipal applicability depends on city limits; do not assert that the location has been independently verified. | Municipal scope, URBANA-12.5-2 |
 
 For a future evaluation, include both sides of each distinction rather than only the original long lease. Keep expert adjudication, model-generation behavior, quote matching and law-ID membership as separate measurements.
+
+## Expanded diagnostic materials, 2026-10-29
+
+The [new review protocol](REASONING_REVIEW.md) adds eight contrast pairs (16 draft inputs), including estimated deposit receipts, interest silence versus express waiver, and entry/showing distinctions. They have not been sent to a model and are not held-out cases or adjudicated legal labels. A separate seven-record audit of the existing full English lease result is evidence-checked locally; it must not be presented as generated results on the new inputs.

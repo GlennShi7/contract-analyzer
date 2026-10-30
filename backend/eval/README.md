@@ -60,3 +60,7 @@ This is separate from the 56-question retrieval experiment. It does not establis
 ## Current-prompt follow-up, 2026-10-29
 
 The [new three-contract rerun and source-based review](ANALYSIS_REVIEW_2026-10-29.md) records three first-response successes, 36/36 exact quotes and 75/75 supplied-ID references. Three of six newly authorized requests were used; total usage was 45,731 tokens. [Validated reports and usage](results/analysis_20261029-195508-505323.json) retain analyzer, law-library and manifest hashes. The review identifies remaining unsupported contract facts, omitted exceptions and coverage gaps. These are repeated existing fixtures, not independent cases or a legal-accuracy benchmark. The October 27 and 28 results remain unchanged historical evidence.
+
+## Offline reasoning-review materials
+
+[Protocol and commands](REASONING_REVIEW.md), [16 paired draft inputs](reasoning_cases.json), and [seven source-anchored historical observations](reasoning_audit_2026-10-29.json) now support a local evidence-validation workflow: `python -m eval.reasoning_review`. It calls no provider and reports legal accuracy/recall as null. The new inputs have not been generated or independently adjudicated; the historical observations are separate from those cases. Source quotes, output locations and text fingerprints are checked to detect fabricated or stale evidence.

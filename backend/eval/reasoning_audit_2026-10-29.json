@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "review_status": "single_reviewer_source_check",
+  "reviewed_on": "2026-10-29",
+  "report_path": "backend/eval/results/analysis_20261029-195508-505323.json",
+  "report_text_sha256": "2c1af51aa10eab152fa0e07728982c7338dc4ee966fa752161739706ac84d94d",
+  "scope": "Seven selected observations on the existing full English lease report, not scores on the 16 new contrast inputs; not exhaustive or independent legal adjudication.",
+  "findings": [
+    {
+      "id": "summary_interest_waiver",
+      "verdict": "contradicted",
+      "evidence": [
+        {
+          "pointer": [
+            "rows",
+            2,
+            "result",
+            "summary"
+          ],
+          "quote": "放弃押金利息"
+        }
+      ],
+      "rationale": "The complete synthetic lease contains no interest-waiver clause. The summary asserts an explicit waiver without support. The deposit quote is context, not automatic proof of absence; the reviewer read the full contract. This is separate from whether interest is owed.",
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-19",
+          "text_sha256": "98e142528686f4b7834d09cbad53c542c689f2e5bf74182dee925d4bed834119",
+          "quote": "A landlord who receives a security deposit of one hundred dollars ($100.00) or more\nfrom a tenant to secure the payment of rent or to compensate for damage to property\nshall pay interest to the tenant, computed from the date the deposit is paid, at a\nrate equal to the interest paid by the largest commercial bank, as measured by total\nassets, having its main banking premises in Champaign County, Illinois, on minimum\ndeposit passbook savings accounts as of the thirtieth of June immediately preceding\nthe inception of the rental agreement on any such deposit held by the landlord for\nmore than six (6) months."
+        }
+      ],
+      "contract_evidence": {
+        "path": "backend/eval/contracts/lease_en.txt",
+        "text_sha256": "37cb966a241936620870ab5aa51a6297f7eec215ec694070e649161481cf02ab",
+        "quote": "Tenant shall pay a security deposit of $1,250.00 upon signing this Lease."
+      }
+    },
+    {
+      "id": "belongings_exception",
+      "verdict": "omitted",
+      "evidence": [
+        {
+          "pointer": [
+            "rows",
+            2,
+            "result",
+            "cards",
+            7,
+            "explanation"
+          ],
+          "quote": "仅对合理认为无价值或易腐物品可立即处置"
+        }
+      ],
+      "rationale": "The word only excludes the additional supplied reasonable-belief low-value/storage-cost exception. This is a material omission in the description of the rule, not a wrong-law-ID finding.",
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-22",
+          "text_sha256": "81504cf0cd8414b8856be537bd02dcf798b36622af402899b361268705e0f8b7",
+          "quote": "If the tenant abandons the rental unit, the landlord may take possession of the rental\nunit.\n(c)\nIf the tenant abandons the rental unit or fails to remove his or her personal property\nfrom the premises after termination of a rental agreement, the landlord shall leave\nthe abandoned property in the rental unit or remove and store all abandoned property\nfrom the rental unit. The landlord may charge the tenant for the actual costs of storage.\nThe landlord may dispose of the property thirty (30) days after mailing written notice\nto tenant's last known address, if the tenant does not claim the property within that\ntime. Notwithstanding the foregoing, if the landlord reasonably believes such abandoned\nproperty to be valueless or of such little value that the cost of storage would exceed\nthe amount that would be realized from sale, or if such property is subject to spoilage,\nthe landlord may immediately dispose of such property."
+        }
+      ]
+    },
+    {
+      "id": "deposit_estimate_path",
+      "verdict": "omitted",
+      "evidence": [
+        {
+          "pointer": [
+            "rows",
+            2,
+            "result",
+            "cards",
+            4,
+            "explanation"
+          ],
+          "quote": "30 天内提供逐项损坏清单及收据"
+        },
+        {
+          "pointer": [
+            "rows",
+            2,
+            "result",
+            "cards",
+            4,
+            "suggestion"
+          ],
+          "quote": "否则 45 天内全额退还"
+        }
+      ],
+      "rationale": "The explanation/replacement omits the statutory path allowing estimated costs followed by receipts within 30 days after the estimate statement. Do not read this record as a finding that every deposit deduction is a damage deduction.",
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-20",
+          "text_sha256": "71eab736a019d091ff562fce80bf78cebae62a9c4c0181ea4929870cb5a32091",
+          "quote": "If estimated cost is given, the lessor shall furnish the lessee with paid receipts,\nor copies thereof, within thirty (30) days from the date the statement showing estimated\ncost was furnished to the lessee, as required by this section. If no such statement\nand receipts, or copies thereof, are furnished to the lessee as required by this section,\nthe lessor shall return the security deposit in full within forty-five (45) days of\nthe date that the lessee vacated the premises."
+        }
+      ]
+    },
+    {
+      "id": "boundary_qualification",
+      "verdict": "supported_observation",
+      "evidence": [
+        {
+          "pointer": [
+            "rows",
+            2,
+            "result",
+            "summary"
+          ],
+          "quote": "未提供市界查询证据，不能据此确认该房产确在 Urbana 市界内"
+        }
+      ],
+      "rationale": "The summary preserves the unverified geographic condition rather than claiming an independent municipal-boundary lookup. This is an observation on one existing fixture.",
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-2",
+          "text_sha256": "c87051a2b559b3083fdd25daf12633126c0b7f833a4a73d9adac4f1f304e778f",
+          "quote": "This chapter applies to, regulates and determines certain rights, obligations and\nremedies under a rental agreement for a rental unit located within the city."
+        }
+      ]
+    },
+    {
+      "id": "fixed_fee_uncertainty",
+      "verdict": "supported_observation",
+      "evidence": [
+        {
+          "pointer": [
+            "rows",
+            2,
+            "result",
+            "cards",
+            10,
+            "explanation"
+          ],
+          "quote": "固定金额本身不等于已证明超标"
+        }
+      ],
+      "rationale": "For the key/lockout fee the report asks for actual costs. This does not assess the omitted $200 subletting-fee example or prove all fee reasoning is correct.",
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-10",
+          "text_sha256": "d30478b538d49cca8f2d88150daac024953414ce4c149046b5369f5395f72706",
+          "quote": "Providing for tenant's payment of lock-out charges, sublet fees, late checkout charges\nor any other fees or penalties that exceed the landlord's actual costs for services;"
+        }
+      ]
+    },
+    {
+      "id": "entry_issue_coverage",
+      "verdict": "supported_observation",
+      "evidence": [
+        {
+          "pointer": [
+            "rows",
+            2,
+            "result",
+            "cards",
+            8,
+            "clause_text"
+          ],
+          "quote": "During the last 90 days of the term, Landlord may show the Premises to prospective tenants on a schedule set by Landlord."
+        }
+      ],
+      "rationale": "A dedicated entry/showing card exists in this run, unlike the earlier run. Coverage of one issue is not an exhaustive recall measurement or a validation of every statement in the card.",
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-15",
+          "text_sha256": "47fc06c4266193a64b240fd16bad1daa9a41a8278b0db7abdfde804f5d4e5f25",
+          "quote": "From the time that either the landlord or the tenant notifies the other party that\nthe rental agreement will not be renewed, the landlord shall have the right to access,\nwithout twenty-four (24) hours advance notice, for the purpose of showing the rental\nunit to prospective tenants, provided that:\n(1)\nThe rental unit has not already been leased for the twelve-month period subsequent\nto the expiration of the rental agreement;\n(2)\nThe landlord enters only during two (2) specific one-hour periods on weekdays and\nthree (3) specific one-hour periods on weekends, selected by the tenant from among\nchoices offered by the landlord, during which the landlord will have daily access;\nand\n(3)\nThe landlord shall notify the tenant when the rental unit has been leased for the\ntwelve-month period subsequent to the expiration of the rental agreement."
+        }
+      ],
+      "contract_evidence": {
+        "path": "backend/eval/contracts/lease_en.txt",
+        "text_sha256": "37cb966a241936620870ab5aa51a6297f7eec215ec694070e649161481cf02ab",
+        "quote": "During the last 90 days of the term, Landlord may show the Premises to prospective tenants on a schedule set by Landlord."
+      }
+    },
+    {
+      "id": "subletting_distinction",
+      "verdict": "not_assessed",
+      "evidence": [
+        {
+          "pointer": [
+            "rows",
+            2,
+            "result",
+            "summary"
+          ],
+          "quote": "这是一份 Urbana 公寓（1207 West Oregon Street, Unit 3B）的住宅租约，租期 2026-08-15 至 2027-07-31，月租 1,250 美元，押金 1,250 美元。合同含有多项对租户明显不利的条款：自动续租、单方承担律师费、维修自付额、高额滞纳金与各类固定费用、提前解约费、放弃押金利息与部分法定程序等。需注意：合同自述位于 Urbana，但未提供市界查询证据，不能据此确认该房产确在 Urbana 市界内；Urbana 第 12.5 章仅适用于市界内的出租单元，并受第 12.5-2、12.5-7 条范围与例外限制。楼栋单元数、房龄、是否业主自住、是否公共住房等事实均未提供，涉及州法门槛（如 25 单元利息规则、6 单元以下维修法例外、1978 年前铅漆披露）的判断需核实。以下风险按严重程度排列，不构成对违法或无效的最终结论。"
+        }
+      ],
+      "rationale": "Reviewer inspected all 12 cards; there is no dedicated consent/subletting card. The report is linked in full. Neither a passed distinction nor complete risk coverage can be inferred from its absence.",
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-10",
+          "text_sha256": "d30478b538d49cca8f2d88150daac024953414ce4c149046b5369f5395f72706",
+          "quote": "Prohibiting the tenant from subletting the rental unit;"
+        }
+      ],
+      "contract_evidence": {
+        "path": "backend/eval/contracts/lease_en.txt",
+        "text_sha256": "37cb966a241936620870ab5aa51a6297f7eec215ec694070e649161481cf02ab",
+        "quote": "Tenant shall not sublet the Premises or assign this Lease without Landlord's prior written consent."
+      }
+    }
+  ]
+}
