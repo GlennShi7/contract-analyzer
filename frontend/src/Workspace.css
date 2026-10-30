@@ -136,3 +136,23 @@
   .upload-panel.compact .upload-actions > span { display: inline; font-size: 10px; }
   .upload-panel.compact .upload-preview { margin-top: 16px; }
 }
+
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+.language-toggle { padding: 4px 10px; min-height: 32px; border: 1px solid #dce5f2; border-radius: 7px; background: white; color: #526c92; font-size: 11px; }
+.language-toggle:hover { background: #eef3fc; }
+html[lang="en"] .brand strong { font-size: 15px; letter-spacing: -.2px; }
+html[lang="en"] .risk-list-heading h3 span { margin-left: 5px; }
+.report-summary > .content-language-note { margin: 0 0 10px; color: #74839a; font-size: 11px; }
+.error-message details { margin-top: 8px; font-size: 11px; }
+.error-message details p { margin-top: 7px; white-space: pre-wrap; }
+.error-message summary { cursor: pointer; }
+@media (max-width: 640px) {
+  .topbar-actions { gap: 6px; }
+  .topbar .mode-tag { display: none; }
+  html[lang="en"] .nav-link.current { padding-inline: 8px; }
+  html[lang="en"] .brand strong { font-size: 14px; }
+  html[lang="en"] .workspace-intro h1 { font-size: 26px; line-height: 1.3; }
+  html[lang="en"] .risk-list-heading { flex-wrap: wrap; gap: 6px; }
+  html[lang="en"] .question-form-footer { align-items: center; }
+  html[lang="en"] .question-form-footer .primary-button { white-space: nowrap; padding-inline: 12px; font-size: 12px; }
+}

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { startDemo } from './demo.mjs';
+import { translate } from '../src/messages.js';
 
 test('replay serves only its fixed synthetic fixture, recorded analysis and scripted questions', async () => {
   const server = await startDemo({ port: 0 });
@@ -33,7 +34,21 @@ test('replay serves only its fixed synthetic fixture, recorded analysis and scri
       assert.ok(answer.answer.startsWith('预设示例：'));
       assert.ok(answer.sources.every(source => source.doc_id === doc_id));
     }
+    for (const [english, chinese] of [['When is the deposit returned?', '押金多久退还？'], ['Does the lease renew automatically?', '会自动续租吗？']]) {
+      const alias = await (await post('ask', { doc_id, question: english })).json();
+      const original = await (await post('ask', { doc_id, question: chinese })).json();
+      assert.deepEqual(alias, original);
+    }
     assert.equal((await post('ask', { doc_id, question: '其他问题' })).status, 422);
     assert.equal((await post('ask', { doc_id: 'a'.repeat(64), question: '押金多久退还？' })).status, 404);
   } finally { await server.close(); }
+});
+
+test('UI translations preserve unknown content and interpolate only supplied values', () => {
+  assert.equal(translate('上传', 'en'), 'Upload');
+  assert.equal(translate('上传', 'zh'), '上传');
+  assert.equal(translate('__proto__', 'en'), '__proto__');
+  assert.equal(translate('constructor', 'en'), 'constructor');
+  assert.equal(translate('Original contract text.', 'en'), 'Original contract text.');
+  assert.equal(translate('· {count} 项提示', 'en', { count: 0 }), '· 0 total');
 });

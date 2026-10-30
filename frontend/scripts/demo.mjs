@@ -66,7 +66,9 @@ export async function startDemo({ port = 5174 } = {}) {
             reply(200, { doc_id: docId, result: recorded.result }); return;
           }
           if (pathname === '/demo-api/ask') {
-            const preset = fixture.questions.find(item => item.question === data.question?.trim());
+            const aliases = { 'When is the deposit returned?': '押金多久退还？', 'Does the lease renew automatically?': '会自动续租吗？' };
+            const question = data.question?.trim();
+            const preset = fixture.questions.find(item => item.question === (aliases[question] || question));
             if (!preset) { reply(422, { detail: '此回放仅支持“押金多久退还？”和“会自动续租吗？”两个预设问题。' }); return; }
             reply(200, { doc_id: docId, answer: preset.answer, sources: preset.sources.map(source => ({ ...source, doc_id: docId })) }); return;
           }

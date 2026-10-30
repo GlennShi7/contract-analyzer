@@ -32,6 +32,7 @@ const api = createServer(async (req, res) => {
     if (uploadMode === 'index503') {
       res.writeHead(503); res.end(JSON.stringify({ detail: '合同索引服务暂时不可用，首次使用需要下载嵌入模型' })); return;
     }
+    if (uploadMode === 'untranslated') { res.writeHead(503); res.end(JSON.stringify({ detail: '自定义服务提示：维护中' })); return; }
     if (uploadMode === 'invalid') { res.end(JSON.stringify({ preview: 'Incomplete response' })); return; }
     const doc_id = (++uploads === 1 ? 'a' : 'b').repeat(64);
     res.end(JSON.stringify({ doc_id, filename: 'lease.pdf', preview: 'Synthetic contract preview', n_chunks: 2 }));
@@ -107,7 +108,7 @@ async function upload(filename, expectedError) {
   await send('DOM.setFileInputFiles', { nodeId: input.nodeId, files: [fixture] });
   if (await evaluate('Boolean(document.querySelector(".contract-questions"))')) throw new Error('Selecting another file retained Q&A');
   const before = uploadRequests;
-  await evaluate('(() => { const b = Array.from(document.querySelectorAll("button")).find(b => b.textContent === "上传"); b.click(); b.click(); })()');
+  await evaluate('(() => { const b = document.querySelector(".upload-actions button"); b.click(); b.click(); })()');
   if (expectedError) {
     await until(`Array.from(document.querySelectorAll('[role=alert]')).some(el => el.textContent.includes(${JSON.stringify(expectedError)}))`);
     if (await evaluate('Boolean(document.querySelector("#contract-question"))')) throw new Error('Failed upload created document UI');
@@ -160,6 +161,8 @@ try {
   await send('Page.navigate', { url: 'http://127.0.0.1:18764' });
   await until('Boolean(document.querySelector("input[type=file]"))');
   if (await evaluate('Boolean(document.querySelector(".contract-questions"))')) throw new Error('Q&A shown before upload');
+  if (!(await evaluate('document.documentElement.lang === "en" && document.querySelector("h1").textContent === "Read the terms. See what matters."'))) throw new Error('English is not the default UI');
+
   for (const width of [320, 390, 768, 1200]) {
     await send('Emulation.setDeviceMetricsOverride', { width, height: width < 640 ? 844 : 1000, deviceScaleFactor: 1, mobile: width < 880 });
     if (!(await evaluate(`document.documentElement.scrollWidth <= ${width} + 1`))) throw new Error(`Home page overflows at ${width}px`);
@@ -167,6 +170,16 @@ try {
   }
   if (!(await evaluate('document.querySelector("input[type=file]").labels.length > 0'))) throw new Error('File picker has no label');
   await screenshot('workspace-empty-desktop.png');
+  await evaluate('document.querySelector("[data-language-toggle]").click()');
+  await until('document.documentElement.lang === "zh-CN"');
+  await send('Page.reload'); await pause(200);
+  await until('document.documentElement.lang === "zh-CN" && Boolean(document.querySelector("input[type=file]"))');
+  await evaluate('document.querySelector("[data-language-toggle]").click()');
+  await until('document.documentElement.lang === "en"');
+  await send('Page.reload'); await pause(200);
+  await until('document.documentElement.lang === "en" && Boolean(document.querySelector("input[type=file]"))');
+  if (requests.length || uploadRequests) throw new Error('Language preference triggered an API request');
+
   const oversized = path.join(out, 'oversized.pdf');
   const oversizedFile = await open(oversized, 'w');
   await oversizedFile.truncate(20 * 1024 * 1024 + 1);
@@ -175,13 +188,23 @@ try {
   const initialInput = await send('DOM.querySelector', { nodeId: initialDoc.root.nodeId, selector: 'input[type=file]' });
   await send('DOM.setFileInputFiles', { nodeId: initialInput.nodeId, files: [oversized] });
   await until('document.querySelector("[role=alert]")?.textContent.includes("20 MiB")');
-  if (uploadRequests !== 0 || !(await evaluate('Array.from(document.querySelectorAll("button")).find(b => b.textContent === "上传").disabled'))) throw new Error('Oversized file sent to API');
+  if (uploadRequests !== 0 || !(await evaluate('document.querySelector(".upload-actions button").disabled'))) throw new Error('Oversized file sent to API');
+  if (!(await evaluate('document.querySelector("[role=alert]").textContent.includes("The PDF exceeds 20 MiB")'))) throw new Error('English upload error missing');
+  await evaluate('document.querySelector("[data-language-toggle]").click()');
+  await until('document.documentElement.lang === "zh-CN" && document.querySelector("[role=alert]").textContent.includes("PDF 文件不能超过")');
   uploadMode = 'html413';
   await upload('proxy-limit.pdf', '文件或请求过大');
   uploadMode = 'index503';
   await upload('cache-error.pdf', '嵌入模型');
   uploadMode = 'invalid';
   await upload('invalid-response.pdf', '上传结果不完整');
+  await evaluate('document.querySelector("[data-language-toggle]").click()');
+  await until('document.documentElement.lang === "en"');
+  uploadMode = 'untranslated';
+  await upload('unknown-service.pdf', 'Upload failed');
+  if (!(await evaluate('document.querySelector("[role=alert] > p").textContent === "Upload failed. Please try again." && document.querySelector("[role=alert] details p").textContent === "自定义服务提示：维护中"'))) throw new Error('Unknown server detail was lost or mistranslated');
+  await evaluate('document.querySelector("[data-language-toggle]").click()');
+  await until('document.documentElement.lang === "zh-CN"');
   uploadMode = 'ok';
   await upload('first.pdf');
   if (!(await evaluate('document.querySelector(".contract-questions button").disabled'))) throw new Error('Empty question enabled');
@@ -204,7 +227,14 @@ try {
   await until('document.querySelectorAll("[data-qa-status=complete]").length === 2');
   if (!(await evaluate('document.querySelector(".question-history").innerText.includes("押金什么时候退？") && document.querySelector(".question-history").innerText.includes("押金返还期限是多少？")'))) throw new Error('Prior question lost');
   if (Object.keys(requests.at(-1)).sort().join(',') !== 'doc_id,question') throw new Error('Unexpected conversation history sent to API');
+  const originalAnswers = await evaluate('Array.from(document.querySelectorAll(".contract-answer")).map(el => el.textContent)');
+  const beforeLanguage = requests.length;
+  await evaluate('document.querySelector("[data-language-toggle]").click()');
+  await until('document.documentElement.lang === "en"');
+  if (JSON.stringify(await evaluate('Array.from(document.querySelectorAll(".contract-answer")).map(el => el.textContent)')) !== JSON.stringify(originalAnswers) || requests.length !== beforeLanguage) throw new Error('Language switch changed answers or sent requests');
   await screenshot('qa-desktop.png');
+  await evaluate('document.querySelector("[data-language-toggle]").click()');
+  await until('document.documentElement.lang === "zh-CN"');
   for (const [question, expected] of [['索引丢失', '合同索引不可用'], ['服务失败', '问答服务暂时不可用'], ['合同不存在', '未找到合同'], ['混入其他合同', '对应信息不完整'], ['空回答', '未收到有效回答'], ['错误格式', '无法读取问答结果']]) {
     await submit(question);
     await until(`document.querySelector('.question-history > li:last-child [role=alert]')?.textContent.includes(${JSON.stringify(expected)})`);
@@ -230,13 +260,15 @@ try {
   await evaluate('document.querySelectorAll(".contract-questions details").forEach(el => el.open = true)');
   if (!(await evaluate('(() => { const r = document.querySelector(".contract-questions").getBoundingClientRect(); return r.left >= 0 && r.right <= window.innerWidth + 1; })()'))) throw new Error('Q&A overflows mobile viewport');
   if (!(await evaluate('document.documentElement.scrollWidth <= 391'))) throw new Error('Page overflows mobile viewport');
+  await evaluate('document.querySelector("[data-language-toggle]").click()');
+  await until('document.documentElement.lang === "en"');
   await screenshot('qa-mobile.png');
   const beforeClear = requests.length;
   await evaluate('document.querySelector(".clear-questions").click()');
   await until('document.querySelectorAll(".question-history > li").length === 0');
   if (requests.length !== beforeClear || !(await evaluate('Boolean(document.querySelector("#contract-question"))'))) throw new Error('Clearing history sent a request or removed the contract');
   if (browserErrors.length) throw new Error('Browser errors: ' + browserErrors.join('\n'));
-  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width', 'home widths 320/390/768/1200', 'labeled file picker', 'suggestion only prefills and focuses without request'], requests }, null, 2));
+  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width', 'home widths 320/390/768/1200', 'labeled file picker', 'English default UI', 'language preference survives reload', 'existing errors relocalize', 'unknown service detail preserved under an English fallback', 'language switch preserves answers and sends no request', 'suggestion only prefills and focuses without request'], requests }, null, 2));
   console.log('PASS: actual contract Q&A UI checks; no paid API calls.');
   console.log('Artifacts:', out);
 } finally {

@@ -36,3 +36,7 @@ The engineering flow is demonstrable. Neither the stored risk scores nor structu
 ## Frontend presentation update
 
 The visual refresh adds no generation calls or dependencies. The real React UI was checked at desktop and mobile widths, with empty/file-ready/report/question/error states and source expansion. Question suggestions only prefill the field. Screenshots were regenerated from the initial mock-backed UI and the clearly labeled historical replay. This is a presentation change; it does not change legal-quality acceptance or the exhausted API allowances.
+
+## English interface
+
+The frontend now defaults to English with a local English/Chinese preference. UI labels, known errors and fixed explanatory metadata are localized; generated content and source text are unchanged. The language switch preserves the active contract and history without API requests. The replay accepts two English question aliases returning its unchanged preset answers. Browser checks exercise both UI languages and English screenshots. No paid model request or backend prompt change was made.

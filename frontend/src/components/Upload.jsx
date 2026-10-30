@@ -1,10 +1,13 @@
 import { useRef, useState } from 'react'
 import Icon from './Icon'
+import { useLanguage } from '../language'
+import ErrorMessage from './ErrorMessage'
 
 const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 const maxFileBytes = 20 * 1024 * 1024
 
 function Upload({ onUploaded, document }) {
+  const { t } = useLanguage()
   const [selectedFile, setSelectedFile] = useState(null)
   const [uploading, setUploading] = useState(false)
   const [preview, setPreview] = useState('')
@@ -57,24 +60,24 @@ function Upload({ onUploaded, document }) {
 
   return (
     <section className={`upload-panel panel${document ? ' compact' : ''}`} aria-labelledby="upload-title">
-      <div className="section-heading"><span className="section-number">01</span><h2 id="upload-title">导入合同</h2></div>
-      <p className="section-description">先让文字清楚地呈现，再看重要约定。</p>
+      <div className="section-heading"><span className="section-number">01</span><h2 id="upload-title">{t("导入合同")}</h2></div>
+      <p className="section-description">{t("先让文字清楚地呈现，再看重要约定。")}</p>
       <label className={`upload-dropzone${uploading ? ' disabled' : ''}`} htmlFor="contract-file">
         <input id="contract-file" className="file-input" type="file" accept=".pdf" onChange={handleFileChange}
-          disabled={uploading} aria-label="选择 PDF 合同" aria-describedby="upload-limits" />
+          disabled={uploading} aria-label={t("选择 PDF 合同")} aria-describedby="upload-limits" />
         <span className="upload-symbol"><Icon name={selectedFile ? 'document' : 'upload'} size={24} /></span>
-        <strong>{selectedFile ? selectedFile.name : '选择一份 PDF 合同'}</strong>
-        <small>{selectedFile ? '点击更换文件' : '点击此处选择文件 · 需要含可读取文字'}</small>
+        <strong>{selectedFile ? selectedFile.name : t("选择一份 PDF 合同")}</strong>
+        <small>{selectedFile ? t("点击更换文件") : t("点击此处选择文件 · 需要含可读取文字")}</small>
       </label>
-      <p className="upload-limits" id="upload-limits">支持含文字的 PDF：最多 20 MiB、200 页、提取文字 100000 字符。</p>
+      <p className="upload-limits" id="upload-limits">{t("支持含文字的 PDF：最多 20 MiB、200 页、提取文字 100000 字符。")}</p>
       <div className="upload-actions">
         <button className="primary-button" onClick={handleUpload} disabled={!selectedFile || uploading}>
-          {uploading ? '上传中...' : '上传'}<Icon name="arrow" size={16} />
+          {uploading ? t("上传中...") : t("上传")}<Icon name="arrow" size={16} />
         </button>
-        <span>{document ? '可更换文件，开始下一份合同' : '选择文件后，点击上传'}</span>
+        <span>{document ? t("可更换文件，开始下一份合同") : t("选择文件后，点击上传")}</span>
       </div>
-      {error && <p className="error-message" role="alert">{error}</p>}
-      {preview && <details className="upload-preview"><summary>查看提取的文字预览</summary><p>{preview}</p></details>}
+      {error && <ErrorMessage message={error} fallback="上传失败，请重试" />}
+      {preview && <details className="upload-preview"><summary>{t("查看提取的文字预览")}</summary><p>{preview}</p></details>}
     </section>
   )
 }

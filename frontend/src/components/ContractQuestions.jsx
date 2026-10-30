@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import './ContractQuestions.css'
 import Icon from './Icon'
+import { useLanguage } from '../language'
+import ErrorMessage from './ErrorMessage'
 
 const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 
 function ContractQuestions({ docId }) {
+  const { t } = useLanguage()
   const [question, setQuestion] = useState('')
   const [asking, setAsking] = useState(false)
   const [turns, setTurns] = useState([])
@@ -71,35 +74,35 @@ function ContractQuestions({ docId }) {
 
   return (
     <section className="contract-questions panel" aria-labelledby="contract-questions-title">
-      <div className="section-heading"><span className="section-number">03</span><h2 id="contract-questions-title">问问这份合同</h2></div>
-      <p className="section-description">可以询问押金、付款期限、维修等合同约定。每次问题独立回答，追问请补全指代。</p>
+      <div className="section-heading"><span className="section-number">03</span><h2 id="contract-questions-title">{t("问问这份合同")}</h2></div>
+      <p className="section-description">{t("可以询问押金、付款期限、维修等合同约定。每次问题独立回答，追问请补全指代。")}</p>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="contract-question">你的问题</label>
+        <label htmlFor="contract-question">{t("你的问题")}</label>
         <textarea ref={questionInput} id="contract-question" value={question} onChange={event => setQuestion(event.target.value)}
-          placeholder="这份合同约定，搬出后多久退还押金？" maxLength={4000} disabled={asking} required />
-        <div className="question-form-footer"><span>答案附原文片段，可展开核对</span><button className="primary-button" type="submit" disabled={!question.trim() || asking}>{asking ? '正在查阅合同…' : '提问'}<Icon name="arrow" size={16} /></button></div>
+          placeholder={t("这份合同约定，搬出后多久退还押金？")} maxLength={4000} disabled={asking} required />
+        <div className="question-form-footer"><span>{t("答案附原文片段，可展开核对")}</span><button className="primary-button" type="submit" disabled={!question.trim() || asking}>{asking ? t("正在查阅合同…") : t("提问")}<Icon name="arrow" size={16} /></button></div>
       </form>
-      <div className="question-suggestions"><span>可以这样问</span>{['押金多久退还？', '会自动续租吗？'].map(value => <button key={value} type="button" disabled={asking}
+      <div className="question-suggestions"><span>{t("可以这样问")}</span>{[t("押金多久退还？"), t("会自动续租吗？")].map(value => <button key={value} type="button" disabled={asking}
         onClick={() => { setQuestion(value); questionInput.current?.focus() }}>{value}</button>)}</div>
       {turns.length > 0 && (
         <button type="button" className="clear-questions" disabled={asking}
-          onClick={() => { setTurns([]); setQuestion('') }}>清空本页问答</button>
+          onClick={() => { setTurns([]); setQuestion('') }}>{t("清空本页问答")}</button>
       )}
-      <ol className="question-history" aria-label="本页问答记录" aria-live="polite">
+      <ol className="question-history" aria-label={t("本页问答记录")} aria-live="polite">
         {turns.map((turn, index) => (
           <li key={turn.id} data-qa-status={turn.status}>
-            <article aria-label={turn.status === 'complete' ? '合同问答结果' : '合同问答记录'}>
+            <article aria-label={turn.status === 'complete' ? t("合同问答结果") : t("合同问答记录")}>
               <h3><span className="question-index">{String(index + 1).padStart(2, '0')}</span>{turn.question}</h3>
-              {turn.status === 'pending' && <p role="status">正在查找相关约定并生成回答…</p>}
-              {turn.status === 'error' && <p className="error-message" role="alert">{turn.error}</p>}
+              {turn.status === 'pending' && <p role="status">{t("正在查找相关约定并生成回答…")}</p>}
+              {turn.status === 'error' && <ErrorMessage message={turn.error} fallback="问答失败，请稍后重试。" />}
               {turn.status === 'complete' && (
                 <>
                   <p className="contract-answer">{turn.answer}</p>
-                  <h4>核对合同原文</h4>
-                  <p>这些是本次检索到的片段，仍需核对它们是否支持回答；片段可能未包含完整条款和例外。</p>
+                  <h4>{t("核对合同原文")}</h4>
+                  <p>{t("这些是本次检索到的片段，仍需核对它们是否支持回答；片段可能未包含完整条款和例外。")}</p>
                   {turn.sources.map((source, sourceIndex) => (
                     <details className="source-details" key={`${source.doc_id}-${source.chunk}`}>
-                      <summary>合同原文{sourceIndex + 1}</summary>
+                      <summary>{t("合同原文{number}", { number: sourceIndex + 1 })}</summary>
                       <blockquote>{source.text}</blockquote>
                     </details>
                   ))}
@@ -109,7 +112,7 @@ function ContractQuestions({ docId }) {
           </li>
         ))}
       </ol>
-      <p className="contract-questions-note">问答用于理解当前合同，不判断条款法律效力。记录仅保留在本页，刷新或切换文件会清除；清空记录不删除服务端合同。</p>
+      <p className="contract-questions-note">{t("问答用于理解当前合同，不判断条款法律效力。记录仅保留在本页，刷新或切换文件会清除；清空记录不删除服务端合同。")}</p>
     </section>
   )
 }

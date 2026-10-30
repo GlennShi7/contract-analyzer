@@ -8,7 +8,7 @@ npm ci
 npm run demo
 ```
 
-Open [the replay](http://127.0.0.1:5174). Download the synthetic PDF from the visible banner, select that file, and click upload. Choose **美国 · Urbana, Illinois** and analyze. Ask exactly **押金多久退还？** or **会自动续租吗？** to try the two scripted answers. Ctrl+C stops the demo.
+Open [the replay](http://127.0.0.1:5174). Download the synthetic PDF from the visible banner, select that file, and click upload. Choose **United States · Urbana, Illinois** and analyze. Ask **When is the deposit returned?** or **Does the lease renew automatically?** to try the two scripted answers. The original Chinese inputs **押金多久退还？** and **会自动续租吗？** remain supported aliases. The interface defaults to English; the header switch changes labels only, and the recorded report and preset answers remain in their original language. Ctrl+C stops the demo.
 
 | | Replay (`npm run demo`) | Normal app / Compose |
 | --- | --- | --- |

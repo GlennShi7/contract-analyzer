@@ -12,6 +12,8 @@ See [implementation progress and remaining acceptance work](PROGRESS.md) for the
 
 [Mobile workspace preview](docs/images/workspace-mobile.png). The interface uses a responsive document workspace, compact imported-file controls, source-linked risk cards and per-question history.
 
+The interface defaults to **English**. Use the header language button to switch to Chinese; the preference is saved locally. This changes interface labels and messages only. Generated reports, answers, contract excerpts and statutory text keep their original language.
+
 ## Try the replay without an API key
 
 ```bash
