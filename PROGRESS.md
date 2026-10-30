@@ -1,6 +1,6 @@
 # Project status
 
-Reviewed on 2026-10-29 against the actual implementation and saved results. This is a working prototype; implementation completion and model-quality acceptance are separate.
+Reviewed on 2026-10-30 against the actual implementation and saved results. This is a working prototype; implementation completion and model-quality acceptance are separate.
 
 | Area | Status | Evidence / limits |
 | --- | --- | --- |
@@ -40,3 +40,11 @@ The visual refresh adds no generation calls or dependencies. The real React UI w
 ## English interface
 
 The frontend now defaults to English with a local English/Chinese preference. UI labels, known errors and fixed explanatory metadata are localized; generated content and source text are unchanged. The language switch preserves the active contract and history without API requests. The replay accepts two English question aliases returning its unchanged preset answers. Browser checks exercise both UI languages and English screenshots. No paid model request or backend prompt change was made.
+
+## Completion pass, October 30
+
+Engineering verification at [2ca507a](https://github.com/GlennShi7/contract-analyzer/actions/runs/41135542518) passed frontend, backend and real-container jobs. Risk-analysis requests now prevent duplicate pending sends, cancel obsolete browser fetches, reject wrong-document results, allow retry after malformed responses, and validate displayed report/source fields before rendering. Region changes reset reports and update the scope hint. English/Chinese UI switching still preserves original generated content.
+
+A new [completion-check batch](backend/eval/ACCEPTANCE_RUN.md) is prepared: all sixteen existing diagnostic inputs and three full synthetic contracts, two generations each, with a maximum of 76 requests including corrections/failures. It has a durable cumulative ledger, fixed source/code/model plan, resume/concurrency protection, repeat comparison and an explicitly unreviewed evidence worksheet. Eleven new mock-client tests bring the local backend total to 146. Preparation and tests use zero paid requests. **The batch has not been authorized or executed.** Historical request allowances remain exhausted.
+
+Engineering implementation is complete for this prototype scope. Model-quality acceptance remains open: executing this planned batch needs new explicit paid-call authorization, and independent review is still absent. Two samples per reused/post-error input do not establish broad stability or legal accuracy. No current-law verification, independent adjudication, accuracy score or recall result is claimed by this completion pass.
