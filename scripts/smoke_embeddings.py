@@ -25,6 +25,7 @@ import os
 from pathlib import Path
 import re
 import sys
+import struct
 
 from chunker import chunk_text
 from documents import load_document
@@ -45,6 +46,10 @@ for document in payload['documents']:
     assert stored_text == {f'{doc_id}_chunk_{i}': chunk for i, chunk in enumerate(chunks)}, 'Stored chunks differ from parsed text'
     dimension = len(stored['embeddings'][0])
     assert dimension == 384, 'Unexpected multilingual MiniLM embedding dimension'
+    vector_hash = sha256()
+    for chunk_id, vector in sorted(zip(stored['ids'], stored['embeddings'])):
+        vector_hash.update(chunk_id.encode())
+        vector_hash.update(struct.pack('<384f', *vector))
     sources = search_chunks(payload['question'], doc_id, n_results=3)
     assert len(sources) == min(3, len(chunks)), 'Missing retrieval results'
     assert all(source['doc_id'] == doc_id and source['text'] == chunks[source['chunk']] for source in sources), 'Cross-document or corrupted retrieval'
@@ -52,7 +57,7 @@ for document in payload['documents']:
     hit = any(normalize(payload['answer_span']) in normalize(source['text']) for source in sources)
     assert hit, 'The fixed el01 answer span was not found in top-3 PDF chunks'
     rows.append({'doc_id': doc_id, 'n_chunks': len(chunks), 'text_sha256': sha256(text.encode()).hexdigest(),
-                 'embedding_dimension': dimension, 'retrieved_chunks': [source['chunk'] for source in sources],
+                 'embedding_dimension': dimension, 'stored_vectors_sha256': vector_hash.hexdigest(), 'retrieved_chunks': [source['chunk'] for source in sources],
                  'foreign_chunks': 0, 'fixed_question_hit_at_3': hit})
 assert len(texts) == 2 and texts[0] == texts[1], 'Byte variants must parse to the same synthetic text'
 ref = Path(os.environ['HF_HOME']) / 'hub' / ('models--sentence-transformers--' + MODEL_NAME) / 'refs/main'
@@ -101,8 +106,10 @@ def main():
         if [row['doc_id'] for row in documents] != ids or any(not isinstance(row['n_chunks'], int) or row['n_chunks'] < 1 for row in documents):
             raise SystemExit('Saved smoke state does not match the two synthetic PDFs.')
         report = inspect(documents, question['question'], question['answer'][0])
+        print(json.dumps({'phase': 'verify-only-observed', **report}), flush=True)
         if report != state['before_recreate']:
-            raise SystemExit('Persisted text, model revision or retrieval changed after container recreation.')
+            print(json.dumps({'phase': 'persistence-comparison-failed', 'before': state['before_recreate'], 'after': report}), flush=True)
+            raise SystemExit('Persisted text, model revision or retrieval changed after container recreation; both observations are logged above.')
         state['after_recreate'] = report
         args.state.write_text(json.dumps(state, indent=2) + '\n', encoding='utf-8')
         print('PASS: saved text, vectors and cached model survive recreation; identical top-3 retrieval offline. No uploads or LLM calls.')
