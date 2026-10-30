@@ -93,7 +93,16 @@ def validate_audit(data, root, sources):
             value = read_pointer(report, evidence["pointer"])
             require(isinstance(value, str) and bool(evidence["quote"].strip()) and evidence["quote"] in value,
                     "Quoted report evidence is absent")
-        validate_anchors(finding["source_anchors"], sources)
+        kind = finding.get("finding_type", "source_support")
+        require(kind in {"source_support", "contract_fact", "profile_relevance"}, "Unknown finding type")
+        if kind == "source_support" or finding["source_anchors"]:
+            validate_anchors(finding["source_anchors"], sources)
+        else:
+            require("contract_evidence" in finding, "Contract-fact review needs contract evidence")
+        if kind == "profile_relevance":
+            profile = finding["profile_evidence"]
+            require(profile["expected"] in {"cn", "us_il_urbana", "unknown"}, "Unknown reviewed profile")
+            require(read_pointer(report, profile["pointer"]) == profile["expected"], "Reviewed profile differs")
         if "contract_evidence" in finding:
             contract = finding["contract_evidence"]
             text = resolve_local(root, contract["path"]).read_text(encoding="utf-8")
@@ -150,6 +159,7 @@ def main():
     parser.add_argument("--cases", type=Path, default=HERE / "reasoning_cases.json")
     parser.add_argument("--audit", type=Path, default=HERE / "reasoning_audit_2026-10-29.json")
     parser.add_argument("--diagnostics", type=Path, default=HERE / "results/reasoning_20261029.json")
+    parser.add_argument("--final-audit", type=Path, default=HERE / "final_reasoning_audit_2026-10-29.json")
     args = parser.parse_args()
     root = HERE.parent.parent
     try:
@@ -161,6 +171,8 @@ def main():
         if args.diagnostics.exists():
             result["live_diagnostics"] = validate_diagnostics(load_json(args.diagnostics), cases, sources)
             result["cases"]["model_tested_cases"] = result["live_diagnostics"]["model_tested_cases"]
+        if args.final_audit.exists():
+            result["final_report_review"] = validate_audit(load_json(args.final_audit), root, sources)
     except (ValueError, KeyError, TypeError, OSError) as error:
         parser.exit(1, f"Review evidence validation failed: {error}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2))

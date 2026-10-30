@@ -227,3 +227,24 @@ def test_no_adverse_clause_can_return_an_empty_card_list():
     report = analyze_contract("出租人和承租人约定押金。", client)
     assert report.cards == [] and len(calls) == 1
     assert report.grounding.quote_verification_rate is None
+
+
+@pytest.mark.parametrize("kind,text", [
+    ("lease", "出租人和承租人约定：押金由出租人决定是否退还。"),
+    ("labor", "用人单位与劳动者约定：押金由出租人决定是否退还。劳动合同工资与试用期。"),
+])
+def test_chinese_profile_does_not_receive_urbana_checklist(kind, text):
+    client, calls = stub_client([(json.dumps(sample_output(kind)), "stop")])
+    analyze_contract(text, client, jurisdiction="cn")
+    system = calls[0]["messages"][0]["content"]
+    for unrelated in ("Urbana", "Champaign", "Chicago", "州法、市条例与联邦法", "市界查询证据"):
+        assert unrelated not in system
+    if kind == "labor":
+        assert "续租等实际存在" not in system
+
+
+def test_unknown_profile_does_not_receive_a_foreign_statutory_checklist():
+    client, calls = stub_client([(json.dumps(sample_output()), "stop")])
+    analyze_contract("出租人和承租人约定：押金由出租人决定是否退还。", client)
+    system = calls[0]["messages"][0]["content"]
+    assert "Urbana" not in system and "市界查询证据" not in system

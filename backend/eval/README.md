@@ -70,3 +70,7 @@ The eight-request diagnostic artifact includes a truncated response, a fabricate
 ## Final enforced-quote live check
 
 The [final implementation check](FINAL_ENFORCEMENT_REVIEW_2026-10-29.md) used the separate full-contract authorization's remaining three requests, bringing that allowance to 6/6 used. All three first responses passed the enforced quote gate: 36/36 exact quotations, 56/56 supplied-ID references, 44,850 tokens. Genuine quotes still accompanied factual/interpretation errors (including twelve months changed to twelve years). This provides no general legal-accuracy or recall score and does not establish a successful live correction path. Both authorization batches are exhausted.
+
+## Additional local-only review
+
+The [five final-report findings](final_reasoning_audit_2026-10-29.json) are now checked by `python -m eval.reasoning_review` as a separate audit. Contract-fact checks use actual contract excerpts rather than unnecessary statutory IDs. The latest prompt separates municipal guidance from Chinese/unknown profiles and housing topics from employment analysis; this was verified with captured mock requests, not new generation. The final full-contract live artifact continues to identify the earlier 9843ce0 code snapshot. Both paid authorizations remain exhausted.

@@ -57,3 +57,9 @@ The earlier six-request authorization for the **three existing full synthetic co
 ## Verification
 
 New evidence-integrity tests reject missing contrast variants, duplicate cases, fabricated source/output quotes, stale fingerprints, invalid evidence pointers, out-of-repository paths, tampered statutory text and fictitious completed runs, and verify that CRLF checkouts preserve the review fingerprints. These tests validate the review tooling, not a legal judgment. Run the complete backend test suite with the command above; current CI evidence is linked from the repository status page.
+
+## Final-report evidence and prompt isolation
+
+A separate [five-finding audit](final_reasoning_audit_2026-10-29.json) now anchors the final full-contract report's duration, approval condition, judicial-procedure wording, deposit receipt path and Chinese-profile relevance issues. Contract-fact findings require the actual contract excerpt and fingerprint; legal-source findings require supplied statutory anchors; profile findings additionally check the selected profile in the saved report. The offline validator reports this audit separately from the earlier seven observations, without an accuracy denominator.
+
+The global prompt previously included Urbana-specific checks even for Chinese or unknown regions, and housing topics even for employment contracts. The latest code isolates guidance by the selected region, available law library and contract type. Local mock-client checks verify that foreign guidance is absent in Chinese/unknown requests and retained in applicable Urbana requests. No statute, stored model response, quote gate, request cap or authorization balance changed. This prompt change has **no paid model follow-up** and does not automatically detect the other observed semantic errors.

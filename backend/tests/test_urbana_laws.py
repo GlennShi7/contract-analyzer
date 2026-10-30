@@ -48,6 +48,7 @@ def test_urbana_pipeline_injects_local_state_and_federal_sources():
     client, calls = stub_client([(json.dumps(sample_output(quote="Landlord and Tenant.")), "stop")])
     result = analyze_contract(text, client, jurisdiction="us_il_urbana")
     system = calls[0]["messages"][0]["content"]
+    assert "市界查询证据" in system
     for law_id in ("URBANA-12.5-10", "765 ILCS 710/1", "42 U.S.C. 3604"):
         assert law_id in system
     assert "劳动合同法-19" not in system

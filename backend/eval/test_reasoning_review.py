@@ -186,3 +186,25 @@ def test_diagnostic_prepare_mode_never_creates_client_or_ledger(monkeypatch, tmp
     monkeypatch.setattr(sys, "argv", ["diagnostic_eval", "--output", str(output)])
     main()
     assert not output.exists()
+
+
+def test_final_report_facts_have_contract_evidence_without_fake_law_ids(sources):
+    data = load_json(HERE / "final_reasoning_audit_2026-10-29.json")
+    result = validate_audit(data, ROOT, sources)
+    assert result["validated_review_records"] == 5
+    assert result["record_verdicts"] == {"contradicted": 4, "omitted": 1}
+    assert result["legal_accuracy"] is None and result["risk_recall"] is None
+
+
+def test_contract_fact_finding_requires_contract_evidence(sources):
+    data = load_json(HERE / "final_reasoning_audit_2026-10-29.json")
+    del data["findings"][0]["contract_evidence"]
+    with pytest.raises(ValueError, match="needs contract evidence"):
+        validate_audit(data, ROOT, sources)
+
+
+def test_profile_review_cannot_silently_change_jurisdiction(sources):
+    data = load_json(HERE / "final_reasoning_audit_2026-10-29.json")
+    data["findings"][-1]["profile_evidence"]["expected"] = "us_il_urbana"
+    with pytest.raises(ValueError, match="profile differs"):
+        validate_audit(data, ROOT, sources)
