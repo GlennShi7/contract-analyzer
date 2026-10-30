@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Icon from './Icon'
 import { useLanguage } from '../language'
 import ErrorMessage from './ErrorMessage'
+import { isRenderableReport } from '../report'
 
 const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 const riskLabels = { high: '高风险', medium: '中风险', low: '低风险' }
@@ -53,6 +54,9 @@ function RiskReport({ docId }) {
       }
       if (data?.doc_id !== docId) {
         throw new Error('分析结果与当前合同不对应，请重新上传后再试。')
+      }
+      if (!isRenderableReport(data.result)) {
+        throw new Error('分析结果格式不完整，请稍后重试。')
       }
       if (!controller.signal.aborted) setReport(data.result)
     } catch (err) {

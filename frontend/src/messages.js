@@ -1,4 +1,5 @@
 export const english = {
+  '分析结果格式不完整，请稍后重试。': 'The analysis response is incomplete or invalid. Please try again.',
   '无法读取分析结果，请稍后重试。': 'The analysis response could not be read. Please try again.',
   '分析结果与当前合同不对应，请重新上传后再试。': 'The analysis does not match the current contract. Upload the contract again.',
   '跳到工作区': 'Skip to workspace',

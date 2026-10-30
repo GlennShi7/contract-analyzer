@@ -20,7 +20,26 @@ const analysisRequests = [];
 let analysisMode = 'ok';
 let delayedAnalysis;
 let analysisAborted = false;
-const analysisResult = { risk_score: 3, summary: 'ORIGINAL_SUMMARY', cards: [], legal_sources: [], legal_scope: 'Synthetic scope', disclaimer: 'Synthetic disclaimer' };
+const analysisResult = { risk_score: 3, summary: 'ORIGINAL_SUMMARY',
+  cards: [{ title: 'Synthetic risk', clause_text: 'Original contract clause.', risk_level: 'medium', explanation: 'Synthetic explanation',
+    suggestion: 'Synthetic suggestion', verified: true, legal_basis: ['law1'] }],
+  legal_sources: [{ id: 'law1', law: 'Synthetic law', article: 'Section 1', text: '<script>window.reportInjected = true</script>',
+    source_url: 'https://www.ilga.gov/', checked_on: '2026-10-30', authority_level: 'state', applicability: 'Synthetic condition' }],
+  legal_scope: 'Synthetic scope', disclaimer: 'Synthetic disclaimer' };
+const malformedReports = {
+  missing: undefined, null: null, cards: { ...analysisResult, cards: {} }, score: { ...analysisResult, risk_score: '3' },
+  summary: { ...analysisResult, summary: { text: 'wrong type' } },
+  card: { ...analysisResult, cards: [null] },
+  basis: { ...analysisResult, cards: [{ ...analysisResult.cards[0], legal_basis: null }] },
+  verified: { ...analysisResult, cards: [{ ...analysisResult.cards[0], verified: 'false' }] },
+  level: { ...analysisResult, cards: [{ ...analysisResult.cards[0], risk_level: '__proto__' }] },
+  sources: { ...analysisResult, legal_sources: {} }, source: { ...analysisResult, legal_sources: [null] },
+  reference: { ...analysisResult, legal_sources: [] },
+  duplicate: { ...analysisResult, legal_sources: [analysisResult.legal_sources[0], analysisResult.legal_sources[0]] },
+  link: { ...analysisResult, legal_sources: [{ ...analysisResult.legal_sources[0], source_url: 'javascript:window.reportInjected = true' }] },
+  scope: { ...analysisResult, legal_scope: 1 },
+  authority: { ...analysisResult, legal_sources: [{ ...analysisResult.legal_sources[0], authority_level: 'constructor' }] },
+};
 const api = createServer(async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:18764');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -52,7 +71,9 @@ const api = createServer(async (req, res) => {
       return;
     }
     if (analysisMode === 'error') { res.writeHead(502); res.end(JSON.stringify({ detail: '分析服务暂时不可用，请稍后重试' })); return; }
+    if (analysisMode === 'empty') { res.end(JSON.stringify({ doc_id: payload.doc_id, result: { ...analysisResult, cards: [], legal_sources: [] } })); return; }
     if (analysisMode === 'html') { res.end('<h1>Unavailable</h1>'); return; }
+    if (Object.hasOwn(malformedReports, analysisMode)) { res.end(JSON.stringify({ doc_id: payload.doc_id, result: malformedReports[analysisMode] })); return; }
     res.end(JSON.stringify({ doc_id: analysisMode === 'foreign' ? 'c'.repeat(64) : payload.doc_id,
       result: { ...analysisResult, summary: analysisMode === 'foreign' ? 'FOREIGN_REPORT_MUST_NOT_RENDER' : analysisResult.summary } }));
     return;
@@ -297,14 +318,26 @@ try {
   await until('document.querySelector(".risk-panel .scope-hint").textContent.includes("Champaign")');
   for (const [mode, expected] of [['error', 'temporarily unavailable'], ['html', 'could not be read'], ['foreign', 'does not match']]) {
     analysisMode = mode;
+    const before = analysisRequests.length;
     await evaluate('document.querySelector(".analysis-toolbar button").click()');
     await until(`document.querySelector('.risk-panel [role=alert]')?.textContent.includes('${expected}')`);
     if (await evaluate('Boolean(document.querySelector(".report-header")) || document.body.innerText.includes("FOREIGN_REPORT_MUST_NOT_RENDER")')) throw new Error('Failed analysis rendered a report');
     if (await evaluate('document.querySelector(".analysis-toolbar button").disabled')) throw new Error('Analysis retry is disabled');
   }
+  for (const mode of Object.keys(malformedReports)) {
+    analysisMode = mode;
+    const before = analysisRequests.length;
+    await evaluate('document.querySelector(".analysis-toolbar button").click()');
+    for (let i = 0; i < 100 && analysisRequests.length === before; i++) await pause(50);
+    if (analysisRequests.length !== before + 1) throw new Error(`Missing malformed report request: ${mode}`);
+    await until('!document.querySelector(".analysis-toolbar button").disabled && document.querySelector(".risk-panel [role=alert]")?.textContent.includes("incomplete or invalid")');
+    if (await evaluate('Boolean(document.querySelector(".report-header")) || document.querySelector(".analysis-toolbar button").disabled')) throw new Error(`Malformed report rendered or blocked retry: ${mode}`);
+  }
   analysisMode = 'ok';
   await evaluate('document.querySelector(".analysis-toolbar button").click()');
   await until('document.querySelector(".report-summary")?.textContent.includes("ORIGINAL_SUMMARY")');
+  if (await evaluate('Boolean(document.querySelector(".risk-panel script")) || Boolean(window.reportInjected)')) throw new Error('Report text interpreted as HTML');
+  if (!(await evaluate('document.querySelector(".clause-quote").textContent === "Original contract clause." && document.querySelector(".source-text").textContent === "<script>window.reportInjected = true</script>"'))) throw new Error('Valid report content changed');
   if (analysisRequests.at(-1).doc_id !== 'b'.repeat(64) || analysisRequests.at(-1).jurisdiction !== 'us_il_urbana') throw new Error('Wrong analysis payload');
   const beforeAnalysisLanguage = analysisRequests.length;
   await evaluate('document.querySelector("[data-language-toggle]").click()');
@@ -324,11 +357,12 @@ try {
   delayedAnalysis.end(JSON.stringify({ doc_id: 'b'.repeat(64), result: { ...analysisResult, summary: 'OLD_REPORT_MUST_NOT_RENDER' } }));
   await pause(100);
   if (await evaluate('Boolean(document.querySelector(".report-header")) || document.body.innerText.includes("OLD_REPORT_MUST_NOT_RENDER")')) throw new Error('Old analysis leaked into new document');
-  analysisMode = 'ok';
+  analysisMode = 'empty';
   await evaluate('document.querySelector(".analysis-toolbar button").click()');
   await until('Boolean(document.querySelector(".report-header"))');
+  if (await evaluate('document.querySelectorAll(".risk-card").length !== 0 || Boolean(document.querySelector(".risk-panel [role=alert]"))')) throw new Error('Valid zero-card report rejected');
   if (browserErrors.length) throw new Error('Browser errors: ' + browserErrors.join('\n'));
-  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['analysis duplicate blocked', 'pending analysis aborted on file change', 'foreign analysis rejected', 'analysis HTML and 502 errors allow retry', 'analysis region hint and report reset', 'language toggle preserves original report', 'client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width', 'home widths 320/390/768/1200', 'labeled file picker', 'English default UI', 'language preference survives reload', 'existing errors relocalize', 'unknown service detail preserved under an English fallback', 'language switch preserves answers and sends no request', 'suggestion only prefills and focuses without request'], requests, analysisRequests }, null, 2));
+  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['16 malformed analysis payloads rejected without page failure; retry remains available', 'valid risk and law text preserved literally', 'analysis duplicate blocked', 'pending analysis aborted on file change', 'foreign analysis rejected', 'analysis HTML and 502 errors allow retry', 'analysis region hint and report reset', 'language toggle preserves original report', 'client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width', 'home widths 320/390/768/1200', 'labeled file picker', 'English default UI', 'language preference survives reload', 'existing errors relocalize', 'unknown service detail preserved under an English fallback', 'language switch preserves answers and sends no request', 'suggestion only prefills and focuses without request'], requests, analysisRequests }, null, 2));
   console.log('PASS: actual contract Q&A UI checks; no paid API calls.');
   console.log('Artifacts:', out);
 } finally {
