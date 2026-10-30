@@ -160,6 +160,13 @@ try {
   await send('Page.navigate', { url: 'http://127.0.0.1:18764' });
   await until('Boolean(document.querySelector("input[type=file]"))');
   if (await evaluate('Boolean(document.querySelector(".contract-questions"))')) throw new Error('Q&A shown before upload');
+  for (const width of [320, 390, 768, 1200]) {
+    await send('Emulation.setDeviceMetricsOverride', { width, height: width < 640 ? 844 : 1000, deviceScaleFactor: 1, mobile: width < 880 });
+    if (!(await evaluate(`document.documentElement.scrollWidth <= ${width} + 1`))) throw new Error(`Home page overflows at ${width}px`);
+    if (width === 390) await screenshot('workspace-empty-mobile.png');
+  }
+  if (!(await evaluate('document.querySelector("input[type=file]").labels.length > 0'))) throw new Error('File picker has no label');
+  await screenshot('workspace-empty-desktop.png');
   const oversized = path.join(out, 'oversized.pdf');
   const oversizedFile = await open(oversized, 'w');
   await oversizedFile.truncate(20 * 1024 * 1024 + 1);
@@ -178,6 +185,13 @@ try {
   uploadMode = 'ok';
   await upload('first.pdf');
   if (!(await evaluate('document.querySelector(".contract-questions button").disabled'))) throw new Error('Empty question enabled');
+  const beforeSuggestion = requests.length;
+  await evaluate('document.querySelector(".question-suggestions button").click()');
+  await until('document.querySelector("#contract-question").value === "押金多久退还？"');
+  if (requests.length !== beforeSuggestion || !(await evaluate('document.activeElement.id === "contract-question"'))) throw new Error('Suggestion sent a request or did not focus the question');
+  await fill('');
+  await until('document.querySelector(".contract-questions button").disabled');
+
   await submit('   ');
   if (requests.length) throw new Error('Whitespace question sent');
   await submit('  押金什么时候退？  ');
@@ -215,13 +229,14 @@ try {
   await send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await evaluate('document.querySelectorAll(".contract-questions details").forEach(el => el.open = true)');
   if (!(await evaluate('(() => { const r = document.querySelector(".contract-questions").getBoundingClientRect(); return r.left >= 0 && r.right <= window.innerWidth + 1; })()'))) throw new Error('Q&A overflows mobile viewport');
+  if (!(await evaluate('document.documentElement.scrollWidth <= 391'))) throw new Error('Page overflows mobile viewport');
   await screenshot('qa-mobile.png');
   const beforeClear = requests.length;
   await evaluate('document.querySelector(".clear-questions").click()');
   await until('document.querySelectorAll(".question-history > li").length === 0');
   if (requests.length !== beforeClear || !(await evaluate('Boolean(document.querySelector("#contract-question"))'))) throw new Error('Clearing history sent a request or removed the contract');
   if (browserErrors.length) throw new Error('Browser errors: ' + browserErrors.join('\n'));
-  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width'], requests }, null, 2));
+  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width', 'home widths 320/390/768/1200', 'labeled file picker', 'suggestion only prefills and focuses without request'], requests }, null, 2));
   console.log('PASS: actual contract Q&A UI checks; no paid API calls.');
   console.log('Artifacts:', out);
 } finally {

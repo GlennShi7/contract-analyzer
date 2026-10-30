@@ -8,7 +8,7 @@ Reviewed on 2026-10-29 against the actual implementation and saved results. This
 | PDF ingestion and document identity | Implemented | Full SHA-256 IDs, temporary-file cleanup, upload/page/text bounds, persisted text, page separators |
 | Document-scoped retrieval | Implemented and exercised | Production top-3 filter, repeat-upload replacement, 56-question controlled evaluation and real-container smoke checks |
 | Structured risk reports and legal sources | Implemented; quality review open | JSON/schema checks, quote matching, legal-ID filtering, selected Chinese and Urbana/state/federal snapshots |
-| Risk-card interface | Implemented | Region choice, score, risk labels, contract excerpts and expandable legal sources |
+| Risk-card interface | Implemented and restyled | Responsive reading workspace, compact imported-file state, region choice, score, text-labeled risks, contract excerpts and expandable legal sources |
 | Question history | Implemented | Per-question pending/error/answer states, session-only history, explicit clearing and document-switch cancellation; each API question remains independent |
 | Repeatable runtime and checks | Implemented | Compose, backend tests, actual-browser checks, real CPU embeddings and offline retrieval after container recreation |
 | Model output reliability | Failures reproduced; broader acceptance open | Quote enforcement passed on three full fixtures at 9843ce0; later jurisdiction/topic guidance isolation is locally tested only. Recorded bad quotes are rejected, but semantic errors and broad reliability remain open |
@@ -32,3 +32,7 @@ The engineering flow is demonstrable. Neither the stored risk scores nor structu
 ## Verification references
 
 [Verified CI at c75114f](https://github.com/GlennShi7/contract-analyzer/actions/runs/40982456843), [latest CI](https://github.com/GlennShi7/contract-analyzer/actions/workflows/ci.yml), [current-prompt rerun and review](backend/eval/ANALYSIS_REVIEW_2026-10-29.md), [retrieval evidence](backend/eval/README.md), [live-analysis review](backend/eval/URBANA_ANALYSIS_REVIEW_2026-10-28.md), [failed follow-up and diagnostics](backend/eval/URBANA_REASONING_FOLLOWUP_2026-10-28.md), [reasoning review protocol](backend/eval/REASONING_REVIEW.md), [manual reasoning cases](backend/eval/URBANA_REASONING_CASES.md), [deployment and real-model checks](DEPLOYMENT.md).
+
+## Frontend presentation update
+
+The visual refresh adds no generation calls or dependencies. The real React UI was checked at desktop and mobile widths, with empty/file-ready/report/question/error states and source expansion. Question suggestions only prefill the field. Screenshots were regenerated from the initial mock-backed UI and the clearly labeled historical replay. This is a presentation change; it does not change legal-quality acceptance or the exhausted API allowances.

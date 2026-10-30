@@ -35,3 +35,9 @@ npm run check:qa-ui
 ```
 
 The script uses headless Edge in a fresh temporary profile and discovers that browser's assigned debugging port, defaulting to the standard Windows Edge path. Set `EDGE_PATH` for another Chromium-compatible executable and `QA_UI_OUTPUT` to choose an artifact directory. Ports 18764 and 18765 must be available. It checks errors, source isolation, duplicate submission, file changes, aborted requests and mobile width, then saves desktop/mobile screenshots and a check record. Backend tests separately cover PDF parsing, retrieval isolation and empty/truncated model responses. See the [project README](../README.md) for setup and limitations.
+
+## Interface and responsive checks
+
+The UI uses a navy navigation area, a light reading workspace, consistent upload/analysis/question sections, and text-labeled risk levels. After import the upload control becomes compact. Extracted-text preview, legal scope, legal sources and question excerpts can be expanded separately. The two question suggestions fill and focus the field without submitting or making an API request. No new UI package, web font or image service is required.
+
+The file picker has a native input and a visible label with keyboard focus treatment. Browser checks cover the empty workspace at 320/390/768/1200 CSS pixels, mobile Q&A with expanded sources, and a mobile risk report with an expanded law source. The checks preserve upload errors/limits, document isolation, independent question payloads, history clearing and pending-request cancellation. `check:qa-ui` also saves `workspace-empty-desktop.png` and `workspace-empty-mobile.png`; `check:demo-ui` saves `demo-mobile.png` in addition to the overview/question screenshots. The empty-workspace screenshots use the real React UI before any request to the local mock API; risk/question screenshots use the explicitly labeled historical replay.

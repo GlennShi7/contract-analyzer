@@ -8,6 +8,10 @@ Built to help people understand unfavorable terms in rental and employment contr
 
 See [implementation progress and remaining acceptance work](PROGRESS.md) for the current boundary between implemented features and unverified model quality.
 
+![Contract reading workspace before upload](docs/images/workspace-desktop.png)
+
+[Mobile workspace preview](docs/images/workspace-mobile.png). The interface uses a responsive document workspace, compact imported-file controls, source-linked risk cards and per-question history.
+
 ## Try the replay without an API key
 
 ```bash
@@ -18,6 +22,9 @@ npm run demo
 
 Open `http://127.0.0.1:5174`, download and upload the supplied synthetic PDF, choose Urbana, and explore the recorded risk report. Two preset questions demonstrate answers with source excerpts. This mode makes no model calls: analysis replays a saved run with known reasoning errors, and Q&A is scripted. See [the walkthrough, scope and reproduction instructions](demo/README.md). Use the normal app below for actual PDF parsing, retrieval and new generation.
 
+<details>
+<summary>View the recorded risk report and scripted Q&A</summary>
+
 Captured from the actual replay UI; the banner identifies the historical output and its limitations:
 
 ![Recorded risk report in the replay UI](docs/images/demo-overview.png)
@@ -25,6 +32,8 @@ Captured from the actual replay UI; the banner identifies the historical output 
 Scripted Q&A with exact original-text chunks:
 
 ![Scripted contract question and source excerpts](docs/images/demo-questions.png)
+
+</details>
 
 ## Implemented
 

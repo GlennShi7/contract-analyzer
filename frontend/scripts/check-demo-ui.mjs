@@ -97,8 +97,13 @@ try {
   await evaluate('document.querySelectorAll(".question-history > li:last-child details").forEach(el => el.open = true)');
   const qaClip = await evaluate('(() => { const r = document.querySelector(".contract-questions").getBoundingClientRect(); return {x:Math.floor(r.left),y:Math.floor(r.top+scrollY),width:Math.ceil(r.width),height:Math.ceil(r.height)}; })()');
   await capture('demo-questions.png', qaClip);
+  await send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
+  await evaluate('document.querySelector("section[aria-label=合同风险报告] article details").open = true');
+  if (!(await evaluate('document.documentElement.scrollWidth <= 391'))) throw new Error('Expanded risk/source page overflows mobile viewport');
+  const mobileY = await evaluate('Math.floor(document.querySelector(".risk-panel").getBoundingClientRect().top + scrollY)');
+  await capture('demo-mobile.png', { x: 0, y: mobileY, width: 390, height: 1400 });
   if (errors.length) throw new Error(errors.join('\n'));
-  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'recorded analysis plus scripted Q&A; no model calls', checks: ['visible replay/limitations banner', 'fixture download and upload', 'region selection required', '12 recorded risk cards', 'unsupported question rejected', 'local history cleared', 'two scripted answers retained and labeled', 'expandable exact source chunks'], screenshots: ['demo-overview.png', 'demo-questions.png'] }, null, 2));
+  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'recorded analysis plus scripted Q&A; no model calls', checks: ['visible replay/limitations banner', 'fixture download and upload', 'region selection required', '12 recorded risk cards', 'unsupported question rejected', 'local history cleared', 'two scripted answers retained and labeled', 'expandable exact source chunks', 'expanded risk source fits mobile width'], screenshots: ['demo-overview.png', 'demo-questions.png', 'demo-mobile.png'] }, null, 2));
   console.log('PASS: actual replay UI, source excerpts and screenshots. No model calls.');
   console.log('Artifacts:', out);
 } finally {

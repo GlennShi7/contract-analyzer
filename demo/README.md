@@ -30,7 +30,7 @@ npm run test:demo
 npm run check:demo-ui
 ```
 
-The first command tests fixture identity, unchanged analysis replay, region validation, source IDs and unsupported requests. The second uses isolated headless Edge to exercise the actual interface and capture the overview and scripted Q&A. Set `EDGE_PATH` if needed and `DEMO_UI_OUTPUT` to choose the screenshot directory. It never calls DeepSeek. The screenshots in the project README are captured from this mode; they are not fresh model outputs.
+The first command tests fixture identity, unchanged analysis replay, region validation, source IDs and unsupported requests. The second uses isolated headless Edge to exercise the actual interface and capture the overview, scripted Q&A and mobile risk layout with an expanded source. Set `EDGE_PATH` if needed and `DEMO_UI_OUTPUT` to choose the screenshot directory. It never calls DeepSeek. The risk and question screenshots in the project README are captured from this mode; they are not fresh model outputs. The initial workspace screenshots are captured separately by the local mock-API browser check before any upload.
 
 ## Rebuild the committed fixture
 

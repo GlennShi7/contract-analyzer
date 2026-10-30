@@ -1,50 +1,24 @@
-.contract-questions {
-  text-align: left;
-  width: 100%;
-  max-width: 52rem;
-  box-sizing: border-box;
-  margin: 2rem auto;
-  padding: 1.25rem;
-  border-top: 1px solid var(--border);
-  overflow-wrap: anywhere;
-}
-
-.contract-questions p { margin: 0.75rem 0; }
-.contract-questions form { display: grid; gap: 0.65rem; margin: 1rem 0; }
-.contract-questions textarea {
-  box-sizing: border-box;
-  width: 100%;
-  min-height: 6rem;
-  resize: vertical;
-  padding: 0.75rem;
-  font: inherit;
-  color: var(--text-h);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-}
-.contract-questions button {
-  justify-self: start;
-  padding: 0.55rem 1.1rem;
-  font: inherit;
-  color: var(--bg);
-  background: var(--text-h);
-  border: 1px solid var(--text-h);
-  border-radius: 6px;
-  cursor: pointer;
-}
-.contract-questions button:disabled { opacity: 0.55; cursor: default; }
-.contract-questions :is(textarea, button, summary):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-.contract-questions details { margin: 0.75rem 0; }
-.contract-questions summary { cursor: pointer; }
-.contract-questions blockquote {
-  margin: 0.75rem 0;
-  padding: 0.75rem;
-  background: var(--code-bg);
-  white-space: pre-wrap;
-}
-.contract-answer { white-space: pre-wrap; }
-.contract-questions-note { font-size: 0.9rem; }
-.question-history { list-style: none; padding: 0; }
-.question-history > li { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
-.contract-questions .clear-questions { color: var(--text-h); background: var(--bg); border-color: var(--border); }
+.contract-questions { margin-top: 24px; padding: 26px; min-width: 0; overflow-wrap: anywhere; }
+.contract-questions form { margin-top: 22px; }
+.contract-questions form > label { display: block; margin-bottom: 8px; color: #52637e; font-size: 12px; }
+.contract-questions textarea { width: 100%; min-height: 118px; resize: vertical; padding: 15px 16px; color: var(--text-h); background: #fbfcff; border: 1px solid #d8e1ee; border-radius: 10px; line-height: 1.8; }
+.contract-questions textarea::placeholder { color: #8492a8; font-size: 12px; }
+.contract-questions textarea:focus { border-color: #88a6ea; background: white; }
+.question-form-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; }
+.question-form-footer > span { color: #728198; font-size: 11px; }
+.question-suggestions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.question-suggestions > span { margin-right: 2px; font-size: 10px; color: #74839a; }
+.question-suggestions button { min-height: 32px; padding: 5px 10px; border: 1px solid #e1e7f1; border-radius: 6px; color: #60769a; background: #f7f9fd; font-size: 11px; }
+.question-suggestions button:hover:not(:disabled) { background: #edf2fc; border-color: #b9ccec; }
+.contract-questions .clear-questions { display: block; margin: 20px 0 0 auto; padding: 6px 0 6px 10px; color: #6b7f9e; background: transparent; border: 0; font-size: 11px; text-decoration: underline; text-underline-offset: 3px; }
+.question-history { list-style: none; margin: 0; padding: 0; }
+.question-history > li { margin-top: 20px; padding: 22px 0 0; border-top: 1px solid var(--border); }
+.question-history h3 { display: flex; align-items: baseline; gap: 10px; font-size: 14px; font-weight: 600; }
+.question-index { font-size: 10px; color: #5978ad; background: #eef3fc; border-radius: 5px; padding: 2px 6px; flex-shrink: 0; }
+.contract-answer { margin-top: 16px; padding: 17px 19px; border-radius: 10px; background: #f3f7fd; border: 1px solid #e6edf8; white-space: pre-wrap; font-size: 13px; color: #425b80; line-height: 1.95; }
+.question-history h4 { margin: 18px 0 6px; font-size: 12px; font-weight: 600; color: #587297; }
+.question-history h4 + p { font-size: 11px; color: #73839b; }
+.question-history [role=status] { color: #6c83a8; font-size: 12px; margin-top: 14px; }
+.contract-questions blockquote { margin: 0; padding: 16px; background: #fbfcfe; color: #52677f; font-size: 12px; line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; }
+.contract-questions-note { font-size: 10px; line-height: 1.9; color: #6d7f97; padding-top: 19px; margin-top: 22px; border-top: 1px solid var(--border); }
+@media (max-width: 640px) { .contract-questions { padding: 20px; border-radius: 13px; } .contract-questions textarea { min-height: 130px; font-size: 14px; padding: 13px; } .question-form-footer { align-items: end; } .question-form-footer > span { max-width: 145px; font-size: 10px; } .question-form-footer button { padding-inline: 20px; } .question-suggestions { gap: 7px; } .question-suggestions > span { flex-basis: 100%; } .question-suggestions button { font-size: 12px; min-height: 36px; } .contract-answer { font-size: 14px; padding: 14px; } .question-history h3 { font-size: 14px; align-items: start; } .contract-questions blockquote { font-size: 13px; padding: 13px; } .contract-questions-note { font-size: 11px; } }
