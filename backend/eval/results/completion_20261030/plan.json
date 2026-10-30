@@ -1,0 +1,559 @@
+{
+  "schema_version": 1,
+  "model": "deepseek-flash",
+  "repetitions": 2,
+  "max_requests": 76,
+  "inputs": [
+    {
+      "id": "subletting_a",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. Tenant may sublet only with Landlord's prior written consent. Screening is required. No approval request or refusal has occurred.",
+      "pair_id": "subletting",
+      "variant": "a",
+      "draft_criterion": "Distinguish an approval condition from an absolute ban; identify any approval/refusal facts needed before alleging a prohibited restriction.",
+      "must_not_infer": [
+        "Do not call these words alone an absolute subletting prohibition.",
+        "Do not claim an approval refusal has occurred."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-10",
+          "text_sha256": "d30478b538d49cca8f2d88150daac024953414ce4c149046b5369f5395f72706",
+          "quote": "Prohibiting the tenant from subletting the rental unit;"
+        }
+      ]
+    },
+    {
+      "id": "subletting_b",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. Tenant is prohibited from subletting under any circumstances.",
+      "pair_id": "subletting",
+      "variant": "b",
+      "draft_criterion": "Identify the absolute prohibition and connect it conditionally to the supplied prohibition, retaining scope and enforcement/remedy conditions.",
+      "must_not_infer": [
+        "Do not describe the clause as merely requiring consent.",
+        "Do not assert damages are automatically awarded without the statutory enforcement conditions."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-10",
+          "text_sha256": "d30478b538d49cca8f2d88150daac024953414ce4c149046b5369f5395f72706",
+          "quote": "Prohibiting the tenant from subletting the rental unit;"
+        }
+      ]
+    },
+    {
+      "id": "fixed_fee_a",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. An approved sublease incurs a $200 processing fee. No evidence of actual service costs is supplied.",
+      "pair_id": "fixed_fee",
+      "variant": "a",
+      "draft_criterion": "Identify the cost-comparison issue as unresolved and ask for actual service-cost facts.",
+      "must_not_infer": [
+        "Do not infer that $200 necessarily exceeds actual costs because the amount is fixed."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-10",
+          "text_sha256": "d30478b538d49cca8f2d88150daac024953414ce4c149046b5369f5395f72706",
+          "quote": "Providing for tenant's payment of lock-out charges, sublet fees, late checkout charges\nor any other fees or penalties that exceed the landlord's actual costs for services;"
+        }
+      ]
+    },
+    {
+      "id": "fixed_fee_b",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. An approved sublease incurs a $200 processing fee. Stipulated diagnostic fact: documented actual service costs for that sublease total $25, with no other service costs.",
+      "pair_id": "fixed_fee",
+      "variant": "b",
+      "draft_criterion": "Use the supplied $25-versus-$200 comparison to identify the excess-cost issue under the provision; distinguish the facts from automatic remedies.",
+      "must_not_infer": [
+        "Do not treat actual costs as unknown in this stipulated case.",
+        "Do not assume a monetary award without required proceedings or findings."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-10",
+          "text_sha256": "d30478b538d49cca8f2d88150daac024953414ce4c149046b5369f5395f72706",
+          "quote": "Providing for tenant's payment of lock-out charges, sublet fees, late checkout charges\nor any other fees or penalties that exceed the landlord's actual costs for services;"
+        }
+      ]
+    },
+    {
+      "id": "repair_election_a",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. Tenant agrees to repair identified housing-code violations in exchange for a rent reduction. This is a recital in a form lease; no bargaining evidence is supplied.",
+      "pair_id": "repair_election",
+      "variant": "a",
+      "draft_criterion": "Preserve knowing/intentional election, actual bargaining and the landlord proof burden; a form recital alone is insufficient.",
+      "must_not_infer": [
+        "Do not treat the form recital as conclusive proof of bargaining.",
+        "Do not say handwriting is the sole permitted proof."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-18",
+          "text_sha256": "2f71b65a7e5e43e73714b1b1ff2d15e16eae7d9e955ec87637a5543787664567",
+          "quote": "The burden shall be on the landlord to establish a knowing\nand intentional election on the part of the tenant to repair the premises in compliance\nwith the applicable housing code. A mere recital in a form lease that tenant has covenanted\nto repair will not be sufficient, it being the intention of this article that any\nagreement with the tenant to repair be bargained for in fact. A separate hand-written\nparagraph in the lease showing:\n(1)\nThat the tenant has been informed of this article and the existing code violations;\n(2)\nThat he/she has affirmatively elected and bargained to repair the violations listed\nand other items listed; and\n(3)\nThe inducement for such arrangements, will be prima facie evidence that such provision\nwas entered into in good faith and was bargained for in fact."
+        }
+      ]
+    },
+    {
+      "id": "repair_election_b",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. A typed attachment identifies code violations and a rent reduction. Stipulated facts: Tenant knew of the violations and the ordinance, intentionally elected to repair, and actually negotiated the listed repairs and reduction. Negotiation records exist, but no paragraph is handwritten.",
+      "pair_id": "repair_election",
+      "variant": "b",
+      "draft_criterion": "Recognize the stipulated bargaining facts; lack of handwriting alone is not dispositive. Keep city enforcement and the particular repair obligations separate.",
+      "must_not_infer": [
+        "Do not reject the election solely because the paragraph is typed.",
+        "Do not declare every repair-cost transfer lawful."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-18",
+          "text_sha256": "2f71b65a7e5e43e73714b1b1ff2d15e16eae7d9e955ec87637a5543787664567",
+          "quote": "The burden shall be on the landlord to establish a knowing\nand intentional election on the part of the tenant to repair the premises in compliance\nwith the applicable housing code. A mere recital in a form lease that tenant has covenanted\nto repair will not be sufficient, it being the intention of this article that any\nagreement with the tenant to repair be bargained for in fact. A separate hand-written\nparagraph in the lease showing:\n(1)\nThat the tenant has been informed of this article and the existing code violations;\n(2)\nThat he/she has affirmatively elected and bargained to repair the violations listed\nand other items listed; and\n(3)\nThe inducement for such arrangements, will be prima facie evidence that such provision\nwas entered into in good faith and was bargained for in fact."
+        }
+      ]
+    },
+    {
+      "id": "belongings_a",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. After tenancy termination, Landlord may immediately discard property reasonably believed to have a $5 sale value when storage would cost $100.",
+      "pair_id": "belongings",
+      "variant": "a",
+      "draft_criterion": "Preserve the low-sale-value versus storage-cost immediate-disposal exception and its reasonable-belief condition.",
+      "must_not_infer": [
+        "Do not say only valueless or perishable property qualifies.",
+        "Do not erase the reasonable-belief requirement."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-22",
+          "text_sha256": "81504cf0cd8414b8856be537bd02dcf798b36622af402899b361268705e0f8b7",
+          "quote": "If the tenant abandons the rental unit, the landlord may take possession of the rental\nunit.\n(c)\nIf the tenant abandons the rental unit or fails to remove his or her personal property\nfrom the premises after termination of a rental agreement, the landlord shall leave\nthe abandoned property in the rental unit or remove and store all abandoned property\nfrom the rental unit. The landlord may charge the tenant for the actual costs of storage.\nThe landlord may dispose of the property thirty (30) days after mailing written notice\nto tenant's last known address, if the tenant does not claim the property within that\ntime. Notwithstanding the foregoing, if the landlord reasonably believes such abandoned\nproperty to be valueless or of such little value that the cost of storage would exceed\nthe amount that would be realized from sale, or if such property is subject to spoilage,\nthe landlord may immediately dispose of such property."
+        }
+      ]
+    },
+    {
+      "id": "belongings_b",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. After tenancy termination, Landlord may immediately discard any uncollected property. Stipulated facts: an identified nonperishable item has a $1000 sale value and $50 storage cost; there is no reasonable belief that it is valueless or low-value, and no notice has been mailed.",
+      "pair_id": "belongings",
+      "variant": "b",
+      "draft_criterion": "Flag the blanket disposal term and preserve mailed notice, 30 days, non-claim, and the stated exceptions.",
+      "must_not_infer": [
+        "Do not apply the low-value/perishable exception to these stipulated facts.",
+        "Do not describe ordinary absence alone as abandonment of the unit."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-22",
+          "text_sha256": "81504cf0cd8414b8856be537bd02dcf798b36622af402899b361268705e0f8b7",
+          "quote": "If the tenant abandons the rental unit, the landlord may take possession of the rental\nunit.\n(c)\nIf the tenant abandons the rental unit or fails to remove his or her personal property\nfrom the premises after termination of a rental agreement, the landlord shall leave\nthe abandoned property in the rental unit or remove and store all abandoned property\nfrom the rental unit. The landlord may charge the tenant for the actual costs of storage.\nThe landlord may dispose of the property thirty (30) days after mailing written notice\nto tenant's last known address, if the tenant does not claim the property within that\ntime. Notwithstanding the foregoing, if the landlord reasonably believes such abandoned\nproperty to be valueless or of such little value that the cost of storage would exceed\nthe amount that would be realized from sale, or if such property is subject to spoilage,\nthe landlord may immediately dispose of such property."
+        }
+      ]
+    },
+    {
+      "id": "boundary_a",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Premises: 1 Main Street, Urbana, IL. User selected Urbana. No municipal-boundary evidence is supplied.",
+      "pair_id": "boundary",
+      "variant": "a",
+      "draft_criterion": "Explain that a mailing address and region selection do not independently establish city-boundary membership; retain conditional municipal scope.",
+      "must_not_infer": [
+        "Do not state that a boundary lookup occurred or that city membership was verified."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-2",
+          "text_sha256": "c87051a2b559b3083fdd25daf12633126c0b7f833a4a73d9adac4f1f304e778f",
+          "quote": "This chapter applies to, regulates and determines certain rights, obligations and\nremedies under a rental agreement for a rental unit located within the city."
+        }
+      ]
+    },
+    {
+      "id": "boundary_b",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Premises have an Urbana mailing address. Stipulated diagnostic fact from a boundary record: the dwelling is outside Urbana city limits. No other geographic facts are supplied.",
+      "pair_id": "boundary",
+      "variant": "b",
+      "draft_criterion": "Recognize that the supplied outside-city fact prevents inferring Chapter 12.5 coverage from the mailing address; assess other law separately only with sources and facts.",
+      "must_not_infer": [
+        "Do not apply Chapter 12.5 merely because Urbana appears in the address.",
+        "Do not claim state/federal law is therefore inapplicable."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-2",
+          "text_sha256": "c87051a2b559b3083fdd25daf12633126c0b7f833a4a73d9adac4f1f304e778f",
+          "quote": "This chapter applies to, regulates and determines certain rights, obligations and\nremedies under a rental agreement for a rental unit located within the city."
+        }
+      ]
+    },
+    {
+      "id": "deposit_receipts_a",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. For claimed damage beyond normal wear, Landlord will furnish an itemized estimated-cost statement within 30 days after Tenant vacates and paid receipts within 30 days of furnishing that statement.",
+      "pair_id": "deposit_receipts",
+      "variant": "a",
+      "draft_criterion": "Recognize the estimated-statement then later-receipts path in the supplied municipal provision; do not reject it solely because receipts may arrive after day 30 from move-out.",
+      "must_not_infer": [
+        "Do not require paid receipts in every case within 30 days of move-out.",
+        "Do not imply that all deductions are damage deductions."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-20",
+          "text_sha256": "71eab736a019d091ff562fce80bf78cebae62a9c4c0181ea4929870cb5a32091",
+          "quote": "If estimated cost is given, the lessor shall furnish the lessee with paid receipts,\nor copies thereof, within thirty (30) days from the date the statement showing estimated\ncost was furnished to the lessee, as required by this section. If no such statement\nand receipts, or copies thereof, are furnished to the lessee as required by this section,\nthe lessor shall return the security deposit in full within forty-five (45) days of\nthe date that the lessee vacated the premises."
+        }
+      ]
+    },
+    {
+      "id": "deposit_receipts_b",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. Landlord may withhold the deposit for alleged damage without providing an itemized statement or receipts. The deposit balance, if any, will be returned within 45 days after Tenant vacates.",
+      "pair_id": "deposit_receipts",
+      "variant": "b",
+      "draft_criterion": "Identify omission of damage-accounting requirements; 45-day wording alone does not replace the prescribed statement/receipts path.",
+      "must_not_infer": [
+        "Do not treat a 45-day return clause as satisfying every damage-accounting requirement.",
+        "Do not omit the estimated-cost/receipt alternative when explaining the rule."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-20",
+          "text_sha256": "71eab736a019d091ff562fce80bf78cebae62a9c4c0181ea4929870cb5a32091",
+          "quote": "If estimated cost is given, the lessor shall furnish the lessee with paid receipts,\nor copies thereof, within thirty (30) days from the date the statement showing estimated\ncost was furnished to the lessee, as required by this section. If no such statement\nand receipts, or copies thereof, are furnished to the lessee as required by this section,\nthe lessor shall return the security deposit in full within forty-five (45) days of\nthe date that the lessee vacated the premises."
+        }
+      ]
+    },
+    {
+      "id": "interest_fact_a",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. Tenant shall pay a security deposit of $1,250. This agreement contains no other deposit-interest language. Deposit holding duration and payment history are not supplied.",
+      "pair_id": "interest_fact",
+      "variant": "a",
+      "draft_criterion": "Describe interest language as absent, not an express waiver; identify duration and other required facts before claiming nonpayment.",
+      "must_not_infer": [
+        "Do not invent an express waiver.",
+        "Do not infer that interest has not been paid from contractual silence."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-19",
+          "text_sha256": "98e142528686f4b7834d09cbad53c542c689f2e5bf74182dee925d4bed834119",
+          "quote": "A landlord who receives a security deposit of one hundred dollars ($100.00) or more\nfrom a tenant to secure the payment of rent or to compensate for damage to property\nshall pay interest to the tenant, computed from the date the deposit is paid, at a\nrate equal to the interest paid by the largest commercial bank, as measured by total\nassets, having its main banking premises in Champaign County, Illinois, on minimum\ndeposit passbook savings accounts as of the thirtieth of June immediately preceding\nthe inception of the rental agreement on any such deposit held by the landlord for\nmore than six (6) months."
+        }
+      ]
+    },
+    {
+      "id": "interest_fact_b",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. Tenant shall pay a security deposit of $1,250 and expressly waives all interest on that deposit. Deposit holding duration and payment history are not supplied.",
+      "pair_id": "interest_fact",
+      "variant": "b",
+      "draft_criterion": "Identify the express waiver as a contract fact, discuss the supplied rule conditionally, and keep holding duration and payment behavior unknown.",
+      "must_not_infer": [
+        "Do not claim that the agreement is silent about interest.",
+        "Do not infer that nonpayment or entitlement to a penalty has already been established."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-19",
+          "text_sha256": "98e142528686f4b7834d09cbad53c542c689f2e5bf74182dee925d4bed834119",
+          "quote": "A landlord who receives a security deposit of one hundred dollars ($100.00) or more\nfrom a tenant to secure the payment of rent or to compensate for damage to property\nshall pay interest to the tenant, computed from the date the deposit is paid, at a\nrate equal to the interest paid by the largest commercial bank, as measured by total\nassets, having its main banking premises in Champaign County, Illinois, on minimum\ndeposit passbook savings accounts as of the thirtieth of June immediately preceding\nthe inception of the rental agreement on any such deposit held by the landlord for\nmore than six (6) months."
+        },
+        {
+          "law_id": "URBANA-12.5-10",
+          "text_sha256": "d30478b538d49cca8f2d88150daac024953414ce4c149046b5369f5395f72706",
+          "quote": "Waiving the rights or remedies provided under this article;"
+        }
+      ]
+    },
+    {
+      "id": "entry_showing_a",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. During the last 90 days, Landlord may show the dwelling at any time on a schedule determined only by Landlord. No non-renewal notice or other access facts are supplied.",
+      "pair_id": "entry_showing",
+      "variant": "a",
+      "draft_criterion": "Identify the unilateral schedule and distinguish it from the conditional non-renewal showing exception; retain tenant-selected periods and unknown notice facts.",
+      "must_not_infer": [
+        "Do not say every last-90-days showing automatically qualifies for notice-free access."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-15",
+          "text_sha256": "47fc06c4266193a64b240fd16bad1daa9a41a8278b0db7abdfde804f5d4e5f25",
+          "quote": "From the time that either the landlord or the tenant notifies the other party that\nthe rental agreement will not be renewed, the landlord shall have the right to access,\nwithout twenty-four (24) hours advance notice, for the purpose of showing the rental\nunit to prospective tenants, provided that:\n(1)\nThe rental unit has not already been leased for the twelve-month period subsequent\nto the expiration of the rental agreement;\n(2)\nThe landlord enters only during two (2) specific one-hour periods on weekdays and\nthree (3) specific one-hour periods on weekends, selected by the tenant from among\nchoices offered by the landlord, during which the landlord will have daily access;\nand\n(3)\nThe landlord shall notify the tenant when the rental unit has been leased for the\ntwelve-month period subsequent to the expiration of the rental agreement."
+        }
+      ]
+    },
+    {
+      "id": "entry_showing_b",
+      "kind": "diagnostic",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT. Landlord leases a dwelling to Tenant. Synthetic facts for this diagnostic only: the dwelling is within Urbana city limits; this is an ordinary residential tenancy entered in 2026, and none of the supplied Chapter 12.5 section 2 exclusions applies. These are stipulated test facts, not a real boundary lookup. Stipulated facts: a non-renewal notice was given, the dwelling has not been leased for the next 12 months, and Tenant selected two specific one-hour weekday periods and three one-hour weekend periods from choices Landlord offered. Showings will occur only during those periods; Landlord will notify Tenant when the next tenancy is leased.",
+      "pair_id": "entry_showing",
+      "variant": "b",
+      "draft_criterion": "Recognize the stipulated showing exception conditions, without generalizing them to repairs or other entry purposes.",
+      "must_not_infer": [
+        "Do not claim 24-hour notice is invariably required even for this supplied exception.",
+        "Do not convert the exception into unrestricted entry."
+      ],
+      "source_anchors": [
+        {
+          "law_id": "URBANA-12.5-15",
+          "text_sha256": "47fc06c4266193a64b240fd16bad1daa9a41a8278b0db7abdfde804f5d4e5f25",
+          "quote": "From the time that either the landlord or the tenant notifies the other party that\nthe rental agreement will not be renewed, the landlord shall have the right to access,\nwithout twenty-four (24) hours advance notice, for the purpose of showing the rental\nunit to prospective tenants, provided that:\n(1)\nThe rental unit has not already been leased for the twelve-month period subsequent\nto the expiration of the rental agreement;\n(2)\nThe landlord enters only during two (2) specific one-hour periods on weekdays and\nthree (3) specific one-hour periods on weekends, selected by the tenant from among\nchoices offered by the landlord, during which the landlord will have daily access;\nand\n(3)\nThe landlord shall notify the tenant when the rental unit has been leased for the\ntwelve-month period subsequent to the expiration of the rental agreement."
+        }
+      ]
+    },
+    {
+      "id": "lease_zh",
+      "kind": "full_contract",
+      "jurisdiction": "cn",
+      "text": "住房租赁合同\n\n出租人（以下简称甲方）：张某某\n承租人（以下简称乙方）：李某某\n\n根据《中华人民共和国民法典》及有关法律、法规的规定，甲乙双方在平等、自愿、协商一致的基础上，就房屋租赁的有关事宜达成如下协议，供双方共同遵守。\n\n第一条 房屋基本情况\n甲方将其合法拥有的位于某市某区某路88号3单元502室的房屋（以下简称该房屋）出租给乙方使用。该房屋建筑面积为68平方米，户型为两室一厅一卫，房屋用途为居住。甲方保证对该房屋享有合法的出租权利，并已如实告知乙方该房屋未设定抵押、未被查封。房屋内现有家具、家电及其他附属设施的清单详见本合同附件一，双方签字确认后作为房屋交付和交还的依据。\n\n第二条 房屋交付及验收\n甲方应于2026年9月1日前将该房屋及附属设施交付乙方，并交付房门钥匙两把、单元门禁卡两张。交付时，双方应共同对房屋及附属设施的现状进行检查，记录水、电、燃气表的读数，并在附件一中签字确认。乙方在交付后七日内发现房屋存在交付时未记载的瑕疵的，应及时书面告知甲方，逾期未告知的，视为房屋交付时状况良好。\n\n第三条 租赁期限\n租赁期限为十二个月，自2026年9月1日起至2027年8月31日止。租赁期满，甲方有权收回该房屋，乙方应如期返还。乙方需继续承租的，应于租赁期满前三十日向甲方提出书面续租要求，经甲方同意后双方重新签订租赁合同。同等条件下，乙方不享有优先承租权。\n\n第四条 租金及支付方式\n该房屋月租金为人民币4500元（大写：肆仟伍佰元整）。租金按季度支付，乙方应于每季度第一个月的5日前一次性支付该季度租金13500元，首期租金于签订本合同时支付。甲方收取租金后应向乙方出具收款凭证。乙方逾期支付租金的，每逾期一日，应按当月租金的百分之五向甲方支付滞纳金；逾期超过十五日的，甲方有权单方解除本合同并收回房屋。\n\n第五条 租金调整\n租赁期间，如遇市场行情变化，甲方有权参照周边房屋租金水平调整租金，调整幅度由甲方确定，甲方应提前十五日通知乙方。乙方不同意调整的，可以解除本合同，但应按照本合同第十三条的约定承担提前解约的责任。\n\n第六条 押金\n签订本合同时，乙方应向甲方支付相当于两个月租金的押金，即人民币9000元，押金不计利息。租赁期间，乙方不得以押金抵扣租金。租赁期满或合同解除后，乙方结清全部费用并按约定交还房屋的，甲方应退还押金。乙方应在退租之日起90日内书面申请退还押金，逾期未申请的，视为乙方自愿放弃押金。押金的扣除项目及扣除金额由甲方根据房屋状况确定，乙方对扣除金额有异议的，以甲方意见为准。\n\n第七条 相关费用的承担\n租赁期间，下列费用由乙方承担：水费、电费、燃气费、网络费、有线电视费、物业管理费及供暖费。乙方应按时足额缴纳上述费用，因乙方逾期缴纳造成停水、停电、停气的，责任由乙方自行承担。该房屋的房产税、城镇土地使用税以及出租房屋产生的税费由甲方承担。租赁期间如有关部门向房屋使用人征收其他费用的，由乙方承担。\n\n第八条 房屋及设施的维修\n租赁期间，乙方应合理使用并爱护该房屋及其附属设施。房屋及附属设施发生损坏或故障的，无论损坏原因，维修费用一律由乙方承担。房屋主体结构出现安全隐患的，乙方应及时通知甲方，甲方在接到通知后三十日内安排修缮，修缮期间乙方不得要求减免租金。因乙方未及时通知造成损失扩大的，乙方应承担扩大部分的损失。\n\n第九条 甲方进入房屋\n为检查房屋使用情况及设施状况，甲方或其委托的人员有权随时进入该房屋，无需提前通知乙方。租赁期满前两个月内，甲方带领意向承租人或购房者看房的，乙方应予以配合，不得拒绝或设置障碍。\n\n第十条 装修与改动\n未经甲方书面同意，乙方不得对该房屋进行装修、改变房屋结构或增设附属设施，不得更换门锁。经甲方同意进行装修的，租赁期满或合同解除时，乙方应自费恢复原状，或将装修部分无偿归甲方所有，具体方式由甲方选择。乙方擅自装修的，甲方有权要求乙方恢复原状并赔偿由此造成的全部损失。\n\n第十一条 转租与居住人员\n未经甲方书面同意，乙方不得将该房屋全部或部分转租、转借给他人，不得与他人调换使用。乙方擅自转租的，甲方有权解除合同、收回房屋，乙方所交押金不予退还。该房屋的居住人数不得超过三人。乙方的亲友在该房屋内连续留宿超过七日的，应事先告知甲方并提供身份信息。\n\n第十二条 禁止事项\n乙方不得在该房屋内饲养宠物，不得存放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合同。\n\n第十三条 提前解除合同\n租赁期间，乙方需提前退租的，应提前六十日书面通知甲方，并支付相当于三个月租金的违约金，已付的剩余租金及押金不予退还。甲方因出售房屋或自住需要提前收回房屋的，应提前三十日通知乙方，并退还乙方已付的剩余租金，甲方不承担其他任何责任。\n\n第十四条 甲方可以解除合同的情形\n乙方有下列情形之一的，甲方有权单方解除本合同、收回房屋，并要求乙方赔偿损失：（一）擅自改变房屋用途的；（二）擅自拆改房屋结构或损坏房屋的；（三）利用该房屋从事违法活动的；（四）拖欠租金或其他费用累计超过十五日的；（五）邻居或物业对乙方提出投诉达到两次的。\n\n第十五条 甲方的违约责任\n甲方未按约定时间交付房屋的，每逾期一日，应按日租金向乙方支付违约金。因甲方原因导致乙方无法正常使用该房屋的，乙方有权要求减免相应期间的租金。\n\n第十六条 安全责任\n乙方应遵守物业管理规定，安全使用水、电、燃气，离开房屋时应关闭门窗和电源。因乙方使用不当引起火灾、漏水等事故，造成甲方或第三人人身、财产损失的，由乙方承担全部赔偿责任。乙方在租赁期间自身发生的人身伤害，甲方不承担任何责任。\n\n第十七条 房屋的交还\n租赁期满或合同解除之日，乙方应将该房屋及附属设施完好交还甲方，并结清所有费用。乙方应在交还房屋时自费进行深度保洁，未进行保洁的，甲方有权从押金中扣除保洁费800元。乙方逾期交还房屋的，每逾期一日应按日租金的三倍支付房屋占用费。乙方在房屋内遗留的物品，自交还房屋之日起超过三日未搬离的，视为乙方放弃，甲方有权自行处置。\n\n第十八条 通知与送达\n本合同项下的通知应以书面形式送达本合同首部所列地址，或通过双方确认的微信、短信发送。一方变更联系方式的，应在变更后三日内通知对方，否则按原联系方式发送即视为送达。\n\n第十九条 不可抗力\n因地震、火灾、洪水等不可抗力导致该房屋损毁或本合同无法继续履行的，本合同自然终止，双方互不承担违约责任，甲方应退还乙方已付的剩余租金。\n\n第二十条 争议解决\n本合同履行过程中发生争议的，双方应协商解决；协商不成的，任何一方均可向该房屋所在地人民法院提起诉讼。\n\n第二十一条 物业管理及公共区域\n乙方应遵守该房屋所在小区的管理规约及物业服务企业的管理规定，配合物业进行消防检查和设施维护。乙方不得在楼道、消防通道等公共区域堆放杂物，不得将电动自行车停放在楼道内或在室内充电。乙方的车辆需进入小区停放的，应自行向物业办理停车登记并缴纳停车费用。\n\n第二十二条 租赁登记备案\n甲方应在本合同签订之日起三十日内，到房屋所在地的住房城乡建设主管部门办理房屋租赁登记备案，乙方应予以配合并提供身份证明。乙方因办理居住证、子女入学等事项需要租赁登记备案证明的，甲方应予以协助。\n\n第二十三条 中介服务\n本合同由某某房地产经纪有限公司居间促成。经纪服务费为人民币4500元，由乙方在签订本合同时一次性支付给经纪机构，本合同提前解除的，经纪服务费不予退还。经纪机构应如实向乙方说明该房屋的权属状况和设施情况。\n\n第二十四条 钥匙及门禁卡\n乙方应妥善保管甲方交付的钥匙及门禁卡，遗失的应及时告知甲方并自费补办。乙方不得私自复制钥匙交给本合同约定以外的人员使用。租赁期满或合同解除时，乙方应将全部钥匙及门禁卡交还甲方。\n\n第二十五条 合同的变更和补充\n租赁期间，任何一方需要变更本合同内容的，应提前十五日书面通知对方，经双方协商一致后以书面形式签订补充协议。补充协议与本合同不一致的，以补充协议为准。\n\n第二十六条 其他\n本合同未尽事宜，经双方协商一致后另行签订补充协议，补充协议与本合同具有同等法律效力。本合同一式两份，甲乙双方各执一份，自双方签字之日起生效。\n\n附件一：房屋附属设施清单\n客厅：沙发一套、茶几一张、电视机一台（55英寸）、空调一台。\n主卧：双人床一张（含床垫）、衣柜一个、空调一台。\n次卧：单人床一张（含床垫）、书桌一张、椅子一把。\n厨房：冰箱一台、燃气灶一台、抽油烟机一台、微波炉一台。\n卫生间：热水器一台、洗衣机一台。\n交付时水表读数、电表读数、燃气表读数由双方现场记录并签字确认。\n\n甲方（签字）：　　　　　　乙方（签字）：\n签订日期：2026年8月20日\n",
+      "draft_criterion": null,
+      "must_not_infer": [],
+      "source_anchors": []
+    },
+    {
+      "id": "labor_zh",
+      "kind": "full_contract",
+      "jurisdiction": "cn",
+      "text": "劳动合同书\n\n用人单位（以下简称甲方）：某某科技有限公司\n劳动者（以下简称乙方）：王某某\n\n根据《中华人民共和国劳动法》《中华人民共和国劳动合同法》及有关法律、法规的规定，甲乙双方遵循合法、公平、平等自愿、协商一致、诚实信用的原则，签订本劳动合同，共同遵守本合同所列条款。\n\n第一条 合同期限\n本合同为固定期限劳动合同，期限三年，自2026年7月1日起至2029年6月30日止。其中试用期为六个月，自2026年7月1日起至2026年12月31日止。试用期内乙方被证明不符合录用条件的，甲方可以随时解除本合同。\n\n第二条 工作内容和工作地点\n乙方同意根据甲方工作需要，担任软件开发工程师岗位工作，具体工作职责以甲方制定的岗位说明书为准。乙方的工作地点为某市某区。甲方可根据经营需要调整乙方的工作岗位和工作地点，包括派驻外地分支机构，乙方应当服从安排，拒不服从的视为严重违反规章制度。\n\n第三条 工作时间和休息休假\n甲方安排乙方执行标准工时制度，每日工作八小时，每周工作五日。因项目需要，乙方应当服从甲方的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。乙方依法享受法定节假日、年休假、婚假、产假等假期。乙方连续工作满一年后，方可申请带薪年休假，具体天数及时间由甲方统一安排。\n\n第四条 劳动报酬\n乙方转正后的月工资为人民币15000元，其中基本工资3000元，绩效工资12000元。绩效工资根据甲方的考核结果发放，考核标准由甲方制定并可随时调整。乙方试用期月工资为转正后工资的百分之七十。甲方于每月25日以银行转账方式支付乙方上月工资，遇节假日顺延。甲方可根据经营状况，在不低于当地最低工资标准的前提下调整乙方的工资。\n\n第五条 社会保险和福利\n甲方依法为乙方办理社会保险。乙方自愿选择不缴纳社会保险和住房公积金的，甲方每月向乙方发放现金补贴500元，乙方承诺不就此向甲方主张任何权利。乙方享有甲方规定的节日福利、体检及其他福利待遇，福利待遇的标准由甲方自行决定。\n\n第六条 劳动保护和劳动条件\n甲方为乙方提供符合国家规定的劳动安全卫生条件和必要的劳动保护用品。乙方在工作中发生工伤的，按照《工伤保险条例》的规定处理。乙方因非因工负伤或患病的，享受国家规定的医疗期待遇。\n\n第七条 培训与服务期\n甲方出资对乙方进行专业技术培训的，双方另行签订培训协议，约定服务期为五年。乙方在服务期内离职的，应当向甲方支付违约金，违约金数额为培训费用的三倍，并返还培训期间甲方支付的全部工资。\n\n第八条 保密义务\n乙方对在工作期间知悉的甲方商业秘密、技术资料、客户信息及其他保密信息负有保密义务，未经甲方书面许可，不得向任何第三方披露或允许他人使用。乙方的保密义务在本合同终止后继续有效，直至相关信息公开为止。乙方违反保密义务的，应赔偿甲方因此遭受的全部损失。\n\n第九条 竞业限制\n乙方在职期间及离职后两年内，不得到与甲方生产或经营同类产品、从事同类业务的有竞争关系的其他用人单位任职，也不得自己开业生产或经营同类产品、从事同类业务。甲方在竞业限制期间不向乙方支付经济补偿。乙方违反竞业限制约定的，应当向甲方支付违约金人民币二十万元。\n\n第十条 知识产权\n乙方在职期间利用甲方的物质技术条件或因执行工作任务完成的发明创造、软件、作品等，其知识产权归甲方所有。乙方在职期间业余时间完成的、与甲方业务相关的成果，其知识产权亦归甲方所有。\n\n第十一条 规章制度\n乙方应当遵守甲方依法制定的各项规章制度和劳动纪律。甲方的规章制度可通过公司内网、电子邮件等方式公示，公示即视为乙方已知悉。乙方严重违反甲方规章制度的，甲方可以解除本合同且不支付经济补偿。\n\n第十二条 乙方解除合同\n乙方提前解除本合同的，应当提前六十日以书面形式通知甲方，并办理完毕工作交接。乙方未提前通知擅自离职的，应当赔偿甲方由此造成的全部损失，并且甲方有权扣发乙方当月工资。\n\n第十三条 甲方解除合同\n乙方有下列情形之一的，甲方可以解除本合同：（一）在试用期间被证明不符合录用条件的；（二）严重违反甲方规章制度的；（三）严重失职、营私舞弊，给甲方造成重大损害的；（四）连续两个季度绩效考核不合格的；（五）被依法追究刑事责任的。乙方因上述情形被解除合同的，甲方不支付经济补偿。\n\n第十四条 违约金\n乙方违反本合同约定的，除本合同另有约定外，应当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。\n\n第十五条 离职交接\n本合同解除或终止时，乙方应在离职前完成工作交接，归还甲方的办公设备、资料及其他财物。甲方在乙方办结工作交接后出具解除或终止劳动合同的证明。乙方未完成工作交接的，甲方有权暂缓发放乙方的剩余工资及经济补偿。\n\n第十六条 劳动争议处理\n双方因履行本合同发生劳动争议的，可以协商解决；协商不成的，可以向甲方所在地劳动争议仲裁委员会申请仲裁；对仲裁裁决不服的，可以向人民法院提起诉讼。\n\n第十七条 岗位职责与工作要求\n乙方应按照甲方的要求完成岗位工作任务，按时参加部门例会，每周五下班前通过公司办公系统提交工作周报。乙方负责的软件模块应符合甲方的编码规范和代码审查要求，上线前须通过测试部门的验收。乙方应配合其他部门完成跨部门协作事项，并对所负责项目的进度和质量承担责任。\n\n第十八条 考勤与请假\n乙方应按照甲方考勤制度按时上下班并通过门禁系统打卡。乙方因病请假的，应于当日上午十点前向直接主管报告，并在返岗后三日内提交二级以上医院出具的病假证明；因事请假的，应提前三个工作日通过办公系统提出申请，经部门负责人批准后方可休假。乙方当月迟到累计三次的，按旷工半日处理；未经批准缺勤的，按旷工处理。\n\n第十九条 出差与费用报销\n乙方因工作需要出差的，应事先填写出差申请单，经批准后方可出行。出差期间的交通、住宿及餐饮费用，按照甲方《差旅费管理办法》规定的标准报销。乙方应在出差结束后十个工作日内提交报销单据，逾期提交的，甲方有权不予报销。乙方因工作需要垫付的其他费用，须提供合法有效的发票。\n\n第二十条 办公设备与信息安全\n甲方为乙方提供工作所需的笔记本电脑、显示器及办公软件账号，上述设备和账号的所有权归甲方。乙方不得在办公电脑上安装未经授权的软件，不得将公司源代码上传至个人网盘或公开代码托管平台。乙方同意甲方出于信息安全目的，对其使用的办公电脑、公司邮箱及内部通讯工具进行必要的监控和审计。\n\n第二十一条 兼职与利益冲突\n乙方在职期间，未经甲方书面同意，不得在其他用人单位兼职，不得以任何形式为甲方的客户、供应商或竞争对手提供有偿服务。乙方的近亲属在甲方的客户或供应商处任职的，乙方应主动向甲方申报。\n\n第二十二条 员工个人信息\n乙方应如实向甲方提供身份证明、学历证明、工作经历及健康状况等与劳动合同直接相关的个人信息，乙方提供虚假信息的，甲方有权解除本合同。乙方同意甲方为人事管理、薪酬发放及办理社会保险之目的收集和使用其个人信息，甲方应对乙方的个人信息予以保密。\n\n第二十三条 合同的变更\n甲乙双方协商一致，可以变更本合同约定的内容。变更劳动合同，应当采用书面形式，变更后的劳动合同文本由双方各执一份。甲方变更名称、法定代表人、主要负责人或者投资人等事项，不影响本合同的履行。\n\n第二十四条 合同的终止\n有下列情形之一的，本合同终止：（一）合同期满的；（二）乙方开始依法享受基本养老保险待遇的；（三）乙方死亡，或者被人民法院宣告死亡或者宣告失踪的；（四）甲方被依法宣告破产的；（五）甲方被吊销营业执照、责令关闭、撤销或者甲方决定提前解散的；（六）法律、行政法规规定的其他情形。\n\n第二十五条 经济补偿\n依照法律规定甲方应当向乙方支付经济补偿的，按乙方在甲方工作的年限，每满一年支付一个月工资的标准向乙方支付。六个月以上不满一年的，按一年计算；不满六个月的，向乙方支付半个月工资的经济补偿。\n\n第二十六条 档案及社会保险关系转移\n甲方应当在解除或者终止本合同时出具解除或者终止劳动合同的证明，并在十五日内为乙方办理档案和社会保险关系转移手续。乙方应当按照双方约定，办理工作交接。\n\n第二十七条 其他约定\n本合同未尽事宜，按照国家有关法律、法规执行。甲方的员工手册、考勤制度及薪酬制度作为本合同的附件，与本合同具有同等效力。本合同一式两份，甲乙双方各执一份，自双方签字或盖章之日起生效。\n\n甲方（盖章）：　　　　　　乙方（签字）：\n签订日期：2026年6月20日\n",
+      "draft_criterion": null,
+      "must_not_infer": [],
+      "source_anchors": []
+    },
+    {
+      "id": "lease_en",
+      "kind": "full_contract",
+      "jurisdiction": "us_il_urbana",
+      "text": "RESIDENTIAL LEASE AGREEMENT\n\nThis Residential Lease Agreement (\"Lease\") is made between Prairie Lane Properties LLC (\"Landlord\") and the undersigned resident or residents (\"Tenant\"). Each person who signs this Lease as Tenant is a Tenant under this Lease.\n\n1. PREMISES. Landlord leases to Tenant the apartment located at 1207 West Oregon Street, Unit 3B, Urbana, Illinois 61801 (the \"Premises\"), together with the appliances and furnishings listed on the Move-In Condition Report. The Premises shall be used only as a private residence for the persons named in this Lease.\n\n2. TERM. The term of this Lease begins at 12:00 p.m. on August 15, 2026 and ends at 12:00 p.m. on July 31, 2027. If Landlord is unable to deliver possession on the start date because a prior occupant has not vacated, rent shall be abated on a daily basis until possession is delivered, and Landlord shall not otherwise be liable for the delay.\n\n3. RENT. Tenant shall pay monthly rent of $1,250.00, due in advance on or before the first day of each month, without demand or deduction. Rent shall be paid through the Landlord's online resident portal. A convenience fee charged by the payment processor for card payments shall be paid by Tenant. Rent for any partial month shall be prorated on a daily basis.\n\n4. LATE CHARGES AND RETURNED PAYMENTS. If any rent is not received by 11:59 p.m. on the fifth day of the month, Tenant shall pay an initial late charge of $50.00 plus $10.00 for each additional day until rent is paid in full. Any payment returned for insufficient funds shall incur a $35.00 returned payment fee, and Landlord may thereafter require Tenant to pay by certified funds.\n\n5. SECURITY DEPOSIT. Tenant shall pay a security deposit of $1,250.00 upon signing this Lease. The security deposit may not be used by Tenant as payment of the last month's rent. Landlord may deduct from the security deposit unpaid rent, unpaid utilities, and the cost of repairing damage beyond ordinary wear and tear. Within 45 days after Tenant vacates, Landlord shall return the security deposit, less any lawful deductions, to the forwarding address provided by Tenant in writing. If any deduction is made for damage, Landlord shall provide an itemized statement of the damage and the estimated or actual cost of repair, with paid receipts or copies of them when available.\n\n6. UTILITIES. Tenant shall establish service in Tenant's own name and pay for electricity, gas, internet, and cable television. Landlord shall provide water, sewer, and trash collection, and the cost of these services is included in the rent. Tenant shall keep heat at no less than 55 degrees Fahrenheit at all times to prevent pipes from freezing, and Tenant shall be responsible for any damage caused by frozen pipes if the heat was turned off or set below this level.\n\n7. MAINTENANCE AND REPAIRS. Tenant shall keep the Premises clean and sanitary and shall promptly report any needed repairs through the resident portal. Landlord shall make repairs needed to keep the Premises fit to live in. Tenant shall pay the first $150.00 of the cost of each repair call, regardless of the cause, unless the repair is required by an emergency affecting health or safety. Tenant shall replace light bulbs and smoke detector batteries during the term at Tenant's expense. Tenant shall pay the full cost of repairing any damage caused by Tenant, Tenant's guests, or pets.\n\n8. LANDLORD'S RIGHT OF ENTRY. Landlord and Landlord's agents may enter the Premises at reasonable times to inspect, make repairs, or show the Premises to prospective tenants or buyers, after giving Tenant at least 24 hours' notice by email or a notice posted on the door. In case of emergency, Landlord may enter at any time without notice. During the last 90 days of the term, Landlord may show the Premises to prospective tenants on a schedule set by Landlord.\n\n9. OCCUPANCY AND GUESTS. Only the persons named as Tenant in this Lease may live in the Premises. A guest may not stay in the Premises for more than seven consecutive nights or more than fourteen nights in any calendar month without Landlord's prior written consent. Any person staying longer shall be treated as an unauthorized occupant, and Landlord may charge Tenant an unauthorized occupant fee of $100.00 per day.\n\n10. SUBLETTING AND ASSIGNMENT. Tenant shall not sublet the Premises or assign this Lease without Landlord's prior written consent. Any proposed subtenant must complete Landlord's application and meet Landlord's rental criteria. If Landlord approves a sublease, Tenant shall pay a sublease processing fee of $200.00, and Tenant shall remain fully responsible for all obligations under this Lease.\n\n11. EARLY TERMINATION. Tenant may terminate this Lease before the end of the term only by giving Landlord at least 60 days' written notice and paying an early termination fee equal to two months' rent. The early termination fee is in addition to rent due through the termination date. Tenant shall not be entitled to a refund of any rent or fees paid in advance.\n\n12. AUTOMATIC RENEWAL. This Lease shall automatically renew for an additional twelve-month term at the then-current market rent set by Landlord unless either party gives written notice of non-renewal at least 60 days before the end of the term. Landlord shall inform Tenant of the renewal rent at least 75 days before the end of the term.\n\n13. JOINT AND SEVERAL LIABILITY. If more than one person signs this Lease as Tenant, each Tenant is jointly and severally liable for all obligations under this Lease, including the full amount of rent and any damages, regardless of which Tenant caused the obligation. The move-out of one Tenant does not release that Tenant from this Lease.\n\n14. PETS. No animals of any kind, including animals belonging to guests, may be kept in the Premises, even temporarily, without Landlord's prior written consent. If an unauthorized animal is found in the Premises, Tenant shall pay a fine of $500.00 per occurrence and the cost of any cleaning, de-fleaing, or repairs. This section does not apply to assistance animals for a person with a disability.\n\n15. SMOKING. Smoking of any substance, including cigarettes, cigars, marijuana, and electronic cigarettes, is prohibited inside the Premises, on balconies, and within 25 feet of the building. Tenant shall pay a $300.00 cleaning charge for any violation of this section.\n\n16. NOISE AND CONDUCT. Tenant shall not disturb other residents or neighbors. Quiet hours are from 10:00 p.m. to 8:00 a.m. on weeknights and from midnight to 9:00 a.m. on weekends. Tenant is responsible for the conduct of Tenant's guests. A second written warning for disturbance within the term shall be a default under this Lease.\n\n17. ALTERATIONS. Tenant shall not paint, wallpaper, install fixtures, change locks, or make any alteration to the Premises without Landlord's prior written consent. Small nail holes for hanging pictures are permitted. Any approved alteration shall become the property of Landlord unless Landlord requires Tenant to remove it and restore the Premises at Tenant's expense.\n\n18. PARKING. One assigned parking space is available in the rear lot for $60.00 per month under a separate parking agreement. Vehicles parked without a valid permit, or in another resident's space, may be towed at the vehicle owner's expense without further notice.\n\n19. RENTER'S INSURANCE. Tenant shall maintain renter's insurance with personal liability coverage of at least $100,000 for the entire term and shall name Landlord as an interested party. Landlord's insurance does not cover Tenant's personal property, and Landlord is not responsible for loss of or damage to Tenant's property from theft, fire, water, or any other cause not caused by Landlord's negligence.\n\n20. KEYS AND LOCKOUTS. Tenant will receive two apartment keys and one mailbox key. Lost keys shall be replaced at a charge of $75.00 per key, which includes rekeying the lock. If Tenant is locked out, Landlord's staff will unlock the door during business hours at no charge; after business hours, a lockout fee of $85.00 shall apply.\n\n21. DEFAULT. If Tenant fails to pay rent when due, Landlord may serve a written five-day notice demanding payment. If Tenant fails to comply with any other term of this Lease, Landlord may serve a ten-day notice of termination. Landlord's acceptance of partial rent shall not waive Landlord's right to proceed with eviction unless Landlord agrees otherwise in writing.\n\n22. ATTORNEY'S FEES. In any legal action to enforce this Lease, Tenant shall pay Landlord's reasonable attorney's fees and court costs, whether or not the action proceeds to judgment.\n\n23. MOVE-OUT AND CLEANING. Tenant shall return the Premises in the same condition as at move-in, ordinary wear and tear excepted, and shall return all keys by 12:00 p.m. on the last day of the term. A professional carpet cleaning charge of $175.00 shall be deducted from the security deposit at move-out regardless of the condition of the carpet. Any personal property left in the Premises after Tenant vacates shall be considered abandoned and may be disposed of by Landlord without liability.\n\n24. HOLDOVER. If Tenant remains in possession after the end of the term without a new written lease, Tenant shall pay rent for each day of holdover at a rate of 150 percent of the daily rent, and Tenant shall be liable for any damages Landlord suffers because the Premises are not available to a new tenant.\n\n25. MOVE-IN CONDITION REPORT. Within five days after move-in, Tenant shall complete and return the Move-In Condition Report describing any existing damage. If Tenant does not return the report, the Premises shall be deemed to have been delivered in good condition, and Tenant may be charged for any damage found at move-out.\n\n26. NOTICES. Notices to Landlord shall be sent through the resident portal or to the management office at 400 South Goodwin Avenue, Urbana, Illinois. Notices to Tenant may be delivered by email to the address on file, through the portal, or by posting on the door of the Premises.\n\n27. ENTIRE AGREEMENT. This Lease, the Move-In Condition Report, and the Community Rules contain the entire agreement between the parties. Any change to this Lease must be in writing and signed by both parties. If any provision of this Lease is found to be invalid, the remaining provisions shall remain in effect. This Lease shall be governed by the laws of the State of Illinois and the ordinances of the City of Urbana.\n\nLANDLORD: Prairie Lane Properties LLC          TENANT(S): ______________________\nDate: July 10, 2026\n",
+      "draft_criterion": null,
+      "must_not_infer": [],
+      "source_anchors": []
+    }
+  ],
+  "text_fingerprints": {
+    "backend/analyzer.py": "c746556d4bc2f7cc5a67af5019e1ccc040b5bb7488089f6e1647dc76d0b15351",
+    "backend/eval/acceptance_eval.py": "db9fc79e05af9ab469099503cdb46ebf07d630c9745182a65b0b32bccacdfe54",
+    "backend/eval/reasoning_cases.json": "e6249df7b1487435d3a37fc01308e39b18908f21f949f2c9445fbd5d034b792f",
+    "backend/laws/labor.json": "7c0ab14ac460d0bcdd79a88ccc526ba7d8a3b4e649e684a5c97e587d03431618",
+    "backend/laws/tenancy.json": "f3cb2bfbd6dcb8108efafd9036403ad5d113a061b60033be8624aa8a87a8e687",
+    "backend/laws/tenancy_us_il_urbana.json": "12b0da4ac0f3a27f3317e872223732cbf2a3abd4ecac68b94b25cabd94339ae4"
+  },
+  "rows": [
+    {
+      "id": "subletting_a:r1",
+      "input_id": "subletting_a",
+      "repeat": 1
+    },
+    {
+      "id": "subletting_b:r1",
+      "input_id": "subletting_b",
+      "repeat": 1
+    },
+    {
+      "id": "fixed_fee_a:r1",
+      "input_id": "fixed_fee_a",
+      "repeat": 1
+    },
+    {
+      "id": "fixed_fee_b:r1",
+      "input_id": "fixed_fee_b",
+      "repeat": 1
+    },
+    {
+      "id": "repair_election_a:r1",
+      "input_id": "repair_election_a",
+      "repeat": 1
+    },
+    {
+      "id": "repair_election_b:r1",
+      "input_id": "repair_election_b",
+      "repeat": 1
+    },
+    {
+      "id": "belongings_a:r1",
+      "input_id": "belongings_a",
+      "repeat": 1
+    },
+    {
+      "id": "belongings_b:r1",
+      "input_id": "belongings_b",
+      "repeat": 1
+    },
+    {
+      "id": "boundary_a:r1",
+      "input_id": "boundary_a",
+      "repeat": 1
+    },
+    {
+      "id": "boundary_b:r1",
+      "input_id": "boundary_b",
+      "repeat": 1
+    },
+    {
+      "id": "deposit_receipts_a:r1",
+      "input_id": "deposit_receipts_a",
+      "repeat": 1
+    },
+    {
+      "id": "deposit_receipts_b:r1",
+      "input_id": "deposit_receipts_b",
+      "repeat": 1
+    },
+    {
+      "id": "interest_fact_a:r1",
+      "input_id": "interest_fact_a",
+      "repeat": 1
+    },
+    {
+      "id": "interest_fact_b:r1",
+      "input_id": "interest_fact_b",
+      "repeat": 1
+    },
+    {
+      "id": "entry_showing_a:r1",
+      "input_id": "entry_showing_a",
+      "repeat": 1
+    },
+    {
+      "id": "entry_showing_b:r1",
+      "input_id": "entry_showing_b",
+      "repeat": 1
+    },
+    {
+      "id": "lease_zh:r1",
+      "input_id": "lease_zh",
+      "repeat": 1
+    },
+    {
+      "id": "labor_zh:r1",
+      "input_id": "labor_zh",
+      "repeat": 1
+    },
+    {
+      "id": "lease_en:r1",
+      "input_id": "lease_en",
+      "repeat": 1
+    },
+    {
+      "id": "subletting_a:r2",
+      "input_id": "subletting_a",
+      "repeat": 2
+    },
+    {
+      "id": "subletting_b:r2",
+      "input_id": "subletting_b",
+      "repeat": 2
+    },
+    {
+      "id": "fixed_fee_a:r2",
+      "input_id": "fixed_fee_a",
+      "repeat": 2
+    },
+    {
+      "id": "fixed_fee_b:r2",
+      "input_id": "fixed_fee_b",
+      "repeat": 2
+    },
+    {
+      "id": "repair_election_a:r2",
+      "input_id": "repair_election_a",
+      "repeat": 2
+    },
+    {
+      "id": "repair_election_b:r2",
+      "input_id": "repair_election_b",
+      "repeat": 2
+    },
+    {
+      "id": "belongings_a:r2",
+      "input_id": "belongings_a",
+      "repeat": 2
+    },
+    {
+      "id": "belongings_b:r2",
+      "input_id": "belongings_b",
+      "repeat": 2
+    },
+    {
+      "id": "boundary_a:r2",
+      "input_id": "boundary_a",
+      "repeat": 2
+    },
+    {
+      "id": "boundary_b:r2",
+      "input_id": "boundary_b",
+      "repeat": 2
+    },
+    {
+      "id": "deposit_receipts_a:r2",
+      "input_id": "deposit_receipts_a",
+      "repeat": 2
+    },
+    {
+      "id": "deposit_receipts_b:r2",
+      "input_id": "deposit_receipts_b",
+      "repeat": 2
+    },
+    {
+      "id": "interest_fact_a:r2",
+      "input_id": "interest_fact_a",
+      "repeat": 2
+    },
+    {
+      "id": "interest_fact_b:r2",
+      "input_id": "interest_fact_b",
+      "repeat": 2
+    },
+    {
+      "id": "entry_showing_a:r2",
+      "input_id": "entry_showing_a",
+      "repeat": 2
+    },
+    {
+      "id": "entry_showing_b:r2",
+      "input_id": "entry_showing_b",
+      "repeat": 2
+    },
+    {
+      "id": "lease_zh:r2",
+      "input_id": "lease_zh",
+      "repeat": 2
+    },
+    {
+      "id": "labor_zh:r2",
+      "input_id": "labor_zh",
+      "repeat": 2
+    },
+    {
+      "id": "lease_en:r2",
+      "input_id": "lease_en",
+      "repeat": 2
+    }
+  ],
+  "limitations": "Existing synthetic inputs and post-error diagnostic drafts, two samples each; not held-out, independently adjudicated, legal accuracy, recall, or a proof of stability.",
+  "fingerprint": "d3caaa8d25b3462b39348863a1e9067e3e6437c62a36fa4933a0fd534db30233"
+}

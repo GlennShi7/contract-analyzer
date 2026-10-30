@@ -1,0 +1,48 @@
+{
+  "status": "partial_or_failed",
+  "ledger_fingerprint": "170d45fc295e4f6cf252acb59c632a126ea99d3c742e80bfc4acedb95a87430c",
+  "provider_requests_recorded": 41,
+  "offline_provider_requests": 0,
+  "replayed_accepted_reports": 37,
+  "verified_card_quotes": 215,
+  "references_in_accepted_reports": 400,
+  "usage_including_corrections": {
+    "prompt_tokens": 816332,
+    "completion_tokens": 60390,
+    "total_tokens": 876722
+  },
+  "legal_accuracy": null,
+  "risk_recall": null,
+  "independent_adjudication": false,
+  "note": "Offline replay verifies provenance and production validation only, not the truth or legal support of any explanation.",
+  "selected_review": {
+    "evidence_anchored_findings": 41,
+    "legal_accuracy": null,
+    "risk_recall": null,
+    "verdict_counts": {
+      "supported_observation": 28,
+      "failed": 13
+    }
+  },
+  "quality_gate": "not_accepted",
+  "quality_gate_reason": "Selected source/input-supported findings include factual contradictions, omitted conditions and prompt relevance failures; no independent legal adjudication.",
+  "authorization": {
+    "cap": 76,
+    "used": 41,
+    "unused": 35,
+    "scope_complete": true,
+    "note": "All 38 planned generation rows attempted. Unused requests are not permission for an additional batch or changed-prompt rerun."
+  },
+  "distinct_diagnostic_inputs_sent": 16,
+  "ledger_statuses": {
+    "validated": 37,
+    "failed": 1,
+    "interrupted": 0
+  },
+  "repeat_comparison": {
+    "comparable_inputs": 18,
+    "different_scores": 2,
+    "different_card_counts": 14,
+    "stability_accepted": false
+  }
+}

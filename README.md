@@ -6,7 +6,7 @@ A full-stack prototype that extracts text from PDF contracts, generates structur
 
 Built to help people understand unfavorable terms in rental and employment contracts before signing, and find relevant contract clauses when questions arise afterward.
 
-See [implementation progress and remaining acceptance work](PROGRESS.md) for the current boundary between implemented features and unverified model quality.
+See [implementation progress and remaining acceptance work](PROGRESS.md) and the [October 30 completion review](backend/eval/COMPLETION_REVIEW_2026-10-30.md). The engineering flow is implemented; the new repeated live check still found factual and interpretation errors, so model-quality acceptance remains open.
 
 ![Contract reading workspace before upload](docs/images/workspace-desktop.png)
 

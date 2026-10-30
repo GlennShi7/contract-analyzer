@@ -1,0 +1,607 @@
+{
+  "status": "partial_or_failed",
+  "plan_fingerprint": "d3caaa8d25b3462b39348863a1e9067e3e6437c62a36fa4933a0fd534db30233",
+  "provider_requests": 41,
+  "generation_rows": 38,
+  "validated_rows": 37,
+  "unrun_rows": [],
+  "legal_accuracy": null,
+  "risk_recall": null,
+  "stability_accepted": false,
+  "comparisons": [
+    {
+      "input_id": "subletting_a",
+      "draft_criterion": "Distinguish an approval condition from an absolute ban; identify any approval/refusal facts needed before alleging a prohibited restriction.",
+      "repeats": [
+        {
+          "id": "subletting_a:r1",
+          "status": "validated",
+          "risk_score": 4,
+          "card_titles": [
+            "转租须房东事先书面同意，审批标准与费用未写明",
+            "合同缺少租金、押金、维修、进入、续租等核心条款",
+            "未约定押金处理与利息，需核实押金金额及持有期限",
+            "未约定房东进入住宅的通知安排",
+            "未约定维修责任与住房法典违规披露"
+          ]
+        },
+        {
+          "id": "subletting_a:r2",
+          "status": "validated",
+          "risk_score": 4,
+          "card_titles": [
+            "转租须房东事先书面同意，审批条件与时限未约定",
+            "合同缺少租金、租期、押金等核心条款",
+            "押金利息与退还规则未约定，需核实适用条件",
+            "房东进入住宅的规则未写入合同",
+            "维修责任与租金抵扣程序未约定",
+            "续租与不续租通知规则未约定",
+            "费用与迟延收费条款缺失",
+            "合同自述位于 Urbana 市界内，仍需实际核实适用范围"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "subletting_b",
+      "draft_criterion": "Identify the absolute prohibition and connect it conditionally to the supplied prohibition, retaining scope and enforcement/remedy conditions.",
+      "repeats": [
+        {
+          "id": "subletting_b:r1",
+          "status": "validated",
+          "risk_score": 4,
+          "card_titles": [
+            "绝对禁止转租条款可能不可执行（取决于适用范围）"
+          ]
+        },
+        {
+          "id": "subletting_b:r2",
+          "status": "validated",
+          "risk_score": 4,
+          "card_titles": [
+            "绝对禁止转租条款可能不可执行（需先确认 Urbana 条例适用）"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "fixed_fee_a",
+      "draft_criterion": "Identify the cost-comparison issue as unresolved and ask for actual service-cost facts.",
+      "repeats": [
+        {
+          "id": "fixed_fee_a:r1",
+          "status": "validated",
+          "risk_score": 5,
+          "card_titles": [
+            "经批准转租仍收200美元处理费，实际成本未证明",
+            "合同未载明租金、租期与付款方式",
+            "未约定维修责任与住房法典合规义务",
+            "未约定房东进入住宅的通知程序",
+            "未约定续租与不续租通知",
+            "未约定押金金额、利息与退还程序",
+            "未约定提前解约、欠租与驱逐程序"
+          ]
+        },
+        {
+          "id": "fixed_fee_a:r2",
+          "status": "validated",
+          "risk_score": 5,
+          "card_titles": [
+            "经批准转租仍收200美元处理费，实际成本未证明",
+            "租金、租期、押金等核心条款缺失",
+            "未约定房东进入住宅的通知规则",
+            "未约定押金金额、利息与退还程序",
+            "未约定维修责任与报修程序",
+            "未约定续租、终止与不续租通知"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "fixed_fee_b",
+      "draft_criterion": "Use the supplied $25-versus-$200 comparison to identify the excess-cost issue under the provision; distinguish the facts from automatic remedies.",
+      "repeats": [
+        {
+          "id": "fixed_fee_b:r1",
+          "status": "validated",
+          "risk_score": 6,
+          "card_titles": [
+            "转租处理费可能超过实际服务成本",
+            "合同缺少租金、押金与期限等核心条款",
+            "未约定维修责任与住房法典合规披露",
+            "未约定房东进入住宅的通知规则",
+            "未约定押金利息与退还程序",
+            "未约定续租与不续租通知",
+            "未约定提前解约与损失减轻",
+            "未包含铅漆披露信息"
+          ]
+        },
+        {
+          "id": "fixed_fee_b:r2",
+          "status": "validated",
+          "risk_score": 6,
+          "card_titles": [
+            "转租处理费可能超过实际成本",
+            "转租审批与费用条件未细化",
+            "合同缺少押金、维修、进入与续租条款"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "repair_election_a",
+      "draft_criterion": "Preserve knowing/intentional election, actual bargaining and the landlord proof burden; a form recital alone is insufficient.",
+      "repeats": [
+        {
+          "id": "repair_election_a:r1",
+          "status": "validated",
+          "risk_score": 6,
+          "card_titles": [
+            "格式租约中的租客维修承诺缺少磋商证据",
+            "维修范围与减租对价不明确",
+            "合同缺失押金、费用、进入、续租与通知条款",
+            "住房法典违规披露与维修责任分配需核实"
+          ]
+        },
+        {
+          "id": "repair_election_a:r2",
+          "status": "validated",
+          "risk_score": 6,
+          "card_titles": [
+            "格式租约中租户承担修复住房规范违规的义务，缺乏磋商证据",
+            "合同缺少租金、押金、期限等核心条款",
+            "押金利息与退还规则未在合同中体现",
+            "房东进入住宅的规则未约定",
+            "维修与租金扣减程序未约定，存在自行停付租金的风险",
+            "续租与终止通知规则未约定"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "repair_election_b",
+      "draft_criterion": "Recognize the stipulated bargaining facts; lack of handwriting alone is not dispositive. Keep city enforcement and the particular repair obligations separate.",
+      "repeats": [
+        {
+          "id": "repair_election_b:r1",
+          "status": "validated",
+          "risk_score": 5,
+          "card_titles": [
+            "维修与减租安排缺少手写段落，需核实是否确为实际协商",
+            "附件所列法规违规与减租安排的具体内容未提供，无法评估",
+            "押金利息与退还规则未在合同中体现，需核实适用条件",
+            "进入住宅、驱逐及续租通知条款缺失，需补充核实",
+            "支付方式与费用条款未提供，需核实是否强制电子支付或收取额外费用"
+          ]
+        },
+        {
+          "id": "repair_election_b:r2",
+          "status": "validated",
+          "risk_score": 5,
+          "card_titles": [
+            "租客承担维修义务的约定需核实是否确经实际协商",
+            "减租与维修安排的具体内容未载明，需核实",
+            "合同其余条款未提供，无法审查进入住宅、押金、费用与续租等安排"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "belongings_a",
+      "draft_criterion": "Preserve the low-sale-value versus storage-cost immediate-disposal exception and its reasonable-belief condition.",
+      "repeats": [
+        {
+          "id": "belongings_a:r1",
+          "status": "validated",
+          "risk_score": 5,
+          "card_titles": [
+            "租期终止后低值遗留物可被立即丢弃",
+            "合同缺少押金、维修、进入、续租等核心条款"
+          ]
+        },
+        {
+          "id": "belongings_a:r2",
+          "status": "validated",
+          "risk_score": 5,
+          "card_titles": [
+            "遗留财物可被立即处置，租客取回机会受限"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "belongings_b",
+      "draft_criterion": "Flag the blanket disposal term and preserve mailed notice, 30 days, non-claim, and the stated exceptions.",
+      "repeats": [
+        {
+          "id": "belongings_b:r1",
+          "status": "validated",
+          "risk_score": 6,
+          "card_titles": [
+            "终止后立即丢弃未取走财物，缺少通知与等待期"
+          ]
+        },
+        {
+          "id": "belongings_b:r2",
+          "status": "validated",
+          "risk_score": 6,
+          "card_titles": [
+            "终止后立即丢弃未取走财物，缺少通知与30天等待"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "boundary_a",
+      "draft_criterion": "Explain that a mailing address and region selection do not independently establish city-boundary membership; retain conditional municipal scope.",
+      "repeats": [
+        {
+          "id": "boundary_a:r1",
+          "status": "validated",
+          "risk_score": 3,
+          "card_titles": [
+            "合同缺少租金、租期与押金等核心条款，权利义务不明",
+            "未确认房屋是否位于 Urbana 市界内，地方规则适用性待核实",
+            "未提供房龄，铅漆披露义务无法核对",
+            "押金金额与退还条件未约定，扣款争议风险",
+            "维修责任与维修抵扣程序未约定",
+            "房东进入住宅的规则未约定",
+            "续租与终止通知机制未约定",
+            "费用与滞纳金条款缺失，收费依据不明",
+            "转租与提前退租安排未约定"
+          ]
+        },
+        {
+          "id": "boundary_a:r2",
+          "status": "validated",
+          "risk_score": 3,
+          "card_titles": [
+            "合同缺少全部实质性条款，无法评估权利义务",
+            "房屋是否位于 Urbana 市界内尚未核实",
+            "未提供押金条款，押金计息与退还规则无法核对",
+            "未提供维修与住房法典违规披露条款",
+            "未提供房东进入住宅的规则",
+            "未提供费用、滞纳金与电子支付安排",
+            "未提供续租、终止与驱逐程序条款"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "boundary_b",
+      "draft_criterion": "Recognize that the supplied outside-city fact prevents inferring Chapter 12.5 coverage from the mailing address; assess other law separately only with sources and facts.",
+      "repeats": [
+        {
+          "id": "boundary_b:r1",
+          "status": "validated",
+          "risk_score": 3,
+          "card_titles": [
+            "房屋可能不在 Urbana 市界内，市条例适用性待核实",
+            "合同缺少租金、租期、押金等核心条款",
+            "未提供铅漆披露信息，需核实房龄",
+            "未约定维修与进入规则，需补充明确",
+            "未约定押金退还与扣款程序",
+            "未约定续租、终止与驱逐程序"
+          ]
+        },
+        {
+          "id": "boundary_b:r2",
+          "status": "validated",
+          "risk_score": 2,
+          "card_titles": []
+        }
+      ]
+    },
+    {
+      "input_id": "deposit_receipts_a",
+      "draft_criterion": "Recognize the estimated-statement then later-receipts path in the supplied municipal provision; do not reject it solely because receipts may arrive after day 30 from move-out.",
+      "repeats": [
+        {
+          "id": "deposit_receipts_a:r1",
+          "status": "validated",
+          "risk_score": 3,
+          "card_titles": [
+            "押金损坏结算未写明逾期全额退还与正常磨损限制",
+            "合同未约定维修义务与维修救济程序",
+            "合同未约定房东进入住宅的通知规则",
+            "合同未约定终止与不续租通知",
+            "合同未约定费用、滞纳金和收据通知",
+            "合同未约定转租与电子支付方式",
+            "合同未涉及含铅涂料披露"
+          ]
+        },
+        {
+          "id": "deposit_receipts_a:r2",
+          "status": "validated",
+          "risk_score": 3,
+          "card_titles": [
+            "押金扣除仅约定30天明细与收据，未写45天全额退还兜底",
+            "合同未约定租金、租期、维修、进入住宅、驱逐与续租等核心事项",
+            "合同未载明房东进入住宅的通知规则",
+            "合同未载明终止或续租的书面通知要求",
+            "合同未载明维修责任与维修请求程序",
+            "合同未载明滞纳金、其他费用及电子支付方式",
+            "合同未载明转租规则",
+            "合同未载明铅漆披露与已知危险信息"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "deposit_receipts_b",
+      "draft_criterion": "Identify omission of damage-accounting requirements; 45-day wording alone does not replace the prescribed statement/receipts path.",
+      "repeats": [
+        {
+          "id": "deposit_receipts_b:r1",
+          "status": "validated",
+          "risk_score": 6,
+          "card_titles": [
+            "押金扣留可不提供逐项清单和收据",
+            "押金返还期限与扣款条件不完整",
+            "缺少维修、进入、续租、费用等基本条款",
+            "合同自述适用性不能替代实际核实"
+          ]
+        },
+        {
+          "id": "deposit_receipts_b:r2",
+          "status": "validated",
+          "risk_score": 7,
+          "card_titles": [
+            "押金扣留可不附逐项说明和收据",
+            "押金返还期限与扣留条件绑定不清"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "interest_fact_a",
+      "draft_criterion": "Describe interest language as absent, not an express waiver; identify duration and other required facts before claiming nonpayment.",
+      "repeats": [
+        {
+          "id": "interest_fact_a:r1",
+          "status": "validated",
+          "risk_score": 4,
+          "card_titles": [
+            "押金利息条款缺失，是否应付息取决于未提供的事实",
+            "押金退还与扣减程序未写入合同",
+            "维修义务与维修权程序未约定",
+            "出租人进入住宅的规则未写入合同",
+            "续租、终止与不续租通知未约定",
+            "费用、滞纳金与付款方式未约定",
+            "责任限制与保险条款缺失，需核实实际条款",
+            "反歧视与合理便利条款未提及",
+            "铅基涂料披露未提及，需核实房龄"
+          ]
+        },
+        {
+          "id": "interest_fact_a:r2",
+          "status": "validated",
+          "risk_score": 4,
+          "card_titles": [
+            "押金利息安排未在合同中体现，需核实是否应支付",
+            "押金返还与扣减程序未约定，需核实实际做法",
+            "维修义务与维修救济程序未约定",
+            "房东进入住宅的规则未约定",
+            "续租与不续租通知机制未约定",
+            "费用、滞纳金与支付方式未约定",
+            "转租与提前解约安排未约定",
+            "房龄与铅基涂料披露信息缺失"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "interest_fact_b",
+      "draft_criterion": "Identify the express waiver as a contract fact, discuss the supplied rule conditionally, and keep holding duration and payment behavior unknown.",
+      "repeats": [
+        {
+          "id": "interest_fact_b:r1",
+          "status": "validated",
+          "risk_score": 5,
+          "card_titles": [
+            "放弃押金利息条款可能不可执行（取决于持有期限）",
+            "押金退还与扣减程序未约定，需核实",
+            "租约核心条款缺失，权利义务不明",
+            "未约定房东进入住宅的通知规则",
+            "未约定维修责任与住房法典违规披露",
+            "未约定不续租或涨租的书面通知",
+            "未约定费用与滞纳金，需核实是否书面披露"
+          ]
+        },
+        {
+          "id": "interest_fact_b:r2",
+          "status": "validated",
+          "risk_score": 5,
+          "card_titles": [
+            "放弃押金利息条款可能不可执行（需核实持有期限）",
+            "押金退还与扣减程序未约定",
+            "押金不得抵租的法定限制未在合同中说明",
+            "维修、进入、续租及费用条款缺失，权利边界不明"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "entry_showing_a",
+      "draft_criterion": "Identify the unilateral schedule and distinguish it from the conditional non-renewal showing exception; retain tenant-selected periods and unknown notice facts.",
+      "repeats": [
+        {
+          "id": "entry_showing_a:r1",
+          "status": "validated",
+          "risk_score": 6,
+          "card_titles": [
+            "最后90天看房进入时间由房东单方决定，缺少租客选择时段等限制",
+            "未约定提前24小时通知的一般进入规则",
+            "合同缺少续租与不续租通知条款，需核实是否另有约定",
+            "合同未约定押金退还与利息，需核实",
+            "合同未约定维修义务与租金扣减程序，需核实"
+          ]
+        },
+        {
+          "id": "entry_showing_a:r2",
+          "status": "validated",
+          "risk_score": 6,
+          "card_titles": [
+            "最后90天看房进入时间由房东单方决定，未写入法定限定时段",
+            "“随时”看房未保留24小时提前通知与合理时间限制"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "entry_showing_b",
+      "draft_criterion": "Recognize the stipulated showing exception conditions, without generalizing them to repairs or other entry purposes.",
+      "repeats": [
+        {
+          "id": "entry_showing_b:r1",
+          "status": "validated",
+          "risk_score": 3,
+          "card_titles": [
+            "不续租后看房进入安排：文本仅假定符合条件，实际执行需核实",
+            "合同缺少租金、押金、维修、驱逐与续租等核心条款",
+            "押金与费用条款缺失，退还与计息规则无法核对",
+            "维修责任与费用条款缺失，修葺权行使条件不明",
+            "终止与续租通知条款缺失，通知期限与后果不明"
+          ]
+        },
+        {
+          "id": "entry_showing_b:r2",
+          "status": "validated",
+          "risk_score": 3,
+          "card_titles": [
+            "合同未载明租金、期限、押金等核心条款",
+            "进入与看房条款未写入合同，仅依赖口头或外部安排",
+            "不续租与搬离通知程序未在合同中明确",
+            "押金利息与退还规则未约定，需核实押金金额和持有时间",
+            "维修责任与租金抵扣程序未写入合同",
+            "费用与滞纳金条款缺失，收费依据不明",
+            "转租与提前解约规则未约定",
+            "电子缴费与替代支付方式未约定",
+            "房东身份与代理人披露信息缺失",
+            "放弃陪审团审判或法律权利条款未出现，但需确认完整合同"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "lease_zh",
+      "draft_criterion": null,
+      "repeats": [
+        {
+          "id": "lease_zh:r1",
+          "status": "validated",
+          "risk_score": 9,
+          "card_titles": [
+            "甲方可随时进入房屋且无需提前通知",
+            "租金调整权由甲方单方确定",
+            "押金退还设90日申请期限且逾期视为放弃",
+            "维修费用一律由乙方承担且修缮期间不减租",
+            "乙方提前退租违约金高且剩余租金押金不退",
+            "甲方提前收回房屋仅退剩余租金不担其他责任",
+            "逾期交还按日租金三倍计占用费",
+            "遗留物品三日未搬离视为放弃",
+            "邻居或物业投诉两次即可解除合同",
+            "逾期付租滞纳金按日5%且十五日即可解约",
+            "交付后七日未书面告知瑕疵视为状况良好",
+            "宠物、危险物品等禁止事项每次违约金2000元"
+          ]
+        },
+        {
+          "id": "lease_zh:r2",
+          "status": "validated",
+          "risk_score": 9,
+          "card_titles": [
+            "甲方可随时进入房屋且无需提前通知",
+            "租金调整权由甲方单方决定",
+            "押金退还设90日申请期限且逾期视为放弃",
+            "押金扣除金额以甲方意见为准",
+            "维修费用一律由乙方承担",
+            "修缮期间不得要求减免租金",
+            "乙方提前退租违约金高且剩余租金押金不退",
+            "甲方提前收回房屋仅退剩余租金不担其他责任",
+            "投诉两次即可解除合同",
+            "逾期交还按三倍日租金计占用费",
+            "逾期付租滞纳金按日5%且15日即可解除",
+            "续租不享有优先承租权"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "labor_zh",
+      "draft_criterion": null,
+      "repeats": [
+        {
+          "id": "labor_zh:r1",
+          "status": "failed",
+          "risk_score": null,
+          "card_titles": []
+        },
+        {
+          "id": "labor_zh:r2",
+          "status": "validated",
+          "risk_score": 9,
+          "card_titles": [
+            "工资已包含全部加班费且不另付",
+            "试用期工资为转正工资70%",
+            "竞业限制两年但不支付经济补偿",
+            "服务期违约金为培训费三倍并返还培训期间工资",
+            "普通违约一律约定一万元违约金",
+            "乙方辞职需提前六十日且未通知可扣发当月工资",
+            "未完成交接可暂缓发放工资及经济补偿",
+            "可自愿不缴社保并领取现金补贴",
+            "甲方可单方调岗调地且拒不服从视为严重违纪",
+            "连续两个季度考核不合格即可解除",
+            "绩效工资占比高且考核标准由甲方随时调整",
+            "规章制度公示即视为知悉且严重违纪可解除"
+          ]
+        }
+      ]
+    },
+    {
+      "input_id": "lease_en",
+      "draft_criterion": null,
+      "repeats": [
+        {
+          "id": "lease_en:r1",
+          "status": "validated",
+          "risk_score": 8,
+          "card_titles": [
+            "维修费自付额不论原因均由租户承担",
+            "自动续租且租金由房东设定",
+            "律师费仅由租户承担",
+            "提前解约费为两个月租金且不退预付费用",
+            "押金中固定扣除地毯清洁费",
+            "遗留物品可无责任处置",
+            "逾期费按日累加且无上限",
+            "未经同意转租即禁止并收取处理费",
+            "房东可在最后90天自行安排看房",
+            "未返还原条件报告即视为交付良好",
+            "未经授权居住者按日收费",
+            "房东不承担非过失财产损失"
+          ]
+        },
+        {
+          "id": "lease_en:r2",
+          "status": "validated",
+          "risk_score": 8,
+          "card_titles": [
+            "维修费自付额可能转嫁房东法定维修义务",
+            "提前解约费两个月租金且不退预付费用",
+            "自动续租一年且租金由房东定",
+            "律师费仅由租户承担",
+            "押金中固定扣除地毯清洁费",
+            "逾期费按日累加可能超过法定上限",
+            "未经法定程序处置遗留物品",
+            "未经同意转租即违约且收200美元处理费",
+            "未经通知拖车条款",
+            "入住条件报告逾期视为房屋完好",
+            "房东可在最后90天自行安排看房时间",
+            "烟雾报警器电池和灯泡由租户更换"
+          ]
+        }
+      ]
+    }
+  ],
+  "note": "Generation validity and repeat differences only. Two runs do not establish legal accuracy or stable performance; manual review remains uncompleted."
+}

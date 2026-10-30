@@ -1,5 +1,7 @@
 # Retrieval evaluation / 检索评测
 
+**October 30 update:** The [completion batch](COMPLETION_REVIEW_2026-10-30.md) now covers all sixteen short inputs twice plus the three full fixtures twice: 41 requests, 37 production-valid reports and one rejected generation row. All sixteen remain draft-labeled with no independent adjudication; selected evidence checks identify material failures. The four-tested/twelve-untested counts and lack-of-live-follow-up statements below describe the earlier October 29 batches. The offline validator now reports the October 30 batch separately.
+
 Measures whether retrieval finds a labeled contract passage. It does not measure LLM answer correctness or legal accuracy.
 衡量检索是否找到标注的合同原文，不衡量模型回答或法律判断是否正确。
 

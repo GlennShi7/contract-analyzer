@@ -1,0 +1,52 @@
+[
+  {
+    "request_index": 17,
+    "row_id": "labor_zh:r1",
+    "failure": "unverified_quotes",
+    "rejected_cards": [
+      {
+        "title": "竞业限制不支付经济补偿且违约金20万元",
+        "quote": "甲方在竞业限制期间不向乙方支付经济补偿。乙方违反竞业限制约定的，应当向乙方支付违约金人民币二十万元。",
+        "match": "approximate"
+      }
+    ]
+  },
+  {
+    "request_index": 18,
+    "row_id": "labor_zh:r1",
+    "failure": "unverified_quotes",
+    "rejected_cards": [
+      {
+        "title": "竞业限制无补偿且违约金过高",
+        "quote": "甲方在竞业限制期间不向乙方支付经济补偿。乙方违反竞业限制约定的，应当向乙方支付违约金人民币二十万元。",
+        "match": "approximate"
+      }
+    ]
+  },
+  {
+    "request_index": 19,
+    "row_id": "lease_en:r1",
+    "failure": "ValidationError",
+    "fields": [
+      {
+        "field": [
+          "summary_note"
+        ],
+        "type": "extra_forbidden"
+      }
+    ]
+  },
+  {
+    "request_index": 30,
+    "row_id": "boundary_b:r2",
+    "failure": "ValidationError",
+    "fields": [
+      {
+        "field": [
+          "summary_note"
+        ],
+        "type": "extra_forbidden"
+      }
+    ]
+  }
+]

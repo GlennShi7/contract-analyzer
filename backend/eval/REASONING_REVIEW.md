@@ -1,5 +1,7 @@
 # Reasoning review protocol and diagnostic cases
 
+**October 30 update:** The [completion batch](COMPLETION_REVIEW_2026-10-30.md) now covers all sixteen short inputs twice plus the three full fixtures twice: 41 requests, 37 production-valid reports and one rejected generation row. All sixteen remain draft-labeled with no independent adjudication; selected evidence checks identify material failures. The four-tested/twelve-untested counts and lack-of-live-follow-up statements below describe the earlier October 29 batches. The offline validator now reports the October 30 batch separately.
+
 Prepared 2026-10-29. This is a local engineering review workflow, not legal advice, independent legal adjudication or a calibrated benchmark. It makes **no provider requests**. It does not establish the currency of the source snapshots.
 
 ## What is available

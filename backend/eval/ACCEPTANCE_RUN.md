@@ -1,6 +1,6 @@
 # Completion-check batch
 
-This batch is **prepared, not authorized or executed**. Historical paid-call allowances are exhausted. A new explicit user approval is required before adding `--live`. Preparation, unit tests and CI make no model requests.
+The October 30 batch was explicitly authorized for at most 76 requests and has now finished all 38 planned generation rows using 41 requests. See the [recorded outcome](COMPLETION_REVIEW_2026-10-30.md): 37 reports passed production validation and one failed. The quality gate was not accepted. The commands below document the prepare/live workflow; they are not permission to start another batch or reuse its unused 35 requests for changed-prompt runs. Preparation, unit tests and CI make no model requests.
 
 The plan contains the sixteen existing paired diagnostic inputs and three existing full synthetic contracts, each run twice with one frozen analyzer/source/model snapshot: **38 requested reports, at most 76 provider requests including corrections and failures**. The short cases use the Urbana profile; the full English lease uses Urbana and the two full Chinese contracts retain the Chinese profile. Only these synthetic texts and selected repository statute snapshots are sent. No private contract, entire Excel code export or private handoff is part of this batch.
 
@@ -42,3 +42,12 @@ python -m eval.reasoning_review
 ```
 
 Mock-client tests cover the no-client prepare path, all 19 inputs/two rounds, durable counts before sends, cumulative limits across resume, failed/correction requests, zero SDK retries, concurrent/stale locks, interrupted rows, changed-plan rejection, existing-file refusal and unreviewed worksheet labels.
+
+
+## Replay the recorded batch without generation
+
+```bash
+python -m eval.acceptance_review eval/results/completion_20261030/ledger.json --review eval/results/completion_20261030/selected-review.json
+```
+
+This reconstructs accepted reports from the saved raw responses and requires matching analyzer/source/model fingerprints. It checks selected finding quotes and evidence locations but does not establish their legal correctness. For future code changes, reproduce the saved code snapshot to verify this historical run instead of silently relabeling it as current. The saved labor-recipient reversal also has a regression test confirming rejection after the allowed correction.

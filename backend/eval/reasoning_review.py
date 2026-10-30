@@ -160,6 +160,7 @@ def main():
     parser.add_argument("--audit", type=Path, default=HERE / "reasoning_audit_2026-10-29.json")
     parser.add_argument("--diagnostics", type=Path, default=HERE / "results/reasoning_20261029.json")
     parser.add_argument("--final-audit", type=Path, default=HERE / "final_reasoning_audit_2026-10-29.json")
+    parser.add_argument("--completion", type=Path, default=HERE / "results/completion_20261030/ledger.json")
     args = parser.parse_args()
     root = HERE.parent.parent
     try:
@@ -171,6 +172,15 @@ def main():
         if args.diagnostics.exists():
             result["live_diagnostics"] = validate_diagnostics(load_json(args.diagnostics), cases, sources)
             result["cases"]["model_tested_cases"] = result["live_diagnostics"]["model_tested_cases"]
+        if args.completion.exists():
+            from eval.acceptance_review import validate_ledger
+            completion = load_json(args.completion)
+            result["completion_check"] = validate_ledger(completion, root)
+            case_ids = {case["id"] for case in cases["cases"]}
+            input_by_row = {row["id"]: row["input_id"] for row in completion["plan"]["rows"]}
+            sent = {input_by_row[record["row_id"]] for record in completion["requests"]} & case_ids
+            result["cases"]["model_tested_cases"] = len(sent)
+            result["cases"]["not_model_tested_cases"] = len(case_ids - sent)
         if args.final_audit.exists():
             result["final_report_review"] = validate_audit(load_json(args.final_audit), root, sources)
     except (ValueError, KeyError, TypeError, OSError) as error:

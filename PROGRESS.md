@@ -1,50 +1,43 @@
 # Project status
 
-Reviewed on 2026-10-30 against the actual implementation and saved results. This is a working prototype; implementation completion and model-quality acceptance are separate.
+Reviewed on 2026-10-30 against the repository, actual browser checks and saved live results. **The prototype's engineering implementation is complete. Model-quality acceptance is not passed.**
 
 | Area | Status | Evidence / limits |
 | --- | --- | --- |
-| Repository, dependencies and public documentation | Implemented | Complete default branch, environment examples, direct dependency pins, license, replay screenshots and setup instructions |
-| PDF ingestion and document identity | Implemented | Full SHA-256 IDs, temporary-file cleanup, upload/page/text bounds, persisted text, page separators |
-| Document-scoped retrieval | Implemented and exercised | Production top-3 filter, repeat-upload replacement, 56-question controlled evaluation and real-container smoke checks |
-| Structured risk reports and legal sources | Implemented; quality review open | JSON/schema checks, quote matching, legal-ID filtering, selected Chinese and Urbana/state/federal snapshots |
-| Risk-card interface | Implemented and restyled | Responsive reading workspace, compact imported-file state, region choice, score, text-labeled risks, contract excerpts and expandable legal sources |
-| Question history | Implemented | Per-question pending/error/answer states, session-only history, explicit clearing and document-switch cancellation; each API question remains independent |
-| Repeatable runtime and checks | Implemented | Compose, backend tests, actual-browser checks, real CPU embeddings and offline retrieval after container recreation |
-| Model output reliability | Failures reproduced; broader acceptance open | Quote enforcement passed on three full fixtures at 9843ce0; later jurisdiction/topic guidance isolation is locally tested only. Recorded bad quotes are rejected, but semantic errors and broad reliability remain open |
-| Legal support and missed-risk assessment | Review materials implemented; acceptance open | Sixteen paired diagnostic inputs, four actually tested, twelve untested; seven earlier observations plus five evidence-anchored final-report findings; no independent adjudication |
+| Repository, dependencies and public documentation | Implemented | Default branch, pinned dependencies/environment examples, license, screenshots, replay and setup docs; credential/index scan |
+| PDF ingestion and document identity | Implemented | Full SHA-256 IDs, temporary cleanup, upload/page/text bounds and persisted text |
+| Document-scoped retrieval | Implemented and exercised | Filtered top-3, repeat-upload replacement, 56-question retrieval evaluation and real-container persistence checks |
+| Risk analysis and statutory sources | Implemented; reasoning failures remain | Structured validation, strict card quotations, supplied-ID filtering and selected Chinese/Urbana/state/federal snapshots |
+| English/Chinese responsive interface | Implemented | English default, local language preference, desktop/mobile checks, source details, retryable errors; generated/source text unchanged |
+| Request and report isolation | Implemented | Duplicate pending requests blocked, obsolete browser fetches aborted, wrong-document/malformed reports rejected, region changes clear old reports |
+| Per-question history | Implemented | Session history with independent question payloads, per-turn errors, expandable plain-text sources and explicit clearing |
+| Repeatable engineering checks | Implemented | Compose, backend tests, frontend lint/build/browser checks, real CPU embeddings and three exclusive offline reopens without relaxing comparisons |
+| Latest-prompt live check | Executed; partial/failed outcome | All 38 planned generation rows attempted using 41 requests; 37 production-valid reports, one rejected after correction |
+| Explanation and missed-issue review | Source-based review completed; independent acceptance open | All sixteen diagnostic inputs tested twice, 41 selected anchored observations including 13 failures; no accuracy/recall denominator or independent adjudication |
 
-## Remaining acceptance work
+## Current evidence
 
-1. Assess stability, revised correction and the latest jurisdiction/topic-specific guidance beyond local request checks. The [final enforced-quote live check](backend/eval/FINAL_ENFORCEMENT_REVIEW_2026-10-29.md) passed all three existing full inputs but still contains explanation errors. The [October 29 rerun and review](backend/eval/ANALYSIS_REVIEW_2026-10-29.md) preserve validated reports, code/source hashes, request counts and token usage; failed-run diagnostics preserve rejected responses. The latest guidance isolation has no paid model follow-up; earlier three full-contract successes precede the final enforcement change; the separate final rerun establishes only first-pass success on these existing inputs. Both the 6-request full-contract and 8-request short-case authorizations are exhausted.
-2. Review legal applicability, explanation support, false positives and missing risks using independent cases and explicit review criteria. The [review protocol and offline validator](backend/eval/REASONING_REVIEW.md) provide sixteen paired diagnostic inputs and seven selected historical observations. Four cases have [live diagnostic observations](backend/eval/DIAGNOSTIC_REVIEW_2026-10-29.md), including material failures; twelve are untested and none have independent adjudication; the six older manual counterexamples also remain unscored review material. Quote matching and allowed-ID membership do not substitute for this assessment.
+The [October 30 completion review](backend/eval/COMPLETION_REVIEW_2026-10-30.md) links exact inputs, frozen code/source/model fingerprints, all 41 payloads/raw responses, token usage, accepted reports, rejected attempts, repeat comparison and selected source/input-anchored findings. Offline replay reconstructs all 37 accepted reports. The 215 exact quotations and 400 supplied-ID references are mechanical facts; neither establishes that explanations are correct.
 
-The engineering flow is demonstrable. Neither the stored risk scores nor structural citation rates should be presented as calibrated legal accuracy. There is no verified user-count claim.
+The explicitly authorized maximum was 76 new requests for this exact two-round batch. It used 41; all 38 generation rows are finished. The unused 35 are not authority for an additional or changed-prompt batch. The older six- and eight-request authorizations remain exhausted.
 
-## Deliberate implementation choices
+Backend verification now includes 154 tests. The [last verified engineering CI before this evidence archive](https://github.com/GlennShi7/contract-analyzer/actions/runs/41136470905) passed frontend, backend and container jobs; [current CI](https://github.com/GlennShi7/contract-analyzer/actions/workflows/ci.yml) tracks the published completion commit. Mock/CI/browser/offline review checks make no model requests.
 
-- Analysis is triggered after explicit region confirmation rather than automatically on upload.
-- The page retains question history; the backend still receives one independent question at a time.
-- The demo uses a clearly labeled interactive replay and actual screenshots.
-- Defaults remain 500 characters / 50 overlap / top-3 to preserve the recorded evaluation configuration.
-- OCR, accounts, public multi-user deployment and broader legal coverage are future product extensions, not silently included in the completed prototype.
+## Remaining quality boundary
 
-## Verification references
+The engineering work and this live evaluation/review batch are complete. **The outcome does not support accepting the model as legally reliable.** Saved failures include unsupported quote relevance, contradictions of explicit contract facts, omitted exceptions, and inconsistent titles/suggestions. Among 18 inputs with two valid reports, two changed score and fourteen changed card count. These reused/post-error inputs do not establish general stability, independent legal labels, unseen-case coverage or current-law correctness.
 
-[Verified CI at c75114f](https://github.com/GlennShi7/contract-analyzer/actions/runs/40982456843), [latest CI](https://github.com/GlennShi7/contract-analyzer/actions/workflows/ci.yml), [current-prompt rerun and review](backend/eval/ANALYSIS_REVIEW_2026-10-29.md), [retrieval evidence](backend/eval/README.md), [live-analysis review](backend/eval/URBANA_ANALYSIS_REVIEW_2026-10-28.md), [failed follow-up and diagnostics](backend/eval/URBANA_REASONING_FOLLOWUP_2026-10-28.md), [reasoning review protocol](backend/eval/REASONING_REVIEW.md), [manual reasoning cases](backend/eval/URBANA_REASONING_CASES.md), [deployment and real-model checks](DEPLOYMENT.md).
+An independent review and further targeted fixes/evaluation would be required before publishing legal-accuracy or recall claims or presenting this as a legal decision system. They are not silently marked done. Risk scores are not calibrated probabilities. There is no verified user-count claim.
 
-## Frontend presentation update
+## Scope choices
 
-The visual refresh adds no generation calls or dependencies. The real React UI was checked at desktop and mobile widths, with empty/file-ready/report/question/error states and source expansion. Question suggestions only prefill the field. Screenshots were regenerated from the initial mock-backed UI and the clearly labeled historical replay. This is a presentation change; it does not change legal-quality acceptance or the exhausted API allowances.
+- Analysis follows explicit region selection; contract language does not select governing law.
+- English/Chinese UI switching changes labels and known fixed messages, preserving generated content and sources.
+- Browser cancellation does not guarantee cancellation of server generation or its cost.
+- The replay remains clearly labeled historical analysis and preset questions; its saved reports are unchanged.
+- Chunking remains 500 characters / 50 overlap / top-3 to preserve recorded retrieval configuration.
+- OCR, accounts, public multi-user deployment and broader legal coverage are future product extensions.
 
-## English interface
+## Earlier evidence
 
-The frontend now defaults to English with a local English/Chinese preference. UI labels, known errors and fixed explanatory metadata are localized; generated content and source text are unchanged. The language switch preserves the active contract and history without API requests. The replay accepts two English question aliases returning its unchanged preset answers. Browser checks exercise both UI languages and English screenshots. No paid model request or backend prompt change was made.
-
-## Completion pass, October 30
-
-Engineering verification at [2ca507a](https://github.com/GlennShi7/contract-analyzer/actions/runs/41135542518) passed frontend, backend and real-container jobs. Risk-analysis requests now prevent duplicate pending sends, cancel obsolete browser fetches, reject wrong-document results, allow retry after malformed responses, and validate displayed report/source fields before rendering. Region changes reset reports and update the scope hint. English/Chinese UI switching still preserves original generated content.
-
-A new [completion-check batch](backend/eval/ACCEPTANCE_RUN.md) is prepared: all sixteen existing diagnostic inputs and three full synthetic contracts, two generations each, with a maximum of 76 requests including corrections/failures. It has a durable cumulative ledger, fixed source/code/model plan, resume/concurrency protection, repeat comparison and an explicitly unreviewed evidence worksheet. Eleven new mock-client tests bring the local backend total to 146. Preparation and tests use zero paid requests. **The batch has not been authorized or executed.** Historical request allowances remain exhausted.
-
-Engineering implementation is complete for this prototype scope. Model-quality acceptance remains open: executing this planned batch needs new explicit paid-call authorization, and independent review is still absent. Two samples per reused/post-error input do not establish broad stability or legal accuracy. No current-law verification, independent adjudication, accuracy score or recall result is claimed by this completion pass.
+[Retrieval evaluation](backend/eval/README.md), [final quotation enforcement](backend/eval/FINAL_ENFORCEMENT_REVIEW_2026-10-29.md), [earlier three-contract review](backend/eval/ANALYSIS_REVIEW_2026-10-29.md), [eight-request diagnostics](backend/eval/DIAGNOSTIC_REVIEW_2026-10-29.md), [reasoning review protocol](backend/eval/REASONING_REVIEW.md), [deployment/runtime checks](DEPLOYMENT.md).

@@ -1,0 +1,2329 @@
+{
+  "status": "unreviewed",
+  "independent_adjudication": false,
+  "plan_fingerprint": "d3caaa8d25b3462b39348863a1e9067e3e6437c62a36fa4933a0fd534db30233",
+  "ledger_fingerprint": "170d45fc295e4f6cf252acb59c632a126ea99d3c742e80bfc4acedb95a87430c",
+  "legal_accuracy": null,
+  "risk_recall": null,
+  "instructions": "Fill each dimension with supported/failed/unknown/not_applicable and exact output/source evidence. Record reviewer role, second review and resolution. Never treat unreviewed or missing output as passed.",
+  "rows": [
+    {
+      "id": "subletting_a:r1",
+      "input_id": "subletting_a",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "subletting_b:r1",
+      "input_id": "subletting_b",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "fixed_fee_a:r1",
+      "input_id": "fixed_fee_a",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "fixed_fee_b:r1",
+      "input_id": "fixed_fee_b",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "repair_election_a:r1",
+      "input_id": "repair_election_a",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "repair_election_b:r1",
+      "input_id": "repair_election_b",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "belongings_a:r1",
+      "input_id": "belongings_a",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "belongings_b:r1",
+      "input_id": "belongings_b",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "boundary_a:r1",
+      "input_id": "boundary_a",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "boundary_b:r1",
+      "input_id": "boundary_b",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "deposit_receipts_a:r1",
+      "input_id": "deposit_receipts_a",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "deposit_receipts_b:r1",
+      "input_id": "deposit_receipts_b",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "interest_fact_a:r1",
+      "input_id": "interest_fact_a",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "interest_fact_b:r1",
+      "input_id": "interest_fact_b",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "entry_showing_a:r1",
+      "input_id": "entry_showing_a",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "entry_showing_b:r1",
+      "input_id": "entry_showing_b",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "lease_zh:r1",
+      "input_id": "lease_zh",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "labor_zh:r1",
+      "input_id": "labor_zh",
+      "repeat": 1,
+      "generation_status": "failed",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "lease_en:r1",
+      "input_id": "lease_en",
+      "repeat": 1,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "subletting_a:r2",
+      "input_id": "subletting_a",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "subletting_b:r2",
+      "input_id": "subletting_b",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "fixed_fee_a:r2",
+      "input_id": "fixed_fee_a",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "fixed_fee_b:r2",
+      "input_id": "fixed_fee_b",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "repair_election_a:r2",
+      "input_id": "repair_election_a",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "repair_election_b:r2",
+      "input_id": "repair_election_b",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "belongings_a:r2",
+      "input_id": "belongings_a",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "belongings_b:r2",
+      "input_id": "belongings_b",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "boundary_a:r2",
+      "input_id": "boundary_a",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "boundary_b:r2",
+      "input_id": "boundary_b",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "deposit_receipts_a:r2",
+      "input_id": "deposit_receipts_a",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "deposit_receipts_b:r2",
+      "input_id": "deposit_receipts_b",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "interest_fact_a:r2",
+      "input_id": "interest_fact_a",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "interest_fact_b:r2",
+      "input_id": "interest_fact_b",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "entry_showing_a:r2",
+      "input_id": "entry_showing_a",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "entry_showing_b:r2",
+      "input_id": "entry_showing_b",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "lease_zh:r2",
+      "input_id": "lease_zh",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "labor_zh:r2",
+      "input_id": "labor_zh",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    },
+    {
+      "id": "lease_en:r2",
+      "input_id": "lease_en",
+      "repeat": 2,
+      "generation_status": "validated",
+      "reviewer": null,
+      "reviewer_role": null,
+      "independent_second_review": null,
+      "resolution": null,
+      "dimensions": {
+        "contract_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "scope_and_facts": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "conditions_and_exceptions": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "legal_support": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "false_positive": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "expected_issue_coverage": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        },
+        "uncertainty_and_consistency": {
+          "verdict": "unreviewed",
+          "output_pointer": null,
+          "output_quote": null,
+          "source_anchors": [],
+          "rationale": null
+        }
+      }
+    }
+  ]
+}
