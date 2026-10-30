@@ -106,17 +106,61 @@ def validate_audit(data, root, sources):
             "note": "Evidence integrity only. Human judgments are not automatically established by matching quotes; findings are not an exhaustive denominator."}
 
 
+def validate_diagnostics(data, cases, sources):
+    """Read completed generation evidence separately from the initial case manifest."""
+    known = {case["id"]: case for case in cases["cases"]}
+    selected = {case["id"] for case in data["cases"]}
+    require(len(selected) == len(data["cases"]) and bool(selected), "Duplicate or empty diagnostic inputs")
+    for case in data["cases"]:
+        require(case["id"] in known and case == known[case["id"]], "Diagnostic input differs from case manifest")
+        validate_anchors(case["source_anchors"], sources)
+    require(data["status"] in {"completed", "partial_or_failed"}, "Diagnostic run is unfinished")
+    require(data["max_requests"] == 8 and 0 < len(data["requests"]) <= 8, "Diagnostic request budget mismatch")
+    for record in data["requests"]:
+        require(record["case_id"] in selected, "Request used an unlisted diagnostic input")
+        require(record["status"] in {"started", "completed", "failed"}, "Unknown request status")
+    tested = set()
+    generations = 0
+    for phase, rows in [("baseline", data["rows"]), ("follow_up", data.get("follow_up", {}).get("rows", []))]:
+        seen = set()
+        for row in rows:
+            require(row["case_id"] in selected and row["case_id"] not in seen, "Duplicate or unknown diagnostic row")
+            seen.add(row["case_id"])
+            require(row["status"] in {"validated", "failed"}, "Unknown diagnostic row status")
+            attempts = [r for r in data["requests"] if r["case_id"] == row["case_id"] and r.get("phase", "baseline") == phase]
+            # The historical runner recorded a failed row when its counter blocked a send.
+            require(bool(attempts) or (row["status"] == "failed" and row.get("failure_type") == "BudgetExhausted"),
+                    "Diagnostic row has no recorded request")
+            if row["status"] == "validated":
+                require(row["result"]["attempts"] == len(attempts), "Diagnostic attempt count mismatch")
+                require(all(r["status"] == "completed" for r in attempts), "Validated row contains an incomplete request")
+                tested.add(row["case_id"])
+                generations += 1
+    last_phase = "follow_up" if "follow_up" in data else "baseline"
+    last_requested = {r["case_id"] for r in data["requests"] if r.get("phase", "baseline") == last_phase}
+    return {"model_tested_cases": len(tested), "not_model_tested_cases": len(known) - len(tested),
+            "schema_accepted_generations": generations, "provider_requests_recorded": len(data["requests"]),
+            "last_round_not_run": sorted(selected - last_requested),
+            "legal_accuracy": None, "risk_recall": None,
+            "note": "Post-error diagnostics, with prompt revision between rounds; not a controlled causal estimate or independent legal benchmark."}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cases", type=Path, default=HERE / "reasoning_cases.json")
     parser.add_argument("--audit", type=Path, default=HERE / "reasoning_audit_2026-10-29.json")
+    parser.add_argument("--diagnostics", type=Path, default=HERE / "results/reasoning_20261029.json")
     args = parser.parse_args()
     root = HERE.parent.parent
     try:
         sources = load_sources(root)
-        result = {"cases": validate_cases(load_json(args.cases), sources),
+        cases = load_json(args.cases)
+        result = {"cases": validate_cases(cases, sources),
                   "existing_report_review": validate_audit(load_json(args.audit), root, sources),
                   "provider_requests": 0}
+        if args.diagnostics.exists():
+            result["live_diagnostics"] = validate_diagnostics(load_json(args.diagnostics), cases, sources)
+            result["cases"]["model_tested_cases"] = result["live_diagnostics"]["model_tested_cases"]
     except (ValueError, KeyError, TypeError, OSError) as error:
         parser.exit(1, f"Review evidence validation failed: {error}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2))

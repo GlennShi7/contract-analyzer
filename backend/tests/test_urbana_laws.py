@@ -45,7 +45,7 @@ def test_jurisdiction_choice_does_not_follow_document_language():
 
 def test_urbana_pipeline_injects_local_state_and_federal_sources():
     text = "Residential Lease. Landlord and Tenant. Property located at 1 Main Street, Urbana, Illinois. Security deposit."
-    client, calls = stub_client([(json.dumps(sample_output()), "stop")])
+    client, calls = stub_client([(json.dumps(sample_output(quote="Landlord and Tenant.")), "stop")])
     result = analyze_contract(text, client, jurisdiction="us_il_urbana")
     system = calls[0]["messages"][0]["content"]
     for law_id in ("URBANA-12.5-10", "765 ILCS 710/1", "42 U.S.C. 3604"):
@@ -59,7 +59,7 @@ def test_urbana_pipeline_injects_local_state_and_federal_sources():
 @pytest.mark.parametrize("city", ["Chicago", "Champaign", "Evanston"])
 def test_other_illinois_city_is_not_treated_as_urbana(city):
     text = f"Residential Lease. Landlord and Tenant. Property located at 1 Main Street, {city}, Illinois."
-    client, calls = stub_client([(json.dumps(sample_output()), "stop")])
+    client, calls = stub_client([(json.dumps(sample_output(quote="Landlord and Tenant.")), "stop")])
     report = analyze_contract(text, client, jurisdiction="us_il_urbana")
     assert "URBANA-12.5-10" not in calls[0]["messages"][0]["content"]
     assert not report.legal_sources
@@ -91,7 +91,7 @@ def test_legal_sources_reject_untrusted_urls(url):
 
 def test_server_scope_keeps_city_boundary_unverified_when_model_overclaims():
     text = "Residential Lease. Landlord and Tenant. Property located at 1 Main Street, Urbana, Illinois. Security deposit."
-    output = sample_output() | {"summary": "已核实位于 Urbana 市界内。"}
+    output = sample_output(quote="Landlord and Tenant.") | {"summary": "已核实位于 Urbana 市界内。"}
     client, _ = stub_client([(json.dumps(output), "stop")])
     report = analyze_contract(text, client, jurisdiction="us_il_urbana")
     # Scope is computed by the server, even when a model overclaims in its summary.

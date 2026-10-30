@@ -12,9 +12,9 @@ from analyzer import (
 )
 
 
-def sample_output(kind="lease"):
+def sample_output(kind="lease", *, quote="押金由出租人决定是否退还。"):
     return {"contract_type": kind, "risk_score": 7, "summary": "押金条款需要核实。", "cards": [
-        {"title": "押金扣减", "clause_text": "押金由出租人决定是否退还。", "risk_level": "high",
+        {"title": "押金扣减", "clause_text": quote, "risk_level": "high",
          "explanation": "应核实扣减条件与依据。", "legal_basis": ["住房租赁条例-10"], "suggestion": "签前确认退还时间与扣减条件。"}
     ]}
 
@@ -138,7 +138,7 @@ def test_json_mode_injects_only_the_selected_law_group():
 
 def test_unknown_jurisdiction_does_not_inject_chinese_statutes():
     client, calls = stub_client([(json.dumps(sample_output()), "stop")])
-    report = analyze_contract("出租人和承租人约定押金。", client)
+    report = analyze_contract("出租人和承租人约定：押金由出租人决定是否退还。", client)
     assert "住房租赁条例-10" not in calls[0]["messages"][0]["content"]
     assert not report.legal_sources
     assert report.cards[0].legal_basis == []
@@ -147,7 +147,7 @@ def test_unknown_jurisdiction_does_not_inject_chinese_statutes():
 
 def test_invalid_json_is_corrected_once():
     client, calls = stub_client([("bad", "stop"), (json.dumps(sample_output()), "stop")])
-    report = analyze_contract("出租人和承租人约定押金。", client)
+    report = analyze_contract("出租人和承租人约定：押金由出租人决定是否退还。", client)
     assert len(calls) == report.attempts == 2
     assert "未通过校验" in calls[1]["messages"][-1]["content"]
 
@@ -156,7 +156,7 @@ def test_invalid_json_is_corrected_once():
 def test_two_invalid_responses_stop_without_a_third_call(output, finish):
     client, calls = stub_client([(output, finish), (output, finish)])
     with pytest.raises(AnalysisOutputError):
-        analyze_contract("出租人和承租人约定押金。", client)
+        analyze_contract("出租人和承租人约定：押金由出租人决定是否退还。", client)
     assert len(calls) == 2
 
 
@@ -192,3 +192,38 @@ def test_live_analysis_requires_explicit_flag(monkeypatch):
     with pytest.raises(SystemExit) as error:
         run_live_eval()
     assert error.value.code == 2
+
+
+def test_fabricated_contract_quote_is_corrected_from_original_input():
+    bad = sample_output()
+    bad["cards"][0]["clause_text"] = "Tenant waives every right under this lease."
+    good = sample_output()
+    text = "出租人和承租人约定：押金由出租人决定是否退还。"
+    client, calls = stub_client([(json.dumps(bad), "stop"), (json.dumps(good), "stop")])
+    result = analyze_contract(text, client)
+    assert result.attempts == len(calls) == 2
+    assert result.grounding.cards_verified == result.grounding.cards_total == 1
+    assert not any(message["role"] == "assistant" for message in calls[1]["messages"])
+    assert calls[1]["messages"][1] == calls[0]["messages"][1]
+
+
+def test_recorded_truncation_and_fabricated_correction_never_return_a_report():
+    path = Path(__file__).resolve().parents[1] / "eval/results/reasoning_20261029.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    case = next(case for case in data["cases"] if case["id"] == "interest_fact_a")
+    rejected, correction = data["requests"][6:8]
+    responses = [(record["choices"][0]["content"], record["choices"][0]["finish_reason"])
+                 for record in (rejected, correction)]
+    client, calls = stub_client(responses)
+    with pytest.raises(AnalysisOutputError):
+        analyze_contract(case["contract_text"], client, jurisdiction="us_il_urbana")
+    assert len(calls) == 2
+    assert not any(message["role"] == "assistant" for message in calls[1]["messages"])
+
+
+def test_no_adverse_clause_can_return_an_empty_card_list():
+    output = sample_output() | {"cards": []}
+    client, calls = stub_client([(json.dumps(output), "stop")])
+    report = analyze_contract("出租人和承租人约定押金。", client)
+    assert report.cards == [] and len(calls) == 1
+    assert report.grounding.quote_verification_rate is None

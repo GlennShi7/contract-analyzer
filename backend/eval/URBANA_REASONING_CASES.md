@@ -15,4 +15,4 @@ For a future evaluation, include both sides of each distinction rather than only
 
 ## Expanded diagnostic materials, 2026-10-29
 
-The [new review protocol](REASONING_REVIEW.md) adds eight contrast pairs (16 draft inputs), including estimated deposit receipts, interest silence versus express waiver, and entry/showing distinctions. They have not been sent to a model and are not held-out cases or adjudicated legal labels. A separate seven-record audit of the existing full English lease result is evidence-checked locally; it must not be presented as generated results on the new inputs.
+The [new review protocol](REASONING_REVIEW.md) adds eight contrast pairs (16 draft inputs), including estimated deposit receipts, interest silence versus express waiver, and entry/showing distinctions. Four of the expanded inputs were subsequently sent in a separately authorized [diagnostic run](DIAGNOSTIC_REVIEW_2026-10-29.md); twelve remain untested. None are held-out cases or adjudicated legal labels. A separate seven-record audit of the existing full English lease result is evidence-checked locally; it must not be presented as generated results on the new inputs.

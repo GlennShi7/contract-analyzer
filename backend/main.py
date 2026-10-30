@@ -81,7 +81,7 @@ def analyze(request: AnalysisRequest):
     try:
         result = analyze_contract(text, get_llm_client(), jurisdiction=request.jurisdiction)
     except AnalysisOutputError:
-        raise HTTPException(status_code=502, detail="分析结果未通过格式校验，请重试") from None
+        raise HTTPException(status_code=502, detail="分析结果未通过格式校验或合同原文匹配，请重试") from None
     except OpenAIError:
         raise HTTPException(status_code=502, detail="分析服务暂时不可用，请稍后重试") from None
     return {"doc_id": request.doc_id, "result": result}

@@ -8,7 +8,7 @@ Prepared 2026-10-29. This is a local engineering review workflow, not legal advi
 - [Seven selected observations on the saved English lease report](reasoning_audit_2026-10-29.json): one unsupported assertion, two omitted conditions/paths, three narrowly supported observations and one unassessed distinction. These findings are **not** results for the sixteen new inputs and do not form an exhaustive accuracy denominator.
 - [Offline evidence validator](reasoning_review.py): checks complete pairs, unique IDs, source-text fingerprints and exact source quotes. It checks the reviewed report fingerprint, structured evidence locations, output quotes and any supplied contract excerpts. Paths cannot escape the repository.
 
-All sixteen diagnostic cases have **zero model runs** and **zero independently adjudicated labels**. They were designed after observing failures, so they must not be called unseen or held-out cases. The case facts are synthetic stipulations, not real property verification. Except in the boundary pair, the inputs explicitly stipulate ordinary tenancy, municipal location, timing and no section 2 exclusion so that irrelevant missing-scope facts do not conceal the target distinction.
+Four of the sixteen diagnostic inputs now have [live observations](DIAGNOSTIC_REVIEW_2026-10-29.md); twelve remain untested. All sixteen still have **zero independently adjudicated labels**. The input manifest retains its initial empty run list; actual execution records are stored separately and merged by the offline validator. They were designed after observing failures, so they must not be called unseen or held-out cases. The case facts are synthetic stipulations, not real property verification. Except in the boundary pair, the inputs explicitly stipulate ordinary tenancy, municipal location, timing and no section 2 exclusion so that irrelevant missing-scope facts do not conceal the target distinction.
 
 The older six-case [manual review note](URBANA_REASONING_CASES.md) remains historical material. The new set expands those distinctions and adds deposit/interest and showing-access contrasts; it does not retroactively score the old cases.
 
@@ -20,7 +20,7 @@ python -m eval.reasoning_review
 python -m pytest tests eval -q
 ```
 
-The validator outputs 16 draft cases, 8 pairs, 0 model-tested cases, 7 integrity-checked review records and 0 provider requests. `legal_accuracy` and `risk_recall` are `null`. The finding-count breakdown describes selected reviewer observations, not a pass rate. Valid evidence anchors do not automatically establish that a human conclusion is correct.
+The validator outputs 16 draft cases, 8 pairs, 4 distinct model-tested cases, 12 untested cases, and 7 integrity-checked historical review records. It records 8 provider requests in the live artifact but itself makes 0 requests. The follow-up did not send the final interest-waiver case after exhausting its cap; seven schema-accepted historical reports do not mean seven legally correct outputs. `legal_accuracy` and `risk_recall` are `null`. The finding-count breakdown describes selected reviewer observations, not a pass rate. Valid evidence anchors do not automatically establish that a human conclusion is correct.
 
 Source text SHA-256 values match the decoded statutory text, as in the production library. The report/contract fingerprints use UTF-8 text after universal-newline decoding so Git's CRLF/LF checkout changes do not break the review. Changes to substantive content still invalidate fingerprints. Law IDs refer to the complete local library sections; anchors are exact excerpts for review convenience, not replacements for the full provisions and their scope.
 
@@ -52,7 +52,7 @@ Before publishing accuracy, false-positive or recall numbers, establish an indep
 
 ## Authorization boundary
 
-The latest authorization allowed six new requests for the **three existing full synthetic contracts** and selected public laws. Three were used; three remain unused. These sixteen new diagnostic inputs have not been sent, and the unused allowance is not silently repurposed for different inputs. No production prompt or law text was changed in this local review step.
+The earlier six-request authorization for the **three existing full synthetic contracts** remains at 3/6 used. A separate, subsequent eight-request authorization covered four short diagnostic inputs and selected public laws; it is now exhausted at 8/8, including a correction. Twelve diagnostic inputs were not sent. [The live review](DIAGNOSTIC_REVIEW_2026-10-29.md) distinguishes baseline and prompt-follow-up observations, the budget-blocked case, and the final quotation enforcement added afterward. The original statutory text was unchanged.
 
 ## Verification
 

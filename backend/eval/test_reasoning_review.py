@@ -5,7 +5,7 @@ import json
 import pytest
 
 from eval.reasoning_review import (
-    HERE, load_json, load_sources, resolve_local, validate_audit, validate_cases,
+    HERE, load_json, load_sources, resolve_local, validate_audit, validate_cases, validate_diagnostics,
 )
 
 ROOT = HERE.parent.parent
@@ -114,3 +114,75 @@ def test_tampered_source_text_is_rejected(tmp_path):
     path.write_text(json.dumps(rows), encoding="utf-8")
     with pytest.raises(ValueError, match="Source checksum mismatch"):
         load_sources(tmp_path)
+
+
+def test_actual_diagnostics_do_not_claim_the_blocked_case_was_rerun(cases, sources):
+    data = load_json(HERE / "results/reasoning_20261029.json")
+    result = validate_diagnostics(data, cases, sources)
+    assert result["model_tested_cases"] == 4
+    assert result["not_model_tested_cases"] == 12
+    assert result["provider_requests_recorded"] == 8
+    assert result["schema_accepted_generations"] == 7
+    assert result["last_round_not_run"] == ["interest_fact_b"]
+    assert result["legal_accuracy"] is None
+
+
+def test_diagnostic_budget_and_input_drift_are_rejected(cases, sources):
+    data = load_json(HERE / "results/reasoning_20261029.json")
+    data["requests"].append(deepcopy(data["requests"][0]))
+    with pytest.raises(ValueError, match="budget mismatch"):
+        validate_diagnostics(data, cases, sources)
+    data["requests"].pop()
+    data["cases"][0]["contract_text"] += " An unauthorized extra condition."
+    with pytest.raises(ValueError, match="differs from case manifest"):
+        validate_diagnostics(data, cases, sources)
+
+
+def test_billing_counter_blocks_ninth_sdk_call_and_saves_before_sending():
+    from types import SimpleNamespace
+    from eval.diagnostic_eval import CountedCompletions, BudgetExhausted
+
+    ledger = {"requests": [], "current_case": "mock"}
+    saved = []
+    calls = []
+
+    def create(**kwargs):
+        assert len(saved) == len(calls) * 2 + 1
+        calls.append(kwargs)
+        return SimpleNamespace(model="mock", usage=None, choices=[])
+
+    counted = CountedCompletions(SimpleNamespace(create=create), ledger, lambda: saved.append(len(ledger["requests"])))
+    for _ in range(8):
+        counted.create()
+    with pytest.raises(BudgetExhausted):
+        counted.create()
+    assert len(calls) == len(ledger["requests"]) == 8
+
+
+def test_failed_sdk_request_still_uses_allowance():
+    from types import SimpleNamespace
+    from eval.diagnostic_eval import CountedCompletions
+
+    def fail(**kwargs):
+        raise RuntimeError("mock network failure")
+
+    ledger = {"requests": [], "current_case": "mock"}
+    counted = CountedCompletions(SimpleNamespace(create=fail), ledger, lambda: None)
+    with pytest.raises(RuntimeError, match="mock network"):
+        counted.create()
+    assert len(ledger["requests"]) == 1 and ledger["requests"][0]["status"] == "failed"
+
+
+def test_diagnostic_prepare_mode_never_creates_client_or_ledger(monkeypatch, tmp_path):
+    import sys
+    import main as app
+    from eval.diagnostic_eval import main
+
+    def forbidden():
+        raise AssertionError("Prepare mode must not create an API client")
+
+    monkeypatch.setattr(app, "get_llm_client", forbidden)
+    output = tmp_path / "unused.json"
+    monkeypatch.setattr(sys, "argv", ["diagnostic_eval", "--output", str(output)])
+    main()
+    assert not output.exists()
