@@ -1,0 +1,1448 @@
+{
+  "evaluated_at_utc": "2026-10-30T00:55:08.500471+00:00",
+  "model": "deepseek-flash",
+  "analyzer_sha256": "13b481d85e8c2328ee57d76acff81aa6000aa652c050e6ed26aac2532a4e81c4",
+  "dataset": "selected existing synthetic evaluation contracts; not real signed contracts",
+  "selected_contracts": [
+    "lease_zh",
+    "labor_zh",
+    "lease_en"
+  ],
+  "max_requests": 6,
+  "law_sources_sha256": "30cb74f0208427bccdad43c96e427b1552f4e368ad811898cd476bd62af38bdc",
+  "urbana_law_sources_sha256": "3616c0e8b817a156892b4c59b4d38850fe0fec3cf23429e956664d6cc0f74bd6",
+  "law_library_sha256": {
+    "labor.json": "220c5ed9a4fb2258e0e779823980fb8ced965dd67e08941ebf8d0f12ad916f7f",
+    "tenancy.json": "ead146632c8ba361ea74ef7e44e9c5cb4ce9f3237b65b33287630040a1799177",
+    "tenancy_us_il_urbana.json": "19d97ade46c3764cab07ae2205ef564b3dac70a16061b81a021f4190602f853f"
+  },
+  "summary": {
+    "contracts": 3,
+    "requests": 3,
+    "cards": 36,
+    "verified_quotes": 36,
+    "quote_verification_rate": 1.0,
+    "law_references": 75,
+    "valid_law_references": 75,
+    "law_reference_validity_rate": 1.0
+  },
+  "limitations": "Checks quote matching and injected-ID membership before filtering; does not validate legal applicability, analysis correctness, risk scores, or recall.",
+  "requests": [
+    {
+      "status": "completed",
+      "model": "deepseek-flash",
+      "usage": {
+        "completion_tokens": 2767,
+        "prompt_tokens": 6561,
+        "total_tokens": 9328,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 6433
+      }
+    },
+    {
+      "status": "completed",
+      "model": "deepseek-flash",
+      "usage": {
+        "completion_tokens": 2602,
+        "prompt_tokens": 6835,
+        "total_tokens": 9437,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 6579
+      }
+    },
+    {
+      "status": "completed",
+      "model": "deepseek-flash",
+      "usage": {
+        "completion_tokens": 3279,
+        "prompt_tokens": 23687,
+        "total_tokens": 26966,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 23552
+        },
+        "prompt_cache_hit_tokens": 23552,
+        "prompt_cache_miss_tokens": 135
+      }
+    }
+  ],
+  "rows": [
+    {
+      "contract": "lease_zh",
+      "text_sha256": "bf261d0079c4724c8869e47c1db5247cb47fea3a78306a5a7ebc5ad5731e8501",
+      "jurisdiction": "cn",
+      "result": {
+        "contract_type": "lease",
+        "risk_score": 9,
+        "summary": "该合同为居住房屋租赁合同，租期12个月，月租4500元，押金9000元。合同存在多处对承租人明显不利的条款：甲方可随时进入房屋、租金调整权由甲方单方决定、维修费用一律由乙方承担、押金扣除由甲方单方决定且逾期90日视为放弃、乙方提前退租违约金为三个月租金且剩余租金押金不退、甲方提前收回仅退剩余租金不担其他责任、逾期交还按日租金三倍计占用费、遗留物品三日视为放弃等。上述条款是否有效需结合格式条款规则、违约金调整规则等具体判断，不能仅因不利即认定无效。合同未载明房屋所在城市、楼栋单位数、房龄等信息，无法核实是否属于城镇国有土地住房租赁及地方标准适用范围，相关事项需进一步核实。",
+        "cards": [
+          {
+            "title": "甲方可随时进入房屋且无需提前通知",
+            "clause_text": "为检查房屋使用情况及设施状况，甲方或其委托的人员有权随时进入该房屋，无需提前通知乙方。租赁期满前两个月内，甲方带领意向承租人或购房者看房的，乙方应予以配合，不得拒绝或设置障碍。",
+            "risk_level": "high",
+            "explanation": "该条款赋予甲方及其委托人员随时进入住宅的权利，且明确无需提前通知，可能影响承租人的居住安宁与隐私。若该条款属于甲方预先拟定、重复使用且未与乙方协商的格式条款，且不合理地限制乙方主要权利，乙方可依民法典第496条主张其不成为合同内容，或依第497条主张无效，但需结合订立过程具体判断。住房租赁条例第9条亦规定出租人不得擅自进入租赁住房，但经承租人同意或依法可以进入的除外；该条适用需以属于城镇国有土地上住房租赁活动为前提，本合同未载明房屋所在地及土地性质，需核实。",
+            "legal_basis": [
+              "民法典-496",
+              "民法典-497",
+              "住房租赁条例-9"
+            ],
+            "suggestion": "签前要求修改为：甲方进入须提前合理时间（如24小时）书面通知并取得乙方同意，紧急情况除外；看房应约定合理时段并提前通知。保留合同文本及沟通记录，入住后如遇未经通知进入，及时书面异议并留存证据。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "租金调整权由甲方单方决定",
+            "clause_text": "租赁期间，如遇市场行情变化，甲方有权参照周边房屋租金水平调整租金，调整幅度由甲方确定，甲方应提前十五日通知乙方。乙方不同意调整的，可以解除本合同，但应按照本合同第十三条的约定承担提前解约的责任。",
+            "risk_level": "high",
+            "explanation": "该条款使甲方在租期内可单方决定租金涨幅，乙方不同意只能解除合同并按第十三条承担三个月租金违约金及剩余租金押金不退的后果，实质将调价风险转嫁给乙方。若属格式条款且不合理加重对方责任、限制对方主要权利，可能依民法典第497条被认定无效，但需结合是否预先拟定、是否协商等事实判断。合同未约定调价上限或参照标准，具体影响需核实。",
+            "legal_basis": [
+              "民法典-496",
+              "民法典-497"
+            ],
+            "suggestion": "签前要求删除单方调价条款，或明确约定租期内租金固定、调价须双方书面协商一致并设上限。若无法删除，评估提前解约成本后再决定是否签署。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "维修费用一律由乙方承担且修缮期间不减租",
+            "clause_text": "房屋及附属设施发生损坏或故障的，无论损坏原因，维修费用一律由乙方承担。房屋主体结构出现安全隐患的，乙方应及时通知甲方，甲方在接到通知后三十日内安排修缮，修缮期间乙方不得要求减免租金。",
+            "risk_level": "high",
+            "explanation": "该条款将无论原因的维修费用全部转由乙方承担，包括非因乙方过错导致的自然损耗或主体结构问题，与民法典第712条出租人原则上承担维修义务（当事人另有约定除外）、第710条承租人按约定方法使用致损耗不承担赔偿责任的规定存在张力。修缮期间不得减租的约定也可能限制乙方在维修影响使用时的救济。上述法条为一般规则，具体效力需结合条款性质及实际情况判断。",
+            "legal_basis": [
+              "民法典-710",
+              "民法典-712",
+              "民法典-713"
+            ],
+            "suggestion": "签前要求区分：自然损耗及主体结构、原有设施老化由甲方维修；因乙方过错造成的损坏由乙方承担。并约定维修影响正常使用时可相应减租或延长租期。入住时详细记录设施状况并拍照留存。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "押金扣除由甲方单方决定且逾期申请视为放弃",
+            "clause_text": "乙方应在退租之日起90日内书面申请退还押金，逾期未申请的，视为乙方自愿放弃押金。押金的扣除项目及扣除金额由甲方根据房屋状况确定，乙方对扣除金额有异议的，以甲方意见为准。",
+            "risk_level": "high",
+            "explanation": "该条款使押金扣除项目和金额完全由甲方单方确定，乙方异议不影响甲方意见，且逾期90日未申请即视为放弃押金，可能不合理地限制乙方主要权利。住房租赁条例第10条要求合同约定押金数额、返还时间及扣减情形，除约定情形外出租人无正当理由不得扣减押金；该条例适用于城镇国有土地上住房租赁活动，本合同房屋所在地及性质需核实。条款效力需结合格式条款规则判断。",
+            "legal_basis": [
+              "民法典-496",
+              "民法典-497",
+              "住房租赁条例-10"
+            ],
+            "suggestion": "签前要求明确押金扣减的具体情形、计算方式和返还期限（如退租后15日内），删除“以甲方意见为准”和“逾期视为放弃”。退租时共同验房、拍照录像并书面确认扣减项目。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "乙方提前退租违约金为三个月租金且剩余租金押金不退",
+            "clause_text": "租赁期间，乙方需提前退租的，应提前六十日书面通知甲方，并支付相当于三个月租金的违约金，已付的剩余租金及押金不予退还。",
+            "risk_level": "high",
+            "explanation": "该条款同时要求支付三个月租金违约金并没收剩余租金和押金，可能构成多重叠加的经济负担。民法典第585条规定约定违约金过分高于造成的损失时，法院或仲裁机构可根据当事人请求适当减少；但该条为事后救济规则，不当然使条款无效。是否过分高于损失需结合实际损失判断，不能仅凭金额断言违法。",
+            "legal_basis": [
+              "民法典-585"
+            ],
+            "suggestion": "签前要求降低违约金标准（如一个月租金）并明确剩余租金按实际使用结算退还、押金在扣除约定费用后退还。保留实际损失相关证据，如发生争议可依法请求调整违约金。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "甲方提前收回房屋仅退剩余租金不担其他责任",
+            "clause_text": "甲方因出售房屋或自住需要提前收回房屋的，应提前三十日通知乙方，并退还乙方已付的剩余租金，甲方不承担其他任何责任。",
+            "risk_level": "high",
+            "explanation": "该条款允许甲方以出售或自住为由提前收回房屋，仅退剩余租金而不承担搬迁、找房等损失，与乙方提前退租需承担三个月违约金的安排明显不对等。若属格式条款且不合理免除甲方责任、加重乙方责任，可能依民法典第497条被认定无效，但需结合订立过程判断。此外，民法典第725条规定租赁物在承租人占有期间所有权变动不影响租赁合同效力，第726条规定出租人出卖房屋时承租人的优先购买权（有例外），该条款未提及这些安排，实际影响需核实。",
+            "legal_basis": [
+              "民法典-497",
+              "民法典-725",
+              "民法典-726"
+            ],
+            "suggestion": "签前要求对等约定：甲方提前收回须提前合理通知并承担相应补偿（如搬迁费、一个月租金），或删除该单方收回权。了解出卖时优先购买权的通知程序。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "逾期交还按日租金三倍计占用费",
+            "clause_text": "乙方逾期交还房屋的，每逾期一日应按日租金的三倍支付房屋占用费。",
+            "risk_level": "medium",
+            "explanation": "三倍日租金的占用费标准较高，可能被认定为变相违约金。民法典第585条规定约定违约金过分高于损失的，可请求适当减少；但该条为事后调整规则，不当然使约定无效。是否过高需结合实际占用损失判断。",
+            "legal_basis": [
+              "民法典-585"
+            ],
+            "suggestion": "签前可协商将占用费调整为合理标准（如日租金的一至一点五倍）。如确因客观原因延迟交还，及时书面沟通并保留证据。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "遗留物品三日未搬离视为放弃",
+            "clause_text": "乙方在房屋内遗留的物品，自交还房屋之日起超过三日未搬离的，视为乙方放弃，甲方有权自行处置。",
+            "risk_level": "medium",
+            "explanation": "该条款使甲方在三日短期限内即可自行处置乙方遗留物品，可能使乙方丧失财物而缺乏合理取回机会。条款是否有效需结合格式条款规则及具体情况判断，不能仅因期限短即认定违法。",
+            "legal_basis": [
+              "民法典-496",
+              "民法典-497"
+            ],
+            "suggestion": "签前要求延长取回期限（如15日）并约定甲方处置前须书面通知。退租时清点个人物品并拍照留存。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "投诉两次即可解除合同",
+            "clause_text": "（五）邻居或物业对乙方提出投诉达到两次的。",
+            "risk_level": "medium",
+            "explanation": "该条款将邻居或物业投诉达到两次作为甲方单方解除合同的事由，未区分投诉是否属实、是否因乙方过错，可能被滥用。若属格式条款且不合理加重乙方责任、限制其主要权利，可能依民法典第497条被认定无效，但需结合具体情况判断。",
+            "legal_basis": [
+              "民法典-497"
+            ],
+            "suggestion": "签前要求限定为“经核实确因乙方过错且违反合同约定或管理规约的投诉”，并约定异议核实程序。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "乙方不享有优先承租权",
+            "clause_text": "同等条件下，乙方不享有优先承租权。",
+            "risk_level": "medium",
+            "explanation": "民法典第734条规定租赁期限届满，房屋承租人享有以同等条件优先承租的权利。该条款以约定排除乙方的优先承租权，其效力需结合该条性质及具体情况判断，不能仅凭约定即断言有效或无效。",
+            "legal_basis": [
+              "民法典-734"
+            ],
+            "suggestion": "签前了解当地司法实践对该约定的态度，评估续租需求；如重视续租，可要求删除该排除条款或约定续租条件。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "宠物及危险物品等禁止事项设固定违约金",
+            "clause_text": "乙方不得在该房屋内饲养宠物，不得存放易燃易爆等危险物品，不得从事违法活动，不得进行群租或将房屋用于经营。乙方违反本条约定的，每次应向甲方支付违约金2000元，甲方并有权解除合同。",
+            "risk_level": "low",
+            "explanation": "禁止事项本身属常见约定，但每次违反即支付2000元并同时可解除合同，可能构成较重的违约后果。民法典第585条规定违约金过分高于损失时可请求适当减少，但需结合实际损失判断，不能仅因固定金额即认定过高。",
+            "legal_basis": [
+              "民法典-585"
+            ],
+            "suggestion": "签前确认违约金是否与实际损失相当，必要时协商降低或改为按实际损失赔偿。遵守约定，避免触发。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "租赁登记备案义务及房屋信息需核实",
+            "clause_text": "甲方应在本合同签订之日起三十日内，到房屋所在地的住房城乡建设主管部门办理房屋租赁登记备案，乙方应予以配合并提供身份证明。",
+            "risk_level": "low",
+            "explanation": "合同约定甲方办理备案，与住房租赁条例第8条关于出租人应按规定备案、未备案时承租人可办理的规定方向一致，但该条例适用于城镇国有土地上住房租赁活动。合同未载明房屋所在城市、楼栋单位数、房龄及土地性质，无法核实是否属于该条例适用范围及地方标准，需进一步核实。",
+            "legal_basis": [
+              "住房租赁条例-2",
+              "住房租赁条例-8"
+            ],
+            "suggestion": "签前核实房屋所在地、土地性质及是否可备案；签约后跟进备案进度，如甲方未办理，可依条例自行办理备案并保留凭证。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          }
+        ],
+        "legal_sources": [
+          {
+            "id": "民法典-496",
+            "law": "中华人民共和国民法典",
+            "article": "第四百九十六条",
+            "text": "格式条款是当事人为了重复使用而预先拟定，并在订立合同时未与对方协商的条款。\n采用格式条款订立合同的，提供格式条款的一方应当遵循公平原则确定当事人之间的权利和义务，并采取合理的方式提示对方注意免除或者减轻其责任等与对方有重大利害关系的条款，按照对方的要求，对该条款予以说明。提供格式条款的一方未履行提示或者说明义务，致使对方没有注意或者理解与其有重大利害关系的条款的，对方可以主张该条款不成为合同的内容。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "a72d99b2d4e192f6d5f217bac5ef7055172f216d0b3fbf6c8f54c611234cdfb9",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "民法典-497",
+            "law": "中华人民共和国民法典",
+            "article": "第四百九十七条",
+            "text": "有下列情形之一的，该格式条款无效：\n（一）具有本法第一编第六章第三节和本法第五百零六条规定的无效情形；\n（二）提供格式条款一方不合理地免除或者减轻其责任、加重对方责任、限制对方主要权利；\n（三）提供格式条款一方排除对方主要权利。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "4259fb67497ee1869c93c9e5437ecd6a608faec3c56da967e6fd7a6a2aad188a",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "民法典-585",
+            "law": "中华人民共和国民法典",
+            "article": "第五百八十五条",
+            "text": "当事人可以约定一方违约时应当根据违约情况向对方支付一定数额的违约金，也可以约定因违约产生的损失赔偿额的计算方法。\n约定的违约金低于造成的损失的，人民法院或者仲裁机构可以根据当事人的请求予以增加；约定的违约金过分高于造成的损失的，人民法院或者仲裁机构可以根据当事人的请求予以适当减少。\n当事人就迟延履行约定违约金的，违约方支付违约金后，还应当履行债务。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "ec5d687861b2c484e2c491ce9906bbb3d9381b6076f50f533656ed78947de0cf",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "民法典-710",
+            "law": "中华人民共和国民法典",
+            "article": "第七百一十条",
+            "text": "承租人按照约定的方法或者根据租赁物的性质使用租赁物，致使租赁物受到损耗的，不承担赔偿责任。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "a693760635a535e9de7f97012e1700310ac2e0b69bafae3cfb6e8b63e0218077",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "民法典-712",
+            "law": "中华人民共和国民法典",
+            "article": "第七百一十二条",
+            "text": "出租人应当履行租赁物的维修义务，但是当事人另有约定的除外。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "ebc073c4de3535ae33879ee871790fe8093a888de13b7b836e548f284f42b57a",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "民法典-713",
+            "law": "中华人民共和国民法典",
+            "article": "第七百一十三条",
+            "text": "承租人在租赁物需要维修时可以请求出租人在合理期限内维修。出租人未履行维修义务的，承租人可以自行维修，维修费用由出租人负担。因维修租赁物影响承租人使用的，应当相应减少租金或者延长租期。\n因承租人的过错致使租赁物需要维修的，出租人不承担前款规定的维修义务。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "1ba3191f26ba8c7a1c6c2450950e67e5ee1f8fdc8f286caf3f8369457cea0db5",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "民法典-725",
+            "law": "中华人民共和国民法典",
+            "article": "第七百二十五条",
+            "text": "租赁物在承租人按照租赁合同占有期限内发生所有权变动的，不影响租赁合同的效力。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "2ed9ef5b6ec1e6fc36f7bd23bb8dc65b39d767241260521257f6bf5756471283",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "民法典-726",
+            "law": "中华人民共和国民法典",
+            "article": "第七百二十六条",
+            "text": "出租人出卖租赁房屋的，应当在出卖之前的合理期限内通知承租人，承租人享有以同等条件优先购买的权利；但是，房屋按份共有人行使优先购买权或者出租人将房屋出卖给近亲属的除外。\n出租人履行通知义务后，承租人在十五日内未明确表示购买的，视为承租人放弃优先购买权。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "5d32e4336445c95ab2d022bbafd92fffc712621527e9cf0c559b644a45a65e11",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "民法典-734",
+            "law": "中华人民共和国民法典",
+            "article": "第七百三十四条",
+            "text": "租赁期限届满，承租人继续使用租赁物，出租人没有提出异议的，原租赁合同继续有效，但是租赁期限为不定期。\n租赁期限届满，房屋承租人享有以同等条件优先承租的权利。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_60fb3863b7364b759123a42d1df568ca.html",
+            "source_version": "2020-05-28 adopted",
+            "checked_on": "2026-10-27",
+            "text_sha256": "f4900f820e24fa12df4d9596141e42454e1148f1626e8199d1a7b8eb07d2fcb2",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "住房租赁条例-2",
+            "law": "住房租赁条例",
+            "article": "第二条",
+            "text": "城镇国有土地上住房租赁活动及其监督管理，适用本条例。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+            "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+            "checked_on": "2026-10-27",
+            "text_sha256": "96b4c1760028760f939f9c744cc001f06ab2d63b72eac18f12e0a5393e923316",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "住房租赁条例-8",
+            "law": "住房租赁条例",
+            "article": "第八条",
+            "text": "出租人和承租人应当使用实名签订住房租赁合同。\n出租人应当按照规定，通过住房租赁管理服务平台等方式将住房租赁合同向租赁住房所在地房产管理部门备案。房产管理部门应当提高住房租赁合同备案服务水平，不得就住房租赁合同备案收取任何费用。\n出租人未办理住房租赁合同备案的，承租人可以办理备案。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+            "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+            "checked_on": "2026-10-27",
+            "text_sha256": "323b561b07c4b675725f5e7c8cb79a94d75981aa99a78a1cab2c9f60394ee5ce",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "住房租赁条例-9",
+            "law": "住房租赁条例",
+            "article": "第九条",
+            "text": "出租人应当遵守下列规定：\n（一）向承租人出示身份证明材料、拟出租住房的不动产权属证书或者其他证明其具有合法出租权利的材料，并配合承租人依法查询、核实拟出租住房有关信息；\n（二）核验承租人的身份证明材料，不得将住房出租给拒绝出示身份证明材料的单位或者个人；\n（三）不得擅自进入租赁住房，但是经承租人同意或者依法可以进入的除外。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+            "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+            "checked_on": "2026-10-27",
+            "text_sha256": "3f7350f242ef3346f208fba8aa7c052051829ccb32f0ec8070eb508eadc389ac",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "住房租赁条例-10",
+            "law": "住房租赁条例",
+            "article": "第十条",
+            "text": "出租人收取押金的，应当在住房租赁合同中约定押金的数额、返还时间以及扣减押金的情形等事项。除住房租赁合同约定的情形以外，出租人无正当理由不得扣减押金。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2026/art_925f3f41a36541c8b98252a660ed8467.html",
+            "source_version": "2025-07-16 promulgated; effective 2025-09-15",
+            "checked_on": "2026-10-27",
+            "text_sha256": "79ea1248fb57f9fba1e1596dc000d0f6a33cc2eac5564739e6881d3857e75c8a",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          }
+        ],
+        "legal_scope": "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。",
+        "disclaimer": "仅供理解合同，不构成法律意见。原文匹配和法条引用核对不保证法律适用或分析结论正确。",
+        "grounding": {
+          "cards_total": 12,
+          "cards_verified": 12,
+          "quote_verification_rate": 1.0,
+          "law_references_total": 23,
+          "law_references_valid": 23,
+          "law_reference_validity_rate": 1.0
+        },
+        "model": "deepseek-flash",
+        "attempts": 1
+      }
+    },
+    {
+      "contract": "labor_zh",
+      "text_sha256": "189a2d9736ee155dc4c088e7d695c705aae7695197c561da898e3b854ac2d932",
+      "jurisdiction": "cn",
+      "result": {
+        "contract_type": "labor",
+        "risk_score": 9,
+        "summary": "该劳动合同存在多处对劳动者不利且可能与现行劳动法律强制性规定不一致的条款，主要集中在试用期工资、加班费打包、社会保险放弃、竞业限制无补偿、违约金范围、解除条件、工资扣发与暂缓发放、单方调岗调薪等方面。部分条款是否无效需结合具体事实由仲裁机构或法院认定，不能仅凭文字直接断言违法；合同未载明用人单位全称、住所、法定代表人等信息，也未明确绩效工资考核规则和规章制度内容，需签约前核实。",
+        "cards": [
+          {
+            "title": "试用期六个月与三年期合同：期限本身在法定上限内，但试用期工资约定偏低",
+            "clause_text": "其中试用期为六个月，自2026年7月1日起至2026年12月31日止。",
+            "risk_level": "medium",
+            "explanation": "三年以上固定期限劳动合同约定六个月试用期，未超过《劳动合同法》第十九条规定的六个月上限，期限本身不当然违法。但合同同时约定试用期月工资为转正后工资的百分之七十，低于《劳动合同法》第二十条规定的“不得低于本单位相同岗位最低档工资或者劳动合同约定工资的百分之八十”的下限，该工资约定存在被认定无效或需补足差额的风险。",
+            "legal_basis": [
+              "劳动合同法-19",
+              "劳动合同法-20"
+            ],
+            "suggestion": "签约前要求将试用期工资调整为不低于转正工资的百分之八十，并核实是否不低于当地最低工资标准；保留工资条和银行流水，若实际发放低于法定下限，可向劳动监察部门投诉或申请仲裁。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "月工资已包含全部加班费，且要求服从加班安排",
+            "clause_text": "因项目需要，乙方应当服从甲方的加班安排，乙方的月工资中已包含全部加班费，甲方不再另行支付加班费。",
+            "risk_level": "high",
+            "explanation": "该条款将加班费打包进月工资并排除另行支付，可能构成用人单位免除自身法定责任、排除劳动者权利。加班费应按《劳动法》第四十四条规定的标准计算，能否以“包干”方式替代需结合工资构成、加班时长和实际发放情况判断，不能仅凭该文字直接认定全部无效，但存在较大争议风险。",
+            "legal_basis": [
+              "劳动合同法-26",
+              "劳动合同法-31",
+              "劳动法-44"
+            ],
+            "suggestion": "签约前要求明确加班费计算基数和支付方式；保留考勤记录、加班通知、工作邮件等证据，若实际加班未获足额加班费，可依法主张差额。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "社会保险可自愿放弃并领取现金补贴",
+            "clause_text": "乙方自愿选择不缴纳社会保险和住房公积金的，甲方每月向乙方发放现金补贴500元，乙方承诺不就此向甲方主张任何权利。",
+            "risk_level": "high",
+            "explanation": "用人单位为职工办理社会保险登记、按时足额缴纳社会保险费是法定义务，不因劳动者“自愿放弃”而免除。该条款可能因排除劳动者权利、免除用人单位法定责任而被认定无效或部分无效，但具体效力需由仲裁机构或法院认定。劳动者仍可要求补缴社会保险，但现金补贴是否需返还及如何返还需结合具体情况处理。",
+            "legal_basis": [
+              "劳动合同法-26",
+              "社会保险法-58",
+              "社会保险法-60"
+            ],
+            "suggestion": "不建议签署放弃社保的书面承诺；签约前要求甲方依法办理社保登记并缴纳，保留工资条中社保扣缴记录，若未缴纳可向社保征收机构投诉。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "竞业限制两年但离职后不支付经济补偿",
+            "clause_text": "甲方在竞业限制期间不向乙方支付经济补偿。",
+            "risk_level": "high",
+            "explanation": "竞业限制条款要求劳动者离职后两年内不得从事竞争业务，但约定不支付经济补偿，可能构成用人单位免除自身法定责任、排除劳动者权利。竞业限制的适用人员范围、地域和期限需符合《劳动合同法》第二十四条，且离职后应按月给予经济补偿；该无补偿约定存在被认定无效或需补付补偿的风险，但具体效力需结合乙方是否属于竞业限制人员等事实判断。",
+            "legal_basis": [
+              "劳动合同法-23",
+              "劳动合同法-24",
+              "劳动合同法-26"
+            ],
+            "suggestion": "签约前要求明确竞业限制的适用人员范围、地域、期限及离职后经济补偿标准；若离职后被要求履行竞业限制，保留甲方未支付补偿的证据，并咨询是否可主张补偿或解除竞业限制。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "服务期违约金为培训费三倍并返还全部工资",
+            "clause_text": "乙方在服务期内离职的，应当向甲方支付违约金，违约金数额为培训费用的三倍，并返还培训期间甲方支付的全部工资。",
+            "risk_level": "high",
+            "explanation": "服务期违约金仅适用于用人单位提供专项培训费用进行专业技术培训的情形，且违约金不得超过用人单位提供的培训费用，并不得超过服务期尚未履行部分所应分摊的培训费用。约定三倍培训费及返还培训期间全部工资，可能超出法定上限，存在被认定无效或调减的风险，但需结合培训协议和实际培训费用判断。",
+            "legal_basis": [
+              "劳动合同法-22",
+              "劳动合同法-25"
+            ],
+            "suggestion": "签约前要求另行签订的培训协议明确培训费用金额、服务期起算和违约金分摊方式；保留培训费用凭证，若违约金明显超过实际培训费用，可依法主张调减。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "一般违约即需支付一万元违约金",
+            "clause_text": "乙方违反本合同约定的，除本合同另有约定外，应当向甲方支付违约金人民币一万元，违约金不足以弥补甲方损失的，乙方还应赔偿差额部分。",
+            "risk_level": "high",
+            "explanation": "除服务期和竞业限制两种法定情形外，用人单位不得与劳动者约定由劳动者承担违约金。该条对一般违约行为设定一万元违约金，可能因违反《劳动合同法》第二十五条而被认定无效，但具体效力需由仲裁机构或法院认定；用人单位仍可能依据实际损失主张赔偿，需区分违约金与损失赔偿。",
+            "legal_basis": [
+              "劳动合同法-25",
+              "劳动合同法-26"
+            ],
+            "suggestion": "签约前要求删除一般违约违约金条款，或明确仅限法定两种情形；保留合同文本，若被主张违约金，可提出该条款无效的抗辩并咨询专业意见。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "连续两个季度绩效考核不合格即可解除合同",
+            "clause_text": "（四）连续两个季度绩效考核不合格的；",
+            "risk_level": "high",
+            "explanation": "用人单位以“不能胜任工作”解除劳动合同，需经过培训或者调整工作岗位，仍不能胜任工作，并提前三十日书面通知或额外支付一个月工资。合同直接约定连续两个季度考核不合格即可解除且不支付经济补偿，可能不符合法定解除条件和程序，存在被认定违法解除的风险，但需结合考核制度和实际履行情况判断。",
+            "legal_basis": [
+              "劳动合同法-40",
+              "劳动合同法-46",
+              "劳动合同法-87"
+            ],
+            "suggestion": "签约前要求明确绩效考核标准、考核程序和申诉机制；若被以此解除，保留考核结果、培训或调岗记录，评估是否属于违法解除并主张赔偿金。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "提前解除需提前六十日通知，未通知扣发当月工资",
+            "clause_text": "乙方提前解除本合同的，应当提前六十日以书面形式通知甲方，并办理完毕工作交接。乙方未提前通知擅自离职的，应当赔偿甲方由此造成的全部损失，并且甲方有权扣发乙方当月工资。",
+            "risk_level": "high",
+            "explanation": "劳动者提前解除劳动合同的法定通知期为三十日，试用期内为三日。约定六十日通知期超出法定标准，可能对劳动者不产生约束力；以未提前通知为由扣发当月工资，可能构成克扣工资，违反工资应当按月足额支付的规定。但劳动者未依法通知给用人单位造成实际损失的，用人单位可依法主张赔偿，需区分扣发工资与损失赔偿。",
+            "legal_basis": [
+              "劳动合同法-37",
+              "劳动合同法-30",
+              "劳动法-50"
+            ],
+            "suggestion": "签约前要求将通知期改为三十日；离职时按法定程序书面通知并保留送达证据，若工资被扣发，可向劳动监察部门投诉或申请仲裁。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "未完成工作交接可暂缓发放剩余工资及经济补偿",
+            "clause_text": "乙方未完成工作交接的，甲方有权暂缓发放乙方的剩余工资及经济补偿。",
+            "risk_level": "high",
+            "explanation": "工资应当按月足额支付，经济补偿的支付也有法定条件。以未完成工作交接为由暂缓发放剩余工资及经济补偿，可能构成克扣或无故拖欠工资，存在被认定违法的风险；但用人单位可就交接造成的实际损失另行主张，不能直接以扣发工资代替。",
+            "legal_basis": [
+              "劳动合同法-30",
+              "劳动法-50",
+              "劳动合同法-46"
+            ],
+            "suggestion": "离职时尽量完成书面交接并保留交接清单；若工资或经济补偿被暂缓发放，可向劳动监察部门投诉或申请仲裁，要求足额支付。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "甲方可单方调整岗位、工作地点和工资",
+            "clause_text": "甲方可根据经营需要调整乙方的工作岗位和工作地点，包括派驻外地分支机构，乙方应当服从安排，拒不服从的视为严重违反规章制度。",
+            "risk_level": "high",
+            "explanation": "变更劳动合同约定的内容应当协商一致并采用书面形式。该条赋予甲方单方调岗调地点权，并将拒不服从直接视为严重违反规章制度，可能被用于变相迫使劳动者离职，存在被认定排除劳动者权利的风险；但用人单位在合理范围内依法行使用工自主权的边界需结合具体情形判断。",
+            "legal_basis": [
+              "劳动合同法-35",
+              "劳动合同法-26",
+              "劳动合同法-39"
+            ],
+            "suggestion": "签约前要求明确调岗调地点的合理范围、程序和待遇保障；若被单方调岗，保留书面通知和沟通记录，评估是否属于协商变更或违法变更。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "绩效工资占比高且考核标准由甲方随时调整",
+            "clause_text": "绩效工资根据甲方的考核结果发放，考核标准由甲方制定并可随时调整。",
+            "risk_level": "medium",
+            "explanation": "绩效工资占月工资的百分之八十，考核标准由甲方单方制定并可随时调整，可能导致劳动报酬实际发放金额不确定，影响劳动者对工资的合理预期。该约定本身不当然违法，但若考核标准不合理或随意扣减绩效工资，可能构成未足额支付劳动报酬，需结合规章制度和实际发放情况判断。",
+            "legal_basis": [
+              "劳动合同法-17",
+              "劳动合同法-30"
+            ],
+            "suggestion": "签约前要求明确绩效工资的计算方式、考核指标和调整程序，并保留考核结果和工资条；若绩效工资被无依据扣减，可主张补足差额。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "规章制度公示即视为知悉，严重违反可解除",
+            "clause_text": "甲方的规章制度可通过公司内网、电子邮件等方式公示，公示即视为乙方已知悉。乙方严重违反甲方规章制度的，甲方可以解除本合同且不支付经济补偿。",
+            "risk_level": "medium",
+            "explanation": "用人单位规章制度需依法制定并向劳动者公示或告知，才能作为管理依据。约定“公示即视为知悉”可能使劳动者在未实际阅读的情况下受规章制度约束，若规章制度内容违法或不合理，据此解除合同存在被认定违法解除的风险；但公示方式是否有效需结合具体证据判断。",
+            "legal_basis": [
+              "劳动合同法-26",
+              "劳动合同法-39"
+            ],
+            "suggestion": "签约前要求提供员工手册、考勤制度和薪酬制度文本并留存；若被以严重违反规章制度解除，要求甲方说明具体条款和公示证据，评估解除合法性。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          }
+        ],
+        "legal_sources": [
+          {
+            "id": "劳动合同法-17",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第十七条",
+            "text": "劳动合同应当具备以下条款:\n（一）用人单位的名称、住所和法定代表人或者主要负责人；\n（二）劳动者的姓名、住址和居民身份证或者其他有效身份证件号码；\n（三）劳动合同期限；\n（四）工作内容和工作地点；\n（五）工作时间和休息休假；\n（六）劳动报酬；\n（七）社会保险；\n（八）劳动保护、劳动条件和职业危害防护；\n（九）法律、法规规定应当纳入劳动合同的其他事项。\n劳动合同除前款规定的必备条款外，用人单位与劳动者可以约定试用期、培训、保守秘密、补充保险和福利待遇等其他事项。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "27cb3bfeb058756da4fdecaaaa92e9c834ed0fd2d2adeb7e07fb508bbc547efa",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-19",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第十九条",
+            "text": "劳动合同期限三个月以上不满一年的，试用期不得超过一个月；劳动合同期限一年以上不满三年的，试用期不得超过二个月；三年以上固定期限和无固定期限的劳动合同，试用期不得超过六个月。\n同一用人单位与同一劳动者只能约定一次试用期。\n以完成一定工作任务为期限的劳动合同或者劳动合同期限不满三个月的，不得约定试用期。\n试用期包含在劳动合同期限内。劳动合同仅约定试用期的，试用期不成立，该期限为劳动合同期限。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "0207f0ae2ea72c749bd91dfa377e9e7cefc7415ebe8fb6a7eeb764fac63b4158",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-20",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十条",
+            "text": "劳动者在试用期的工资不得低于本单位相同岗位最低档工资或者劳动合同约定工资的百分之八十，并不得低于用人单位所在地的最低工资标准。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "e16bd36223a2700a45e785c2b8cfecd498e338d631e7b59a4cf3923868ffdb0d",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-22",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十二条",
+            "text": "用人单位为劳动者提供专项培训费用，对其进行专业技术培训的，可以与该劳动者订立协议，约定服务期。\n劳动者违反服务期约定的，应当按照约定向用人单位支付违约金。违约金的数额不得超过用人单位提供的培训费用。用人单位要求劳动者支付的违约金不得超过服务期尚未履行部分所应分摊的培训费用。\n用人单位与劳动者约定服务期的，不影响按照正常的工资调整机制提高劳动者在服务期期间的劳动报酬。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "d5d4ffbc258c2a795f563d9e8b529cef924c89745d9e71097722dfc883d7c160",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-23",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十三条",
+            "text": "用人单位与劳动者可以在劳动合同中约定保守用人单位的商业秘密和与知识产权相关的保密事项。\n对负有保密义务的劳动者，用人单位可以在劳动合同或者保密协议中与劳动者约定竞业限制条款，并约定在解除或者终止劳动合同后，在竞业限制期限内按月给予劳动者经济补偿。劳动者违反竞业限制约定的，应当按照约定向用人单位支付违约金。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "6b2c1e0a13fbc3a38ff7c1f431a6063bbf362a0564e233fd1a96f8f0f4b73952",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-24",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十四条",
+            "text": "竞业限制的人员限于用人单位的高级管理人员、高级技术人员和其他负有保密义务的人员。竞业限制的范围、地域、期限由用人单位与劳动者约定，竞业限制的约定不得违反法律、法规的规定。\n在解除或者终止劳动合同后，前款规定的人员到与本单位生产或者经营同类产品、从事同类业务的有竞争关系的其他用人单位，或者自己开业生产或者经营同类产品、从事同类业务的竞业限制期限，不得超过二年。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "ccb3bc37bd592ba8e5ae9c19190435ff651bcdc31bdc098076f5d605a64d32dc",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-25",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十五条",
+            "text": "除本法第二十二条和第二十三条规定的情形外，用人单位不得与劳动者约定由劳动者承担违约金。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "1ab86f303bfda3bd33fe623dfe0b90ad428550d90a6b928a9945da72b7b13f21",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-26",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第二十六条",
+            "text": "下列劳动合同无效或者部分无效:\n（一）以欺诈、胁迫的手段或者乘人之危，使对方在违背真实意思的情况下订立或者变更劳动合同的；\n（二）用人单位免除自己的法定责任、排除劳动者权利的；\n（三）违反法律、行政法规强制性规定的。\n对劳动合同的无效或者部分无效有争议的，由劳动争议仲裁机构或者人民法院确认。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "ac1ea33ba2516bba29567840cf595b1560b8da70abc46f69778d59bef7277fb0",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-30",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第三十条",
+            "text": "用人单位应当按照劳动合同约定和国家规定，向劳动者及时足额支付劳动报酬。\n用人单位拖欠或者未足额支付劳动报酬的，劳动者可以依法向当地人民法院申请支付令，人民法院应当依法发出支付令。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "6eb6864b0d1827657f63cfc2d19ed1c6bfbc9290fffed0fff39f4e3defb37aad",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-31",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第三十一条",
+            "text": "用人单位应当严格执行劳动定额标准，不得强迫或者变相强迫劳动者加班。用人单位安排加班的，应当按照国家有关规定向劳动者支付加班费。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "b26daad3ddefa19cfc1a129ce7f2a9de0c029bcc858e80b28a9ce22a72802a00",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-35",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第三十五条",
+            "text": "用人单位与劳动者协商一致，可以变更劳动合同约定的内容。变更劳动合同，应当采用书面形式。\n变更后的劳动合同文本由用人单位和劳动者各执一份。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "23dfb94b6b593f33bdd0cab637d10c2a000e0fd84af742800e5916ad27c17e20",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-37",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第三十七条",
+            "text": "劳动者提前三十日以书面形式通知用人单位，可以解除劳动合同。劳动者在试用期内提前三日通知用人单位，可以解除劳动合同。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "825ae38cc5e3facacd41e92a4cf14e697c2dd30587da4da15364b03adce4e837",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-39",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第三十九条",
+            "text": "劳动者有下列情形之一的，用人单位可以解除劳动合同:\n（一）在试用期间被证明不符合录用条件的；\n（二）严重违反用人单位的规章制度的；\n（三）严重失职，营私舞弊，给用人单位造成重大损害的；\n（四）劳动者同时与其他用人单位建立劳动关系，对完成本单位的工作任务造成严重影响，或者经用人单位提出，拒不改正的；\n（五）因本法第二十六条第一款第一项规定的情形致使劳动合同无效的；\n（六）被依法追究刑事责任的。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "b6c43d948c188a252c10e73fe58d9400e76a894a2d99de1c778df88450a8accc",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-40",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第四十条",
+            "text": "有下列情形之一的，用人单位提前三十日以书面形式通知劳动者本人或者额外支付劳动者一个月工资后，可以解除劳动合同:\n（一）劳动者患病或者非因工负伤，在规定的医疗期满后不能从事原工作，也不能从事由用人单位另行安排的工作的；\n（二）劳动者不能胜任工作，经过培训或者调整工作岗位，仍不能胜任工作的；\n（三）劳动合同订立时所依据的客观情况发生重大变化，致使劳动合同无法履行，经用人单位与劳动者协商，未能就变更劳动合同内容达成协议的。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "622b63a010705e051a4be068517bbde7d8010445fcc53a2e8ab6a257e60a05e4",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-46",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第四十六条",
+            "text": "有下列情形之一的，用人单位应当向劳动者支付经济补偿:\n（一）劳动者依照本法第三十八条规定解除劳动合同的；\n（二）用人单位依照本法第三十六条规定向劳动者提出解除劳动合同并与劳动者协商一致解除劳动合同的；\n（三）用人单位依照本法第四十条规定解除劳动合同的；\n（四）用人单位依照本法第四十一条第一款规定解除劳动合同的；\n（五）除用人单位维持或者提高劳动合同约定条件续订劳动合同，劳动者不同意续订的情形外，依照本法第四十四条第一项规定终止固定期限劳动合同的；\n（六）依照本法第四十四条第四项、第五项规定终止劳动合同的；\n（七）法律、行政法规规定的其他情形。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "6bd537e8ccfb2458579c8af7d200aef208eb186dcf72fb670b16b13a3be314f7",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动合同法-87",
+            "law": "中华人民共和国劳动合同法",
+            "article": "第八十七条",
+            "text": "用人单位违反本法规定解除或者终止劳动合同的，应当依照本法第四十七条规定的经济补偿标准的二倍向劳动者支付赔偿金。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+            "source_version": "2012-12-28 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "a5b298cb605b3c7215b4e3b7bc60bc86cabb08e5bbaeed686b180ceef6718934",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "社会保险法-58",
+            "law": "中华人民共和国社会保险法",
+            "article": "第五十八条",
+            "text": "用人单位应当自用工之日起三十日内为其职工向社会保险经办机构申请办理社会保险登记。未办理社会保险登记的，由社会保险经办机构核定其应当缴纳的社会保险费。\n自愿参加社会保险的无雇工的个体工商户、未在用人单位参加社会保险的非全日制从业人员以及其他灵活就业人员，应当向社会保险经办机构申请办理社会保险登记。\n国家建立全国统一的个人社会保障号码。个人社会保障号码为公民身份号码。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_e81d115419b4463ebb59ec46467fb136.html",
+            "source_version": "2018-12-29 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "f74183a9e10ff729872d4347166cb86113331eebb201580445d5a00801daaec7",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "社会保险法-60",
+            "law": "中华人民共和国社会保险法",
+            "article": "第六十条",
+            "text": "用人单位应当自行申报、按时足额缴纳社会保险费，非因不可抗力等法定事由不得缓缴、减免。职工应当缴纳的社会保险费由用人单位代扣代缴，用人单位应当按月将缴纳社会保险费的明细情况告知本人。\n无雇工的个体工商户、未在用人单位参加社会保险的非全日制从业人员以及其他灵活就业人员，可以直接向社会保险费征收机构缴纳社会保险费。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_e81d115419b4463ebb59ec46467fb136.html",
+            "source_version": "2018-12-29 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "a6efb0fc29ea24b77fbdc30c7a38203a69c85117db44ebb69d914c831c7c6954",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动法-44",
+            "law": "中华人民共和国劳动法",
+            "article": "第四十四条",
+            "text": "有下列情形之一的，用人单位应当按照下列标准支付高于劳动者正常工作时间工资的工资报酬：\n（一）安排劳动者延长工作时间的，支付不低于工资的百分之一百五十的工资报酬；\n（二）休息日安排劳动者工作又不能安排补休的，支付不低于工资的百分之二百的工资报酬；\n（三）法定休假日安排劳动者工作的，支付不低于工资的百分之三百的工资报酬。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_d9aa750028b14b99a776cb93726a360d.html",
+            "source_version": "2018-12-29 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "41d71c3a748fd61ce80d2a2875f5568a76a5a3126b4e83a483c1e00f90b354dc",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "劳动法-50",
+            "law": "中华人民共和国劳动法",
+            "article": "第五十条",
+            "text": "工资应当以货币形式按月支付给劳动者本人。不得克扣或者无故拖欠劳动者的工资。",
+            "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_d9aa750028b14b99a776cb93726a360d.html",
+            "source_version": "2018-12-29 amendment",
+            "checked_on": "2026-10-27",
+            "text_sha256": "cd06368a511d6af7cd7cd100775c92c7f143feae056d03a8948f9bd4a19e12a0",
+            "jurisdiction": "cn",
+            "authority_level": "national",
+            "applicability": "具体适用条件以条文原文为准。",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          }
+        ],
+        "legal_scope": "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。",
+        "disclaimer": "仅供理解合同，不构成法律意见。原文匹配和法条引用核对不保证法律适用或分析结论正确。",
+        "grounding": {
+          "cards_total": 12,
+          "cards_verified": 12,
+          "quote_verification_rate": 1.0,
+          "law_references_total": 31,
+          "law_references_valid": 31,
+          "law_reference_validity_rate": 1.0
+        },
+        "model": "deepseek-flash",
+        "attempts": 1
+      }
+    },
+    {
+      "contract": "lease_en",
+      "text_sha256": "37cb966a241936620870ab5aa51a6297f7eec215ec694070e649161481cf02ab",
+      "jurisdiction": "us_il_urbana",
+      "result": {
+        "contract_type": "lease",
+        "risk_score": 8,
+        "summary": "这是一份 Urbana 公寓（1207 West Oregon Street, Unit 3B）的住宅租约，租期 2026-08-15 至 2027-07-31，月租 1,250 美元，押金 1,250 美元。合同含有多项对租户明显不利的条款：自动续租、单方承担律师费、维修自付额、高额滞纳金与各类固定费用、提前解约费、放弃押金利息与部分法定程序等。需注意：合同自述位于 Urbana，但未提供市界查询证据，不能据此确认该房产确在 Urbana 市界内；Urbana 第 12.5 章仅适用于市界内的出租单元，并受第 12.5-2、12.5-7 条范围与例外限制。楼栋单元数、房龄、是否业主自住、是否公共住房等事实均未提供，涉及州法门槛（如 25 单元利息规则、6 单元以下维修法例外、1978 年前铅漆披露）的判断需核实。以下风险按严重程度排列，不构成对违法或无效的最终结论。",
+        "cards": [
+          {
+            "title": "自动续租条款可能违反 Urbana 禁止自动续租的规定",
+            "clause_text": "This Lease shall automatically renew for an additional twelve-month term at the then-current market rent set by Landlord unless either party gives written notice of non-renewal at least 60 days before the end of the term.",
+            "risk_level": "high",
+            "explanation": "Urbana 第 12.5-10(a)(9) 条禁止租约因租户未发出不续租通知而自动续租。本条款正是以租户未在 60 天前通知为条件自动续期一年，且续期租金由房东按市场价单方设定。若该房产确在 Urbana 市界内且租约受第 12.5 章约束，该条款可能不可执行；但市界与适用范围尚未核实，不能断言必然无效。",
+            "legal_basis": [
+              "URBANA-12.5-10",
+              "URBANA-12.5-2",
+              "URBANA-12.5-7"
+            ],
+            "suggestion": "签约前书面要求删除自动续租条款，改为到期终止或双方书面续签；如保留，务必在日历上标注不续租通知截止日并保留送达证据。同时向房东或市府核实房产是否在 Urbana 市界内。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "律师费仅由租户承担，可能违反双向对等要求",
+            "clause_text": "In any legal action to enforce this Lease, Tenant shall pay Landlord's reasonable attorney's fees and court costs, whether or not the action proceeds to judgment.",
+            "risk_level": "high",
+            "explanation": "Urbana 第 12.5-10(a)(4) 条禁止租约规定一方可追偿律师费，除非双方在相同条件下均可追偿。本条款只让租户承担房东律师费，未赋予租户对等权利，若适用第 12.5 章可能不可执行。但该条适用取决于房产在市界内及租约受该章约束，需核实。",
+            "legal_basis": [
+              "URBANA-12.5-10"
+            ],
+            "suggestion": "要求改为双方对等承担律师费，或删除该条；保留合同原文，若房东据此主张费用，可提出条款不可执行的抗辩并咨询当地法律援助。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "提前解约费两个月租金且不退预付租金",
+            "clause_text": "Tenant may terminate this Lease before the end of the term only by giving Landlord at least 60 days' written notice and paying an early termination fee equal to two months' rent. The early termination fee is in addition to rent due through the termination date. Tenant shall not be entitled to a refund of any rent or fees paid in advance.",
+            "risk_level": "high",
+            "explanation": "提前解约需付两个月租金（2,500 美元）作为违约金，另加至终止日的租金，且预付租金不退。伊利诺伊州法要求房东对违约租户的损失采取合理减损措施（735 ILCS 5/9-213.1），但该法并不自动取消双方约定的提前解约费；该费用是否合理、是否与实际损失相符需结合事实判断。Urbana 第 12.5-10(a)(8) 条禁止超过实际成本的费用，但该条针对特定费用类型，是否涵盖提前解约费存在解释空间，不宜直接断言违法。",
+            "legal_basis": [
+              "735 ILCS 5/9-213.1",
+              "URBANA-12.5-10"
+            ],
+            "suggestion": "签约前协商降低或删除提前解约费，明确房东有减损义务；保留因工作、学业变动需提前解约的书面沟通记录。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "维修自付额不论原因均由租户承担",
+            "clause_text": "Tenant shall pay the first $150.00 of the cost of each repair call, regardless of the cause, unless the repair is required by an emergency affecting health or safety.",
+            "risk_level": "high",
+            "explanation": "该条要求租户承担每次维修的前 150 美元，不论损坏原因，等于将房东依 Urbana 第 12.5-18 条及伊利诺伊州默示适居保证应承担的维修义务部分转嫁给租户。第 12.5-18 条允许租户明知且自愿地约定自行维修，但须实际协商，格式租约中的笼统条款不足以证明；且房东仍须遵守住房规范。该条款是否可执行取决于具体维修事项与协商事实，不能仅凭文字断言无效。",
+            "legal_basis": [
+              "URBANA-12.5-18",
+              "765 ILCS 742/5",
+              "765 ILCS 742/10"
+            ],
+            "suggestion": "要求删除“不论原因”的自付额，或至少限定为租户过错造成的损坏；入住时详细填写 Move-In Condition Report 并拍照留存。若房屋为业主自住且不超过 6 个单元，州维修法可能不适用，需核实。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "押金退还期限与 Urbana 规定不一致",
+            "clause_text": "Within 45 days after Tenant vacates, Landlord shall return the security deposit, less any lawful deductions, to the forwarding address provided by Tenant in writing. If any deduction is made for damage, Landlord shall provide an itemized statement of the damage and the estimated or actual cost of repair, with paid receipts or copies of them when available.",
+            "risk_level": "high",
+            "explanation": "Urbana 第 12.5-20 条要求房东在租户搬出后 30 天内提供逐项损坏清单及收据；若未提供，须在 45 天内全额退还押金。本条款把 45 天作为一般退还期限，未明确 30 天内提供清单的义务，可能弱化租户权利。州法 765 ILCS 710/1 也有 30 天清单要求。该条款是否违反取决于房产是否受 Urbana 章约束及具体扣款性质，需核实。",
+            "legal_basis": [
+              "URBANA-12.5-20",
+              "765 ILCS 710/1"
+            ],
+            "suggestion": "签约前要求明确“30 天内提供逐项清单及收据，否则 45 天内全额退还”；搬出时书面提供转发地址并保留副本，拍照记录房屋状况。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "地毯清洁费固定扣除，可能不属于可扣损坏",
+            "clause_text": "A professional carpet cleaning charge of $175.00 shall be deducted from the security deposit at move-out regardless of the condition of the carpet.",
+            "risk_level": "high",
+            "explanation": "Urbana 第 12.5-20(d) 条明确，租户搬出后的装饰性清洁（包括地毯清洁），除非地毯损坏超出正常磨损，不得计入损坏并从押金中扣除。本条款不论地毯状况一律扣 175 美元，可能违反该规定。但该条适用取决于房产在市界内及租约受第 12.5 章约束，需核实；州法 765 ILCS 710/1 允许书面租约约定清洁费用，但须针对超出正常磨损的损坏且合理。",
+            "legal_basis": [
+              "URBANA-12.5-20",
+              "765 ILCS 710/1"
+            ],
+            "suggestion": "要求删除“不论状况”的固定扣款，改为仅在超出正常磨损时按实际收据扣除；入住和搬出时拍摄地毯照片作为证据。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "滞纳金结构可能超过 Urbana 上限",
+            "clause_text": "If any rent is not received by 11:59 p.m. on the fifth day of the month, Tenant shall pay an initial late charge of $50.00 plus $10.00 for each additional day until rent is paid in full.",
+            "risk_level": "high",
+            "explanation": "Urbana 第 12.5-10(a)(7) 条禁止每月滞纳金超过月租的 5%（本租约即 62.50 美元），除非房东证明实际成本更高。本条款首日 50 美元加每日 10 美元，若逾期数日即可能超过 5% 上限。第 12.5-13 条还要求滞纳金金额须在租约中写明，本条款已写明。是否违法取决于实际累计金额及房东能否证明更高成本，不能仅凭固定金额断言。",
+            "legal_basis": [
+              "URBANA-12.5-10",
+              "URBANA-12.5-13"
+            ],
+            "suggestion": "要求将滞纳金改为不超过月租 5% 的一次性费用，删除按日累加；保留付款邮戳或电子支付记录，注意第 12.5-13 条关于邮戳日期的规定。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "未经法定程序处置遗留物品",
+            "clause_text": "Any personal property left in the Premises after Tenant vacates shall be considered abandoned and may be disposed of by Landlord without liability.",
+            "risk_level": "high",
+            "explanation": "Urbana 第 12.5-22(c) 条要求房东将遗留物品留在单元内或搬出储存，可收取实际储存费，并须在向租户最后已知地址邮寄书面通知 30 天后、租户未认领时方可处置；仅对合理认为无价值或易腐物品可立即处置。本条款允许房东无责任直接处置，未保留通知与 30 天认领程序，若适用第 12.5 章可能不可执行。适用范围需核实。",
+            "legal_basis": [
+              "URBANA-12.5-22"
+            ],
+            "suggestion": "要求删除该条或改为符合第 12.5-22 条的通知与储存程序；搬出时确保带走全部物品并书面确认。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "房东进入权在最后 90 天由房东单方安排",
+            "clause_text": "During the last 90 days of the term, Landlord may show the Premises to prospective tenants on a schedule set by Landlord.",
+            "risk_level": "medium",
+            "explanation": "Urbana 第 12.5-15(c) 条允许在通知不续租后无需 24 小时通知带看，但要求由租户从房东提供的时段中选择具体的一小时时段（工作日两个、周末三个），且房东须在单元已租出后通知租户。本条款把时间表完全交由房东设定，未体现租户选择权，可能不符合该条。但该条适用取决于房产在市界内及租约受第 12.5 章约束，需核实。",
+            "legal_basis": [
+              "URBANA-12.5-15"
+            ],
+            "suggestion": "要求改为由租户选择具体带看时段，并保留 24 小时一般通知；记录每次进入的时间与人员。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "未经通知拖车条款",
+            "clause_text": "Vehicles parked without a valid permit, or in another resident's space, may be towed at the vehicle owner's expense without further notice.",
+            "risk_level": "medium",
+            "explanation": "该条允许无进一步通知即拖车，可能使租户在不知情下承担拖车费用。合同未说明拖车前是否给予纠正机会，也未提及州或地方法律对拖车通知的要求。此处仅讨论合同文字，不主张具体法定通知权利；应核实 Urbana 或伊利诺伊州是否有适用于私人停车场的拖车程序规定。",
+            "legal_basis": [],
+            "suggestion": "签约前询问拖车政策并要求至少给予书面或电话通知；保留停车许可证和缴费记录。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "钥匙与开锁费用可能超过实际成本",
+            "clause_text": "Lost keys shall be replaced at a charge of $75.00 per key, which includes rekeying the lock. If Tenant is locked out, Landlord's staff will unlock the door during business hours at no charge; after business hours, a lockout fee of $85.00 shall apply.",
+            "risk_level": "medium",
+            "explanation": "Urbana 第 12.5-10(a)(8) 条禁止开锁费等超过房东实际服务成本的费用。75 美元换钥匙（含换锁）和 85 美元非工作时间开锁是否超过实际成本，需结合房东实际支出判断；固定金额本身不等于已证明超标。第 12.5-14 条还要求非租金费用须在 30 天内书面通知租户。适用范围需核实。",
+            "legal_basis": [
+              "URBANA-12.5-10",
+              "URBANA-12.5-14"
+            ],
+            "suggestion": "要求房东说明费用构成或改为按实际成本收取；保留每次收费的书面通知和收据。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          },
+          {
+            "title": "吸烟清洁费与未经通知的固定收费",
+            "clause_text": "Tenant shall pay a $300.00 cleaning charge for any violation of this section.",
+            "risk_level": "medium",
+            "explanation": "该条对吸烟违规一律收取 300 美元清洁费，未与实际清洁成本挂钩。Urbana 第 12.5-10(a)(8) 条禁止超过实际成本的费用或罚金；第 12.5-14 条要求非租金费用须在 30 天内书面通知。固定金额不等于已证明超过实际成本，但若实际成本远低于 300 美元，该费用可能不可执行。适用范围需核实。",
+            "legal_basis": [
+              "URBANA-12.5-10",
+              "URBANA-12.5-14"
+            ],
+            "suggestion": "要求改为按实际清洁收据收费；如被收费，要求房东提供 30 天内书面通知及成本凭证。",
+            "verified": true,
+            "quote_match": "exact",
+            "quote_similarity": 1.0
+          }
+        ],
+        "legal_sources": [
+          {
+            "id": "URBANA-12.5-2",
+            "law": "Urbana Code of Ordinances, Chapter 12.5",
+            "article": "Sec. 12.5-2. Scope.",
+            "text": "This chapter applies to, regulates and determines certain rights, obligations and\nremedies under a rental agreement for a rental unit located within the city. Unless\ncreated to avoid the application of this chapter, however, the following arrangements\nare not governed by this chapter:\n(1)\nResidence at an institution, public or private, if incidental to detention or the\nprovision of medical, geriatric, counseling, religious or similar service;\n(2)\nOccupancy under a contract of sale of a rental unit or the property of which it is\na part, if the occupant is the purchaser or a person who succeeds to his/her interest;\n(3)\nOccupancy by a member of a fraternal or social organization in the portion of a structure\noperated for the benefit of the organization;\n(4)\nTransient occupancy in a hotel, motel tourist home or tourist court;\n(5)\nOccupancy by an employee of a landlord whose right to occupancy is conditional upon\nemployment in and about the premises.\n(Ord. No. 9394-58, § 1, 1-18-94)",
+            "source_url": "https://library.municode.com/IL/Urbana/codes/Code_of_Ordinances?nodeId=COOR_CH12.5LANARE_ARTIINGE_S12.5-2SC",
+            "source_version": "User-supplied Municode export labeled 20260417; workbook export metadata 2026-10-28; subsequent amendments must be checked",
+            "checked_on": "2026-10-28",
+            "text_sha256": "c87051a2b559b3083fdd25daf12633126c0b7f833a4a73d9adac4f1f304e778f",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "municipal",
+            "applicability": "Only rental units inside Urbana city limits; institutional, purchaser, organization, transient-hotel and employment-conditioned occupancy exclusions are in this section.",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": "Sheet1!E569",
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "URBANA-12.5-7",
+            "law": "Urbana Code of Ordinances, Chapter 12.5",
+            "article": "Sec. 12.5-7. Effective date.",
+            "text": "This chapter shall take effect on April 1, 1994. It applies to rental agreements entered\ninto or extended or renewed on and after that date.\n(Ord. No. 9394-58, § 1, 1-18-94)",
+            "source_url": "https://library.municode.com/IL/Urbana/codes/Code_of_Ordinances?nodeId=COOR_CH12.5LANARE_ARTIINGE_S12.5-7EFDA",
+            "source_version": "User-supplied Municode export labeled 20260417; workbook export metadata 2026-10-28; subsequent amendments must be checked",
+            "checked_on": "2026-10-28",
+            "text_sha256": "d132c1dc8c04bdc15cdecb42a98407578173be9ffc0e521aac910b55d7428986",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "municipal",
+            "applicability": "Applies to rental agreements entered into, extended, or renewed on or after April 1, 1994.",
+            "effective_from": "1994-04-01",
+            "effective_until": null,
+            "source_row": "Sheet1!E574",
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "URBANA-12.5-10",
+            "law": "Urbana Code of Ordinances, Chapter 12.5",
+            "article": "Sec. 12.5-10. Rental agreements—Prohibited provisions.",
+            "text": "(a)\nExcept as otherwise provided by this article, no rental agreement between the landlord\nand the tenant shall contain any provision:\n(1)\nWaiving the rights or remedies provided under this article;\n(2)\nWaiving any statutory rights or remedies provided under state or federal law;\n(3)\nProviding that either the landlord or the tenant confess judgment on a claim arising\nout of the rental agreement;\n(4)\nProviding that either the landlord or the tenant may recover attorney's fees incurred\nto enforce the rental agreement unless the rental agreement stipulates that both the\nlandlord and the tenant be entitled to recovery of attorney's fees under identical\nterms and conditions;\n(5)\nLimiting the liability of the landlord or the tenant arising under law;\n(6)\nProhibiting the tenant from subletting the rental unit;\n(7)\nRequiring a monthly late fee in excess of five (5) percent of the monthly rental payment\nper month; fees in excess of this amount may be charged if the landlord demonstrates\nactual costs which are greater;\n(8)\nProviding for tenant's payment of lock-out charges, sublet fees, late checkout charges\nor any other fees or penalties that exceed the landlord's actual costs for services;\nor\n(9)\nAutomatically renewing the rental agreement by reason of the tenant's failure to provide\nnotice of intent not to renew.\n(b)\nA provision prohibited by subsection (a) included in a rental agreement is unenforceable.\nIf the landlord deliberately attempts to enforce any provision in a rental agreement\nwhich is prohibited, the tenant may recover an amount totaling not more than two (2)\nmonths' rent and such damages, costs and reasonable attorney's fees as a court shall\ndetermine and award. The landlord shall be considered to have deliberately attempted\nto enforce a prohibited lease provision if the landlord knew or reasonably should\nhave known that the provision was prohibited and the landlord:\n(1)\nRefuses to approve a sublease as required by law or requires, as a condition of granting\napproval of a sublease, payment of a prohibited sublease charge, acceleration of rent\nor payment of a higher rental rate than stipulated in the lease agreement;\n(2)\nRefuses to provide a service because of the tenant's nonpayment of a prohibited fee\nor charge;\n(3)\nServes the tenant with written demand stating the intention to terminate the rental\nagreement for nonpayment of prohibited fees or charges;\n(4)\nFiles suit against the tenant to enforce the prohibited provision.\n(Ord. No. 9394-58, § 1, 1-18-94)",
+            "source_url": "https://library.municode.com/IL/Urbana/codes/Code_of_Ordinances?nodeId=COOR_CH12.5LANARE_ARTIILANARIDURE_S12.5-10REAGROPR",
+            "source_version": "User-supplied Municode export labeled 20260417; workbook export metadata 2026-10-28; subsequent amendments must be checked",
+            "checked_on": "2026-10-28",
+            "text_sha256": "d30478b538d49cca8f2d88150daac024953414ce4c149046b5369f5395f72706",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "municipal",
+            "applicability": "Subject to Secs. 12.5-2 and 12.5-7. Distinguish an absolute subletting prohibition from a prior-consent or screening condition; the latter alone does not establish a prohibition. A fixed fee alone does not establish that it exceeds actual service costs. Late fees above 5% require demonstrated higher actual costs. Do not infer invalidity without the facts required by the specific listed prohibition.",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": "Sheet1!E577",
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "URBANA-12.5-13",
+            "law": "Urbana Code of Ordinances, Chapter 12.5",
+            "article": "Sec. 12.5-13. Same—Late charges.",
+            "text": "A landlord may not impose a late charge unless the amount of the late charge is specified\nin the lease. A tenant shall not be subject to a late charge if the envelope containing\nthe payment is postmarked on or prior to the date payment is due.\n(Ord. No. 9394-58, § 1, 1-18-94)",
+            "source_url": "https://library.municode.com/IL/Urbana/codes/Code_of_Ordinances?nodeId=COOR_CH12.5LANARE_ARTIILANARIDURE_S12.5-13SAATCH",
+            "source_version": "User-supplied Municode export labeled 20260417; workbook export metadata 2026-10-28; subsequent amendments must be checked",
+            "checked_on": "2026-10-28",
+            "text_sha256": "7e47231c3db65cdb7535023358bd3bcf3e0aa57c01b6c919ac88398ed53308d0",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "municipal",
+            "applicability": "Subject to Urbana Chapter 12.5 scope and exceptions, including Secs. 12.5-2 and 12.5-7.",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": "Sheet1!E580",
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "URBANA-12.5-14",
+            "law": "Urbana Code of Ordinances, Chapter 12.5",
+            "article": "Sec. 12.5-14. Same—Notice of charges.",
+            "text": "A landlord may not impose any charge or fee, with the exception of rent, unless written\nnotice of the charge or fee is provided to the tenant within thirty (30) days.\n(Ord. No. 9394-58, § 1, 1-18-94)",
+            "source_url": "https://library.municode.com/IL/Urbana/codes/Code_of_Ordinances?nodeId=COOR_CH12.5LANARE_ARTIILANARIDURE_S12.5-14SAOTCH",
+            "source_version": "User-supplied Municode export labeled 20260417; workbook export metadata 2026-10-28; subsequent amendments must be checked",
+            "checked_on": "2026-10-28",
+            "text_sha256": "f98944996aac110f7c11f2071532f689b8f13ccf0bdb28502c1e401f1b6a072c",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "municipal",
+            "applicability": "Subject to Urbana Chapter 12.5 scope and exceptions, including Secs. 12.5-2 and 12.5-7.",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": "Sheet1!E581",
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "URBANA-12.5-15",
+            "law": "Urbana Code of Ordinances, Chapter 12.5",
+            "article": "Sec. 12.5-15. Landlord's right to access.",
+            "text": "(a)\nThe tenant shall not unreasonably withhold consent to the landlord to enter the rental\nunit in order to inspect the premises, make necessary or agreed repairs, supply necessary\nor agreed services, make alterations or improvements if such alterations or improvements\ndo not interfere with the tenant's use of the premises, or to show the rental unit\nto prospective or actual purchasers, mortgagees or tenants.\n(b)\nThe landlord shall not abuse the right of access to the rental unit or use it to harass\nthe tenant. Except in cases of emergency or by mutual consent, the landlord or landlord's\nagents shall not enter the rental unit without first providing the tenant with at\nleast twenty-four (24) hours advance notice of the entry and may enter only at reasonable\ntimes. Reasonable times shall be considered 10:00 a.m. to 8:00 p.m. on weekdays and\n11:00 a.m. to 8:00 p.m. on weekends, or such other times agreed upon by the tenant\nand the landlord.\n(c)\nFrom the time that either the landlord or the tenant notifies the other party that\nthe rental agreement will not be renewed, the landlord shall have the right to access,\nwithout twenty-four (24) hours advance notice, for the purpose of showing the rental\nunit to prospective tenants, provided that:\n(1)\nThe rental unit has not already been leased for the twelve-month period subsequent\nto the expiration of the rental agreement;\n(2)\nThe landlord enters only during two (2) specific one-hour periods on weekdays and\nthree (3) specific one-hour periods on weekends, selected by the tenant from among\nchoices offered by the landlord, during which the landlord will have daily access;\nand\n(3)\nThe landlord shall notify the tenant when the rental unit has been leased for the\ntwelve-month period subsequent to the expiration of the rental agreement.\n(d)\nIf the tenant requests repairs and the landlord enters the rental unit to perform\nsaid repairs within fourteen (14) days of the tenant's initial request, the landlord\nshall not be obligated to provide the tenant with advance notice of entry. If the\nlandlord fails to perform said repairs within fourteen (14) days of the tenant's initial\nrequest, the landlord shall be required to provide the tenant with at least twenty-four\n(24) hours' advance notice of entry. The notice shall only be effective for a seven-day\nperiod.\n(e)\nThe landlord may enter the rental unit at any time, without advance notice, in case\nof emergency. For purposes of this provision, the term \"emergency\" shall refer to\na situation wherein access to the rental unit is necessary in order to prevent damage\nor destruction to the rental unit, other rental units, or the building, or to the\nfixtures, equipment, appliances, furniture or other personal property contained therein,\nor in order to protect any person from injury. Nonpayment or delinquent payment of\nrent shall not constitute an emergency.\n(f)\nThe landlord or landlord's agents shall enter the rental unit only after knocking\non the door and providing the tenant a reasonable opportunity to answer, shall leave\nthe premises in as good condition as when entered, shall clean and remove dirt and\ndebris that result from the performance of maintenance and repairs, shall leave a\nnote indicating the names of the persons who entered the rental unit and shall lock\nthe rental unit when leaving.\n(Ord. No. 9394-58, § 1, 1-18-94)",
+            "source_url": "https://library.municode.com/IL/Urbana/codes/Code_of_Ordinances?nodeId=COOR_CH12.5LANARE_ARTIILANARIDURE_S12.5-15LARIAC",
+            "source_version": "User-supplied Municode export labeled 20260417; workbook export metadata 2026-10-28; subsequent amendments must be checked",
+            "checked_on": "2026-10-28",
+            "text_sha256": "47fc06c4266193a64b240fd16bad1daa9a41a8278b0db7abdfde804f5d4e5f25",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "municipal",
+            "applicability": "Entry rules include advance-notice, emergency, requested-service and prospective-tenant-showing exceptions. Do not omit the exceptions.",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": "Sheet1!E582",
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "URBANA-12.5-18",
+            "law": "Urbana Code of Ordinances, Chapter 12.5",
+            "article": "Sec. 12.5-18. Landlord obligations—Maintenance of premises.",
+            "text": "(a)\nThe landlord shall maintain the premises in compliance with all applicable housing\ncodes of the city and shall promptly make any and all necessary repairs to fulfill\nthat obligation, provided, however, that the tenant may knowingly and intentionally\nelect and agree to repair the premises to bring them into conformity with the applicable\nhousing codes of the city. The burden shall be on the landlord to establish a knowing\nand intentional election on the part of the tenant to repair the premises in compliance\nwith the applicable housing code. A mere recital in a form lease that tenant has covenanted\nto repair will not be sufficient, it being the intention of this article that any\nagreement with the tenant to repair be bargained for in fact. A separate hand-written\nparagraph in the lease showing:\n(1)\nThat the tenant has been informed of this article and the existing code violations;\n(2)\nThat he/she has affirmatively elected and bargained to repair the violations listed\nand other items listed; and\n(3)\nThe inducement for such arrangements, will be prima facie evidence that such provision\nwas entered into in good faith and was bargained for in fact.\n(b)\nNothing in this article shall be interpreted so as to restrict the authority of city\ninspectors to cite a landlord for violation of building code provisions.\n(c)\nBefore a tenant initially enters into or renews a rental agreement for a rental unit,\nthe landlord or any person authorized to enter into a rental agreement on the landlord's\nbehalf shall disclose to the tenant in writing any housing code violations which have\nbeen cited by the building official and which remain uncorrected for that rental unit\nand the common area of the premises.\n(d)\nThis article shall not be interpreted as decreasing or diminishing the implied warranty\nof habitability as adopted by the Illinois Supreme Court.\n(Ord. No. 9394-58, § 1, 1-18-94)",
+            "source_url": "https://library.municode.com/IL/Urbana/codes/Code_of_Ordinances?nodeId=COOR_CH12.5LANARE_ARTIILANARIDURE_S12.5-18LAOBAIPR",
+            "source_version": "User-supplied Municode export labeled 20260417; workbook export metadata 2026-10-28; subsequent amendments must be checked",
+            "checked_on": "2026-10-28",
+            "text_sha256": "2f71b65a7e5e43e73714b1b1ff2d15e16eae7d9e955ec87637a5543787664567",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "municipal",
+            "applicability": "Subject to Secs. 12.5-2 and 12.5-7. A tenant repair election must be knowing, intentional and actually bargained for, with the burden on the landlord; a form-lease recital alone is insufficient. The described separate handwritten paragraph is prima facie evidence, not stated as the sole permissible form of proof. Distinguish payment allocation from an agreement to perform code-compliance repairs, and verify the particular repair and bargaining facts.",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": "Sheet1!E585",
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "URBANA-12.5-20",
+            "law": "Urbana Code of Ordinances, Chapter 12.5",
+            "article": "Sec. 12.5-20. Same—Security deposit return.",
+            "text": "(a)\nA lessor of residential real property who has received a security deposit from a lessee\nto secure the payment of rent or to compensate for damage to the leased property may\nnot withhold any part of that deposit as compensation for property damage unless he\nor she has, within thirty (30) days of the date that the lessee vacated the premises,\nfurnished to the lessee, delivered in person or by mail directed to his or her last\nknown address, an itemized statement of the damage allegedly caused to the premises\nand the estimated or actual cost for repairing or replacing each item on that statement,\nattaching the paid receipts, or copies thereof, for the repair or replacement. If\nthe lessor utilizes his or her own labor to repair any damage caused by the lessee,\nthe lessor may include the reasonable cost of his or her labor to repair such damage.\nIf estimated cost is given, the lessor shall furnish the lessee with paid receipts,\nor copies thereof, within thirty (30) days from the date the statement showing estimated\ncost was furnished to the lessee, as required by this section. If no such statement\nand receipts, or copies thereof, are furnished to the lessee as required by this section,\nthe lessor shall return the security deposit in full within forty-five (45) days of\nthe date that the lessee vacated the premises.\n(b)\nUpon a finding by a circuit court that the landlord has refused to supply the itemized\nstatement required herein, or has supplied such statement in bad faith, and has failed\nor refused to return the amount of the security deposit due within the time limits\nprovided, the landlord shall be liable for an amount equal to twice the amount of\nthe security deposit due, together with court costs and reasonable attorney's fees.\n(c)\nReserved.\n(d)\nThe decorating of the rental unit after the tenant vacates, including painting and\ncarpet cleaning, unless walls or carpets are damaged beyond normal wear, shall not\nbe considered as damage and the costs thereof shall not be charged to the security\ndeposit.\n(Ord. No. 9394-58, § 1, 1-18-94; Ord. No. 2000-07-066, 7-17-00)",
+            "source_url": "https://library.municode.com/IL/Urbana/codes/Code_of_Ordinances?nodeId=COOR_CH12.5LANARE_ARTIILANARIDURE_S12.5-20SAECDERE",
+            "source_version": "User-supplied Municode export labeled 20260417; workbook export metadata 2026-10-28; subsequent amendments must be checked",
+            "checked_on": "2026-10-28",
+            "text_sha256": "71eab736a019d091ff562fce80bf78cebae62a9c4c0181ea4929870cb5a32091",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "municipal",
+            "applicability": "Damage accounting, receipts, return timing, and normal-wear restrictions have the conditions in this section. Do not treat all deposit deductions as damage deductions.",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": "Sheet1!E587",
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "URBANA-12.5-22",
+            "law": "Urbana Code of Ordinances, Chapter 12.5",
+            "article": "Sec. 12.5-22. Same—Abandonment.",
+            "text": "(a)\nThe tenant shall be deemed to have abandoned the rental unit by being absent with\nvisible intent not to return and with rent unpaid.\n(b)\nIf the tenant abandons the rental unit, the landlord may take possession of the rental\nunit.\n(c)\nIf the tenant abandons the rental unit or fails to remove his or her personal property\nfrom the premises after termination of a rental agreement, the landlord shall leave\nthe abandoned property in the rental unit or remove and store all abandoned property\nfrom the rental unit. The landlord may charge the tenant for the actual costs of storage.\nThe landlord may dispose of the property thirty (30) days after mailing written notice\nto tenant's last known address, if the tenant does not claim the property within that\ntime. Notwithstanding the foregoing, if the landlord reasonably believes such abandoned\nproperty to be valueless or of such little value that the cost of storage would exceed\nthe amount that would be realized from sale, or if such property is subject to spoilage,\nthe landlord may immediately dispose of such property.\n(Ord. No. 9394-58, § 1, 1-18-94)",
+            "source_url": "https://library.municode.com/IL/Urbana/codes/Code_of_Ordinances?nodeId=COOR_CH12.5LANARE_ARTIILANARIDURE_S12.5-22SABA",
+            "source_version": "User-supplied Municode export labeled 20260417; workbook export metadata 2026-10-28; subsequent amendments must be checked",
+            "checked_on": "2026-10-28",
+            "text_sha256": "81504cf0cd8414b8856be537bd02dcf798b36622af402899b361268705e0f8b7",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "municipal",
+            "applicability": "Subject to Secs. 12.5-2 and 12.5-7. Abandonment of a unit under (a) requires absence with visible intent not to return and unpaid rent; do not infer it from absence alone. Under (c), preserve the mailed-notice, 30-day and non-claim conditions. Immediate disposal also covers property reasonably believed to have such little value that storage would exceed sale proceeds, as well as valueless or perishable property.",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": "Sheet1!E589",
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "765 ILCS 710/1",
+            "law": "Security Deposit Return Act",
+            "article": "765 ILCS 710/1",
+            "text": "Sec. 1. Statement of damage.\n(a) Except as provided in subsection (b), a lessor of residential real property\nwho has received a security deposit from a lessee to secure the payment\nof rent or to compensate for damage to the leased premises may not\nwithhold any part of that deposit as reimbursement for property damage\nunless the lessor has, within 30 days of the date that the lessee vacated the\nleased premises or within 30 days of the date the lessee's right of possession ends, whichever is later, furnished to the lessee, by personal delivery, by postmarked mail\ndirected to his or her last known address, or by electronic mail to a verified electronic mail address provided by the lessee, an itemized statement of the damage\nallegedly caused to the leased premises and the estimated or actual cost for\nrepairing or replacing each item on that statement, attaching the paid\nreceipts, or copies thereof, for the repair or replacement.\nIf the lessor utilizes his or her own labor to repair or replace any damage or damaged items caused\nby the lessee, the lessor may include the reasonable cost of his or her\nlabor to repair or replace such damage or damaged items. If estimated\ncost is given, the lessor shall furnish to the lessee, delivered in person or by postmarked mail directed to the last known address of the lessee or another address provided by the lessee, paid receipts,\nor copies thereof, within 30 days from the date the statement showing\nestimated cost was furnished to the lessee, as required by this Section. If a written lease specifies the cost for cleaning, repair, or replacement of any component of the leased premises or any component of the building or common areas that, if damaged, will not be replaced, the lessor may withhold the dollar amount specified in the lease. Costs specified in a written lease shall be for damage beyond normal wear and tear and reasonable to restore the leased premises to the same condition as at the time the lease began. The itemized statement shall reference the dollar amount specified in the written lease associated with the specific building component or amenity and include a copy of the applicable portion of the lease. Deductions for costs or values not specified in the lease shall otherwise comply with the requirements of this Section.\nIf no such statement and receipts, or copies thereof, are furnished to\nthe lessee as required by this Section, the lessor shall return the\nsecurity deposit in full within 45 days of the date that the lessee vacated\nthe premises, delivered in person or by postmarked mail directed to the last known address of the lessee or another address provided by the lessee. If the lessee fails to provide the lessor with a mailing address or electronic mail address, the lessor shall not be held liable for any damages or penalties as a result of the lessee's failure to provide an address.\n(b) If, through no fault of the lessor, the lessor is unable to produce as required in subsection (a) receipts for repairs or replacements, or copies thereof, then the lessor shall produce an itemized list of the cost of repair or replacement, any other evidence the lessor has of the cost, and a verified statement of the lessor or the agent of the lessor detailing the specific reasons why the lessor is unable to produce the required receipts or copies and verifying that the lessor has provided all other evidence the lessor has of the cost.\n(c) Upon a finding by a circuit court that a lessor has refused to supply\nthe itemized statement required by this Section, or has supplied such statement\nin bad faith, and has failed or refused to return the amount of the security\ndeposit due within the time limits provided, the lessor shall be liable\nfor an amount equal to twice the amount of the security deposit due, together\nwith court costs and reasonable attorney's fees.",
+            "source_url": "https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2202&ChapterID=62",
+            "source_version": "(Source: P.A. 103-224, eff. 1-1-24.)",
+            "checked_on": "2026-10-28",
+            "text_sha256": "f706b24d90f7f6ffb66378b6043e455dc7dc9a7f697f612e09e92137df142ab4",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "state",
+            "applicability": "Current text has no five-unit threshold. Preserve the distinct damage-accounting, receipt, address and return-time conditions.",
+            "effective_from": "2024-01-01",
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "765 ILCS 742/5",
+            "law": "Residential Tenants' Right to Repair Act",
+            "article": "765 ILCS 742/5",
+            "text": "Sec. 5. Repair; deduction from rent. If a repair is required under a\nresidential lease\nagreement or required under a law, administrative rule, or local ordinance or\nregulation,\nand the reasonable cost of the repair does not exceed the lesser of $500 or\none-half of the\nmonthly rent, the tenant may notify the landlord in writing by registered or certified mail or other restricted delivery service to the address of the landlord or an agent of the landlord as indicated on the lease agreement; if an address is not listed, the tenant may send notice to the landlord's last known address of the tenant's\nintention to\nhave the repair made at the landlord's expense.\nIf the landlord fails to make the repair\nwithin 14 days after being notified by the tenant as provided above or more promptly\nas\nconditions require in the case of an emergency, the tenant may have the repair\nmade in\na\nworkmanlike manner and in compliance with the appropriate law, administrative\nrule, or\nlocal ordinance or regulation. Emergencies include conditions that will cause irreparable harm to the apartment or any fixture attached to the apartment if not immediately repaired or any condition that poses an immediate threat to the health or safety of any occupant of the dwelling or any common area. After submitting to the landlord a paid bill\nfrom an\nappropriate tradesman or supplier unrelated to the tenant, the tenant may deduct from his or\nher rent the\namount of the bill, not to exceed the limits specified by this Section and not\nto exceed the\nreasonable price then customarily charged for the repair. If not clearly indicated on the bill submitted by the tenant, the tenant shall also provide to the landlord in writing, at the time of the submission of the bill, the name, address, and telephone number for the tradesman or supplier that provided the repair services. A tenant may not\nrepair at the\nlandlord's expense if the condition was caused by the deliberate or negligent\nact or\nomission of the tenant, a member of the tenant's family, or another person on\nthe\npremises with the tenant's consent.",
+            "source_url": "https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2605&ChapterID=62",
+            "source_version": "(Source: P.A. 93-891, eff. 1-1-05.)",
+            "checked_on": "2026-10-28",
+            "text_sha256": "568f1beec35c970fe526891af3de5a432fb22fcc7ce48f94d9ba46cc1ea5dad1",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "state",
+            "applicability": "Written restricted-delivery notice, cure period, cost cap, qualified repair and fault conditions apply; read with Secs. 10 and 15.",
+            "effective_from": "2005-01-01",
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "765 ILCS 742/10",
+            "law": "Residential Tenants' Right to Repair Act",
+            "article": "765 ILCS 742/10",
+            "text": "Sec. 10. Exceptions.\n(a) This Act does not apply to public housing as defined in Section 3(b) of\nthe\nUnited States Housing Act of 1937, as amended from time to time, and any\nsuccessor\nAct.\n(b) This Act does not apply to condominiums.\n(c) This Act does not apply to not-for-profit corporations organized for the\npurpose of residential cooperative housing.\n(d) This Act does not apply to tenancies other than residential tenancies.\n(e) This Act does not apply to owner-occupied rental property containing 6 or fewer dwelling units.\n(f) This Act does not apply to any dwelling unit that is subject to the Mobile Home Landlord and Tenant Rights Act.",
+            "source_url": "https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2605&ChapterID=62",
+            "source_version": "(Source: P.A. 93-891, eff. 1-1-05.)",
+            "checked_on": "2026-10-28",
+            "text_sha256": "2703d5e58ecae1a0491ad91bb7c95b7d9b71cb74beef19ad888fbf0d8970b474",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "state",
+            "applicability": "Excludes public housing, condominiums, residential cooperatives, nonresidential tenancies, owner-occupied properties with six or fewer units, and covered mobile-home units.",
+            "effective_from": "2005-01-01",
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          },
+          {
+            "id": "735 ILCS 5/9-213.1",
+            "law": "Code of Civil Procedure",
+            "article": "735 ILCS 5/9-213.1",
+            "text": "Sec. 9-213.1.\nDuty of landlord to mitigate damages.\nAfter January\n1, 1984, a\nlandlord or his or her agent shall take reasonable measures to mitigate the damages\nrecoverable against a defaulting lessee.",
+            "source_url": "https://www.ilga.gov/documents/legislation/ilcs/documents/073500050K9-213.1.htm",
+            "source_version": "(Source: P.A. 84-1043.)",
+            "checked_on": "2026-10-28",
+            "text_sha256": "7fe9caf2e7279a1710518efc95ceea9d1daa68fd0955592b0dd0569b51f83c3c",
+            "jurisdiction": "us_il_urbana",
+            "authority_level": "state",
+            "applicability": "Reasonable mitigation of recoverable damages against a defaulting lessee; not automatic cancellation of every agreed early-termination charge.",
+            "effective_from": null,
+            "effective_until": null,
+            "source_row": null,
+            "source_status": "verified_snapshot"
+          }
+        ],
+        "legal_scope": "Urbana, Illinois 住宅租赁：市条例、伊利诺伊州法及联邦法参考。房产须在 Urbana 市界内；本工具尚未核验市界，邮寄地址或地区选择不等于市界确认。市条例采用文件标识为 20260417 的官方导出版本，需核对后续修订及各条适用条件。",
+        "disclaimer": "仅供理解合同，不构成法律意见。原文匹配和法条引用核对不保证法律适用或分析结论正确。",
+        "grounding": {
+          "cards_total": 12,
+          "cards_verified": 12,
+          "quote_verification_rate": 1.0,
+          "law_references_total": 21,
+          "law_references_valid": 21,
+          "law_reference_validity_rate": 1.0
+        },
+        "model": "deepseek-flash",
+        "attempts": 1
+      }
+    }
+  ]
+}

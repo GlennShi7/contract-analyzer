@@ -56,3 +56,7 @@ Inputs are plain text, so retrieval evaluation excludes PDF extraction. Separate
 The [2026-10-27 live analysis result](results/analysis_20261027-152735.json) covers the three synthetic contracts with three actual DeepSeek requests. It records 29/29 exact contract quotes and 43/43 references to injected law IDs. The Illinois sample has no statutory references, so its legal-ID rate is undefined, not 100%.
 
 This is separate from the 56-question retrieval experiment. It does not establish legal correctness or completeness. See the [qualitative review](ANALYSIS_REVIEW_2026-10-27.md), including observed unsupported legal generalizations and the discrepancy between the original natural-language card-count request and schema limit.
+
+## Current-prompt follow-up, 2026-10-29
+
+The [new three-contract rerun and source-based review](ANALYSIS_REVIEW_2026-10-29.md) records three first-response successes, 36/36 exact quotes and 75/75 supplied-ID references. Three of six newly authorized requests were used; total usage was 45,731 tokens. [Validated reports and usage](results/analysis_20261029-195508-505323.json) retain analyzer, law-library and manifest hashes. The review identifies remaining unsupported contract facts, omitted exceptions and coverage gaps. These are repeated existing fixtures, not independent cases or a legal-accuracy benchmark. The October 27 and 28 results remain unchanged historical evidence.

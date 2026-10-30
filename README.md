@@ -149,6 +149,8 @@ The [2026-10-28 Urbana-profile run](backend/eval/results/analysis_20261028-16123
 
 The [interpretation follow-up](backend/eval/URBANA_REASONING_FOLLOWUP_2026-10-28.md) adds more precise applicability guidance and an explicit unverified-boundary notice. Its one-request live rerun produced no validated report; the request cap blocked a correction attempt. No reasoning improvement is claimed. The evaluator now preserves rejected-response diagnostics with no success metrics. Local tests: 76 passed.
 
+The [2026-10-29 current-prompt rerun](backend/eval/ANALYSIS_REVIEW_2026-10-29.md) used three of six newly authorized requests: all three existing fixtures passed on their first responses, with 36/36 exact quotes and 75/75 references to supplied IDs (45,731 tokens). The review still found unsupported summary wording and omitted statutory exceptions. This minimum functional rerun does not establish general reliability, legal accuracy or recall. The implementation at that snapshot passed 100 backend tests, actual-browser checks and real-container retrieval checks.
+
 An optional script is available for explicitly authorized, billable verification on the three synthetic contracts:
 
 ```bash
