@@ -87,14 +87,18 @@ try {
   await capture('demo-overview.png', { x: 0, y: 0, width: 1200, height: overviewHeight });
   await question('其他问题');
   await until('document.querySelector(".contract-questions [role=alert]")?.textContent.includes("预设问题")');
+  await evaluate('document.querySelector(".clear-questions").click()');
+  await until('document.querySelectorAll(".question-history > li").length === 0');
   await question('押金多久退还？');
   await until('Boolean(document.querySelector("article[aria-label=合同问答结果]"))');
   if (!(await evaluate('document.querySelector(".contract-answer").textContent.startsWith("预设示例：")'))) throw new Error('Scripted answer not labeled');
-  await evaluate('document.querySelectorAll(".contract-questions details").forEach(el => el.open = true)');
+  await question('会自动续租吗？');
+  await until('document.querySelectorAll("[data-qa-status=complete]").length === 2');
+  await evaluate('document.querySelectorAll(".question-history > li:last-child details").forEach(el => el.open = true)');
   const qaClip = await evaluate('(() => { const r = document.querySelector(".contract-questions").getBoundingClientRect(); return {x:Math.floor(r.left),y:Math.floor(r.top+scrollY),width:Math.ceil(r.width),height:Math.ceil(r.height)}; })()');
   await capture('demo-questions.png', qaClip);
   if (errors.length) throw new Error(errors.join('\n'));
-  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'recorded analysis plus scripted Q&A; no model calls', checks: ['visible replay/limitations banner', 'fixture download and upload', 'region selection required', '12 recorded risk cards', 'unsupported question rejected', 'scripted answer labeled', 'expandable exact source chunks'], screenshots: ['demo-overview.png', 'demo-questions.png'] }, null, 2));
+  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'recorded analysis plus scripted Q&A; no model calls', checks: ['visible replay/limitations banner', 'fixture download and upload', 'region selection required', '12 recorded risk cards', 'unsupported question rejected', 'local history cleared', 'two scripted answers retained and labeled', 'expandable exact source chunks'], screenshots: ['demo-overview.png', 'demo-questions.png'] }, null, 2));
   console.log('PASS: actual replay UI, source excerpts and screenshots. No model calls.');
   console.log('Artifacts:', out);
 } finally {

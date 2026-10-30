@@ -24,9 +24,9 @@ npm run build
 npm run lint
 ```
 
-After upload, use **问问这份合同** to submit a question. The page shows the latest answer and expandable excerpts from the same document. Each question is independent; prior Q&A is not sent as conversation history. Selecting another file clears the question/result and aborts the pending browser fetch. This does not guarantee cancellation of server-side generation or its cost.
+After upload, use **问问这份合同** to submit questions. This page retains each question's pending, error or answer state and expandable source excerpts. Each API question is independent; prior Q&A is not sent as model conversation context. **清空本页问答** clears local history without deleting the contract or sending a request. Refreshing or selecting another file clears history; file selection also aborts the pending browser fetch. This does not guarantee cancellation of server-side generation or its cost.
 
-Blank questions and duplicate pending submissions are blocked. The interface rejects empty answers and mismatched document/source IDs, displays API errors, and removes stale results. Retrieved excerpts are displayed as plain text; they are not automatically verified evidence for the generated answer. Q&A does not inject the risk analysis's statutory profile.
+Blank questions and duplicate pending submissions are blocked. Empty answers and mismatched document/source IDs become an error on that question, while earlier answers remain with their original questions. Retrieved excerpts are plain text and are not automatically verified evidence for the generated answer. Q&A does not inject the risk analysis's statutory profile.
 
 Run the actual interface checks with a local mock API (no DeepSeek calls):
 

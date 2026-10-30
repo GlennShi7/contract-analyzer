@@ -6,6 +6,8 @@ A full-stack prototype that extracts text from PDF contracts, generates structur
 
 Built to help people understand unfavorable terms in rental and employment contracts before signing, and find relevant contract clauses when questions arise afterward.
 
+See [implementation progress and remaining acceptance work](PROGRESS.md) for the current boundary between implemented features and unverified model quality.
+
 ## Try the replay without an API key
 
 ```bash
@@ -99,9 +101,9 @@ Open [the frontend](http://localhost:5173). Upload a text-based PDF, confirm the
 
 ## Contract Q&A
 
-After uploading, use **问问这份合同** to ask about deposit returns, payment deadlines, repairs or other contract terms. The browser sends the current document ID and question to `/ask`, then displays the latest answer and expandable numbered contract excerpts. Q&A is independent of the legal-region selector; it interprets retrieved contract text without injecting statutes or establishing legal validity. Each question stands alone, without prior conversation history.
+After uploading, use **问问这份合同** to ask about deposit returns, payment deadlines, repairs or other contract terms. The page retains each question's pending, error or answer state with its own numbered source excerpts. Clear the session with **清空本页问答**. The browser sends only the current document ID and question to `/ask`; displayed history is not used as model conversation context. Q&A is independent of the legal-region selector and interprets retrieved text without injecting statutes or establishing legal validity.
 
-Switching files clears the question and answer and aborts the pending browser fetch. Cancellation does not guarantee that server-side generation or billing has stopped. Blank submissions and concurrent duplicate submissions are blocked. Responses with empty answers or mismatched document/source IDs are rejected. Empty or truncated model responses return 502 rather than a successful blank answer. Retrieved excerpts still need human review: finding a passage does not prove that it supports the answer, and other relevant terms may be missing.
+Switching files clears session history and aborts the pending browser fetch. Refreshing also clears this page-only history. Clearing history leaves the server-side contract intact and sends no request. Cancellation does not guarantee that server-side generation or billing has stopped. Blank/duplicate pending submissions are blocked. Empty answers and mismatched document/source IDs are rejected for that turn; previous answers remain attached to their original questions. Empty or truncated model responses return 502. Retrieved excerpts still need human review: finding a passage does not prove that it supports the answer, and other relevant terms may be missing.
 
 Validation: 100 backend tests passed; frontend build and lint passed; isolated headless Edge checks exercised the actual React interface with a local mock API, including upload limits, HTML proxy errors, incomplete upload results, source isolation, literal-text rendering, file changes during pending requests, and mobile width. No paid API request was made for this feature. Reproduce browser checks with `npm run check:qa-ui` in `frontend`; see [frontend instructions](frontend/README.md).
 

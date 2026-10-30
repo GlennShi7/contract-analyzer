@@ -45,3 +45,6 @@
 }
 .contract-answer { white-space: pre-wrap; }
 .contract-questions-note { font-size: 0.9rem; }
+.question-history { list-style: none; padding: 0; }
+.question-history > li { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+.contract-questions .clear-questions { color: var(--text-h); background: var(--bg); border-color: var(--border); }

@@ -186,11 +186,16 @@ try {
   await evaluate('document.querySelectorAll(".contract-questions details").forEach(el => el.open = true)');
   if ((await evaluate('document.querySelectorAll(".contract-questions blockquote").length')) !== 2) throw new Error('Missing source excerpts');
   if (await evaluate('Boolean(document.querySelector(".contract-questions script")) || Boolean(window.qaInjected)')) throw new Error('Contract source interpreted as HTML');
+  await submit('押金返还期限是多少？');
+  await until('document.querySelectorAll("[data-qa-status=complete]").length === 2');
+  if (!(await evaluate('document.querySelector(".question-history").innerText.includes("押金什么时候退？") && document.querySelector(".question-history").innerText.includes("押金返还期限是多少？")'))) throw new Error('Prior question lost');
+  if (Object.keys(requests.at(-1)).sort().join(',') !== 'doc_id,question') throw new Error('Unexpected conversation history sent to API');
   await screenshot('qa-desktop.png');
   for (const [question, expected] of [['索引丢失', '合同索引不可用'], ['服务失败', '问答服务暂时不可用'], ['合同不存在', '未找到合同'], ['混入其他合同', '对应信息不完整'], ['空回答', '未收到有效回答'], ['错误格式', '无法读取问答结果']]) {
     await submit(question);
-    await until(`document.querySelector('.contract-questions [role=alert]')?.textContent.includes(${JSON.stringify(expected)})`);
-    if (await evaluate('Boolean(document.querySelector("[aria-label=合同问答结果]")) || document.body.innerText.includes("FOREIGN_SECRET_MUST_NOT_RENDER")')) throw new Error('Stale or foreign answer shown');
+    await until(`document.querySelector('.question-history > li:last-child [role=alert]')?.textContent.includes(${JSON.stringify(expected)})`);
+    if (await evaluate('Boolean(document.querySelector(".question-history > li:last-child .contract-answer")) || document.body.innerText.includes("FOREIGN_SECRET_MUST_NOT_RENDER")')) throw new Error('Failed question contains stale or foreign answer');
+    if ((await evaluate('document.querySelectorAll("[data-qa-status=complete]").length')) !== 2) throw new Error('Failure removed prior answers');
   }
   await fill('等待回答');
   const before = requests.length;
@@ -198,8 +203,9 @@ try {
   await until('document.querySelector(".contract-questions button").disabled && document.body.innerText.includes("正在查找相关约定")');
   for (let i = 0; i < 100 && !delayed; i++) await pause(50);
   if (!delayed || requests.length !== before + 1) throw new Error('Duplicate submission or no pending request');
+  if (!(await evaluate('document.querySelector(".clear-questions").disabled'))) throw new Error('Pending history can be cleared');
   await upload('second.pdf');
-  if (await evaluate('document.querySelector("#contract-question").value !== "" || Boolean(document.querySelector("[aria-label=合同问答结果]"))')) throw new Error('Q&A not reset');
+  if (await evaluate('document.querySelector("#contract-question").value !== "" || document.querySelectorAll(".question-history > li").length !== 0')) throw new Error('Q&A history not reset');
   for (let i = 0; i < 100 && !aborted; i++) await pause(50);
   if (!aborted) throw new Error('Pending request was not aborted');
   delayed.end(JSON.stringify({ answer: 'OLD_ANSWER_MUST_NOT_RENDER' }));
@@ -210,8 +216,12 @@ try {
   await evaluate('document.querySelectorAll(".contract-questions details").forEach(el => el.open = true)');
   if (!(await evaluate('(() => { const r = document.querySelector(".contract-questions").getBoundingClientRect(); return r.left >= 0 && r.right <= window.innerWidth + 1; })()'))) throw new Error('Q&A overflows mobile viewport');
   await screenshot('qa-mobile.png');
+  const beforeClear = requests.length;
+  await evaluate('document.querySelector(".clear-questions").click()');
+  await until('document.querySelectorAll(".question-history > li").length === 0');
+  if (requests.length !== beforeClear || !(await evaluate('Boolean(document.querySelector("#contract-question"))'))) throw new Error('Clearing history sent a request or removed the contract');
   if (browserErrors.length) throw new Error('Browser errors: ' + browserErrors.join('\n'));
-  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears state and aborts pending fetch', 'new document ID sent', 'mobile width'], requests }, null, 2));
+  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width'], requests }, null, 2));
   console.log('PASS: actual contract Q&A UI checks; no paid API calls.');
   console.log('Artifacts:', out);
 } finally {
