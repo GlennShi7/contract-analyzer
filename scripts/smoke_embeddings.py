@@ -55,6 +55,7 @@ for document in payload['documents']:
     assert all(source['doc_id'] == doc_id and source['text'] == chunks[source['chunk']] for source in sources), 'Cross-document or corrupted retrieval'
     normalize = lambda value: re.sub(r'\s+', ' ', value).strip()
     hit = any(normalize(payload['answer_span']) in normalize(source['text']) for source in sources)
+    print('SMOKE_OBSERVATION=' + json.dumps({'doc_id': doc_id, 'stored_vectors_sha256': vector_hash.hexdigest(), 'retrieved_chunks': [source['chunk'] for source in sources], 'fixed_question_hit_at_3': hit}), flush=True)
     assert hit, 'The fixed el01 answer span was not found in top-3 PDF chunks'
     rows.append({'doc_id': doc_id, 'n_chunks': len(chunks), 'text_sha256': sha256(text.encode()).hexdigest(),
                  'embedding_dimension': dimension, 'stored_vectors_sha256': vector_hash.hexdigest(), 'retrieved_chunks': [source['chunk'] for source in sources],
@@ -68,14 +69,25 @@ print('SMOKE_RESULT=' + json.dumps(result))
 '''
 
 
-def inspect(documents, question, answer_span):
-    result = subprocess.run(
-        ['docker', 'compose', 'exec', '-T', '-e', 'HF_HUB_OFFLINE=1', 'backend', 'python', '-c', INSPECT],
-        input=json.dumps({'documents': documents, 'question': question, 'answer_span': answer_span}),
-        text=True, encoding='utf-8', errors='replace', capture_output=True, timeout=180, cwd=REPO,
-    )
+def inspect(documents, question, answer_span, *, exclusive=False):
+    if not exclusive:
+        raise ValueError('Inspection requires --exclusive on an idle test stack; the backend is stopped briefly.')
+    common = {'text': True, 'encoding': 'utf-8', 'errors': 'replace', 'capture_output': True, 'cwd': REPO}
+    try:
+        stopped = subprocess.run(['docker', 'compose', 'stop', '--timeout', '30', 'backend'], timeout=60, **common)
+        if stopped.returncode:
+            raise SystemExit('Cannot obtain exclusive backend storage access:\n' + stopped.stderr[-3000:])
+        result = subprocess.run(
+            ['docker', 'compose', 'run', '--rm', '--no-deps', '-T', '-e', 'HF_HUB_OFFLINE=1', 'backend', 'python', '-c', INSPECT],
+            input=json.dumps({'documents': documents, 'question': question, 'answer_span': answer_span}),
+            timeout=180, **common,
+        )
+    finally:
+        restored = subprocess.run(['docker', 'compose', 'up', '-d', '--no-deps', '--wait', '--wait-timeout', '120', 'backend'], timeout=150, **common)
+        if restored.returncode:
+            raise SystemExit('Could not restore the test backend after inspection:\n' + restored.stderr[-3000:])
     if result.returncode:
-        raise SystemExit('Container inspection failed:\n' + result.stderr[-6000:])
+        raise SystemExit('Container inspection failed:\n' + result.stdout[-6000:] + '\n' + result.stderr[-6000:])
     lines = [line.removeprefix('SMOKE_RESULT=') for line in result.stdout.splitlines() if line.startswith('SMOKE_RESULT=')]
     if len(lines) != 1:
         raise SystemExit('Container inspection did not return exactly one result.')
@@ -90,7 +102,10 @@ def main():
     parser.add_argument('--base-url', default='http://127.0.0.1:8080')
     parser.add_argument('--state', type=Path, required=True, help='synthetic test evidence written outside the repository')
     parser.add_argument('--verify-only', action='store_true', help='read saved documents and index without re-uploading')
+    parser.add_argument('--exclusive', action='store_true', help='allow brief backend stops during inspection; use only on an idle test stack')
     args = parser.parse_args()
+    if not args.exclusive:
+        parser.error('--exclusive is required: inspection briefly stops and restores the backend; do not use on an active service.')
     pdf = (REPO / 'demo/lease_en.pdf').read_bytes()
     fixture = json.loads((REPO / 'demo/fixture.json').read_text(encoding='utf-8'))
     if sha256(pdf).hexdigest() != fixture['pdf_sha256']:
@@ -105,7 +120,7 @@ def main():
         documents = state['documents']
         if [row['doc_id'] for row in documents] != ids or any(not isinstance(row['n_chunks'], int) or row['n_chunks'] < 1 for row in documents):
             raise SystemExit('Saved smoke state does not match the two synthetic PDFs.')
-        report = inspect(documents, question['question'], question['answer'][0])
+        report = inspect(documents, question['question'], question['answer'][0], exclusive=args.exclusive)
         print(json.dumps({'phase': 'verify-only-observed', **report}), flush=True)
         if report != state['before_recreate']:
             print(json.dumps({'phase': 'persistence-comparison-failed', 'before': state['before_recreate'], 'after': report}), flush=True)
@@ -139,7 +154,7 @@ def main():
         raise SystemExit('Renaming the same PDF changed its document or chunk count.')
     second = upload(variant, 'lease.pdf')
     documents = [first, second]
-    report = inspect(documents, question['question'], question['answer'][0])
+    report = inspect(documents, question['question'], question['answer'][0], exclusive=args.exclusive)
     state = {'fixture': 'two byte variants of committed synthetic PDF, identical parsed text',
              'documents': documents, 'question_id': 'el01', 'before_recreate': report,
              'limits': 'One fixed query is a smoke assertion, not a retrieval benchmark or a legal-accuracy result. No LLM call.'}

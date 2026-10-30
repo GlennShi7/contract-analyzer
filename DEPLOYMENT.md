@@ -46,9 +46,9 @@ Use `config --quiet` to validate configuration without printing resolved environ
 For the real embedding path, run the following from the repository root:
 
 ```bash
-python scripts/smoke_embeddings.py --state embedding-smoke.json
+python scripts/smoke_embeddings.py --exclusive --state embedding-smoke.json
 docker compose up -d --force-recreate --wait --wait-timeout 120
-python scripts/smoke_embeddings.py --state embedding-smoke.json --verify-only
+python scripts/smoke_embeddings.py --exclusive --state embedding-smoke.json --verify-only
 ```
 
 The first command uploads the committed synthetic PDF, repeats it under another filename, and uploads a second byte variant with identical parsed text. It checks full-file IDs, exact stored chunks, actual 384-dimensional CPU embeddings, document-filtered top-3 results and the existing labeled query `el01`. Model weights may download from Hugging Face during initial upload. This adds two synthetic documents to the current stack's volumes; it does not read other documents or call `/ask`, `/analyze` or an LLM provider, even if an API key is configured.
@@ -66,3 +66,9 @@ The CI workflow runs on pushes to `master`, pull requests and manual dispatch. I
 No DeepSeek secret is supplied, and the live-analysis evaluator is never run by CI. GitHub Actions are pinned to verified commits. Node/Python image minor versions and direct Python dependencies are specified; this is not a complete lock of all transitive Python dependencies or image digests.
 
 Implementation references: [Compose readiness conditions](https://docs.docker.com/compose/how-tos/startup-order/), [FastAPI behind a proxy](https://fastapi.tiangolo.com/advanced/behind-a-proxy/), [official CPU PyTorch wheels](https://download.pytorch.org/whl/cpu/torch/).
+
+## Exclusive storage inspection
+
+The real-embedding smoke check requires `--exclusive` and is intended for an **idle test stack**. It stops the backend, opens the existing volumes in a disposable one-off backend container, then restores the backend in a `finally` path, including on failed inspection. Do not run it against an active service. It does not change the production API, delete volumes, weaken vector/text equality, or call a model provider.
+
+The old `docker compose exec ... python` inspection opened a second `PersistentClient` while the application held the same persistence directory. [Upstream contributor guidance](https://github.com/chroma-core/chroma/issues/3769) warns against assuming consistent shared-directory views across separate client processes. The inspection now has one storage owner at a time. CI checks three independent offline reopens after recreation, retaining exact vector fingerprints, source isolation, the fixed top-3 hit and full before/after equality. Failure output also retains partial observations from the inspection subprocess. This removes an unsupported test topology; it is not a claim of general retrieval determinism or an independently reproduced explanation for every historical failure.
