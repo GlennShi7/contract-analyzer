@@ -59,7 +59,7 @@
     {
       "id": "unsupported_judicial_disposal_requirement",
       "finding_type": "source_support",
-      "verdict": "contradicted",
+      "verdict": "unsupported",
       "evidence": [
         {
           "pointer": [

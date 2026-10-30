@@ -86,7 +86,7 @@ def validate_audit(data, root, sources):
         require(finding["id"] not in seen, "Duplicate finding ID")
         seen.add(finding["id"])
         verdict = finding["verdict"]
-        require(verdict in {"contradicted", "omitted", "supported_observation", "not_assessed"}, "Unknown verdict")
+        require(verdict in {"contradicted", "unsupported", "omitted", "supported_observation", "not_assessed"}, "Unknown verdict")
         require(bool(finding["rationale"].strip()), "Missing review rationale")
         require(bool(finding["evidence"]), "Missing report evidence")
         for evidence in finding["evidence"]:

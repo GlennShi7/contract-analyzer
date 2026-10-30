@@ -192,7 +192,7 @@ def test_final_report_facts_have_contract_evidence_without_fake_law_ids(sources)
     data = load_json(HERE / "final_reasoning_audit_2026-10-29.json")
     result = validate_audit(data, ROOT, sources)
     assert result["validated_review_records"] == 5
-    assert result["record_verdicts"] == {"contradicted": 4, "omitted": 1}
+    assert result["record_verdicts"] == {"contradicted": 3, "unsupported": 1, "omitted": 1}
     assert result["legal_accuracy"] is None and result["risk_recall"] is None
 
 
