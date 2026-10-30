@@ -16,6 +16,11 @@ let uploadRequests = 0;
 let uploadMode = 'ok';
 let delayed;
 let aborted = false;
+const analysisRequests = [];
+let analysisMode = 'ok';
+let delayedAnalysis;
+let analysisAborted = false;
+const analysisResult = { risk_score: 3, summary: 'ORIGINAL_SUMMARY', cards: [], legal_sources: [], legal_scope: 'Synthetic scope', disclaimer: 'Synthetic disclaimer' };
 const api = createServer(async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:18764');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -36,6 +41,20 @@ const api = createServer(async (req, res) => {
     if (uploadMode === 'invalid') { res.end(JSON.stringify({ preview: 'Incomplete response' })); return; }
     const doc_id = (++uploads === 1 ? 'a' : 'b').repeat(64);
     res.end(JSON.stringify({ doc_id, filename: 'lease.pdf', preview: 'Synthetic contract preview', n_chunks: 2 }));
+    return;
+  }
+  if (req.url === '/analyze') {
+    const payload = JSON.parse(Buffer.concat(chunks).toString());
+    analysisRequests.push(payload);
+    if (analysisMode === 'pending') {
+      delayedAnalysis = res;
+      res.on('close', () => { if (!res.writableEnded) analysisAborted = true; });
+      return;
+    }
+    if (analysisMode === 'error') { res.writeHead(502); res.end(JSON.stringify({ detail: '分析服务暂时不可用，请稍后重试' })); return; }
+    if (analysisMode === 'html') { res.end('<h1>Unavailable</h1>'); return; }
+    res.end(JSON.stringify({ doc_id: analysisMode === 'foreign' ? 'c'.repeat(64) : payload.doc_id,
+      result: { ...analysisResult, summary: analysisMode === 'foreign' ? 'FOREIGN_REPORT_MUST_NOT_RENDER' : analysisResult.summary } }));
     return;
   }
   if (req.url !== '/ask') { res.writeHead(404); res.end('{}'); return; }
@@ -267,8 +286,49 @@ try {
   await evaluate('document.querySelector(".clear-questions").click()');
   await until('document.querySelectorAll(".question-history > li").length === 0');
   if (requests.length !== beforeClear || !(await evaluate('Boolean(document.querySelector("#contract-question"))'))) throw new Error('Clearing history sent a request or removed the contract');
+  // Analysis lifecycle checks use only the same local mock server.
+  async function changeRegion(value) {
+    await evaluate(`(() => { const el = document.querySelector('.region-control select'); el.value = '${value}'; el.dispatchEvent(new Event('change', { bubbles: true })); })()`);
+  }
+  if (!(await evaluate('document.querySelector(".risk-panel .scope-hint").textContent.includes("contract-text issues only")'))) throw new Error('Unknown-region hint is wrong');
+  await changeRegion('cn');
+  await until('document.querySelector(".risk-panel .scope-hint").textContent.includes("Chinese mainland")');
+  await changeRegion('us_il_urbana');
+  await until('document.querySelector(".risk-panel .scope-hint").textContent.includes("Champaign")');
+  for (const [mode, expected] of [['error', 'temporarily unavailable'], ['html', 'could not be read'], ['foreign', 'does not match']]) {
+    analysisMode = mode;
+    await evaluate('document.querySelector(".analysis-toolbar button").click()');
+    await until(`document.querySelector('.risk-panel [role=alert]')?.textContent.includes('${expected}')`);
+    if (await evaluate('Boolean(document.querySelector(".report-header")) || document.body.innerText.includes("FOREIGN_REPORT_MUST_NOT_RENDER")')) throw new Error('Failed analysis rendered a report');
+    if (await evaluate('document.querySelector(".analysis-toolbar button").disabled')) throw new Error('Analysis retry is disabled');
+  }
+  analysisMode = 'ok';
+  await evaluate('document.querySelector(".analysis-toolbar button").click()');
+  await until('document.querySelector(".report-summary")?.textContent.includes("ORIGINAL_SUMMARY")');
+  if (analysisRequests.at(-1).doc_id !== 'b'.repeat(64) || analysisRequests.at(-1).jurisdiction !== 'us_il_urbana') throw new Error('Wrong analysis payload');
+  const beforeAnalysisLanguage = analysisRequests.length;
+  await evaluate('document.querySelector("[data-language-toggle]").click()');
+  await until('document.documentElement.lang === "zh-CN"');
+  if (!(await evaluate('document.querySelector(".report-summary")?.textContent.includes("ORIGINAL_SUMMARY")')) || analysisRequests.length !== beforeAnalysisLanguage) throw new Error('Language toggle changed analysis');
+  await changeRegion('unknown');
+  await until('!document.querySelector(".report-header")');
+  analysisMode = 'pending';
+  const beforeAnalysis = analysisRequests.length;
+  await evaluate('(() => { const b = document.querySelector(".analysis-toolbar button"); b.click(); b.click(); })()');
+  await until('document.querySelector(".analysis-toolbar button").disabled && document.querySelector(".region-control select").disabled');
+  for (let i = 0; i < 100 && !delayedAnalysis; i++) await pause(50);
+  if (!delayedAnalysis || analysisRequests.length !== beforeAnalysis + 1) throw new Error('Duplicate analysis request or missing pending request');
+  await upload('third.pdf');
+  for (let i = 0; i < 100 && !analysisAborted; i++) await pause(50);
+  if (!analysisAborted) throw new Error('Pending analysis fetch was not aborted on file change');
+  delayedAnalysis.end(JSON.stringify({ doc_id: 'b'.repeat(64), result: { ...analysisResult, summary: 'OLD_REPORT_MUST_NOT_RENDER' } }));
+  await pause(100);
+  if (await evaluate('Boolean(document.querySelector(".report-header")) || document.body.innerText.includes("OLD_REPORT_MUST_NOT_RENDER")')) throw new Error('Old analysis leaked into new document');
+  analysisMode = 'ok';
+  await evaluate('document.querySelector(".analysis-toolbar button").click()');
+  await until('Boolean(document.querySelector(".report-header"))');
   if (browserErrors.length) throw new Error('Browser errors: ' + browserErrors.join('\n'));
-  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width', 'home widths 320/390/768/1200', 'labeled file picker', 'English default UI', 'language preference survives reload', 'existing errors relocalize', 'unknown service detail preserved under an English fallback', 'language switch preserves answers and sends no request', 'suggestion only prefills and focuses without request'], requests }, null, 2));
+  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['analysis duplicate blocked', 'pending analysis aborted on file change', 'foreign analysis rejected', 'analysis HTML and 502 errors allow retry', 'analysis region hint and report reset', 'language toggle preserves original report', 'client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width', 'home widths 320/390/768/1200', 'labeled file picker', 'English default UI', 'language preference survives reload', 'existing errors relocalize', 'unknown service detail preserved under an English fallback', 'language switch preserves answers and sends no request', 'suggestion only prefills and focuses without request'], requests, analysisRequests }, null, 2));
   console.log('PASS: actual contract Q&A UI checks; no paid API calls.');
   console.log('Artifacts:', out);
 } finally {

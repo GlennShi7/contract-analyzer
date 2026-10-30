@@ -1,4 +1,6 @@
 export const english = {
+  '无法读取分析结果，请稍后重试。': 'The analysis response could not be read. Please try again.',
+  '分析结果与当前合同不对应，请重新上传后再试。': 'The analysis does not match the current contract. Upload the contract again.',
   '跳到工作区': 'Skip to workspace',
   '工作台导航': 'Workspace navigation',
   '合同防踩坑': 'Contract Review',

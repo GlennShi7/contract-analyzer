@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Icon from './Icon'
 import { useLanguage } from '../language'
 import ErrorMessage from './ErrorMessage'
@@ -13,6 +13,13 @@ function RiskReport({ docId }) {
   const [analyzing, setAnalyzing] = useState(false)
   const [error, setError] = useState('')
   const [jurisdiction, setJurisdiction] = useState('unknown')
+  const pendingRequest = useRef(null)
+
+  useEffect(() => () => {
+    pendingRequest.current?.abort()
+    pendingRequest.current = null
+  }, [])
+
   const laws = new Map((report?.legal_sources || []).map(law => [law.id, law]))
 
   function handleJurisdictionChange(e) {
@@ -22,6 +29,9 @@ function RiskReport({ docId }) {
   }
 
   async function handleAnalyze() {
+    if (!docId || pendingRequest.current) return
+    const controller = new AbortController()
+    pendingRequest.current = controller
     setAnalyzing(true)
     setError('')
     setReport(null)
@@ -30,16 +40,28 @@ function RiskReport({ docId }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ doc_id: docId, jurisdiction }),
+        signal: controller.signal,
       })
-      const data = await res.json()
-      if (!res.ok) {
-        throw new Error(typeof data.detail === 'string' ? data.detail : '分析失败，请重试')
+      let data
+      try {
+        data = await res.json()
+      } catch {
+        throw new Error('无法读取分析结果，请稍后重试。')
       }
-      setReport(data.result)
+      if (!res.ok) {
+        throw new Error(typeof data?.detail === 'string' ? data.detail : '分析失败，请重试')
+      }
+      if (data?.doc_id !== docId) {
+        throw new Error('分析结果与当前合同不对应，请重新上传后再试。')
+      }
+      if (!controller.signal.aborted) setReport(data.result)
     } catch (err) {
-      setError(err.message || '分析失败，请检查后端连接')
+      if (!controller.signal.aborted) setError(err.message || '分析失败，请检查后端连接')
     } finally {
-      setAnalyzing(false)
+      if (pendingRequest.current === controller) {
+        pendingRequest.current = null
+        setAnalyzing(false)
+      }
     }
   }
 
@@ -58,7 +80,7 @@ function RiskReport({ docId }) {
           {analyzing ? t("分析中...") : t("分析风险")}<Icon name="arrow" size={16} />
         </button>
       </div>
-      <p className="scope-hint">{t("Urbana 不包括 Champaign 或 Chicago；不确定地区时，先查看文字风险。")}</p>
+      <p className="scope-hint">{t(jurisdiction === 'us_il_urbana' ? "Urbana 不包括 Champaign 或 Chicago；不确定地区时，先查看文字风险。" : jurisdiction === 'cn' ? "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。" : "未注入适用法律，仅提供合同文字风险提示。")}</p>
       {error && <ErrorMessage message={error} fallback="分析失败，请重试" />}
       {!report && !error && <div className="analysis-empty" role={analyzing ? 'status' : undefined}>
         <span className="soft-icon"><Icon name="search" size={22} /></span>
