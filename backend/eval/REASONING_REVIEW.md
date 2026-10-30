@@ -52,7 +52,7 @@ Before publishing accuracy, false-positive or recall numbers, establish an indep
 
 ## Authorization boundary
 
-The earlier six-request authorization for the **three existing full synthetic contracts** remains at 3/6 used. A separate, subsequent eight-request authorization covered four short diagnostic inputs and selected public laws; it is now exhausted at 8/8, including a correction. Twelve diagnostic inputs were not sent. [The live review](DIAGNOSTIC_REVIEW_2026-10-29.md) distinguishes baseline and prompt-follow-up observations, the budget-blocked case, and the final quotation enforcement added afterward. The original statutory text was unchanged.
+The earlier six-request authorization for the **three existing full synthetic contracts** is now 6/6 used: the first three calls plus a [final-version rerun](FINAL_ENFORCEMENT_REVIEW_2026-10-29.md) of the same full inputs. A separate, subsequent eight-request authorization covered four short diagnostic inputs and selected public laws; it is now exhausted at 8/8, including a correction. Twelve diagnostic inputs were not sent. [The live review](DIAGNOSTIC_REVIEW_2026-10-29.md) distinguishes baseline and prompt-follow-up observations, the budget-blocked case, and the final quotation enforcement added afterward. The original statutory text was unchanged.
 
 ## Verification
 

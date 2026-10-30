@@ -65,3 +65,7 @@ The last command is prepare-only by default: no client, ledger or billable reque
 Current local checks: **124 backend tests passed**. Billing tests block the ninth SDK call and count failed requests. Offline review reports four distinct cases tested, twelve not tested, seven historical schema-accepted reports, and the unrun last case in the follow-up. Legal accuracy and risk recall remain `null`.
 
 Next acceptance work is still independent source-based adjudication, the remaining twelve diagnostic cases, repeatability beyond these selected cases, and a newly authorized live check of the final enforcement/correction path. This batch's eight-request allowance is exhausted; the earlier remaining three requests are restricted to the original full-contract inputs and were not repurposed. The demo remains the clearly labeled October 28 replay.
+
+## Subsequent final-version check
+
+The [final full-contract rerun](FINAL_ENFORCEMENT_REVIEW_2026-10-29.md) subsequently used the three remaining requests from the separate six-request full-contract allowance. All three first responses passed final quote enforcement, without a correction. This does not validate the revised correction path live or cure the interpretation errors. The full-contract authorization is now 6/6 used; the short-case authorization stays 8/8. No further paid call was made.
