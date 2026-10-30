@@ -318,7 +318,6 @@ try {
   await until('document.querySelector(".risk-panel .scope-hint").textContent.includes("Champaign")');
   for (const [mode, expected] of [['error', 'temporarily unavailable'], ['html', 'could not be read'], ['foreign', 'does not match']]) {
     analysisMode = mode;
-    const before = analysisRequests.length;
     await evaluate('document.querySelector(".analysis-toolbar button").click()');
     await until(`document.querySelector('.risk-panel [role=alert]')?.textContent.includes('${expected}')`);
     if (await evaluate('Boolean(document.querySelector(".report-header")) || document.body.innerText.includes("FOREIGN_REPORT_MUST_NOT_RENDER")')) throw new Error('Failed analysis rendered a report');
