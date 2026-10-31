@@ -1,5 +1,7 @@
 # Contract Risk Analyzer / 合同防踩坑工具
 
+**English** | [简体中文](README.zh-CN.md) · [中文收尾报告](docs/FINAL_REPORT.zh-CN.md)
+
 [![CI](https://github.com/GlennShi7/contract-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/GlennShi7/contract-analyzer/actions/workflows/ci.yml)
 
 A full-stack prototype that extracts text from PDF contracts, generates structured risk cards with DeepSeek, and supports semantic clause Q&A in the browser and through a FastAPI endpoint.
@@ -116,7 +118,7 @@ After uploading, use **问问这份合同** to ask about deposit returns, paymen
 
 Switching files clears session history and aborts the pending browser fetch. Refreshing also clears this page-only history. Clearing history leaves the server-side contract intact and sends no request. Cancellation does not guarantee that server-side generation or billing has stopped. Blank/duplicate pending submissions are blocked. Empty answers and mismatched document/source IDs are rejected for that turn; previous answers remain attached to their original questions. Empty or truncated model responses return 502. Retrieved excerpts still need human review: finding a passage does not prove that it supports the answer, and other relevant terms may be missing.
 
-Validation: 100 backend tests passed; frontend build and lint passed; isolated headless Edge checks exercised the actual React interface with a local mock API, including upload limits, HTML proxy errors, incomplete upload results, source isolation, literal-text rendering, file changes during pending requests, and mobile width. No paid API request was made for this feature. Reproduce browser checks with `npm run check:qa-ui` in `frontend`; see [frontend instructions](frontend/README.md).
+Current engineering validation at the documented October 30 baseline: 154 backend tests passed; frontend build and lint passed; isolated headless Edge checks exercised the actual React interface with a local mock API, including upload limits, HTML proxy errors, incomplete upload results, source isolation, literal-text rendering, file changes during pending requests, and mobile width. No paid API request was made for this feature. Reproduce browser checks with `npm run check:qa-ui` in `frontend`; see [frontend instructions](frontend/README.md).
 
 ## API
 
@@ -162,7 +164,7 @@ The [interpretation follow-up](backend/eval/URBANA_REASONING_FOLLOWUP_2026-10-28
 
 The [2026-10-29 current-prompt rerun](backend/eval/ANALYSIS_REVIEW_2026-10-29.md) used three of six newly authorized requests: all three existing fixtures passed on their first responses, with 36/36 exact quotes and 75/75 references to supplied IDs (45,731 tokens). The review still found unsupported summary wording and omitted statutory exceptions. This minimum functional rerun does not establish general reliability, legal accuracy or recall. The implementation at that snapshot passed 100 backend tests, actual-browser checks and real-container retrieval checks.
 
-A separate [four-case diagnostic run](backend/eval/DIAGNOSTIC_REVIEW_2026-10-29.md) used its full newly authorized 8-request cap, reproduced fabricated contract quotations, and motivated strict server enforcement. The final guard rejects the saved bad response in a mocked regression. A subsequent [final-version full-contract check](backend/eval/FINAL_ENFORCEMENT_REVIEW_2026-10-29.md) used the three remaining requests from the separate full-contract authorization: three first-pass successes, 36/36 exact quotes, 56/56 supplied-ID references, and 44,850 tokens. Explanation errors remain, including twelve months being described as twelve years. Both authorizations are now exhausted. The later [local-only review](backend/eval/REASONING_REVIEW.md#final-report-evidence-and-prompt-isolation) records five evidence-anchored issues and isolates region/type guidance; this prompt change has not been live-tested. The [offline review protocol](backend/eval/REASONING_REVIEW.md) separates actual tested cases from untested drafts and leaves legal accuracy/recall undefined.
+A separate [four-case diagnostic run](backend/eval/DIAGNOSTIC_REVIEW_2026-10-29.md) used its full newly authorized 8-request cap, reproduced fabricated contract quotations, and motivated strict server enforcement. The final guard rejects the saved bad response in a mocked regression. A subsequent [final-version full-contract check](backend/eval/FINAL_ENFORCEMENT_REVIEW_2026-10-29.md) used the three remaining requests from the separate full-contract authorization: three first-pass successes, 36/36 exact quotes, 56/56 supplied-ID references, and 44,850 tokens. Explanation errors remain, including twelve months being described as twelve years. Both authorizations are now exhausted. The later [local-only review](backend/eval/REASONING_REVIEW.md#final-report-evidence-and-prompt-isolation) records five evidence-anchored issues and isolates region/type guidance; this prompt change was subsequently live-tested in the [October 30 completion batch](backend/eval/COMPLETION_REVIEW_2026-10-30.md), which still did not pass model-quality acceptance. The [offline review protocol](backend/eval/REASONING_REVIEW.md) separates actual tested cases from untested drafts and leaves legal accuracy/recall undefined.
 
 An optional script is available for explicitly authorized, billable verification on the three synthetic contracts:
 
@@ -203,7 +205,7 @@ python -m eval.retrieval_eval
 - Document filtering is not user authentication or access control. The prototype has no accounts; use synthetic documents for development.
 - Scanned PDFs require OCR, which is not implemented.
 - The statute library is selective and omits many laws, local rules, judicial interpretations, and technical standards. The Urbana municipal text comes from a user-supplied official export labeled 20260417; later amendments must be checked. Its Chapter 5 technical codes are not reproduced in that export. Matching a quote or allowing a law ID does not establish that the law supports the model's explanation.
-- Live analysis has been checked on only three synthetic contracts. Quote and ID checks do not measure legal correctness or risk recall; unsupported legal generalizations were observed in the English sample.
+- Live analysis checks cover three full synthetic contracts and sixteen post-error diagnostic inputs, including the October 30 repeated batch. Quote and ID checks do not measure legal correctness or risk recall; factual and interpretation errors remain.
 - The evaluation set is small and synthetic. Retrieval metrics exclude PDF extraction and LLM generation; the separate live analysis check measures only structural citation properties. Scores are not calibrated.
 
 This is a development prototype, not legal advice.
