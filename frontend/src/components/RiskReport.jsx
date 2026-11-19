@@ -5,11 +5,12 @@ import ErrorMessage from './ErrorMessage'
 import { isRenderableReport } from '../report'
 
 const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
+const replayDemo = import.meta.env.VITE_REPLAY_DEMO === 'true'
 const riskLabels = { high: '高风险', medium: '中风险', low: '低风险' }
 const lawLevels = { national: '国家法律', municipal: 'Urbana 市条例', state: '伊利诺伊州法', federal: '美国联邦法' }
 
 function RiskReport({ docId }) {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const [report, setReport] = useState(null)
   const [analyzing, setAnalyzing] = useState(false)
   const [error, setError] = useState('')
@@ -40,7 +41,8 @@ function RiskReport({ docId }) {
       const res = await fetch(`${apiUrl}/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ doc_id: docId, jurisdiction }),
+        // The report is written in the interface language; quoted clauses stay in the contract's language.
+        body: JSON.stringify({ doc_id: docId, jurisdiction, output_language: language }),
         signal: controller.signal,
       })
       let data
@@ -96,7 +98,7 @@ function RiskReport({ docId }) {
             <div className="score-tile" aria-label={t("风险提示评分：{score}/10", { score: report.risk_score })}>
               <h3>{t("风险提示评分")}</h3><p className="score-value">{report.risk_score}<span>/ 10</span></p><small>{t("提示性评分，非违法概率")}</small>
             </div>
-            <div className="report-summary"><h2>{t("这份合同，需要关注什么？")}</h2><p className="content-language-note">{t("报告、回答和引用原文保留原有语言。")}</p><p>{report.summary}</p>
+            <div className="report-summary"><h2>{t("这份合同，需要关注什么？")}</h2><p className="content-language-note">{t(replayDemo ? "报告、回答和引用原文保留原有语言。" : "报告和回答使用生成时的界面语言；引用的合同原文保持原文语言。")}</p><p>{report.summary}</p>
               <details className="scope-details"><summary>{t("本次法条范围与适用条件")}</summary><p>{t(report.legal_scope)}</p></details>
             </div>
           </div>

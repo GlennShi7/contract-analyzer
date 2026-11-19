@@ -14,7 +14,7 @@ def artifact():
     plan = runner.build_plan()
     item, spec = plan["inputs"][0], plan["rows"][0]
     requests = []
-    output = {"contract_type": classify_contract(item["text"]), "risk_score": 1, "summary": "Synthetic offline test", "cards": []}
+    output = {"contract_type": classify_contract(item["text"]), "risk_score": 1, "summary": "合成离线测试", "cards": []}
     raw = json.dumps(output)
     def complete(**kwargs):
         requests.append({"row_id": spec["id"], "status": "completed", "payload": deepcopy(kwargs),
@@ -51,7 +51,7 @@ def test_findings_require_exact_output_input_and_source_evidence():
     item = value["plan"]["inputs"][0]
     review = {"ledger_fingerprint": runner.digest(value), "independent_adjudication": False,
               "findings": [{"id": "f1", "verdict": "unknown", "rationale": "Test evidence anchor only",
-                            "output_evidence": [{"pointer": ["rows", 0, "result", "summary"], "quote": "Synthetic offline test"}],
+                            "output_evidence": [{"pointer": ["rows", 0, "result", "summary"], "quote": "合成离线测试"}],
                             "input_evidence": [{"input_id": item["id"], "quote": item["text"]}],
                             "source_anchors": item["source_anchors"]}]}
     assert validate_findings(review, value)["evidence_anchored_findings"] == 1

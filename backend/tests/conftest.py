@@ -54,8 +54,9 @@ def api(monkeypatch, tmp_path, collection):
         if kwargs.get("response_format"):
             from analyzer import classify_contract
             text = json.loads(kwargs["messages"][1]["content"])["contract_text"]
+            english = "in English" in kwargs["messages"][0]["content"]
             content = json.dumps({"contract_type": classify_contract(text), "risk_score": 5,
-                                  "summary": "Test summary", "cards": []})
+                                  "summary": "Test summary" if english else "测试摘要", "cards": []})
         else:
             content = "Test answer"
         return SimpleNamespace(choices=[SimpleNamespace(finish_reason="stop", message=SimpleNamespace(content=content))])

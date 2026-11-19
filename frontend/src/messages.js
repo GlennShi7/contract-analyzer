@@ -97,6 +97,7 @@ export const english = {
   '查看官方原文 ↗': 'Open official source ↗',
   '来源核对日期：': 'Source checked: ',
   '报告、回答和引用原文保留原有语言。': 'Reports, answers and source text stay in their original language.',
+  '报告和回答使用生成时的界面语言；引用的合同原文保持原文语言。': 'Reports and answers use the interface language chosen when they are generated; quoted clauses stay in the contract’s language.',
   '问问这份合同': 'Ask this contract',
   '可以询问押金、付款期限、维修等合同约定。每次问题独立回答，追问请补全指代。': 'Ask about deposits, deadlines, repairs or other terms. Each question is independent, so include the context.',
   '你的问题': 'Your question',

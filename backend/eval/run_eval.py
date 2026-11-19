@@ -90,9 +90,10 @@ def main():
     ap.add_argument("--out", type=Path, default=PRIVATE)
     ap.add_argument("--drop-info-pages", action="store_true", help="remove pamphlet and ordinance-summary pages before analysis")
     ap.add_argument("--model")
+    ap.add_argument("--language", choices=["zh", "en"], default="zh", help="language of the report prose")
     a = ap.parse_args()
     run(a.pdf, deepseek_client(), jurisdiction=a.jurisdiction, runs=a.runs, out_dir=a.out,
-        drop_info_pages=a.drop_info_pages, model=a.model)
+        drop_info_pages=a.drop_info_pages, model=a.model, output_language=a.language)
 
 
 if __name__ == "__main__":

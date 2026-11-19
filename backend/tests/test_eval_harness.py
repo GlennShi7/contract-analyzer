@@ -17,7 +17,7 @@ def stub_client(cards):
         calls.append(kwargs)
         from analyzer import classify_contract
         text = json.loads(kwargs["messages"][1]["content"])["contract_text"]
-        content = json.dumps({"contract_type": classify_contract(text), "risk_score": 5, "summary": "s", "cards": cards})
+        content = json.dumps({"contract_type": classify_contract(text), "risk_score": 5, "summary": "测试摘要", "cards": cards})
         return SimpleNamespace(choices=[SimpleNamespace(finish_reason="stop", message=SimpleNamespace(content=content))])
 
     return SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=create))), calls
