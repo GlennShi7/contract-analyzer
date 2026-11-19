@@ -1,0 +1,716 @@
+{
+ "version": "2026-11-18",
+ "note": "Lease review checklist v2. Tiers are a first draft to be calibrated with tenant advocates.",
+ "items": [
+  {
+   "id": 1,
+   "name_zh": "押金退还与扣款",
+   "name_en": "Deposit return and deductions",
+   "description_zh": "退还期限、逐项清单与收据、兜底没收押金的条款",
+   "tier": "universal",
+   "absent_means": "missing",
+   "keywords": [
+    "security deposit",
+    "itemiz",
+    "forfeit",
+    "refund",
+    "deduct"
+   ]
+  },
+  {
+   "id": 2,
+   "name_zh": "押金利息",
+   "name_en": "Deposit interest",
+   "description_zh": "租约写明不付押金利息（法律要求付息时）",
+   "tier": "universal",
+   "absent_means": "none",
+   "keywords": [
+    "interest"
+   ]
+  },
+  {
+   "id": 3,
+   "name_zh": "预设清洁/维修价目",
+   "name_en": "Preset cleaning/repair charges",
+   "description_zh": "预先写死的清洁/维修/刷墙/洗地毯收费，是否限于超出正常损耗",
+   "tier": "universal",
+   "absent_means": "none",
+   "keywords": [
+    "replacement cost",
+    "schedule of",
+    "normal wear",
+    "wear and tear",
+    "cleaning",
+    "carpet",
+    "paint"
+   ]
+  },
+  {
+   "id": 4,
+   "name_zh": "滞纳金",
+   "name_en": "Late fees",
+   "description_zh": "滞纳金金额、计算基数、宽限期",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "late fee",
+    "late charge",
+    "late payment",
+    "grace period",
+    "delinquen"
+   ]
+  },
+  {
+   "id": 5,
+   "name_zh": "其他杂费、罚款和催收费",
+   "name_en": "Other fees, fines and collection charges",
+   "description_zh": "转租费、换锁费、罚款、催收费等是否超过实际成本",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "collection",
+    "lockout",
+    "lock-out",
+    "rekey",
+    "re-key",
+    "key replacement",
+    "transfer fee",
+    "sublease fee",
+    "sublet fee",
+    "nsf",
+    "returned check",
+    "returned payment",
+    "administrative fee",
+    "processing fee",
+    "fines",
+    "penalt"
+   ]
+  },
+  {
+   "id": 6,
+   "name_zh": "租期中涨租",
+   "name_en": "Rent increases during the term",
+   "description_zh": "租期内单方面涨租或改条款",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "operating cost",
+    "escalat",
+    "adjust the rent",
+    "rent adjustment",
+    "increase"
+   ]
+  },
+  {
+   "id": 7,
+   "name_zh": "付款方式",
+   "name_en": "Payment methods",
+   "description_zh": "强制电子付款、门户手续费、纸质支票收费",
+   "tier": "universal",
+   "absent_means": "none",
+   "keywords": [
+    "convenience fee",
+    "portal",
+    "ach",
+    "electronic",
+    "online",
+    "money order",
+    "certified funds",
+    "cashier"
+   ]
+  },
+  {
+   "id": 8,
+   "name_zh": "签约前付钱/预付/递延租金",
+   "name_en": "Pre-signing payments, prepaid or deferred rent",
+   "description_zh": "签约前付款、预付或递延租金",
+   "tier": "universal",
+   "absent_means": "none",
+   "keywords": [
+    "holding deposit",
+    "pre-lease",
+    "deferred",
+    "prepay",
+    "prepaid",
+    "pre-pay",
+    "in advance",
+    "reservation"
+   ]
+  },
+  {
+   "id": 9,
+   "name_zh": "公用事业分摊",
+   "name_en": "Utility allocation",
+   "description_zh": "谁付哪项水电、分摊方式、转户罚款",
+   "tier": "universal",
+   "absent_means": "missing",
+   "keywords": [
+    "allocat",
+    "submeter",
+    "overage",
+    "utilit",
+    "electric",
+    "water",
+    "internet"
+   ]
+  },
+  {
+   "id": 10,
+   "name_zh": "按床位/整套、连带责任、担保人",
+   "name_en": "By-the-bed vs. joint liability, guarantors",
+   "description_zh": "按床位还是按整套、连带责任、担保人范围",
+   "tier": "universal",
+   "absent_means": "missing",
+   "keywords": [
+    "jointly",
+    "by the bed",
+    "by the unit",
+    "guarant",
+    "co-sign",
+    "cosign",
+    "individual",
+    "several"
+   ]
+  },
+  {
+   "id": 11,
+   "name_zh": "免除房东过失责任",
+   "name_en": "Exculpation of landlord negligence",
+   "description_zh": "免除房东自身过失责任",
+   "tier": "rare",
+   "absent_means": "none",
+   "keywords": [
+    "negligen",
+    "not be liable",
+    "not liable",
+    "not responsible",
+    "release",
+    "liability"
+   ]
+  },
+  {
+   "id": 12,
+   "name_zh": "维修责任",
+   "name_en": "Repair responsibility",
+   "description_zh": "维修责任归属，是否把维修推给租客",
+   "tier": "common",
+   "absent_means": "missing",
+   "keywords": [
+    "habitab",
+    "work order",
+    "repair",
+    "maintenance",
+    "maintain"
+   ]
+  },
+  {
+   "id": 13,
+   "name_zh": "霉菌和害虫",
+   "name_en": "Mold and pests",
+   "description_zh": "霉菌责任转嫁、除虫安排",
+   "tier": "common",
+   "absent_means": "missing",
+   "keywords": [
+    "mold",
+    "mildew",
+    "bed bug",
+    "bedbug",
+    "pest",
+    "extermin",
+    "insect"
+   ]
+  },
+  {
+   "id": 14,
+   "name_zh": "交房延迟和火灾等灾害",
+   "name_en": "Delayed possession, fire and casualty",
+   "description_zh": "无法按时交房、火灾等灾害时的解约、减租、安置",
+   "tier": "rare",
+   "absent_means": "missing",
+   "keywords": [
+    "casualty",
+    "uninhabit",
+    "force majeure",
+    "act of god",
+    "fire",
+    "construction",
+    "delay",
+    "possession",
+    "relocat"
+   ]
+  },
+  {
+   "id": 15,
+   "name_zh": "认诺判决",
+   "name_en": "Confession of judgment",
+   "description_zh": "认诺判决条款",
+   "tier": "rare",
+   "absent_means": "none",
+   "keywords": [
+    "confess",
+    "cognovit",
+    "warrant of attorney",
+    "power of attorney"
+   ]
+  },
+  {
+   "id": 16,
+   "name_zh": "律师费",
+   "name_en": "Attorney's fees",
+   "description_zh": "单方面律师费、从押金扣律师费",
+   "tier": "rare",
+   "absent_means": "none",
+   "keywords": [
+    "attorney",
+    "legal fee",
+    "court cost",
+    "collection cost"
+   ]
+  },
+  {
+   "id": 17,
+   "name_zh": "放弃通知/正当程序/扣租权利",
+   "name_en": "Waiver of notice, due process or rent withholding",
+   "description_zh": "放弃通知、驱逐程序或扣减房租的权利",
+   "tier": "rare",
+   "absent_means": "none",
+   "keywords": [
+    "without notice",
+    "without demand",
+    "waive",
+    "waiver",
+    "withhold",
+    "reduce rent",
+    "offset",
+    "set-off",
+    "setoff"
+   ]
+  },
+  {
+   "id": 18,
+   "name_zh": "房东入户",
+   "name_en": "Landlord entry",
+   "description_zh": "房东入户的通知时间和例外",
+   "tier": "common",
+   "absent_means": "missing",
+   "keywords": [
+    "entry",
+    "enter",
+    "access",
+    "inspect"
+   ]
+  },
+  {
+   "id": 19,
+   "name_zh": "转租和转让",
+   "name_en": "Subletting and assignment",
+   "description_zh": "禁止转租、转租审批、转租费和罚款",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "sublet",
+    "sublease",
+    "replacement resident",
+    "relet",
+    "re-let",
+    "assignment",
+    "assign this/the/your lease"
+   ]
+  },
+  {
+   "id": 20,
+   "name_zh": "规则随时可改、宠物许可可撤回",
+   "name_en": "Rules changeable at will, revocable pet consent",
+   "description_zh": "房东可随时修改规则、撤回宠物许可、违规罚款",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "revoke",
+    "community policies",
+    "rules",
+    "regulations",
+    "amend",
+    "modif",
+    "pets",
+    "animal"
+   ]
+  },
+  {
+   "id": 21,
+   "name_zh": "自动续约和续约通知",
+   "name_en": "Automatic renewal and renewal notices",
+   "description_zh": "自动续约、续约/不续约通知",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "automatic",
+    "renew",
+    "month-to-month",
+    "month to month",
+    "intent to vacate",
+    "notice to vacate"
+   ]
+  },
+  {
+   "id": 22,
+   "name_zh": "不能提前解约",
+   "name_en": "No early termination",
+   "description_zh": "任何理由不得提前解约、需付清剩余租金",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "early termination",
+    "buyout",
+    "buy-out",
+    "mitigat",
+    "military",
+    "domestic violence",
+    "sexual violence",
+    "cancel",
+    "terminat"
+   ]
+  },
+  {
+   "id": 23,
+   "name_zh": "逾期不搬",
+   "name_en": "Holdover",
+   "description_zh": "逾期不搬的罚款和赔偿",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "holdover",
+    "hold over",
+    "holding over",
+    "remain in possession",
+    "stay in possession",
+    "trespass"
+   ]
+  },
+  {
+   "id": 24,
+   "name_zh": "法定披露（管理人/业主、含铅油漆）",
+   "name_en": "Required disclosures (owner/manager, lead paint)",
+   "description_zh": "业主/管理人披露、1978 年前房屋含铅油漆披露",
+   "tier": "rare",
+   "absent_means": "missing",
+   "keywords": [
+    "lead-based",
+    "lead based",
+    "lead paint",
+    "managing agent",
+    "disclos"
+   ]
+  },
+  {
+   "id": 25,
+   "name_zh": "歧视性条款",
+   "name_en": "Discriminatory terms",
+   "description_zh": "按受保护类别区别对待的条款",
+   "tier": "rare",
+   "absent_means": "none",
+   "keywords": [
+    "citizen",
+    "immigration",
+    "national origin",
+    "voucher",
+    "section 8",
+    "familial",
+    "disabilit"
+   ]
+  },
+  {
+   "id": 26,
+   "name_zh": "押金替代产品和强制保险",
+   "name_en": "Deposit alternatives and required insurance",
+   "description_zh": "押金替代产品、强制租客保险或代买保险",
+   "tier": "universal",
+   "absent_means": "none",
+   "keywords": [
+    "deposit alternative",
+    "surety",
+    "damage waiver",
+    "waiver program",
+    "insurance",
+    "insured"
+   ]
+  },
+  {
+   "id": 27,
+   "name_zh": "固定杂费和水电包干上限",
+   "name_en": "Fixed fees and utility caps",
+   "description_zh": "月租以外的固定杂费、水电包干上限",
+   "tier": "universal",
+   "absent_means": "none",
+   "keywords": [
+    "cap",
+    "capped",
+    "flat fee",
+    "amenit",
+    "technology",
+    "trash",
+    "valet",
+    "package",
+    "parking",
+    "included in"
+   ]
+  },
+  {
+   "id": 28,
+   "name_zh": "分期和不足月",
+   "name_en": "Installments and partial months",
+   "description_zh": "分期期数与实际租期不符、不足月不折算",
+   "tier": "universal",
+   "absent_means": "missing",
+   "keywords": [
+    "partial month",
+    "prorat",
+    "pro-rat",
+    "pro rat",
+    "installment",
+    "aggregate"
+   ]
+  },
+  {
+   "id": 29,
+   "name_zh": "付款冲抵顺序、费用算作房租",
+   "name_en": "Payment application order, fees treated as rent",
+   "description_zh": "付款先抵费用、费用并入房租余额",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "applied first",
+    "application of payment",
+    "applied to",
+    "apply any",
+    "additional rent",
+    "\"rent\"",
+    "deemed rent",
+    "considered rent"
+   ]
+  },
+  {
+   "id": 30,
+   "name_zh": "优惠追回",
+   "name_en": "Concession clawbacks",
+   "description_zh": "签约优惠在违约时追回",
+   "tier": "rare",
+   "absent_means": "none",
+   "keywords": [
+    "concession",
+    "gift card",
+    "incentive",
+    "rebate",
+    "promotion",
+    "discount",
+    "special"
+   ]
+  },
+  {
+   "id": 31,
+   "name_zh": "房间待分配和换房",
+   "name_en": "Room assignment and relocation",
+   "description_zh": "卧室待分配、房东安排室友、换房",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "tbd",
+    "reassign",
+    "relocat",
+    "substitut",
+    "roommate matching",
+    "assigned"
+   ]
+  },
+  {
+   "id": 32,
+   "name_zh": "公共区域损坏均摊",
+   "name_en": "Shared charges for common-area damage",
+   "description_zh": "公共区域损坏由全体租客平摊",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "common area",
+    "pro rata",
+    "equally",
+    "divided",
+    "shared"
+   ]
+  },
+  {
+   "id": 33,
+   "name_zh": "违约加速到期",
+   "name_en": "Rent acceleration on default",
+   "description_zh": "违约后剩余租金全部立即到期",
+   "tier": "rare",
+   "absent_means": "none",
+   "keywords": [
+    "accelerat",
+    "immediately due",
+    "entire balance",
+    "remaining rent",
+    "become due",
+    "remaining obligations",
+    "until the ending date",
+    "entire term",
+    "balance of the term",
+    "all rent"
+   ]
+  },
+  {
+   "id": 34,
+   "name_zh": "宽泛的赔偿条款",
+   "name_en": "Broad indemnification",
+   "description_zh": "租客承担房东自身过失在内的一切赔偿",
+   "tier": "rare",
+   "absent_means": "none",
+   "keywords": [
+    "indemnif",
+    "hold harmless",
+    "hold us harmless",
+    "harmless",
+    "defend"
+   ]
+  },
+  {
+   "id": 35,
+   "name_zh": "仲裁/放弃陪审团/集体诉讼/管辖地",
+   "name_en": "Arbitration, jury/class waivers, venue",
+   "description_zh": "仲裁、放弃陪审团或集体诉讼、指定管辖地",
+   "tier": "rare",
+   "absent_means": "none",
+   "keywords": [
+    "arbitrat",
+    "jury",
+    "class action",
+    "venue",
+    "governing law",
+    "jurisdiction"
+   ]
+  },
+  {
+   "id": 36,
+   "name_zh": "弃置物品和换锁断电",
+   "name_en": "Abandoned property, lockouts and utility shutoffs",
+   "description_zh": "遗弃物品处理期限和费用、换锁断电赶人",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "abandon",
+    "change the lock",
+    "lock out",
+    "dispose",
+    "personal property",
+    "storage"
+   ]
+  },
+  {
+   "id": 37,
+   "name_zh": "通知方式",
+   "name_en": "Notice methods",
+   "description_zh": "通知送达方式、转寄地址",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "forwarding address",
+    "certified mail",
+    "email address",
+    "deemed",
+    "notices"
+   ]
+  },
+  {
+   "id": 38,
+   "name_zh": "完整协议条款和口头承诺",
+   "name_en": "Entire-agreement clause and oral promises",
+   "description_zh": "完整协议条款、口头承诺无效",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "entire agreement",
+    "supersede",
+    "oral",
+    "verbal",
+    "representation"
+   ]
+  },
+  {
+   "id": 39,
+   "name_zh": "签约生效不对等",
+   "name_en": "Asymmetric signing/effectiveness",
+   "description_zh": "租客签字即受约束而房东不受约束",
+   "tier": "rare",
+   "absent_means": "none",
+   "keywords": [
+    "binding",
+    "signed by",
+    "executed",
+    "acceptance"
+   ]
+  },
+  {
+   "id": 40,
+   "name_zh": "入住检查表",
+   "name_en": "Move-in condition checklist",
+   "description_zh": "入住检查表的期限和方式",
+   "tier": "universal",
+   "absent_means": "missing",
+   "keywords": [
+    "condition report",
+    "checklist",
+    "inventory",
+    "move-in",
+    "move in",
+    "inspection"
+   ]
+  },
+  {
+   "id": 41,
+   "name_zh": "学生身份条款",
+   "name_en": "Student-status terms",
+   "description_zh": "退学、转学、毕业不影响租约等学生身份条款",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "no longer a student",
+    "student status",
+    "enroll",
+    "withdraw",
+    "graduat",
+    "academic"
+   ]
+  },
+  {
+   "id": 42,
+   "name_zh": "针对国际学生的额外条件",
+   "name_en": "Extra conditions for international students",
+   "description_zh": "仅因签证或移民身份附加的条件",
+   "tier": "rare",
+   "absent_means": "none",
+   "keywords": [
+    "international",
+    "foreign",
+    "visa",
+    "i-20",
+    "passport",
+    "social security",
+    "ssn"
+   ]
+  },
+  {
+   "id": 43,
+   "name_zh": "引用了但没附上的文件",
+   "name_en": "Referenced documents not attached",
+   "description_zh": "引用了但没附上的附录、规则、手册；条款前后矛盾",
+   "tier": "common",
+   "absent_means": "none",
+   "keywords": [
+    "addend",
+    "exhibit",
+    "incorporat",
+    "attached",
+    "community guidelines",
+    "schedule"
+   ]
+  }
+ ]
+}

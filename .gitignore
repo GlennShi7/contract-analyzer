@@ -21,3 +21,6 @@ HANDOFF*.md
 
 # Local synthetic container smoke evidence.
 /embedding-smoke.json
+
+# Real leases and their evaluation outputs contain personal information; never commit them.
+backend/eval/private/

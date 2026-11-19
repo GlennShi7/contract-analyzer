@@ -22,6 +22,8 @@ from parser import MAX_DOCUMENT_CHARS, PDFLimitError, extract_text
 
 load_dotenv(Path(__file__).resolve().parent / ".env")
 MAX_UPLOAD_BYTES = 20 * 1024 * 1024
+# Long leases double the input size; leave room for reading the full text before the first token.
+LLM_TIMEOUT_SECONDS = 120
 INDEX_UNAVAILABLE = "合同索引服务暂时不可用，请稍后重试；首次使用需要联网下载嵌入模型，缓存完整后可离线使用"
 
 app = FastAPI()
@@ -39,7 +41,7 @@ def get_llm_client():
     key = os.environ.get("DEEPSEEK_API_KEY")
     if not key:
         raise HTTPException(status_code=503, detail="服务端尚未配置 DeepSeek API key")
-    return OpenAI(api_key=key, base_url="https://api.deepseek.com", timeout=60, max_retries=0)
+    return OpenAI(api_key=key, base_url="https://api.deepseek.com", timeout=LLM_TIMEOUT_SECONDS, max_retries=0)
 
 
 class ContractRequest(BaseModel):

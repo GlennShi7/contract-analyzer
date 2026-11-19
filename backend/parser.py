@@ -1,14 +1,16 @@
 import pdfplumber
 
 MAX_PDF_PAGES = 200
-MAX_DOCUMENT_CHARS = 100_000
+# Real student leases often append required disclosures (lead-paint and radon pamphlets, ordinance
+# summaries); a 48-page Urbana lease extracts to about 120,000 characters.
+MAX_DOCUMENT_CHARS = 200_000
 
 
 class PDFLimitError(ValueError):
     """The PDF exceeds the prototype's page or extracted-text limits."""
 
 
-def extract_text(file_path: str) -> str:
+def extract_pages(file_path: str) -> list[str]:
     pages = []
     size = 0
     with pdfplumber.open(file_path) as pdf:
@@ -20,4 +22,8 @@ def extract_text(file_path: str) -> str:
             if size > MAX_DOCUMENT_CHARS:
                 raise PDFLimitError(f"提取文字超过 {MAX_DOCUMENT_CHARS} 字符，请拆分 PDF 后上传")
             pages.append(text)
-    return "\n\n".join(pages)
+    return pages
+
+
+def extract_text(file_path: str) -> str:
+    return "\n\n".join(extract_pages(file_path))
