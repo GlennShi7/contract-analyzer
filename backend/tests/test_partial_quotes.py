@@ -52,7 +52,7 @@ def test_second_attempt_fails_when_most_cards_are_broken():
 
 
 def test_more_cards_than_checklist_items_are_accepted():
-    # Seen on the real Oregon lease: 45 cards, because one item can carry several problems.
+    # Seen on a real lease: 45 cards, because one item can carry several problems.
     cards = report(45, 0)
     for i, c in enumerate(cards):
         c["checklist_item"] = (i % analyzer.CHECKLIST_SIZE) + 1

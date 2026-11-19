@@ -321,7 +321,7 @@ try {
   await changeRegion('us_il');
   await until('document.querySelector(".risk-panel .scope-hint").textContent.includes("Illinois state and federal law only")');
   await changeRegion('us_il_urbana');
-  await until('document.querySelector(".risk-panel .scope-hint").textContent.includes("Urbana excludes Champaign")');
+  await until('document.querySelector(".risk-panel .scope-hint").textContent.includes("inside Urbana city limits")');
   for (const [mode, expected] of [['error', 'temporarily unavailable'], ['html', 'could not be read'], ['foreign', 'does not match']]) {
     analysisMode = mode;
     await evaluate('document.querySelector(".analysis-toolbar button").click()');

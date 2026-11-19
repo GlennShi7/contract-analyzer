@@ -2,10 +2,10 @@
 
     cd backend
     # cards already carry checklist_item (step 3 onward): scoring is automatic
-    python -m eval.score_eval --gold private/oregon_gold.csv --runs private/oregon_full_run*.json
+    python -m eval.score_eval --gold private/lease_a_gold.csv --runs private/lease_a_full_run*.json
     # older outputs without checklist_item: write a mapping template, confirm it, then score
-    python -m eval.score_eval --gold private/oregon_gold.csv --runs private/*.json --write-mapping private/map.json
-    python -m eval.score_eval --gold private/oregon_gold.csv --runs private/*.json --mapping private/map.json
+    python -m eval.score_eval --gold private/lease_a_gold.csv --runs private/*.json --write-mapping private/map.json
+    python -m eval.score_eval --gold private/lease_a_gold.csv --runs private/*.json --mapping private/map.json
 
 Answer key formats:
 - CSV exported from the keyword report ("导出 CSV"): uses the 判断 column, falls back to 初稿.
@@ -25,6 +25,8 @@ SHOULD_FLAG = {"违法/无效", "风险", "待核实", "缺失"}
 SHOULD_NOT = {"没问题", "没有"}
 CATEGORY_LABEL = {"illegal": "违法/无效", "risk": "风险", "verify": "待核实", "missing": "缺失"}
 TIER_ZH = {"universal": "每人都会", "common": "常见", "rare": "罕见"}
+# An item with several cards is judged by its strongest claim.
+STRENGTH = ["illegal", "risk", "verify", "missing"]
 
 
 def load_checklist(path: Path = CHECKLIST) -> dict[int, dict]:
@@ -96,13 +98,22 @@ def score_run(record: dict, gold: dict[int, str], checklist: dict[int, dict], ma
         tier_should = {i for i in should if checklist[i]["tier"] == tier}
         if tier_should:
             out["recall_by_tier"][tier] = (len(tier_should & flagged), len(tier_should))
-    categorized = [(item, card) for item in hits for card in by_item[item] if card.get("category") in CATEGORY_LABEL]
-    if categorized:
-        out["category_exact"] = sum(CATEGORY_LABEL[c["category"]] == gold[i] for i, c in categorized)
-        out["category_total"] = len(categorized)
-        out["overclaim"] = sorted({i for i, c in categorized if c["category"] == "illegal" and gold[i] != "违法/无效"})
-        out["underclaim"] = sorted({i for i in hits if gold[i] == "违法/无效"
-                                    and not any(c.get("category") == "illegal" for c in by_item[i])})
+    # One verdict per checklist item, so an item with five cards counts once.
+    item_category = {}
+    for item in hits:
+        categories = [c.get("category") for c in by_item[item] if c.get("category") in CATEGORY_LABEL]
+        if categories:
+            item_category[item] = min(categories, key=STRENGTH.index)
+    if item_category:
+        out["category_exact"] = sum(CATEGORY_LABEL[c] == gold[i] for i, c in item_category.items())
+        out["category_total"] = len(item_category)
+        out["category_by_item"] = {i: CATEGORY_LABEL[c] for i, c in sorted(item_category.items())}
+        out["overclaim"] = sorted(i for i, c in item_category.items() if c == "illegal" and gold[i] != "违法/无效")
+        out["underclaim"] = sorted(i for i in hits if gold[i] == "违法/无效" and item_category.get(i) != "illegal")
+    grounding = record["result"].get("grounding") or {}
+    out["dropped"] = grounding.get("cards_dropped", 0)
+    out["missing_blocked"] = grounding.get("missing_blocked", [])
+    out["retries"] = len(grounding.get("retry_reasons", []))
     illegal_hits = [i for i in hits if gold[i] == "违法/无效"]
     out["illegal_hits_with_law"] = sum(any(c.get("legal_basis") for c in by_item[i]) for i in illegal_hits)
     out["illegal_hits"] = len(illegal_hits)
@@ -143,6 +154,7 @@ def report(scores: list[dict], gold: dict[int, str], checklist: dict[int, dict],
             lines.append(f"- 类别一致 {s['category_exact']}/{s['category_total']}；说过头（判违法但答案不是）：{s['overclaim'] or '无'}；"
                          f"说轻了（答案违法但没判违法）：{s['underclaim'] or '无'}")
         lines.append(f"- 违法项命中且附法条：{s['illegal_hits_with_law']}/{s['illegal_hits']}")
+        lines.append(f"- 没通过检查被去掉 {s['dropped']} 张；缺失卡被关键词拦下 {len(s['missing_blocked'])} 张；重试 {s['retries']} 次")
         if s["unmapped_cards"]:
             lines.append(f"- 未映射的卡片：{s['unmapped_cards']}（先用 --write-mapping 生成映射并确认）")
         if s["other_cards"]:

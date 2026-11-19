@@ -3,9 +3,9 @@
 Real leases contain personal information. Outputs go to backend/eval/private/ (git-ignored) by default.
 
     cd backend
-    python -m eval.run_eval ~/leases/oregon.pdf --jurisdiction us_il_urbana --runs 3
+    python -m eval.run_eval ~/leases/lease_a.pdf --jurisdiction us_il_urbana --runs 3
     # A/B check: the same lease without pamphlet and ordinance-summary pages
-    python -m eval.run_eval ~/leases/oregon.pdf --jurisdiction us_il_urbana --runs 3 --drop-info-pages
+    python -m eval.run_eval ~/leases/lease_a.pdf --jurisdiction us_il_urbana --runs 3 --drop-info-pages
 
 Each run file holds the full analysis (or the error), the model, timing and which pages were sent.
 Score the files with eval.score_eval.

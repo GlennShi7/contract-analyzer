@@ -27,7 +27,7 @@ LEASE_PAGE = "Residential lease. Landlord and tenant agree. Monthly rent is 500.
 PAMPHLET = "Protect Your Family From Lead in Your Home. EPA pamphlet. What is lead? It is a metal. What can I do? Test your home."
 
 
-def test_oregon_sized_lease_passes_the_upload_limit(api, pdf_factory):
+def test_long_real_lease_size_passes_the_upload_limit(api, pdf_factory):
     # A 48-page Urbana lease with required pamphlets extracts to about 120,000 characters.
     client, _ = api
     pages = [("Tenant shall pay rent. " * 130)[:3000] for _ in range(40)]

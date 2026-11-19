@@ -48,7 +48,7 @@ def test_urbana_pipeline_injects_local_state_and_federal_sources():
     client, calls = stub_client([(json.dumps(sample_output(quote="Landlord and Tenant.")), "stop")])
     result = analyze_contract(text, client, jurisdiction="us_il_urbana")
     system = calls[0]["messages"][0]["content"]
-    assert "市界查询证据" in system
+    assert "即声明房产位于 Urbana 市界内" in system and "不因本工具无法核验市界而降低类别" in system
     for law_id in ("URBANA-12.5-10", "765 ILCS 710/1", "42 U.S.C. 3604"):
         assert law_id in system
     assert "劳动合同法-19" not in system
@@ -96,8 +96,8 @@ def test_server_scope_keeps_city_boundary_unverified_when_model_overclaims():
     client, _ = stub_client([(json.dumps(output), "stop")])
     report = analyze_contract(text, client, jurisdiction="us_il_urbana")
     # Scope is computed by the server, even when a model overclaims in its summary.
-    assert "尚未核验市界" in report.legal_scope
-    assert "邮寄地址或地区选择不等于市界确认" in report.legal_scope
+    assert "假定房产位于 Urbana 市界内" in report.legal_scope
+    assert "本工具没有核验市界" in report.legal_scope
 
 
 def test_live_request_limit_also_blocks_a_correction_request(monkeypatch):

@@ -295,9 +295,13 @@
    "absent_means": "missing",
    "keywords": [
     "entry",
-    "enter",
-    "access",
-    "inspect"
+    "enter the premises",
+    "enter the unit",
+    "enter the apartment",
+    "enter the dwelling",
+    "right of access",
+    "access to the premises",
+    "access to the unit"
    ]
   },
   {
@@ -388,17 +392,16 @@
   },
   {
    "id": 24,
-   "name_zh": "法定披露（管理人/业主、含铅油漆）",
-   "name_en": "Required disclosures (owner/manager, lead paint)",
-   "description_zh": "业主/管理人披露、1978 年前房屋含铅油漆披露",
+   "name_zh": "法定披露（含铅油漆）",
+   "name_en": "Required disclosures (lead paint)",
+   "description_zh": "1978 年前建的房子要随租约附含铅油漆披露（联邦法）；业主和管理人的联系方式有的城市规定租客要求后才提供，租约没写不算缺失",
    "tier": "rare",
    "absent_means": "missing",
    "keywords": [
     "lead-based",
     "lead based",
     "lead paint",
-    "managing agent",
-    "disclos"
+    "lead hazard"
    ]
   },
   {

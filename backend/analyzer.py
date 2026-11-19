@@ -119,6 +119,10 @@ class GroundingMetrics(BaseModel):
     cards_verified: int
     cards_missing: int = 0
     cards_dropped: int = 0
+    # Absence claims removed because the contract does address the item; kept for evaluation, not shown.
+    missing_blocked: list[str] = []
+    # Why earlier generations of this report were rejected.
+    retry_reasons: list[str] = []
     quote_verification_rate: float | None
     law_references_total: int
     law_references_valid: int
@@ -161,6 +165,21 @@ def checklist_prompt() -> str:
         note = "（租约没写也要出 missing 卡）" if item["absent_means"] == "missing" else ""
         lines.append(f"{item['id']}. {item['name_zh']}：{item['description_zh']}{note}")
     return "\n".join(lines)
+
+
+def absence_contradicted(item: dict | None, text_lower: str) -> str | None:
+    """Why a "the lease does not say this" card cannot stand, or None if it can.
+
+    An absence claim has no quote to check, so it is the one card type the model can get wrong unseen:
+    on a real lease every such card in three runs contradicted the text. A keyword hit is cheap,
+    deterministic evidence that the lease does address the item.
+    """
+    if not item or item["absent_means"] != "missing":
+        return "item does not take missing cards"
+    for keyword in item["keywords"]:
+        if re.search(r"\b" + re.escape(keyword.lower()), text_lower):
+            return f"contract mentions '{keyword}'"
+    return None
 
 
 def card_priority(card: "RiskCard") -> tuple[int, int, int]:
@@ -318,11 +337,16 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
                     rejected_cards: int = 0) -> AnalysisResult:
     allowed = {law.id: law for law in laws}
     checklist = load_checklist() if use_checklist else {}
-    cards, dropped = [], []
+    text_lower = text.lower()
+    cards, dropped, blocked = [], [], []
     references_total = 0
     references_valid = 0
     for card in generated.cards:
         if card.category == "missing":
+            reason = absence_contradicted(checklist.get(card.checklist_item), text_lower)
+            if reason:
+                blocked.append(f"{card.checklist_item}: {reason}")
+                continue
             match, similarity = "missing", 0.0
         else:
             match, similarity = match_quote(card.clause_text, text)
@@ -346,12 +370,14 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
         cards.append(risk_card)
     if dropped:
         logger.warning("analysis_dropped_cards count=%d items=%s", len(dropped), [(card.checklist_item, card.title) for card in dropped])
+    if blocked:
+        logger.warning("analysis_blocked_missing_cards count=%d reasons=%s", len(blocked), blocked)
     used = {reference for card in cards for reference in card.legal_basis}
     cards.sort(key=card_priority)
     quoted = [card for card in cards if card.category != "missing"]
     verified = sum(card.verified for card in quoted)
     metrics = GroundingMetrics(
-        cards_total=len(cards), cards_verified=verified, cards_missing=len(cards) - len(quoted), cards_dropped=len(dropped) + rejected_cards,
+        cards_total=len(cards), cards_verified=verified, cards_missing=len(cards) - len(quoted), cards_dropped=len(dropped) + rejected_cards, missing_blocked=blocked,
         quote_verification_rate=verified / len(quoted) if quoted else None,
         law_references_total=references_total, law_references_valid=references_valid,
         law_reference_validity_rate=references_valid / references_total if references_total else None,
@@ -359,7 +385,7 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
     if laws and laws[0].jurisdiction == "us_il":
         scope = "伊利诺伊州住宅租赁：只含伊利诺伊州法和联邦法参考，不含任何城市条例（Champaign、Chicago 等城市的租赁条例未收录）。各条有单位数量、房龄、签订时间等适用条件，需逐条核对。"
     elif laws and laws[0].jurisdiction == "us_il_urbana":
-        scope = "Urbana, Illinois 住宅租赁：市条例、伊利诺伊州法及联邦法参考。房产须在 Urbana 市界内；本工具尚未核验市界，邮寄地址或地区选择不等于市界确认。市条例采用文件标识为 20260417 的官方导出版本，需核对后续修订及各条适用条件。"
+        scope = "Urbana, Illinois 住宅租赁：市条例、伊利诺伊州法及联邦法参考。本报告以你选择的地区为前提，假定房产位于 Urbana 市界内；本工具没有核验市界，房产不在市界内时，依据市条例得出的“违法/无效”结论不成立。市条例采用文件标识为 20260417 的官方导出版本，需核对后续修订及各条适用条件。"
     else:
         scope = "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。" if laws else "未注入适用法律，仅提供合同文字风险提示。"
     logger.info("analysis_grounding model=%s metrics=%s", model, metrics.model_dump())
@@ -400,7 +426,9 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
             "Urbana 不等于 Champaign 或 Chicago，禁止套用芝加哥租赁条例。"
             "州法、市条例与联邦法可同时适用，不能只因保护标准不同就认定冲突。逐条注意地域、单位数量、房龄、租约签订时间、适用例外和通知程序。"
             "缺少房龄、楼栋单位数等事实时，仅在与所引条文相关时标为需核实，不能推断违法。"
-            "没有提供市界查询证据，不得凭地址、邮编、合同自述或用户地区选择声称房产已核实位于 Urbana 市界内；可以说明在确属市界且符合例外条件时的规则。"
+            "用户选择 Urbana 地区，即声明房产位于 Urbana 市界内：以此为前提判断市条例是否适用，不因本工具无法核验市界而降低类别；不要声称市界已经核验。"
+            "条款被所提供的市条例、州法或联邦法明确禁止，且除市界以外的适用条件（单位数、房龄、签约时间、例外）已由合同或常识确定时，category 用 illegal，并在 explanation 末尾注明“前提：房产在 Urbana 市界内”（仅对市条例）。"
+            "条款写明是罚款、按天累计或按欠款比例收取的费用，本身就不以实际成本为准，可据此判断与“不得超过实际成本”的规定冲突；只有单个固定服务费（如挂号信费）才需要核实实际成本，标 verify。"
         )
     elif laws and jurisdiction == "us_il":
         jurisdiction_guidance = (
@@ -432,6 +460,7 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
         "若条款本身已将行为限制在法条列明的例外条件内，不要仅凭其不同于一般程序就声称条文本身冲突。区分条款条件是否与例外一致、现实行为是否满足条件；后者未知不能替代前者的文本分析。"
         "legal_basis 只能列出所提供法条的 id；不确定时留空，不得凭记忆增加法律、司法解释或条号。"
         "引用条文时注意适用条件、例外和但书；不能把对用户不利直接等同于违法或无效。"
+        "summary 只能概括卡片里的结论；除非有对应的 missing 卡，不得在 summary 里说租约没写某事项。"
         "区分合同已经写明的事实、尚未核实的事实与附条件的法律判断；标题、summary、explanation 和 suggestion 必须保持相同的限定，不能正文说待核实却在标题断言违法。"
         "条件限制不等于绝对禁止；合同固定收费金额不等于已证明超过实际成本。不得把某种初步证据写成唯一法定形式，也不得省略会改变结论的例外。"
         "如果法条列表为空，只讨论合同文字及应核实事项，不得断言法定权利、义务或法律效力。"
@@ -445,6 +474,7 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
     )
     messages = [{"role": "system", "content": system},
                 {"role": "user", "content": json.dumps({"contract_text": text}, ensure_ascii=False)}]
+    retry_reasons: list[str] = []
     for attempt in range(1, 3):
         response = client.chat.completions.create(
             model=selected_model, messages=messages, response_format={"type": "json_object"},
@@ -484,12 +514,14 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
                 raise ValueError("".join(problems))
             if conflict:
                 result.legal_scope = "合同中的地点信息与所选地区不一致，未注入法条；请核实房产地址和地区。"
+            result.grounding.retry_reasons = retry_reasons
             return result
         except ValueError as error:
             usage = getattr(response, "usage", None)
             logger.warning("analysis_attempt_failed attempt=%d finish_reason=%s completion_tokens=%s reason=%s", attempt,
                            getattr(response.choices[0], "finish_reason", None) if getattr(response, "choices", None) else None,
                            getattr(usage, "completion_tokens", None), str(error)[:600])
+            retry_reasons.append(str(error)[:600])
             if attempt == 2:
                 raise AnalysisOutputError("Invalid structured analysis after one retry") from error
             if isinstance(error, ValidationError):
