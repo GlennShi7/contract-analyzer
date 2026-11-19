@@ -8,6 +8,14 @@ const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 const replayDemo = import.meta.env.VITE_REPLAY_DEMO === 'true'
 const riskLabels = { high: '高风险', medium: '中风险', low: '低风险' }
 const lawLevels = { national: '国家法律', municipal: 'Urbana 市条例', state: '伊利诺伊州法', federal: '美国联邦法' }
+const categoryLabels = { illegal: '违法/无效', risk: '风险', verify: '待核实', missing: '缺失' }
+// Problems every tenant meets come first; the backend already sorts cards in this order.
+const tierGroups = [['universal', '每个人都会碰上'], ['common', '常见情况'], ['rare', '少见情况'], [null, '清单之外']]
+
+function groupCards(cards) {
+  if (!cards.some(card => card.tier)) return [[null, null, cards]]
+  return tierGroups.map(([tier, label]) => [tier, label, cards.filter(card => (card.tier || null) === tier)]).filter(([, , items]) => items.length)
+}
 
 function RiskReport({ docId }) {
   const { t, language } = useLanguage()
@@ -104,11 +112,22 @@ function RiskReport({ docId }) {
           </div>
           <div className="risk-list-heading"><h3>{t("逐项核对")}<span>{t("· {count} 项提示", { count: report.cards.length })}</span></h3><span>{t("结合原文与实际情况阅读")}</span></div>
           {report.cards.length === 0 && <p className="scope-hint">{t("本次未列出风险卡片，不代表合同不存在风险。")}</p>}
-          {report.cards.map((card, index) => (
-            <article key={index} className={`risk-card risk-${card.risk_level}`}>
-              <div className="risk-card-heading"><span className="risk-badge">{t(riskLabels[card.risk_level])}</span><h3>{card.title}</h3></div>
-              <blockquote className="clause-quote">{card.clause_text}</blockquote>
-              <p className={`quote-status${card.verified ? '' : ' unverified'}`}><Icon name={card.verified ? 'check' : 'info'} size={13} />{card.verified ? t("引用已匹配合同原文") : t("引用未逐字匹配，请回到合同核对")}</p>
+          {groupCards(report.cards).map(([tier, label, cards]) => (
+            <div key={tier || 'other'} className="risk-group">
+              {label && <h4 className="risk-group-heading">{t(label)}<span>{t("{count} 项", { count: cards.length })}</span></h4>}
+              {cards.map((card, index) => (
+            <article key={index} className={`risk-card risk-${card.risk_level}${card.category ? ` category-${card.category}` : ''}`}>
+              <div className="risk-card-heading"><span className="risk-badge">{t(card.category ? categoryLabels[card.category] : riskLabels[card.risk_level])}</span><h3>{card.title}</h3></div>
+              {card.checklist_item && <p className="checklist-label">{t("清单第 {n} 项", { n: card.checklist_item })}{card.checklist_name ? ` · ${card.checklist_name}` : ''}</p>}
+              {card.category === 'missing' ? (
+                <p className="quote-status missing"><Icon name="info" size={13} />{t("租约里没有找到这项约定")}</p>
+              ) : (
+                <>
+                  <blockquote className="clause-quote">{card.clause_text}</blockquote>
+                  <p className={`quote-status${card.verified ? '' : ' unverified'}`}><Icon name={card.verified ? 'check' : 'info'} size={13} />{card.verified ? t("引用已匹配合同原文") : t("引用未逐字匹配，请回到合同核对")}</p>
+                </>
+              )}
+              {card.category_downgraded && <p className="downgrade-note">{t("模型判为违法，但没有可核对的法条，已改为待核实。")}</p>}
               <p className="risk-explanation">{card.explanation}</p>
               <p className="risk-suggestion"><strong>{t("建议：")}</strong>{card.suggestion}</p>
               {card.legal_basis.length === 0 && <p className="no-law">{t("暂无可核对的法条依据。")}</p>}
@@ -128,6 +147,8 @@ function RiskReport({ docId }) {
                 )
               })}
             </article>
+              ))}
+            </div>
           ))}
           <p className="report-disclaimer"><Icon name="info" size={15} />{t(report.disclaimer)}</p>
         </section>

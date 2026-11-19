@@ -11,7 +11,7 @@ QUOTE = "Tenant forfeits the security deposit if late."
 
 def output(summary, title, explanation, suggestion):
     return json.dumps({"contract_type": "lease", "risk_score": 6, "summary": summary, "cards": [
-        {"title": title, "clause_text": QUOTE, "risk_level": "high", "explanation": explanation,
+        {"title": title, "category": "risk", "checklist_item": 1, "clause_text": QUOTE, "risk_level": "high", "explanation": explanation,
          "legal_basis": [], "suggestion": suggestion}]})
 
 

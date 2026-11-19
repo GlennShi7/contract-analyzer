@@ -1,6 +1,8 @@
 // Validate only the fields consumed by the report UI; preserve the response verbatim.
 const text = value => typeof value === 'string' && value.trim().length > 0
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value)
+const categories = ['illegal', 'risk', 'verify', 'missing']
+const tiers = ['universal', 'common', 'rare']
 
 function sourceLink(value) {
   if (!text(value)) return false
@@ -26,7 +28,13 @@ export function isRenderableReport(report) {
     ids.add(law.id)
   }
   return report.cards.every(card => object(card) &&
-    ['title', 'clause_text', 'explanation', 'suggestion'].every(key => text(card[key])) &&
+    ['title', 'explanation', 'suggestion'].every(key => text(card[key])) &&
+    // A missing-term card has no quote; every other card must quote the contract.
+    (card.category === 'missing' ? card.clause_text === '' : text(card.clause_text)) &&
+    (card.category === undefined || categories.includes(card.category)) &&
+    (card.tier === undefined || card.tier === null || tiers.includes(card.tier)) &&
+    (card.checklist_item === undefined || card.checklist_item === null || Number.isInteger(card.checklist_item)) &&
+    (card.checklist_name === undefined || card.checklist_name === null || typeof card.checklist_name === 'string') &&
     ['high', 'medium', 'low'].includes(card.risk_level) && typeof card.verified === 'boolean' &&
     Array.isArray(card.legal_basis) && card.legal_basis.every(id => text(id) && ids.has(id)))
 }

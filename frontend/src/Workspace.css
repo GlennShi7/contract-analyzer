@@ -104,6 +104,16 @@
 .clause-quote { margin: 16px 0 9px; padding: 14px 16px; border-left: 3px solid #b6c8e9; border-radius: 0 8px 8px 0; background: #f4f7fb; color: #4d5f7a; font-size: 12px; line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; }
 .quote-status { display: flex; align-items: center; gap: 6px; color: #4d735f; font-size: 10px; }
 .quote-status.unverified { color: #9c6c39; }
+.risk-group + .risk-group { margin-top: 18px; }
+.risk-group-heading { display: flex; align-items: baseline; gap: 8px; margin: 16px 0 4px; font-size: 13px; color: #334155; }
+.risk-group-heading span { color: #64748b; font-size: 10px; font-weight: 500; }
+.risk-card.category-illegal { --risk: #a3342b; --risk-bg: #fbeae7; }
+.risk-card.category-verify { --risk: #6b4a9b; --risk-bg: #f2edf9; }
+.risk-card.category-risk { --risk: #89601f; --risk-bg: #fcf5e7; }
+.risk-card.category-missing { --risk: #456d9e; --risk-bg: #edf3fb; }
+.checklist-label { color: #64748b; font-size: 10px; margin: 4px 0 8px; }
+.quote-status.missing { color: #456d9e; }
+.downgrade-note { color: #6b4a9b; font-size: 11px; }
 .risk-explanation { margin-top: 15px; font-size: 13px; color: #52627b; line-height: 1.9; }
 .risk-suggestion { margin-top: 13px; padding: 12px 14px; background: #fafbfe; border: 1px solid #ebeff6; border-radius: 8px; font-size: 12px; color: #65768f; line-height: 1.85; }
 .risk-suggestion strong { color: #425c86; }

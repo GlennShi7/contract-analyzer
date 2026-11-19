@@ -14,7 +14,7 @@ from analyzer import (
 
 def sample_output(kind="lease", *, quote="押金由出租人决定是否退还。"):
     return {"contract_type": kind, "risk_score": 7, "summary": "押金条款需要核实。", "cards": [
-        {"title": "押金扣减", "clause_text": quote, "risk_level": "high",
+        {"title": "押金扣减", "category": "risk", "checklist_item": 1 if kind == "lease" else None, "clause_text": quote, "risk_level": "high",
          "explanation": "应核实扣减条件与依据。", "legal_basis": ["住房租赁条例-10"], "suggestion": "签前确认退还时间与扣减条件。"}
     ]}
 
@@ -131,7 +131,7 @@ def test_json_mode_injects_only_the_selected_law_group():
     assert sent["response_format"] == {"type": "json_object"}
     assert sent["extra_body"] == {"thinking": {"type": "disabled"}}
     assert "住房租赁条例-10" in sent["messages"][0]["content"]
-    assert f"至多{MAX_CARDS}个重要风险" in sent["messages"][0]["content"]
+    assert "逐项检查以下" not in sent["messages"][0]["content"]  # the US lease checklist is not for mainland China
     assert "劳动合同法-19" not in sent["messages"][0]["content"]
     assert report.cards[0].verified is True
 
