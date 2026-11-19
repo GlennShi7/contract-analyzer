@@ -22,5 +22,13 @@ HANDOFF*.md
 # Local synthetic container smoke evidence.
 /embedding-smoke.json
 
-# Real leases and their evaluation outputs contain personal information; never commit them.
+# Real contracts must never reach GitHub: no lease PDFs, no text extracted from them,
+# no evaluation outputs or answer keys built from them. Only the synthetic demo PDF is tracked.
 backend/eval/private/
+*.pdf
+*.PDF
+!demo/lease_en.pdf
+*.docx
+*_初稿.json
+*关键词报告*.html
+keyword_hits*.csv
