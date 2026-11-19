@@ -108,7 +108,7 @@ function RiskReport({ docId }) {
               <h3>{t("风险提示评分")}</h3><p className="score-value">{report.risk_score}<span>/ 10</span></p><small>{t("提示性评分，非违法概率")}</small>
             </div>
             <div className="report-summary"><h2>{t("这份合同，需要关注什么？")}</h2><p className="content-language-note">{t(replayDemo ? "报告、回答和引用原文保留原有语言。" : "报告和回答使用生成时的界面语言；引用的合同原文保持原文语言。")}</p><p>{report.summary}</p>
-              {report.grounding?.cards_dropped > 0 && <p className="dropped-note"><Icon name="info" size={13} />{t("有 {count} 张卡片引用的原文在合同里找不到，已去掉；这些清单项请自己对照合同核实。", { count: report.grounding.cards_dropped })}</p>}
+              {report.grounding?.cards_dropped > 0 && <p className="dropped-note"><Icon name="info" size={13} />{t("有 {count} 张卡片没通过检查（格式不对，或引用的原文在合同里找不到），已去掉；这些清单项请自己对照合同核实。", { count: report.grounding.cards_dropped })}</p>}
               <details className="scope-details"><summary>{t("本次法条范围与适用条件")}</summary><p>{t(report.legal_scope)}</p></details>
             </div>
           </div>

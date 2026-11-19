@@ -5,7 +5,7 @@ from types import SimpleNamespace
 import pytest
 
 import analyzer
-from analyzer import AnalysisOutputError, AnalysisResult, MAX_CARDS, analyze_contract, load_checklist
+from analyzer import AnalysisOutputError, AnalysisResult, CHECKLIST_SIZE, analyze_contract, load_checklist
 
 REPO = Path(__file__).resolve().parents[2]
 LEASE = ("Residential lease. Landlord and tenant agree. Monthly rent is $500. Security deposit is $500. "
@@ -31,7 +31,7 @@ def stub(*outputs):
 
 def test_checklist_file_matches_the_card_schema():
     items = load_checklist()
-    assert sorted(items) == list(range(1, MAX_CARDS + 1))
+    assert sorted(items) == list(range(1, CHECKLIST_SIZE + 1))
     assert {i["tier"] for i in items.values()} == {"universal", "common", "rare"}
     assert all(i["keywords"] and i["name_en"] and i["description_zh"] for i in items.values())
 
@@ -40,7 +40,7 @@ def test_lease_prompt_walks_the_checklist_but_labor_and_mainland_leases_do_not()
     client, calls = stub([])
     analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
     system = calls[0]["messages"][0]["content"]
-    assert f"逐项检查以下 {MAX_CARDS} 项清单" in system and "18. 房东入户" in system and "missing" in system
+    assert f"逐项检查以下 {CHECKLIST_SIZE} 项清单" in system and "18. 房东入户" in system and "missing" in system
     client, calls = stub([])
     analyze_contract("出租人和承租人约定：租金每月一千元，押金一千元。", client, jurisdiction="cn")
     assert "逐项检查以下" not in calls[0]["messages"][0]["content"]
@@ -48,7 +48,7 @@ def test_lease_prompt_walks_the_checklist_but_labor_and_mainland_leases_do_not()
 
 def test_more_than_twelve_problems_are_kept():
     quotes = [s + "." for s in LEASE.split(". ") if s] * 4
-    cards = [card((i % MAX_CARDS) + 1, quote=q.rstrip(".") + ".") for i, q in enumerate(quotes[:27])]
+    cards = [card((i % CHECKLIST_SIZE) + 1, quote=q.rstrip(".") + ".") for i, q in enumerate(quotes[:27])]
     client, calls = stub(cards)
     result = analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
     assert len(result.cards) == 27 and result.grounding.cards_verified == 27

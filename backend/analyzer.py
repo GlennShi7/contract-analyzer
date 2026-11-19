@@ -16,11 +16,16 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_valida
 DEFAULT_MODEL = "deepseek-flash"
 # One card per checklist item is the expected upper range, not a quota. A cap of 12 limited recall to
 # 12 of the 27 problems in a real 48-page Urbana lease before the model made a single mistake.
-MAX_CARDS = 43
+# The checklist has 43 items, but one item can carry several problems and some cards sit outside the checklist.
+CHECKLIST_SIZE = 43
+# Only a guard against a model stuck in a loop.
+MAX_CARDS = 100
 # DeepSeek allows far more output; this only caps runaway generations. English reports run about twice the tokens of Chinese.
 DEFAULT_MAX_OUTPUT_TOKENS = 32768
-# A few unmatched quotes are dropped at once; more than this share means the output is systematically off, so retry.
+# A few broken cards (bad format or a quote the contract lacks) are dropped at once; a larger share means the output is
+# systematically off, so retry. After the retry, broken cards are dropped unless they are the majority.
 DROP_WITHOUT_RETRY_SHARE = 0.2
+DROP_AFTER_RETRY_SHARE = 0.5
 LAWS_DIR = Path(__file__).resolve().parent / "laws"
 CHECKLIST_PATH = Path(__file__).resolve().parent / "checklist.json"
 logger = logging.getLogger(__name__)
@@ -70,7 +75,7 @@ class GeneratedRiskCard(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
     title: str = Field(min_length=1, max_length=120)
     category: Category
-    checklist_item: int | None = Field(ge=1, le=MAX_CARDS)
+    checklist_item: int | None = Field(ge=1, le=CHECKLIST_SIZE)
     clause_text: str = Field(max_length=2000)
     risk_level: Literal["high", "medium", "low"]
     explanation: str = Field(min_length=1, max_length=2000)
@@ -100,7 +105,7 @@ class GeneratedAnalysis(BaseModel):
 class RiskCard(GeneratedRiskCard):
     # Defaults keep reports saved before checklist cards readable.
     category: Category = "risk"
-    checklist_item: int | None = Field(default=None, ge=1, le=MAX_CARDS)
+    checklist_item: int | None = Field(default=None, ge=1, le=CHECKLIST_SIZE)
     tier: Tier | None = None
     checklist_name: str | None = None
     category_downgraded: bool = False
@@ -251,14 +256,34 @@ def output_language_matches(generated: "GeneratedAnalysis", language: OutputLang
     return share >= 0.3 if language == "zh" else share <= 0.05
 
 
-def parse_analysis(raw: str | None) -> GeneratedAnalysis:
+def unfence(raw: str | None) -> str:
     if not isinstance(raw, str) or not raw.strip():
         raise ValueError("Empty model output")
     text = raw.strip()
     fenced = re.fullmatch(r"```(?:json)?\s*(.*?)\s*```", text, re.DOTALL | re.IGNORECASE)
-    if fenced:
-        text = fenced.group(1)
-    return GeneratedAnalysis.model_validate_json(text)
+    return fenced.group(1) if fenced else text
+
+
+def parse_analysis(raw: str | None) -> GeneratedAnalysis:
+    """Strict: any bad card rejects the whole output."""
+    return GeneratedAnalysis.model_validate_json(unfence(raw))
+
+
+def parse_analysis_by_card(raw: str | None) -> tuple[GeneratedAnalysis, list[str]]:
+    """The report envelope must be valid; a bad card is set aside with its reason instead of sinking the report."""
+    text = unfence(raw)
+    data = json.loads(text)
+    if not isinstance(data, dict) or not isinstance(data.get("cards"), list):
+        return GeneratedAnalysis.model_validate_json(text), []
+    kept, rejected = [], []
+    for index, item in enumerate(data["cards"], 1):
+        try:
+            kept.append(GeneratedRiskCard.model_validate(item))
+        except ValidationError as error:
+            title = item.get("title") if isinstance(item, dict) else None
+            reason = "; ".join(f"{'.'.join(map(str, e['loc'])) or 'card'}: {e['msg']}" for e in error.errors(include_input=False))
+            rejected.append(f"第 {index} 张《{title or '无标题'}》：{reason}")
+    return GeneratedAnalysis.model_validate(data | {"cards": kept}), rejected
 
 
 def normalize_quote_whitespace(text: str) -> str:
@@ -289,7 +314,8 @@ def match_quote(quote: str, text: str) -> tuple[str, float]:
 
 
 def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArticle, ...], *, model: str, attempts: int,
-                    output_language: OutputLanguage = "zh", use_checklist: bool = True, drop_unverified: bool = False) -> AnalysisResult:
+                    output_language: OutputLanguage = "zh", use_checklist: bool = True, drop_unverified: bool = False,
+                    rejected_cards: int = 0) -> AnalysisResult:
     allowed = {law.id: law for law in laws}
     checklist = load_checklist() if use_checklist else {}
     cards, dropped = [], []
@@ -325,7 +351,7 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
     quoted = [card for card in cards if card.category != "missing"]
     verified = sum(card.verified for card in quoted)
     metrics = GroundingMetrics(
-        cards_total=len(cards), cards_verified=verified, cards_missing=len(cards) - len(quoted), cards_dropped=len(dropped),
+        cards_total=len(cards), cards_verified=verified, cards_missing=len(cards) - len(quoted), cards_dropped=len(dropped) + rejected_cards,
         quote_verification_rate=verified / len(quoted) if quoted else None,
         law_references_total=references_total, law_references_valid=references_valid,
         law_reference_validity_rate=references_valid / references_total if references_total else None,
@@ -432,7 +458,7 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
             raw = choice.message.content
             if getattr(choice, "finish_reason", "stop") != "stop":
                 raise ValueError("Generation did not finish normally")
-            generated = parse_analysis(raw)
+            generated, rejected = parse_analysis_by_card(raw)
             if generated.contract_type != kind:
                 raise ValueError("contract_type does not match the supplied type")
             if not output_language_matches(generated, output_language):
@@ -440,13 +466,22 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
             result = ground_analysis(generated, text, laws, model=selected_model, attempts=attempt, output_language=output_language,
                                      use_checklist=use_checklist)
             unmatched = [card for card in result.cards if card.category != "missing" and not card.verified]
-            quoted = result.grounding.cards_total - result.grounding.cards_missing
-            if unmatched and (attempt == 2 or len(unmatched) <= DROP_WITHOUT_RETRY_SHARE * quoted):
+            total = len(generated.cards) + len(rejected)
+            share = (len(unmatched) + len(rejected)) / total if total else 0.0
+            if share and (share <= DROP_WITHOUT_RETRY_SHARE or (attempt == 2 and share <= DROP_AFTER_RETRY_SHARE)):
+                if rejected:
+                    logger.warning("analysis_rejected_cards count=%d reasons=%s", len(rejected), rejected)
                 result = ground_analysis(generated, text, laws, model=selected_model, attempts=attempt, output_language=output_language,
-                                         use_checklist=use_checklist, drop_unverified=True)
-            elif unmatched:
-                names = "；".join(f"第 {card.checklist_item} 项《{card.title}》" if card.checklist_item else f"《{card.title}》" for card in unmatched)
-                raise ValueError(f"{len(unmatched)}/{quoted} 张卡片的 clause_text 在合同原文中找不到（{names}）。clause_text 必须逐字复制合同原文，不得改写、拼接或翻译；找不到对应原文的卡片删掉；只有清单标明的缺失事项才用 category missing 且 clause_text 留空")
+                                         use_checklist=use_checklist, drop_unverified=True, rejected_cards=len(rejected))
+            elif share:
+                problems = [f"{len(unmatched) + len(rejected)}/{total} 张卡片未通过校验。"]
+                if unmatched:
+                    names = "；".join(f"第 {card.checklist_item} 项《{card.title}》" if card.checklist_item else f"《{card.title}》" for card in unmatched)
+                    problems.append(f"clause_text 在合同原文中找不到：{names}。clause_text 必须逐字复制合同原文，不得改写、拼接或翻译；找不到对应原文的卡片删掉。")
+                if rejected:
+                    problems.append(f"格式不对：{'；'.join(rejected)[:1500]}。")
+                problems.append("只有清单标明的缺失事项才用 category missing 且 clause_text 留空。")
+                raise ValueError("".join(problems))
             if conflict:
                 result.legal_scope = "合同中的地点信息与所选地区不一致，未注入法条；请核实房产地址和地区。"
             return result

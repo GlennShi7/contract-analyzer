@@ -348,7 +348,7 @@ try {
   if (!(await evaluate('document.querySelector(".risk-card.category-missing .quote-status")?.textContent.includes("The lease does not state this.") && !document.querySelector(".risk-card.category-missing .clause-quote")'))) throw new Error('Missing-term card rendered incorrectly');
   if (await evaluate('[...document.querySelectorAll(".risk-group-heading")].map(h => h.firstChild.textContent).join("|")') !== 'Every tenant meets these|Outside the checklist') throw new Error('Cards not grouped by how often tenants meet them');
   if (await evaluate('document.querySelector(".risk-card.category-missing .checklist-label")?.textContent') !== 'Checklist item 18 · No notice before entry') throw new Error('Checklist label missing');
-  if (!(await evaluate('document.querySelector(".dropped-note")?.textContent.startsWith("2 card(s) quoted text the contract does not contain")'))) throw new Error('Dropped-card note missing');
+  if (!(await evaluate('document.querySelector(".dropped-note")?.textContent.startsWith("2 card(s) failed checks")'))) throw new Error('Dropped-card note missing');
   const beforeAnalysisLanguage = analysisRequests.length;
   await evaluate('document.querySelector("[data-language-toggle]").click()');
   await until('document.documentElement.lang === "zh-CN"');

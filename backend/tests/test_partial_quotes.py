@@ -38,10 +38,56 @@ def test_many_unmatched_quotes_retry_naming_the_cards_then_drop_what_still_misse
     assert "analysis_attempt_failed attempt=1 finish_reason=stop" in caplog.text
 
 
-def test_second_attempt_never_fails_on_quotes_alone():
-    client, _ = stub(report(5, 5), report(5, 4))
+def test_second_attempt_drops_a_minority_of_broken_cards():
+    client, _ = stub(report(5, 5), report(5, 2))
     result = analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
-    assert len(result.cards) == 1 and result.grounding.cards_dropped == 4
+    assert len(result.cards) == 3 and result.grounding.cards_dropped == 2
+
+
+def test_second_attempt_fails_when_most_cards_are_broken():
+    # An empty or near-empty report would read as a clean lease; refuse it instead.
+    client, _ = stub(report(5, 5), report(5, 3))
+    with pytest.raises(analyzer.AnalysisOutputError):
+        analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
+
+
+def test_more_cards_than_checklist_items_are_accepted():
+    # Seen on the real Oregon lease: 45 cards, because one item can carry several problems.
+    cards = report(45, 0)
+    for i, c in enumerate(cards):
+        c["checklist_item"] = (i % analyzer.CHECKLIST_SIZE) + 1
+    client, calls = stub(cards)
+    result = analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
+    assert len(calls) == 1 and len(result.cards) == 45 and result.grounding.cards_dropped == 0
+
+
+def test_a_badly_formed_card_is_dropped_not_the_report(caplog):
+    cards = report(27, 0)
+    cards[3] = card(18, "missing", quote="Tenant forfeits the security deposit if late.", title="缺失卡却带了引文")
+    cards[7]["checklist_item"] = 44
+    client, calls = stub(cards)
+    with caplog.at_level(logging.WARNING, logger="analyzer"):
+        result = analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
+    assert len(calls) == 1 and len(result.cards) == 25 and result.grounding.cards_dropped == 2
+    assert "analysis_rejected_cards count=2" in caplog.text and "缺失卡却带了引文" in caplog.text
+
+
+def test_many_badly_formed_cards_retry_with_their_reasons():
+    broken = report(10, 0)
+    for c in broken[:4]:
+        c["category"] = "urgent"
+    client, calls = stub(broken, report(10, 0))
+    result = analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
+    retry = calls[1]["messages"][-1]["content"]
+    assert len(calls) == 2 and "4/10 张卡片未通过校验" in retry and "格式不对：第 1 张《卡片1》" in retry and "category" in retry
+    assert len(result.cards) == 10 and result.grounding.cards_dropped == 0
+
+
+def test_a_runaway_card_list_is_still_rejected():
+    client, calls = stub(report(101, 0), report(101, 0))
+    with pytest.raises(analyzer.AnalysisOutputError):
+        analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
+    assert len(calls) == 2
 
 
 def test_a_small_report_with_a_bad_quote_still_retries():
