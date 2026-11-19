@@ -17,7 +17,10 @@ DEFAULT_MODEL = "deepseek-flash"
 # One card per checklist item is the expected upper range, not a quota. A cap of 12 limited recall to
 # 12 of the 27 problems in a real 48-page Urbana lease before the model made a single mistake.
 MAX_CARDS = 43
-DEFAULT_MAX_OUTPUT_TOKENS = 8192
+# DeepSeek allows far more output; this only caps runaway generations. English reports run about twice the tokens of Chinese.
+DEFAULT_MAX_OUTPUT_TOKENS = 32768
+# A few unmatched quotes are dropped at once; more than this share means the output is systematically off, so retry.
+DROP_WITHOUT_RETRY_SHARE = 0.2
 LAWS_DIR = Path(__file__).resolve().parent / "laws"
 CHECKLIST_PATH = Path(__file__).resolve().parent / "checklist.json"
 logger = logging.getLogger(__name__)
@@ -110,6 +113,7 @@ class GroundingMetrics(BaseModel):
     cards_total: int
     cards_verified: int
     cards_missing: int = 0
+    cards_dropped: int = 0
     quote_verification_rate: float | None
     law_references_total: int
     law_references_valid: int
@@ -221,7 +225,7 @@ CJK = re.compile(r"[\u3400-\u9fff]")
 LATIN = re.compile(r"[A-Za-z]")
 LANGUAGE_INSTRUCTION = {
     "zh": "summary、title、explanation 和 suggestion 用简体中文书写；clause_text 必须保持合同原文的语言逐字引用，不得翻译。",
-    "en": "Write summary, title, explanation and suggestion in English, even though these instructions are in Chinese. clause_text must stay a verbatim quote in the contract's own language; never translate it.",
+    "en": "Write summary, title, explanation and suggestion in English, even though these instructions are in Chinese. clause_text must stay a verbatim quote in the contract's own language; never translate it. Keep each title under 10 words, explanation under 40 words and suggestion under 20 words.",
 }
 EXAMPLE_TEXT = {
     "zh": {"summary": "简要概括风险与不确定性。", "title": "风险标题", "clause_text": "从合同中逐字复制的原文",
@@ -285,37 +289,43 @@ def match_quote(quote: str, text: str) -> tuple[str, float]:
 
 
 def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArticle, ...], *, model: str, attempts: int,
-                    output_language: OutputLanguage = "zh", use_checklist: bool = True) -> AnalysisResult:
+                    output_language: OutputLanguage = "zh", use_checklist: bool = True, drop_unverified: bool = False) -> AnalysisResult:
     allowed = {law.id: law for law in laws}
     checklist = load_checklist() if use_checklist else {}
-    cards = []
+    cards, dropped = [], []
     references_total = 0
     references_valid = 0
-    used = set()
     for card in generated.cards:
         if card.category == "missing":
             match, similarity = "missing", 0.0
         else:
             match, similarity = match_quote(card.clause_text, text)
-        references_total += len(card.legal_basis)
-        references_valid += sum(reference in allowed for reference in card.legal_basis)
         legal_basis = list(dict.fromkeys(reference for reference in card.legal_basis if reference in allowed))
-        used.update(legal_basis)
         # "Illegal" needs a provided statute; without one the honest label is "needs verification".
         downgraded = card.category == "illegal" and not legal_basis
         item = checklist.get(card.checklist_item)
-        cards.append(RiskCard(
+        risk_card = RiskCard(
             **(card.model_dump() | {"legal_basis": legal_basis, "category": "verify" if downgraded else card.category}),
             tier=item["tier"] if item else None,
             checklist_name=(item["name_en"] if output_language == "en" else item["name_zh"]) if item else None,
             category_downgraded=downgraded,
             verified=match in {"exact", "whitespace"}, quote_match=match, quote_similarity=similarity,
-        ))
+        )
+        if drop_unverified and risk_card.category != "missing" and not risk_card.verified:
+            # Never show a quote the contract does not contain: drop the card, keep the count.
+            dropped.append(risk_card)
+            continue
+        references_total += len(card.legal_basis)
+        references_valid += sum(reference in allowed for reference in card.legal_basis)
+        cards.append(risk_card)
+    if dropped:
+        logger.warning("analysis_dropped_cards count=%d items=%s", len(dropped), [(card.checklist_item, card.title) for card in dropped])
+    used = {reference for card in cards for reference in card.legal_basis}
     cards.sort(key=card_priority)
     quoted = [card for card in cards if card.category != "missing"]
     verified = sum(card.verified for card in quoted)
     metrics = GroundingMetrics(
-        cards_total=len(cards), cards_verified=verified, cards_missing=len(cards) - len(quoted),
+        cards_total=len(cards), cards_verified=verified, cards_missing=len(cards) - len(quoted), cards_dropped=len(dropped),
         quote_verification_rate=verified / len(quoted) if quoted else None,
         law_references_total=references_total, law_references_valid=references_valid,
         law_reference_validity_rate=references_valid / references_total if references_total else None,
@@ -429,12 +439,22 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
                 raise ValueError(f"summary, title, explanation and suggestion must be written in {'Simplified Chinese' if output_language == 'zh' else 'English'}; keep clause_text verbatim")
             result = ground_analysis(generated, text, laws, model=selected_model, attempts=attempt, output_language=output_language,
                                      use_checklist=use_checklist)
-            if result.grounding.cards_verified != result.grounding.cards_total - result.grounding.cards_missing:
-                raise ValueError("Card clause_text must match the original contract exactly or by conservative whitespace normalization; remove unsupported cards, and use category missing with empty clause_text only for checklist items the lease does not state")
+            unmatched = [card for card in result.cards if card.category != "missing" and not card.verified]
+            quoted = result.grounding.cards_total - result.grounding.cards_missing
+            if unmatched and (attempt == 2 or len(unmatched) <= DROP_WITHOUT_RETRY_SHARE * quoted):
+                result = ground_analysis(generated, text, laws, model=selected_model, attempts=attempt, output_language=output_language,
+                                         use_checklist=use_checklist, drop_unverified=True)
+            elif unmatched:
+                names = "；".join(f"第 {card.checklist_item} 项《{card.title}》" if card.checklist_item else f"《{card.title}》" for card in unmatched)
+                raise ValueError(f"{len(unmatched)}/{quoted} 张卡片的 clause_text 在合同原文中找不到（{names}）。clause_text 必须逐字复制合同原文，不得改写、拼接或翻译；找不到对应原文的卡片删掉；只有清单标明的缺失事项才用 category missing 且 clause_text 留空")
             if conflict:
                 result.legal_scope = "合同中的地点信息与所选地区不一致，未注入法条；请核实房产地址和地区。"
             return result
         except ValueError as error:
+            usage = getattr(response, "usage", None)
+            logger.warning("analysis_attempt_failed attempt=%d finish_reason=%s completion_tokens=%s reason=%s", attempt,
+                           getattr(response.choices[0], "finish_reason", None) if getattr(response, "choices", None) else None,
+                           getattr(usage, "completion_tokens", None), str(error)[:600])
             if attempt == 2:
                 raise AnalysisOutputError("Invalid structured analysis after one retry") from error
             if isinstance(error, ValidationError):

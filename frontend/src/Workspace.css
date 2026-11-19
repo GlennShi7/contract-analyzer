@@ -166,3 +166,5 @@ html[lang="en"] .risk-list-heading h3 span { margin-left: 5px; }
   html[lang="en"] .question-form-footer { align-items: center; }
   html[lang="en"] .question-form-footer .primary-button { white-space: nowrap; padding-inline: 12px; font-size: 12px; }
 }
+
+.dropped-note { display: flex; gap: 6px; align-items: center; margin-top: 8px; font-size: 13px; color: #8a5a00; }

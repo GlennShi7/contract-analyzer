@@ -23,7 +23,7 @@ from parser import MAX_DOCUMENT_CHARS, PDFLimitError, extract_text
 load_dotenv(Path(__file__).resolve().parent / ".env")
 MAX_UPLOAD_BYTES = 20 * 1024 * 1024
 # Long leases double the input size; leave room for reading the full text before the first token.
-LLM_TIMEOUT_SECONDS = 120
+LLM_TIMEOUT_SECONDS = 300
 INDEX_UNAVAILABLE = "合同索引服务暂时不可用，请稍后重试；首次使用需要联网下载嵌入模型，缓存完整后可离线使用"
 
 app = FastAPI()

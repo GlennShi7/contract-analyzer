@@ -48,7 +48,7 @@ def deepseek_client():
     key = os.environ.get("DEEPSEEK_API_KEY")
     if not key:
         raise SystemExit("DEEPSEEK_API_KEY is not set (backend/.env or environment).")
-    return OpenAI(api_key=key, base_url="https://api.deepseek.com", timeout=120, max_retries=0)
+    return OpenAI(api_key=key, base_url="https://api.deepseek.com", timeout=300, max_retries=0)
 
 
 def run(pdf: Path, client, *, jurisdiction: str, runs: int, out_dir: Path, drop_info_pages: bool = False,
