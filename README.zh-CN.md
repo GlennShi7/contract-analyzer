@@ -68,7 +68,7 @@ doc_id + 问题 → /ask → 只检索当前合同的最多3块 → DeepSeek
 
 全文风险分析不先走 top-3 检索；问答不会自动获得整份合同或法条库。地区选择影响 `/analyze`，不改变 `/ask` 的检索问答逻辑。
 
-合同类型由中英文关键词保守分类；适用地区由用户明确选择，**不是根据合同语言推断**。默认地区为 `unknown`，不注入法律。`cn` 支持所选中国大陆劳动/租赁资料；`us_il_urbana` 只支持 Urbana 市界内住宅租赁，不涵盖 Champaign、Chicago 或美国劳动合同。关键词冲突检查不是市界、地址或适用法核验。
+合同类型由中英文关键词保守分类；适用地区由用户明确选择，**不是根据合同语言推断**。默认地区为 `unknown`，不注入法律。`cn` 支持所选中国大陆劳动/租赁资料；`us_il_urbana` 只支持 Urbana 市界内住宅租赁，不涵盖 Champaign、Chicago 或美国劳动合同；`us_il` 用于 Urbana 以外的伊利诺伊州住宅租赁（如 Champaign），只注入州法和联邦法，不含任何城市条例。美国租约会逐项检查 `backend/checklist.json` 的 43 项清单，每张卡片带类别（违法/无效、风险、待核实、缺失）和清单项号。关键词冲突检查不是市界、地址或适用法核验。
 
 ## 启动真实应用
 
@@ -135,7 +135,7 @@ npm run dev
 | --- | --- | --- |
 | `GET /hello` | 无 | 进程启动消息 |
 | `POST /upload` | multipart文件字段 `file` | `doc_id`、`filename`、前200字符 `preview`、`n_chunks` |
-| `POST /analyze` | `doc_id`、`jurisdiction`（`unknown`/`cn`/`us_il_urbana`） | `doc_id`、结构化 `result` |
+| `POST /analyze` | `doc_id`、`jurisdiction`（`unknown`/`cn`/`us_il_urbana`/`us_il`）、`output_language`（`zh`/`en`） | `doc_id`、结构化 `result` |
 | `POST /ask` | `doc_id`、1至4000字符的 `question` | `doc_id`、`answer`、`sources` |
 
 `doc_id` 是64位小写十六进制 SHA-256。问答来源含 `doc_id`、从0开始的 `chunk` 序号及 `text`。风险报告含类型、1—10分提示评分、摘要、卡片、所引法条、范围说明、校验统计、模型及尝试次数。

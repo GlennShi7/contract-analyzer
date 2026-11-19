@@ -63,9 +63,11 @@ export const english = {
   '其他 / 不确定': 'Other / Not sure',
   '中国大陆': 'Mainland China',
   '美国 · Urbana, Illinois': 'United States · Urbana, Illinois',
+  '美国 · 伊利诺伊州（Urbana 以外，如 Champaign）': 'United States · Illinois (outside Urbana, e.g. Champaign)',
   '分析中...': 'Analyzing...',
   '分析风险': 'Analyze risks',
   'Urbana 不包括 Champaign 或 Chicago；不确定地区时，先查看文字风险。': 'Urbana excludes Champaign and Chicago. If unsure, start with a text-only review.',
+  '只用伊利诺伊州法和联邦法；Champaign、Chicago 等城市条例未收录。房子在 Urbana 请选上一项。': 'Illinois state and federal law only. City ordinances such as Champaign’s or Chicago’s are not included. For a property in Urbana, choose the option above.',
   '正在逐项阅读这份合同…': 'Reading through the contract…',
   '准备好后，开始第一轮核对': 'Ready for your first review',
   '分析需要一些时间，请保持当前页面。': 'This may take a moment. Keep this page open.',
@@ -174,6 +176,7 @@ export const english = {
   '合同中的地点信息与所选地区不一致，未注入法条；请核实房产地址和地区。': 'The contract location conflicts with the selected region. No statutes were supplied; check the property address and region.',
   'Urbana, Illinois 住宅租赁：市条例、伊利诺伊州法及联邦法参考。房产须在 Urbana 市界内；市条例采用文件标识为 20260417 的官方导出版本，需核对后续修订及各条适用条件。': 'Urbana, Illinois residential leasing: municipal, Illinois state and federal references. The property must be inside Urbana city limits. The municipal source is the official export labeled 20260417; check later amendments and each provision’s conditions.',
   'Urbana, Illinois 住宅租赁：市条例、伊利诺伊州法及联邦法参考。房产须在 Urbana 市界内；本工具尚未核验市界，邮寄地址或地区选择不等于市界确认。市条例采用文件标识为 20260417 的官方导出版本，需核对后续修订及各条适用条件。': 'Urbana, Illinois residential leasing: municipal, Illinois state and federal references. The property must be inside Urbana city limits, which this tool has not verified. A mailing address or region choice does not confirm municipal boundaries. The municipal source is the official export labeled 20260417; check later amendments and each provision’s conditions.',
+  '伊利诺伊州住宅租赁：只含伊利诺伊州法和联邦法参考，不含任何城市条例（Champaign、Chicago 等城市的租赁条例未收录）。各条有单位数量、房龄、签订时间等适用条件，需逐条核对。': 'Illinois residential leasing: Illinois state and federal references only, with no city ordinances (Champaign, Chicago and other city leasing ordinances are not included). Provisions depend on facts such as unit count, building age and signing date; check each one.',
   '仅供理解合同，不构成法律意见。原文匹配和法条引用核对不保证法律适用或分析结论正确。': 'For understanding the contract, not legal advice. Quote matching and citation checks do not establish legal applicability or a correct conclusion.',
 }
 

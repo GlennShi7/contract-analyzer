@@ -88,13 +88,14 @@ function RiskReport({ docId }) {
             <option value="unknown">{t("其他 / 不确定")}</option>
             <option value="cn">{t("中国大陆")}</option>
             <option value="us_il_urbana">{t("美国 · Urbana, Illinois")}</option>
+            <option value="us_il">{t("美国 · 伊利诺伊州（Urbana 以外，如 Champaign）")}</option>
           </select>
         </label>
         <button className="primary-button" onClick={handleAnalyze} disabled={!docId || analyzing}>
           {analyzing ? t("分析中...") : t("分析风险")}<Icon name="arrow" size={16} />
         </button>
       </div>
-      <p className="scope-hint">{t(jurisdiction === 'us_il_urbana' ? "Urbana 不包括 Champaign 或 Chicago；不确定地区时，先查看文字风险。" : jurisdiction === 'cn' ? "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。" : "未注入适用法律，仅提供合同文字风险提示。")}</p>
+      <p className="scope-hint">{t(jurisdiction === 'us_il_urbana' ? "Urbana 不包括 Champaign 或 Chicago；不确定地区时，先查看文字风险。" : jurisdiction === 'us_il' ? "只用伊利诺伊州法和联邦法；Champaign、Chicago 等城市条例未收录。房子在 Urbana 请选上一项。" : jurisdiction === 'cn' ? "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。" : "未注入适用法律，仅提供合同文字风险提示。")}</p>
       {error && <ErrorMessage message={error} fallback="分析失败，请重试" />}
       {!report && !error && <div className="analysis-empty" role={analyzing ? 'status' : undefined}>
         <span className="soft-icon"><Icon name="search" size={22} /></span>

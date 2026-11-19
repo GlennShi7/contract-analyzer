@@ -22,7 +22,7 @@ LAWS_DIR = Path(__file__).resolve().parent / "laws"
 CHECKLIST_PATH = Path(__file__).resolve().parent / "checklist.json"
 logger = logging.getLogger(__name__)
 ContractType = Literal["lease", "labor", "other"]
-Jurisdiction = Literal["cn", "us_il_urbana", "unknown"]
+Jurisdiction = Literal["cn", "us_il_urbana", "us_il", "unknown"]
 # The reader chooses the report language; the contract's language says nothing about who is reading it.
 OutputLanguage = Literal["zh", "en"]
 # illegal: a provided statute forbids it and applies; verify: depends on unknown facts or unsettled law;
@@ -46,7 +46,7 @@ class LawArticle(BaseModel):
     source_version: str
     checked_on: str
     text_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
-    jurisdiction: Literal["cn", "us_il_urbana"] = "cn"
+    jurisdiction: Literal["cn", "us_il_urbana", "us_il"] = "cn"
     authority_level: Literal["national", "municipal", "state", "federal"] = "national"
     applicability: str = "具体适用条件以条文原文为准。"
     effective_from: date | None = None
@@ -173,15 +173,24 @@ def classify_contract(text: str) -> ContractType:
     return "other"
 
 
+OUTSIDE_ILLINOIS_NAMES = re.compile(r"\b(new york|london|california|indiana|wisconsin|iowa|missouri|kentucky|michigan|texas)\b", re.IGNORECASE)
+# State codes only count after a comma ("Bloomington, IN"); case-sensitive so the word "in" never matches.
+OUTSIDE_ILLINOIS_CODES = re.compile(r",\s*(NY|CA|IN|WI|IA|MO|KY|MI|TX)\b")
+ILLINOIS = re.compile(r"\billinois\b|,\s*IL\b", re.IGNORECASE)
+
+
 def jurisdiction_conflict(text: str, jurisdiction: Jurisdiction) -> bool:
     if jurisdiction == "cn":
         return bool(re.search(r"\b(illinois|urbana|united states|england|singapore|hong kong)\b|伊利诺伊|美国法律|香港法律|澳门法律|台湾法律", text, re.IGNORECASE))
-    if jurisdiction == "us_il_urbana":
+    if jurisdiction in {"us_il_urbana", "us_il"}:
         if re.search(r"中华人民共和国|中国大陆|\b(england|singapore|hong kong)\b", text, re.IGNORECASE):
             return True
         address = re.search(r"(?:located at|property address|premises address)[^\n]{0,240}", text, re.IGNORECASE)
-        if address and re.search(r"\b(chicago|champaign|evanston|new york|london)\b", address.group(), re.IGNORECASE):
+        if address and jurisdiction == "us_il_urbana" and re.search(r"\b(chicago|champaign|evanston|new york|london)\b", address.group(), re.IGNORECASE):
             return not bool(re.search(r"\burbana\b", address.group(), re.IGNORECASE))
+        # Illinois without a city ordinance: only an address plainly in another state or country conflicts.
+        if address and jurisdiction == "us_il" and (OUTSIDE_ILLINOIS_NAMES.search(address.group()) or OUTSIDE_ILLINOIS_CODES.search(address.group())):
+            return not ILLINOIS.search(address.group())
     return False
 
 
@@ -189,8 +198,12 @@ def jurisdiction_conflict(text: str, jurisdiction: Jurisdiction) -> bool:
 def load_laws(contract_type: ContractType, jurisdiction: Jurisdiction = "cn", *, as_of: date = LAW_SNAPSHOT_DATE) -> tuple[LawArticle, ...]:
     if contract_type == "other" or jurisdiction == "unknown":
         return ()
-    if jurisdiction == "us_il_urbana" and contract_type != "lease":
+    if jurisdiction in {"us_il_urbana", "us_il"} and contract_type != "lease":
         return ()
+    if jurisdiction == "us_il":
+        # Statewide and federal rows of the Urbana library apply anywhere in Illinois; municipal rows do not.
+        urbana = load_laws(contract_type, "us_il_urbana", as_of=as_of)
+        return tuple(row.model_copy(update={"jurisdiction": "us_il"}) for row in urbana if row.authority_level in {"state", "federal"})
     filename = "tenancy_us_il_urbana.json" if jurisdiction == "us_il_urbana" else ("labor.json" if contract_type == "labor" else "tenancy.json")
     rows = json.loads((LAWS_DIR / filename).read_text(encoding="utf-8"))
     articles = tuple(LawArticle.model_validate(row) for row in rows)
@@ -307,7 +320,9 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
         law_references_total=references_total, law_references_valid=references_valid,
         law_reference_validity_rate=references_valid / references_total if references_total else None,
     )
-    if laws and laws[0].jurisdiction == "us_il_urbana":
+    if laws and laws[0].jurisdiction == "us_il":
+        scope = "伊利诺伊州住宅租赁：只含伊利诺伊州法和联邦法参考，不含任何城市条例（Champaign、Chicago 等城市的租赁条例未收录）。各条有单位数量、房龄、签订时间等适用条件，需逐条核对。"
+    elif laws and laws[0].jurisdiction == "us_il_urbana":
         scope = "Urbana, Illinois 住宅租赁：市条例、伊利诺伊州法及联邦法参考。房产须在 Urbana 市界内；本工具尚未核验市界，邮寄地址或地区选择不等于市界确认。市条例采用文件标识为 20260417 的官方导出版本，需核对后续修订及各条适用条件。"
     else:
         scope = "中国大陆法律参考；具体地域、时间和条文适用条件仍需核实。" if laws else "未注入适用法律，仅提供合同文字风险提示。"
@@ -350,6 +365,13 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
             "州法、市条例与联邦法可同时适用，不能只因保护标准不同就认定冲突。逐条注意地域、单位数量、房龄、租约签订时间、适用例外和通知程序。"
             "缺少房龄、楼栋单位数等事实时，仅在与所引条文相关时标为需核实，不能推断违法。"
             "没有提供市界查询证据，不得凭地址、邮编、合同自述或用户地区选择声称房产已核实位于 Urbana 市界内；可以说明在确属市界且符合例外条件时的规则。"
+        )
+    elif laws and jurisdiction == "us_il":
+        jurisdiction_guidance = (
+            "本次只提供伊利诺伊州法和联邦法，没有提供任何城市条例；不得引用或凭记忆套用 Urbana、Champaign、Chicago 等城市的租赁条例。"
+            "只有城市条例才禁止的条款最多标为 risk 或 verify，不能标 illegal。"
+            "州法与联邦法逐条注意单位数量、房龄、租约签订时间、适用例外和通知程序；缺少这些事实时，仅在与所引条文相关时标为 verify，不能推断违法。"
+            "如果合同显示房产在 Urbana，在 summary 中提示改选 Urbana 地区可以加入市条例分析，但不得据此认定市界。"
         )
     elif laws and jurisdiction == "cn":
         jurisdiction_guidance = "本次只提供中国大陆法条。核实事项须与实际合同和所引条文相关，不得借用其他法域的地域、事实门槛或核实清单。注意条文自身的地域、时间、适用条件和例外。"
