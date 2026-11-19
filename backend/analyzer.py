@@ -21,7 +21,7 @@ CHECKLIST_SIZE = 43
 # Only a guard against a model stuck in a loop.
 MAX_CARDS = 100
 # DeepSeek allows far more output; this only caps runaway generations. English reports run about twice the tokens of Chinese.
-DEFAULT_MAX_OUTPUT_TOKENS = 32768
+DEFAULT_MAX_OUTPUT_TOKENS = 16384
 # A few broken cards (bad format or a quote the contract lacks) are dropped at once; a larger share means the output is
 # systematically off, so retry. After the retry, broken cards are dropped unless they are the majority.
 DROP_WITHOUT_RETRY_SHARE = 0.2
@@ -121,6 +121,8 @@ class GroundingMetrics(BaseModel):
     cards_dropped: int = 0
     # Absence claims removed because the contract does address the item; kept for evaluation, not shown.
     missing_blocked: list[str] = []
+    # Cards that only said no action is needed; not findings.
+    no_action_removed: int = 0
     # Why earlier generations of this report were rejected.
     retry_reasons: list[str] = []
     quote_verification_rate: float | None
@@ -142,6 +144,11 @@ class AnalysisResult(GeneratedAnalysis):
 class AnalysisOutputError(Exception):
     """The model failed to return a usable analysis after one correction attempt."""
 
+    def __init__(self, message: str, raw_outputs: list[str | None] | None = None):
+        super().__init__(message)
+        # Kept so an evaluation run can save what the model actually wrote; never sent to the API caller.
+        self.raw_outputs = raw_outputs or []
+
 
 def model_name() -> str:
     return os.environ.get("DEEPSEEK_MODEL", "").strip() or DEFAULT_MODEL
@@ -162,8 +169,7 @@ def load_checklist() -> dict[int, dict]:
 def checklist_prompt() -> str:
     lines = []
     for item in load_checklist().values():
-        note = "（租约没写也要出 missing 卡）" if item["absent_means"] == "missing" else ""
-        lines.append(f"{item['id']}. {item['name_zh']}：{item['description_zh']}{note}")
+        lines.append(f"{item['id']}. {item['name_zh']}：{item['description_zh']}")
     return "\n".join(lines)
 
 
@@ -180,6 +186,45 @@ def absence_contradicted(item: dict | None, text_lower: str) -> str | None:
         if re.search(r"\b" + re.escape(keyword.lower()), text_lower):
             return f"contract mentions '{keyword}'"
     return None
+
+
+def absence_candidates(text: str) -> list[int]:
+    """Checklist items this contract may be said to lack: they take missing cards and none of their keywords appear."""
+    lower = text.lower()
+    return [i for i, item in load_checklist().items() if absence_contradicted(item, lower) is None]
+
+
+NO_ACTION = re.compile(r"^\s*(no (further )?action (is )?(needed|required)|nothing to do|none needed|无需(采取)?(任何)?(行动|处理|操作)|不需要(任何)?(处理|操作))[。.!]?\s*$", re.IGNORECASE)
+QUALIFIER = re.compile(r"\b(unless|except|provided that|provided,|subject to|but not|other than)\b", re.IGNORECASE)
+SENTENCE_END = re.compile(r"[.;!?](?=\s|$)|\n\s*\n")
+
+
+def complete_qualified_quote(quote: str, text: str) -> str:
+    """Extend an exact quote to its sentence end when the cut-off remainder carries a qualifier.
+
+    A quote can match verbatim and still drop "unless caused by Lessor's negligence" a few words later,
+    reversing what a reader takes from it. The extension is itself verbatim contract text.
+    """
+    tokens = quote.split()
+    if not tokens or quote.rstrip()[-1:] in ".;!?":
+        return quote
+    # PDF text breaks lines mid-sentence, so match the quote with any whitespace between its words.
+    found = re.search(r"\s+".join(map(re.escape, tokens)), text)
+    if not found:
+        return quote
+    stop = SENTENCE_END.search(text, found.end())
+    if not stop or stop.end() - found.end() > 800:
+        return quote
+    rest = text[found.end():stop.end()]
+    return quote.rstrip() + re.sub(r"\s+", " ", rest).rstrip() if QUALIFIER.search(rest) else quote
+
+
+def trim_summary(summary: str, limit: int = 2000) -> str:
+    if len(summary) <= limit:
+        return summary
+    cut = summary[:limit]
+    boundary = max(cut.rfind(". "), cut.rfind("。"), cut.rfind("! "), cut.rfind("? "))
+    return cut[:boundary + 1] if boundary > limit // 2 else cut
 
 
 def card_priority(card: "RiskCard") -> tuple[int, int, int]:
@@ -249,7 +294,7 @@ CJK = re.compile(r"[\u3400-\u9fff]")
 LATIN = re.compile(r"[A-Za-z]")
 LANGUAGE_INSTRUCTION = {
     "zh": "summary、title、explanation 和 suggestion 用简体中文书写；clause_text 必须保持合同原文的语言逐字引用，不得翻译。",
-    "en": "Write summary, title, explanation and suggestion in English, even though these instructions are in Chinese. clause_text must stay a verbatim quote in the contract's own language; never translate it. Keep each title under 10 words, explanation under 40 words and suggestion under 20 words.",
+    "en": "Write summary, title, explanation and suggestion in English, even though these instructions are in Chinese. clause_text must stay a verbatim quote in the contract's own language; never translate it. Keep the summary under 120 words, each title under 10 words, explanation under 40 words and suggestion under 20 words.",
 }
 EXAMPLE_TEXT = {
     "zh": {"summary": "简要概括风险与不确定性。", "title": "风险标题", "clause_text": "从合同中逐字复制的原文",
@@ -294,6 +339,9 @@ def parse_analysis_by_card(raw: str | None) -> tuple[GeneratedAnalysis, list[str
     data = json.loads(text)
     if not isinstance(data, dict) or not isinstance(data.get("cards"), list):
         return GeneratedAnalysis.model_validate_json(text), []
+    if isinstance(data.get("summary"), str) and len(data["summary"]) > 2000:
+        logger.warning("analysis_summary_trimmed chars=%d", len(data["summary"]))
+        data["summary"] = trim_summary(data["summary"])
     kept, rejected = [], []
     for index, item in enumerate(data["cards"], 1):
         try:
@@ -339,9 +387,15 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
     checklist = load_checklist() if use_checklist else {}
     text_lower = text.lower()
     cards, dropped, blocked = [], [], []
+    no_action = 0
     references_total = 0
     references_valid = 0
     for card in generated.cards:
+        if NO_ACTION.match(card.suggestion or ""):
+            no_action += 1
+            continue
+        if card.category != "missing":
+            card = card.model_copy(update={"clause_text": complete_qualified_quote(card.clause_text, text)})
         if card.category == "missing":
             reason = absence_contradicted(checklist.get(card.checklist_item), text_lower)
             if reason:
@@ -377,7 +431,7 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
     quoted = [card for card in cards if card.category != "missing"]
     verified = sum(card.verified for card in quoted)
     metrics = GroundingMetrics(
-        cards_total=len(cards), cards_verified=verified, cards_missing=len(cards) - len(quoted), cards_dropped=len(dropped) + rejected_cards, missing_blocked=blocked,
+        cards_total=len(cards), cards_verified=verified, cards_missing=len(cards) - len(quoted), cards_dropped=len(dropped) + rejected_cards, missing_blocked=blocked, no_action_removed=no_action,
         quote_verification_rate=verified / len(quoted) if quoted else None,
         law_references_total=references_total, law_references_valid=references_valid,
         law_reference_validity_rate=references_valid / references_total if references_total else None,
@@ -406,17 +460,21 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
     law_context = [law.model_dump(mode="json", include={"id", "law", "article", "text", "jurisdiction", "authority_level", "applicability", "effective_from", "effective_until", "source_version"}) for law in laws]
     # The checklist describes residential leases outside mainland China; other contracts keep free-form cards.
     use_checklist = kind == "lease" and jurisdiction != "cn"
+    absent = absence_candidates(text) if use_checklist else []
     words = EXAMPLE_TEXT[output_language]
     cards = [{"title": words["title"], "category": "risk", "checklist_item": 5 if use_checklist else None, "clause_text": words["clause_text"],
               "risk_level": "medium", "explanation": words["explanation"], "legal_basis": [], "suggestion": words["suggestion"]}]
-    if use_checklist:
-        cards.append({"title": words["missing_title"], "category": "missing", "checklist_item": 18, "clause_text": "", "risk_level": "low",
+    if absent:
+        cards.append({"title": words["missing_title"], "category": "missing", "checklist_item": absent[0], "clause_text": "", "risk_level": "low",
                       "explanation": words["missing_explanation"], "legal_basis": [], "suggestion": words["missing_suggestion"]})
     example = {"contract_type": kind, "risk_score": 5, "summary": words["summary"], "cards": cards}
     if use_checklist:
+        missing_rule = (f"只有清单第 {'、'.join(map(str, absent))} 项可以出 category 为 missing 的卡片（这些事项的相关文字在合同里没有出现），clause_text 留空字符串；其他清单项一律不出 missing 卡。"
+                        if absent else "这份合同不出 missing 卡：清单要求写明的事项在合同里都有相关文字。")
         checklist_rules = (
-            "清单中标明'租约没写也要出 missing 卡'的事项在全文找不到时，出一张 category 为 missing 的卡片，clause_text 留空字符串。"
-            "checklist_item 填对应的清单编号；清单之外但重要的问题填 null。同一清单项有几个不同问题可以出几张卡；没有问题的清单项不出卡。"
+            f"{missing_rule}summary 不得说合同缺少某事项，除非为该事项出了 missing 卡。"
+            "checklist_item 填对应的清单编号；清单之外但重要的问题填 null。同一清单项有几个不同问题可以出几张卡。"
+            "只为有问题的条款出卡：没有问题的清单项不出卡，不写“无需处理 / No action needed”这类卡片。卡片总数一般不超过 40 张。"
             f"逐项检查以下 {len(load_checklist())} 项清单：\n{checklist_prompt()}\n"
         )
     else:
@@ -424,10 +482,13 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
     if laws and jurisdiction == "us_il_urbana":
         jurisdiction_guidance = (
             "Urbana 不等于 Champaign 或 Chicago，禁止套用芝加哥租赁条例。"
-            "州法、市条例与联邦法可同时适用，不能只因保护标准不同就认定冲突。逐条注意地域、单位数量、房龄、租约签订时间、适用例外和通知程序。"
-            "缺少房龄、楼栋单位数等事实时，仅在与所引条文相关时标为需核实，不能推断违法。"
-            "用户选择 Urbana 地区，即声明房产位于 Urbana 市界内：以此为前提判断市条例是否适用，不因本工具无法核验市界而降低类别；不要声称市界已经核验。"
-            "条款被所提供的市条例、州法或联邦法明确禁止，且除市界以外的适用条件（单位数、房龄、签约时间、例外）已由合同或常识确定时，category 用 illegal，并在 explanation 末尾注明“前提：房产在 Urbana 市界内”（仅对市条例）。"
+            "州法、市条例与联邦法可同时适用，不能只因保护标准不同就认定冲突。"
+            "Urbana 第 12.5 章（id 以 URBANA 开头）只有两个适用条件：房产在 Urbana 市界内；租约在 1994 年 4 月 1 日或之后签订、延期或续约（12.5-7），以合同写的日期为准。"
+            "用户选择 Urbana 地区即声明房产位于 Urbana 市界内：以此为前提，不因本工具无法核验市界而降低类别，也不要声称市界已经核验。"
+            "12.5-2 的例外只有机构收容、购房人居住、兄弟会或社团会所、酒店等短住、以受雇为条件的雇员住房；合同没有显示属于这些情形，就按适用处理。"
+            "第 12.5 章没有楼栋单位数或房龄门槛，判断 URBANA 条文时不得以单位数、房龄未知为由降低类别。"
+            "单位数、房龄等门槛只属于部分州法和联邦法条文（以该条 applicability 字段为准）；缺少这些事实时，只对那几条标 verify。"
+            "条款被所提供的条文明确禁止且适用条件满足时，category 用 illegal；依据是市条例的，在 explanation 末尾注明“前提：房产在 Urbana 市界内”。"
             "条款写明是罚款、按天累计或按欠款比例收取的费用，本身就不以实际成本为准，可据此判断与“不得超过实际成本”的规定冲突；只有单个固定服务费（如挂号信费）才需要核实实际成本，标 verify。"
         )
     elif laws and jurisdiction == "us_il":
@@ -460,9 +521,8 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
         "若条款本身已将行为限制在法条列明的例外条件内，不要仅凭其不同于一般程序就声称条文本身冲突。区分条款条件是否与例外一致、现实行为是否满足条件；后者未知不能替代前者的文本分析。"
         "legal_basis 只能列出所提供法条的 id；不确定时留空，不得凭记忆增加法律、司法解释或条号。"
         "引用条文时注意适用条件、例外和但书；不能把对用户不利直接等同于违法或无效。"
-        "summary 只能概括卡片里的结论；除非有对应的 missing 卡，不得在 summary 里说租约没写某事项。"
         "区分合同已经写明的事实、尚未核实的事实与附条件的法律判断；标题、summary、explanation 和 suggestion 必须保持相同的限定，不能正文说待核实却在标题断言违法。"
-        "条件限制不等于绝对禁止；合同固定收费金额不等于已证明超过实际成本。不得把某种初步证据写成唯一法定形式，也不得省略会改变结论的例外。"
+        "条件限制不等于绝对禁止；单个固定服务费的金额本身不等于已证明超过实际成本。不得把某种初步证据写成唯一法定形式，也不得省略会改变结论的例外。"
         "如果法条列表为空，只讨论合同文字及应核实事项，不得断言法定权利、义务或法律效力。"
         f"用户选择的地区为 {jurisdiction}，法条资料核对日为 {LAW_SNAPSHOT_DATE.isoformat()}。"
         "合同语言不决定适用法；只依据本次所选地区与实际提供的法条，不把其他法域规则混入分析。"
@@ -475,6 +535,7 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
     messages = [{"role": "system", "content": system},
                 {"role": "user", "content": json.dumps({"contract_text": text}, ensure_ascii=False)}]
     retry_reasons: list[str] = []
+    raw_outputs: list[str | None] = []
     for attempt in range(1, 3):
         response = client.chat.completions.create(
             model=selected_model, messages=messages, response_format={"type": "json_object"},
@@ -522,8 +583,9 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
                            getattr(response.choices[0], "finish_reason", None) if getattr(response, "choices", None) else None,
                            getattr(usage, "completion_tokens", None), str(error)[:600])
             retry_reasons.append(str(error)[:600])
+            raw_outputs.append(raw)
             if attempt == 2:
-                raise AnalysisOutputError("Invalid structured analysis after one retry") from error
+                raise AnalysisOutputError("Invalid structured analysis after one retry", raw_outputs) from error
             if isinstance(error, ValidationError):
                 detail = [{"field": list(item["loc"]), "type": item["type"]} for item in error.errors(include_input=False)]
             else:

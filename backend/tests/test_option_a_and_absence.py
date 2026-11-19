@@ -83,7 +83,8 @@ def test_retry_reasons_are_kept_in_the_result():
 def test_summary_may_not_claim_absence_without_a_missing_card():
     client, calls = stub([])
     analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
-    assert "除非有对应的 missing 卡，不得在 summary 里说租约没写某事项" in calls[0]["messages"][0]["content"]
+    system = calls[0]["messages"][0]["content"]
+    assert "summary 不得说合同缺少某事项，除非为该事项出了 missing 卡" in system
 
 
 def test_item_24_is_about_lead_paint_only():

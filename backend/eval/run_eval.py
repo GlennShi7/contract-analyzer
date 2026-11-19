@@ -71,6 +71,11 @@ def run(pdf: Path, client, *, jurisdiction: str, runs: int, out_dir: Path, drop_
             record["result"] = result.model_dump(mode="json")
         except AnalysisOutputError as error:
             record["error"] = f"AnalysisOutputError: {error.__cause__ or error}"
+            # What the model wrote, for diagnosing runaways; contains contract quotes, so it stays in the output folder.
+            for number, raw in enumerate(error.raw_outputs, 1):
+                if raw:
+                    (out_dir / f"{pdf.stem}_{label}_run{i}_attempt{number}_raw.txt").write_text(raw, encoding="utf-8")
+            record["raw_outputs_saved"] = sum(1 for raw in error.raw_outputs if raw)
         except Exception as error:  # network or provider failure: keep the run, record why it failed
             record["error"] = f"{type(error).__name__}: {error}"
         record["elapsed_s"] = round(time.monotonic() - started, 1)

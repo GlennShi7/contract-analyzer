@@ -125,7 +125,7 @@ def test_english_reports_get_word_limits_and_room_to_finish():
     with pytest.raises(analyzer.AnalysisOutputError):
         analyze_contract(LEASE, client, jurisdiction="us_il_urbana", output_language="en")
     system = calls[0]["messages"][0]["content"]
-    assert "explanation under 40 words" in system and calls[0]["max_tokens"] == 32768
+    assert "explanation under 40 words" in system and calls[0]["max_tokens"] == 16384
 
 
 def test_warnings_reach_the_console_without_logging_setup():
