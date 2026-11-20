@@ -209,3 +209,10 @@ def test_scoring_explains_why_an_item_was_missed():
     record = {"result": {"cards": [], "grounding": {"item_verdicts": {"4": "no_problem", "23": "failed"}}}}
     s = score_eval.score_run(record, {4: "风险", 23: "违法/无效", 1: "没问题"}, load_checklist(), None, "r")
     assert s["miss_verdicts"] == {4: "no_problem", 23: "failed"}
+
+
+def test_a_merged_card_counts_for_every_item_it_lists():
+    from eval import score_eval
+    record = {"result": {"cards": [{"checklist_item": 22, "also_items": [41], "category": "risk", "legal_basis": []}]}}
+    s = score_eval.score_run(record, {22: "风险", 41: "风险"}, load_checklist(), None, "r")
+    assert s["hits"] == [22, 41]

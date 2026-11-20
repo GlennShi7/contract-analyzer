@@ -68,7 +68,8 @@ def keyword_suggestions(card: dict, checklist: dict[int, dict], top: int = 2) ->
 
 def card_items(card: dict, index: int, run_name: str, mapping: dict | None) -> list[int] | None:
     if isinstance(card.get("checklist_item"), int):
-        return [card["checklist_item"]]
+        # A clause raised under several items is kept once and lists the others in also_items; it covers them all.
+        return [card["checklist_item"]] + [i for i in card.get("also_items") or [] if isinstance(i, int)]
     if mapping and run_name in mapping:
         for entry in mapping[run_name]:
             if entry["card"] == index:
@@ -82,16 +83,19 @@ def score_run(record: dict, gold: dict[int, str], checklist: dict[int, dict], ma
     cards = record["result"]["cards"]
     should = {i for i, label in gold.items() if label in SHOULD_FLAG}
     should_not = {i for i, label in gold.items() if label in SHOULD_NOT}
-    flagged, unmapped, other, by_item = set(), [], 0, {}
+    flagged, unmapped, other, by_item, primary = set(), [], 0, {}, {}
     for index, card in enumerate(cards):
         items = card_items(card, index, run_name, mapping)
         if items is None:
             unmapped.append(index)
         elif not items:
             other += 1
-        for item in items or []:
+        for position, item in enumerate(items or []):
             flagged.add(item)
             by_item.setdefault(item, []).append(card)
+            # A merged card's category belongs to its own item; the items in also_items count for recall only.
+            if position == 0 or not isinstance(card.get("checklist_item"), int):
+                primary.setdefault(item, []).append(card)
     hits = flagged & should
     out = {
         "run": run_name, "cards": len(cards), "unmapped_cards": unmapped, "other_cards": other,
@@ -106,7 +110,7 @@ def score_run(record: dict, gold: dict[int, str], checklist: dict[int, dict], ma
     # One verdict per checklist item, so an item with five cards counts once.
     item_category = {}
     for item in hits:
-        categories = [c.get("category") for c in by_item[item] if c.get("category") in CATEGORY_LABEL]
+        categories = [c.get("category") for c in primary.get(item) or by_item[item] if c.get("category") in CATEGORY_LABEL]
         if categories:
             item_category[item] = min(categories, key=STRENGTH.index)
     if item_category:

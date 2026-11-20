@@ -15,6 +15,7 @@ Score the files with eval.score_eval.
 import argparse
 from datetime import datetime, timezone
 import json
+import logging
 import os
 from pathlib import Path
 import time
@@ -95,6 +96,11 @@ def main():
     ap.add_argument("--pipeline", choices=["single", "per_item"], default="single",
                     help="single: whole contract in one call; per_item: one call per checklist item on its retrieved segments")
     a = ap.parse_args()
+    # Show progress: the per-item review logs one line per item; HTTP request lines are left out.
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s", datefmt="%H:%M:%S")
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+    logging.getLogger("openai").setLevel(logging.WARNING)
+    print(f"running {a.runs} run(s), pipeline {a.pipeline}; results go to {a.out}", flush=True)
     run(a.pdf, deepseek_client(), jurisdiction=a.jurisdiction, runs=a.runs, out_dir=a.out,
         drop_info_pages=a.drop_info_pages, model=a.model, pipeline=a.pipeline, output_language=a.language)
 
