@@ -234,7 +234,8 @@ def test_english_reports_state_the_urbana_premise_in_english():
 
     def reply(payload):
         c = card(segment_with(payload, late), late, category="conflict", basis=["URBANA-12.5-13"])
-        c["explanation"] = "Clause charges 5% of the balance; 12.5-13 caps it. 前提：房产在 Urbana 市界内"
+        c["explanation"] = ("The clause charges five percent of the entire outstanding balance, while the ordinance limits "
+                            "late fees to a share of the monthly rent. 前提：房产在 Urbana 市界内")
         return {"verdict": "problem", "cards": [c]}
 
     result, _ = run({4: [reply]})

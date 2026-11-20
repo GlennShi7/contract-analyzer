@@ -341,7 +341,8 @@ def output_language_matches(generated: "GeneratedAnalysis", language: OutputLang
 
 
 def prose_language_matches(parts: list[str], language: OutputLanguage) -> bool:
-    prose = " ".join(parts)
+    # The Urbana premise note is requested in Chinese in every report language; it does not count as Chinese prose.
+    prose = PREMISE_NOTE.sub(" ", " ".join(parts))
     cjk, latin = len(CJK.findall(prose)), len(LATIN.findall(prose))
     if cjk + latin == 0:
         return True
