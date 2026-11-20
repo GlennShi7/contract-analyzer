@@ -227,3 +227,16 @@ def test_curly_quotes_in_the_lease_match_straight_quotes_in_the_model_copy():
                      "Landlord may enter the Bedroom without notice to Resident and without Resident's consent at any time.")]}]})
     result = analyze_contract_per_item(curly + "\n\n" + TEXT, client, pages=[curly] + PAGES, jurisdiction="us_il_urbana", output_language="en")
     assert 18 not in result.grounding.items_failed and any(c.checklist_item == 18 and c.verified for c in result.cards)
+
+
+def test_english_reports_state_the_urbana_premise_in_english():
+    late = "A late fee of 5% of the entire outstanding balance is charged after five days."
+
+    def reply(payload):
+        c = card(segment_with(payload, late), late, category="conflict", basis=["URBANA-12.5-13"])
+        c["explanation"] = "Clause charges 5% of the balance; 12.5-13 caps it. 前提：房产在 Urbana 市界内"
+        return {"verdict": "problem", "cards": [c]}
+
+    result, _ = run({4: [reply]})
+    late_card = next(c for c in result.cards if c.checklist_item == 4)
+    assert "前提" not in late_card.explanation and late_card.explanation.endswith("Assumes the property is inside Urbana city limits.")

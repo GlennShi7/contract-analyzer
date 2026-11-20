@@ -470,6 +470,9 @@ TYPOGRAPHY = str.maketrans({"\u2018": "'", "\u2019": "'", "\u201a": "'", "\u201b
                             "\u00a0": " ", "\u00ad": "", "\ufb01": "fi", "\ufb02": "fl"})
 
 
+PREMISE_NOTE = re.compile(r"[（(]?前提[：:]\s*房产在\s*Urbana\s*市界内[）)]?[。.]?")
+
+
 def normalize_quote_whitespace(text: str) -> str:
     text = re.sub(r"\s+", " ", text.translate(TYPOGRAPHY)).strip()
     # Remove PDF spacing between Chinese characters, but preserve English word boundaries.
@@ -550,6 +553,10 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
     references_total = sum(entry[1] for entry in cards)
     references_valid = sum(entry[2] for entry in cards)
     cards = [entry[0] for entry in cards]
+    if output_language == "en":
+        # The prompt asks for this note in Chinese; English reports get it in English.
+        for card in cards:
+            card.explanation = PREMISE_NOTE.sub("Assumes the property is inside Urbana city limits.", card.explanation)
     if capped:
         logger.warning("analysis_capped_cards count=%d", capped)
     if dropped:
