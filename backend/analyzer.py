@@ -463,8 +463,15 @@ def parse_analysis_data(data: dict) -> tuple[GeneratedAnalysis, list[str]]:
     return GeneratedAnalysis.model_validate(data | {"cards": kept}), rejected
 
 
+# Leases typeset with curly quotes and dashes ("Resident’s"); models copy them as plain ASCII ("Resident's").
+TYPOGRAPHY = str.maketrans({"\u2018": "'", "\u2019": "'", "\u201a": "'", "\u201b": "'", "\u2032": "'",
+                            "\u201c": '"', "\u201d": '"', "\u201e": '"', "\u2033": '"',
+                            "\u2010": "-", "\u2011": "-", "\u2012": "-", "\u2013": "-", "\u2014": "-", "\u2212": "-",
+                            "\u00a0": " ", "\u00ad": "", "\ufb01": "fi", "\ufb02": "fl"})
+
+
 def normalize_quote_whitespace(text: str) -> str:
-    text = re.sub(r"\s+", " ", text).strip()
+    text = re.sub(r"\s+", " ", text.translate(TYPOGRAPHY)).strip()
     # Remove PDF spacing between Chinese characters, but preserve English word boundaries.
     return re.sub(r"(?<=[\u3400-\u9fff，。；：！？、（）]) (?=[\u3400-\u9fff，。；：！？、（）])", "", text)
 

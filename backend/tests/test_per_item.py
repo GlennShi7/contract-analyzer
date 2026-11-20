@@ -216,3 +216,14 @@ def test_a_merged_card_counts_for_every_item_it_lists():
     record = {"result": {"cards": [{"checklist_item": 22, "also_items": [41], "category": "risk", "legal_basis": []}]}}
     s = score_eval.score_run(record, {22: "风险", 41: "风险"}, load_checklist(), None, "r")
     assert s["hits"] == [22, 41]
+
+
+def test_curly_quotes_in_the_lease_match_straight_quotes_in_the_model_copy():
+    from analyzer import match_quote
+    lease = "Landlord may enter the Bedroom without notice to Resident and without Resident’s consent – at any time."
+    assert match_quote("without Resident's consent - at any time.", lease)[0] == "whitespace"
+    curly = "1.4 ENTRY\nLandlord may enter the Bedroom without notice to Resident and without Resident’s consent at any time."
+    client, _ = stub({18: [lambda p: {"verdict": "problem", "cards": [card(segment_with(p, "without notice"),
+                     "Landlord may enter the Bedroom without notice to Resident and without Resident's consent at any time.")]}]})
+    result = analyze_contract_per_item(curly + "\n\n" + TEXT, client, pages=[curly] + PAGES, jurisdiction="us_il_urbana", output_language="en")
+    assert 18 not in result.grounding.items_failed and any(c.checklist_item == 18 and c.verified for c in result.cards)
