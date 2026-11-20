@@ -12,6 +12,8 @@ from openai import OpenAI, OpenAIError
 from pdfminer.psexceptions import PSException
 from pdfminer.pdfdocument import PDFPasswordIncorrect
 from pdfplumber.utils.exceptions import MalformedPDFException, PdfminerException
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 from analyzer import CJK, AnalysisOutputError, AnalysisResult, Jurisdiction, OutputLanguage, analyze_contract, load_checklist, model_name
@@ -19,6 +21,7 @@ from chunker import chunk_text
 from documents import DOC_ID_PATTERN, load_document, load_pages, save_document
 from embedder import EmbeddingUnavailableError, search_chunks, store_chunks
 from parser import MAX_DOCUMENT_CHARS, PDFLimitError, extract_pages
+from per_item import analyze_contract_per_item
 from retrieval import DEFAULT_TOP_K, retrieve_items
 from segmenter import PAGE_SEPARATOR, segment_pages, segment_text
 
@@ -26,6 +29,8 @@ load_dotenv(Path(__file__).resolve().parent / ".env")
 MAX_UPLOAD_BYTES = 20 * 1024 * 1024
 # Long leases double the input size; leave room for reading the full text before the first token.
 LLM_TIMEOUT_SECONDS = 300
+# The single call sends the whole contract at once; longer contracts go through the per-item review.
+SINGLE_CALL_MAX_CHARS = 200_000
 INDEX_UNAVAILABLE = "合同索引服务暂时不可用，请稍后重试；首次使用需要联网下载嵌入模型，缓存完整后可离线使用"
 
 app = FastAPI()
@@ -53,6 +58,8 @@ class ContractRequest(BaseModel):
 class AnalysisRequest(ContractRequest):
     jurisdiction: Jurisdiction = "unknown"
     output_language: OutputLanguage = "zh"
+    # "single": the whole contract in one call; "per_item": one call per checklist item on its retrieved segments.
+    pipeline: Literal["single", "per_item"] = "single"
 
 
 class AnalysisResponse(ContractRequest):
@@ -84,13 +91,29 @@ def hello():
     return {"message": "合同防踩坑工具 API 启动成功 🎉"}
 
 
+def contract_pages(doc_id: str, text: str) -> list[str] | None:
+    """Per-page text saved at upload, or None (older uploads, or pages that no longer reproduce the text)."""
+    try:
+        pages = load_pages(doc_id)
+    except (OSError, UnicodeError, ValueError):
+        return None
+    # Pages saved with the text must reproduce it exactly, or offsets would point at the wrong place.
+    return pages if pages is not None and PAGE_SEPARATOR.join(pages) == text else None
+
+
 @app.post("/analyze", response_model=AnalysisResponse)
 def analyze(request: AnalysisRequest):
     text = contract_text(request.doc_id)
     if len(text) > MAX_DOCUMENT_CHARS:
         raise HTTPException(status_code=413, detail=f"合同文字超过 {MAX_DOCUMENT_CHARS} 字符，请拆分后重新上传再分析")
+    if request.pipeline == "single" and len(text) > SINGLE_CALL_MAX_CHARS:
+        raise HTTPException(status_code=413, detail=f"合同文字超过 {SINGLE_CALL_MAX_CHARS} 字符，一次分析放不下，请改用“逐项检查”")
     try:
-        result = analyze_contract(text, get_llm_client(), jurisdiction=request.jurisdiction, output_language=request.output_language)
+        if request.pipeline == "per_item":
+            result = analyze_contract_per_item(text, get_llm_client(), pages=contract_pages(request.doc_id, text),
+                                               jurisdiction=request.jurisdiction, output_language=request.output_language)
+        else:
+            result = analyze_contract(text, get_llm_client(), jurisdiction=request.jurisdiction, output_language=request.output_language)
     except AnalysisOutputError:
         raise HTTPException(status_code=502, detail="分析结果未通过格式校验或合同原文匹配，请重试") from None
     except OpenAIError:
@@ -102,13 +125,7 @@ def analyze(request: AnalysisRequest):
 def retrieve(request: RetrievalRequest):
     """Phase 1 of the per-item pipeline: which segments each checklist item would be judged on. No model call."""
     text = contract_text(request.doc_id)
-    try:
-        pages = load_pages(request.doc_id)
-    except (OSError, UnicodeError, ValueError):
-        pages = None
-    # Pages saved with the text must reproduce it exactly, or offsets would point at the wrong place.
-    if pages is not None and PAGE_SEPARATOR.join(pages) != text:
-        pages = None
+    pages = contract_pages(request.doc_id, text)
     segments = segment_pages(pages) if pages is not None else segment_text(text)
     results = retrieve_items(segments, load_checklist(), top_k=request.top_k)
     used = {hit.segment.id for result in results for hit in result.hits}

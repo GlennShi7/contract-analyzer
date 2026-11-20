@@ -48,6 +48,7 @@ def test_limit_messages_match_frontend_translations():
     assert f"'提取文字超过 {parser.MAX_DOCUMENT_CHARS} 字符，请拆分 PDF 后上传'" in keys
     assert f"提取文字 {parser.MAX_DOCUMENT_CHARS} 字符" in upload.read_text(encoding="utf-8")
     assert f"{parser.MAX_DOCUMENT_CHARS:,} extracted characters" in keys
+    assert f"'合同文字超过 {main.SINGLE_CALL_MAX_CHARS} 字符，一次分析放不下，请改用“逐项检查”'" in keys
 
 
 def test_informational_pages_are_detected_but_signed_forms_are_kept():

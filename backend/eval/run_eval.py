@@ -6,6 +6,8 @@ Real leases contain personal information. Outputs go to backend/eval/private/ (g
     python -m eval.run_eval ~/leases/lease_a.pdf --jurisdiction us_il_urbana --runs 3
     # A/B check: the same lease without pamphlet and ordinance-summary pages
     python -m eval.run_eval ~/leases/lease_a.pdf --jurisdiction us_il_urbana --runs 3 --drop-info-pages
+    # the per-item review (about 40 calls per run)
+    python -m eval.run_eval ~/leases/lease_a.pdf --jurisdiction us_il_urbana --runs 3 --pipeline per_item
 
 Each run file holds the full analysis (or the error), the model, timing and which pages were sent.
 Score the files with eval.score_eval.
@@ -18,6 +20,7 @@ from pathlib import Path
 import time
 
 from analyzer import AnalysisOutputError, analyze_contract, model_name
+from per_item import analyze_contract_per_item
 from parser import extract_pages
 from segmenter import is_informational_page  # noqa: F401  re-exported for the tests and callers
 
@@ -40,22 +43,27 @@ def deepseek_client():
 
 
 def run(pdf: Path, client, *, jurisdiction: str, runs: int, out_dir: Path, drop_info_pages: bool = False,
-        model: str | None = None, **analyze_kwargs) -> list[Path]:
+        model: str | None = None, pipeline: str = "single", **analyze_kwargs) -> list[Path]:
     pages = extract_pages(str(pdf))
     text, dropped = build_text(pages, drop_info_pages=drop_info_pages)
-    label = "noinfo" if drop_info_pages else "full"
+    kept_pages = [page for number, page in enumerate(pages, 1) if number not in dropped]
+    label = ("noinfo" if drop_info_pages else "full") + ("_peritem" if pipeline == "per_item" else "")
     out_dir.mkdir(parents=True, exist_ok=True)
     written = []
     for i in range(1, runs + 1):
         started = time.monotonic()
         record = {
             "lease": pdf.name, "run": i, "variant": label, "jurisdiction": jurisdiction,
-            "model": model or model_name(), "options": analyze_kwargs,
+            "model": model or model_name(), "options": analyze_kwargs | {"pipeline": pipeline},
             "pages_total": len(pages), "pages_dropped": dropped, "chars_sent": len(text),
             "started_at": datetime.now(timezone.utc).isoformat(),
         }
         try:
-            result = analyze_contract(text, client, jurisdiction=jurisdiction, model=model, **analyze_kwargs)
+            if pipeline == "per_item":
+                # Page numbers then refer to the kept pages; with --drop-info-pages they shift.
+                result = analyze_contract_per_item(text, client, pages=kept_pages, jurisdiction=jurisdiction, model=model, **analyze_kwargs)
+            else:
+                result = analyze_contract(text, client, jurisdiction=jurisdiction, model=model, **analyze_kwargs)
             record["result"] = result.model_dump(mode="json")
         except AnalysisOutputError as error:
             record["error"] = f"AnalysisOutputError: {error.__cause__ or error}"
@@ -84,9 +92,11 @@ def main():
     ap.add_argument("--drop-info-pages", action="store_true", help="remove pamphlet and ordinance-summary pages before analysis")
     ap.add_argument("--model")
     ap.add_argument("--language", choices=["zh", "en"], default="zh", help="language of the report prose")
+    ap.add_argument("--pipeline", choices=["single", "per_item"], default="single",
+                    help="single: whole contract in one call; per_item: one call per checklist item on its retrieved segments")
     a = ap.parse_args()
     run(a.pdf, deepseek_client(), jurisdiction=a.jurisdiction, runs=a.runs, out_dir=a.out,
-        drop_info_pages=a.drop_info_pages, model=a.model, output_language=a.language)
+        drop_info_pages=a.drop_info_pages, model=a.model, pipeline=a.pipeline, output_language=a.language)
 
 
 if __name__ == "__main__":

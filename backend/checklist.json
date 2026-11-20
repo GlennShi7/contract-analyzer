@@ -15,7 +15,32 @@
     "forfeit",
     "refund",
     "deduct"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-20",
+    "URBANA-12.5-10",
+    "765 ILCS 710/1"
+   ],
+   "confusable": [
+    3,
+    16,
+    23,
+    32,
+    36
+   ],
+   "missing_card": {
+    "risk_level": "medium",
+    "zh": {
+     "title": "租约没写押金怎么退",
+     "explanation": "租约里没有找到押金退还期限、扣款清单或收据的约定。没写不代表房东可以不退，但退押金时更容易起争议。",
+     "suggestion": "签约前请房东写明退还期限和扣款方式。"
+    },
+    "en": {
+     "title": "Lease does not say how the deposit is returned",
+     "explanation": "The lease has no terms on the return deadline, itemized deductions or receipts. That does not let the landlord keep the deposit, but it makes disputes more likely.",
+     "suggestion": "Ask the landlord to state the return deadline and how deductions work."
+    }
+   }
   },
   {
    "id": 2,
@@ -26,7 +51,14 @@
    "absent_means": "none",
    "keywords": [
     "interest"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-19",
+    "765 ILCS 715/1",
+    "765 ILCS 715/2",
+    "765 ILCS 715/3"
+   ],
+   "confusable": []
   },
   {
    "id": 3,
@@ -43,6 +75,18 @@
     "cleaning",
     "carpet",
     "paint"
+   ],
+   "laws": [
+    "URBANA-12.5-20",
+    "URBANA-12.5-10",
+    "765 ILCS 710/1"
+   ],
+   "confusable": [
+    1,
+    16,
+    23,
+    32,
+    36
    ]
   },
   {
@@ -58,6 +102,18 @@
     "late payment",
     "grace period",
     "delinquen"
+   ],
+   "laws": [
+    "URBANA-12.5-13",
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    5,
+    7,
+    9,
+    27,
+    28,
+    29
    ]
   },
   {
@@ -84,6 +140,18 @@
     "processing fee",
     "fines",
     "penalt"
+   ],
+   "laws": [
+    "URBANA-12.5-10",
+    "URBANA-12.5-14"
+   ],
+   "confusable": [
+    4,
+    7,
+    9,
+    27,
+    28,
+    29
    ]
   },
   {
@@ -99,6 +167,18 @@
     "adjust the rent",
     "rent adjustment",
     "increase"
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    19,
+    20,
+    21,
+    22,
+    31,
+    33,
+    41
    ]
   },
   {
@@ -117,6 +197,18 @@
     "money order",
     "certified funds",
     "cashier"
+   ],
+   "laws": [
+    "765 ILCS 705/3.5",
+    "765 ILCS 705/4"
+   ],
+   "confusable": [
+    4,
+    5,
+    9,
+    27,
+    28,
+    29
    ]
   },
   {
@@ -135,7 +227,11 @@
     "pre-pay",
     "in advance",
     "reservation"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": []
   },
   {
    "id": 9,
@@ -152,7 +248,32 @@
     "electric",
     "water",
     "internet"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-10",
+    "URBANA-12.5-14"
+   ],
+   "confusable": [
+    4,
+    5,
+    7,
+    27,
+    28,
+    29
+   ],
+   "missing_card": {
+    "risk_level": "medium",
+    "zh": {
+     "title": "租约没写水电谁付",
+     "explanation": "租约里没有找到哪些水电由谁支付、怎么分摊。",
+     "suggestion": "签约前问清每项水电由谁付、怎么分摊，并写进租约。"
+    },
+    "en": {
+     "title": "Lease does not say who pays which utilities",
+     "explanation": "The lease does not say which utilities you pay or how shared bills are split.",
+     "suggestion": "Ask who pays each utility and how it is split, and get it in writing."
+    }
+   }
   },
   {
    "id": 10,
@@ -170,7 +291,24 @@
     "cosign",
     "individual",
     "several"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": [],
+   "missing_card": {
+    "risk_level": "medium",
+    "zh": {
+     "title": "租约没写按床位还是整套",
+     "explanation": "租约里没有找到你是只对自己的房间负责，还是要和室友一起对整套房子的房租和损坏负责。",
+     "suggestion": "签约前问清是否连带负责，并要求写明。"
+    },
+    "en": {
+     "title": "Lease does not say whether liability is per bed or joint",
+     "explanation": "The lease does not say whether you answer only for your own room or, with your roommates, for the whole unit's rent and damage.",
+     "suggestion": "Ask whether liability is joint and get the answer in writing."
+    }
+   }
   },
   {
    "id": 11,
@@ -188,6 +326,14 @@
     "not be held responsible",
     "release",
     "liability"
+   ],
+   "laws": [
+    "765 ILCS 705/1",
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    26,
+    34
    ]
   },
   {
@@ -203,7 +349,32 @@
     "repair",
     "maintenance",
     "maintain"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-18",
+    "URBANA-12.5-17",
+    "URBANA-12.5-23",
+    "765 ILCS 742/5",
+    "765 ILCS 742/15"
+   ],
+   "confusable": [
+    13,
+    17,
+    18
+   ],
+   "missing_card": {
+    "risk_level": "low",
+    "zh": {
+     "title": "租约没写维修归谁",
+     "explanation": "租约里没有找到维修责任怎么划分、报修怎么处理。",
+     "suggestion": "签约前问清报修方式和维修时限。"
+    },
+    "en": {
+     "title": "Lease does not say who handles repairs",
+     "explanation": "The lease does not say how repair duties are divided or how to request repairs.",
+     "suggestion": "Ask how to request repairs and how quickly they are made."
+    }
+   }
   },
   {
    "id": 13,
@@ -220,7 +391,29 @@
     "pest",
     "extermin",
     "insect"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-18",
+    "URBANA-12.5-17"
+   ],
+   "confusable": [
+    12,
+    17,
+    18
+   ],
+   "missing_card": {
+    "risk_level": "low",
+    "zh": {
+     "title": "租约没写霉菌和害虫谁负责",
+     "explanation": "租约里没有找到出现霉菌或害虫时由谁处理、费用谁出。",
+     "suggestion": "签约前问清霉菌和除虫怎么处理。"
+    },
+    "en": {
+     "title": "Lease does not cover mold or pests",
+     "explanation": "The lease does not say who deals with mold or pests, or who pays.",
+     "suggestion": "Ask how mold and pest problems are handled."
+    }
+   }
   },
   {
    "id": 14,
@@ -239,7 +432,25 @@
     "delay",
     "possession",
     "relocat"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-23",
+    "URBANA-12.5-18"
+   ],
+   "confusable": [],
+   "missing_card": {
+    "risk_level": "low",
+    "zh": {
+     "title": "租约没写火灾等灾害怎么办",
+     "explanation": "租约里没有找到房子因火灾等灾害不能住时，能不能解约、房租怎么算、会不会安置。",
+     "suggestion": "签约前问清不能入住时房租和解约怎么处理。"
+    },
+    "en": {
+     "title": "Lease does not cover fire or other casualty",
+     "explanation": "The lease does not say whether you can end the lease, how rent is handled, or whether you are rehoused if the unit becomes unlivable.",
+     "suggestion": "Ask what happens to rent and the lease if the unit becomes unlivable."
+    }
+   }
   },
   {
    "id": 15,
@@ -253,7 +464,11 @@
     "cognovit",
     "warrant of attorney",
     "power of attorney"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": []
   },
   {
    "id": 16,
@@ -267,6 +482,17 @@
     "legal fee",
     "court cost",
     "collection cost"
+   ],
+   "laws": [
+    "URBANA-12.5-10",
+    "URBANA-12.5-20"
+   ],
+   "confusable": [
+    1,
+    3,
+    23,
+    32,
+    36
    ]
   },
   {
@@ -286,6 +512,19 @@
     "offset",
     "set-off",
     "setoff"
+   ],
+   "laws": [
+    "URBANA-12.5-10",
+    "URBANA-12.5-23",
+    "URBANA-12.5-24",
+    "URBANA-12.5-25",
+    "URBANA-12.5-26",
+    "765 ILCS 721/5"
+   ],
+   "confusable": [
+    12,
+    13,
+    18
    ]
   },
   {
@@ -309,7 +548,29 @@
     "may enter",
     "right to enter",
     "permission to enter"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-15",
+    "URBANA-12.5-16"
+   ],
+   "confusable": [
+    12,
+    13,
+    17
+   ],
+   "missing_card": {
+    "risk_level": "medium",
+    "zh": {
+     "title": "租约没写房东入户要提前通知",
+     "explanation": "租约里没有找到房东进入房间前要提前多久通知、什么情况例外。",
+     "suggestion": "签约前问清入户通知时间，并要求写明。"
+    },
+    "en": {
+     "title": "Lease does not require notice before entry",
+     "explanation": "The lease does not say how much notice the landlord gives before entering, or when notice is not needed.",
+     "suggestion": "Ask how much notice is given before entry and get it in writing."
+    }
+   }
   },
   {
    "id": 19,
@@ -326,6 +587,18 @@
     "re-let",
     "assignment",
     "assign this/the/your lease"
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    6,
+    20,
+    21,
+    22,
+    31,
+    33,
+    41
    ]
   },
   {
@@ -344,6 +617,18 @@
     "modif",
     "pets",
     "animal"
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    6,
+    19,
+    21,
+    22,
+    31,
+    33,
+    41
    ]
   },
   {
@@ -360,6 +645,19 @@
     "month to month",
     "intent to vacate",
     "notice to vacate"
+   ],
+   "laws": [
+    "URBANA-12.5-11",
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    6,
+    19,
+    20,
+    22,
+    31,
+    33,
+    41
    ]
   },
   {
@@ -384,6 +682,19 @@
     "release from lease",
     "break the lease",
     "break your lease"
+   ],
+   "laws": [
+    "735 ILCS 5/9-213.1",
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    6,
+    19,
+    20,
+    21,
+    31,
+    33,
+    41
    ]
   },
   {
@@ -400,6 +711,17 @@
     "remain in possession",
     "stay in possession",
     "trespass"
+   ],
+   "laws": [
+    "URBANA-12.5-10",
+    "URBANA-12.5-24"
+   ],
+   "confusable": [
+    1,
+    3,
+    16,
+    32,
+    36
    ]
   },
   {
@@ -414,7 +736,26 @@
     "lead based",
     "lead paint",
     "lead hazard"
-   ]
+   ],
+   "laws": [
+    "42 U.S.C. 4852d(a)(1)",
+    "42 U.S.C. 4851b(27)",
+    "42 U.S.C. 4852d(c)"
+   ],
+   "confusable": [],
+   "missing_card": {
+    "risk_level": "low",
+    "zh": {
+     "title": "租约里没有含铅油漆告知",
+     "explanation": "租约里没有找到含铅油漆告知。联邦法只要求 1978 年以前建的房子随租约提供，1978 年及以后建的不需要。",
+     "suggestion": "问清房子哪年建的；早于 1978 年的，要求提供含铅油漆告知和说明手册。"
+    },
+    "en": {
+     "title": "No lead-paint disclosure in the lease",
+     "explanation": "The lease has no lead-paint disclosure. Federal law requires one only for housing built before 1978.",
+     "suggestion": "Ask when the building was built; if before 1978, ask for the lead disclosure and pamphlet."
+    }
+   }
   },
   {
    "id": 25,
@@ -431,7 +772,13 @@
     "section 8",
     "familial",
     "disabilit"
-   ]
+   ],
+   "laws": [
+    "42 U.S.C. 3604",
+    "42 U.S.C. 3603",
+    "42 U.S.C. 3607"
+   ],
+   "confusable": []
   },
   {
    "id": 26,
@@ -447,6 +794,13 @@
     "waiver program",
     "insurance",
     "insured"
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    11,
+    34
    ]
   },
   {
@@ -467,6 +821,18 @@
     "package",
     "parking",
     "included in"
+   ],
+   "laws": [
+    "URBANA-12.5-10",
+    "URBANA-12.5-14"
+   ],
+   "confusable": [
+    4,
+    5,
+    7,
+    9,
+    28,
+    29
    ]
   },
   {
@@ -483,7 +849,29 @@
     "pro rat",
     "installment",
     "aggregate"
-   ]
+   ],
+   "laws": [],
+   "confusable": [
+    4,
+    5,
+    7,
+    9,
+    27,
+    29
+   ],
+   "missing_card": {
+    "risk_level": "low",
+    "zh": {
+     "title": "租约没写分几期付、不足月怎么算",
+     "explanation": "租约里没有找到房租分几期支付、不足一个月的部分怎么算。",
+     "suggestion": "签约前确认总房租、期数和每期金额。"
+    },
+    "en": {
+     "title": "Lease does not state installments or partial months",
+     "explanation": "The lease does not say how many installments there are or how a partial month is charged.",
+     "suggestion": "Confirm the total rent, number of installments and amount of each."
+    }
+   }
   },
   {
    "id": 29,
@@ -501,6 +889,18 @@
     "\"rent\"",
     "deemed rent",
     "considered rent"
+   ],
+   "laws": [
+    "URBANA-12.5-13",
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    4,
+    5,
+    7,
+    9,
+    27,
+    28
    ]
   },
   {
@@ -518,7 +918,11 @@
     "promotion",
     "discount",
     "special"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": []
   },
   {
    "id": 31,
@@ -534,6 +938,18 @@
     "substitut",
     "roommate matching",
     "assigned"
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    6,
+    19,
+    20,
+    21,
+    22,
+    33,
+    41
    ]
   },
   {
@@ -549,6 +965,17 @@
     "equally",
     "divided",
     "shared"
+   ],
+   "laws": [
+    "URBANA-12.5-20",
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    1,
+    3,
+    16,
+    23,
+    36
    ]
   },
   {
@@ -569,6 +996,18 @@
     "entire term",
     "balance of the term",
     "all rent"
+   ],
+   "laws": [
+    "735 ILCS 5/9-213.1"
+   ],
+   "confusable": [
+    6,
+    19,
+    20,
+    21,
+    22,
+    31,
+    41
    ]
   },
   {
@@ -584,6 +1023,14 @@
     "hold us harmless",
     "harmless",
     "defend"
+   ],
+   "laws": [
+    "765 ILCS 705/1",
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    11,
+    26
    ]
   },
   {
@@ -600,7 +1047,11 @@
     "venue",
     "governing law",
     "jurisdiction"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": []
   },
   {
    "id": 36,
@@ -616,6 +1067,18 @@
     "dispose",
     "personal property",
     "storage"
+   ],
+   "laws": [
+    "URBANA-12.5-22",
+    "URBANA-12.5-25",
+    "URBANA-12.5-10"
+   ],
+   "confusable": [
+    1,
+    3,
+    16,
+    23,
+    32
    ]
   },
   {
@@ -631,7 +1094,11 @@
     "email address",
     "deemed",
     "notices"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-11"
+   ],
+   "confusable": []
   },
   {
    "id": 38,
@@ -646,7 +1113,11 @@
     "oral",
     "verbal",
     "representation"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": []
   },
   {
    "id": 39,
@@ -660,7 +1131,11 @@
     "signed by",
     "executed",
     "acceptance"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-10"
+   ],
+   "confusable": []
   },
   {
    "id": 40,
@@ -676,7 +1151,24 @@
     "move-in",
     "move in",
     "inspection"
-   ]
+   ],
+   "laws": [
+    "URBANA-12.5-20"
+   ],
+   "confusable": [],
+   "missing_card": {
+    "risk_level": "medium",
+    "zh": {
+     "title": "租约没写入住检查表",
+     "explanation": "租约里没有找到入住时记录房屋状况的检查表或期限。没有记录，退租时很难证明损坏不是你造成的。",
+     "suggestion": "入住当天拍照录像，并把房屋状况书面交给房东。"
+    },
+    "en": {
+     "title": "Lease has no move-in condition checklist",
+     "explanation": "The lease has no move-in checklist or deadline for recording the unit's condition, which makes it hard to show at move-out that damage was not yours.",
+     "suggestion": "Photograph the unit on move-in day and give the landlord a written condition report."
+    }
+   }
   },
   {
    "id": 41,
@@ -692,6 +1184,18 @@
     "withdraw",
     "graduat",
     "academic"
+   ],
+   "laws": [
+    "735 ILCS 5/9-213.1"
+   ],
+   "confusable": [
+    6,
+    19,
+    20,
+    21,
+    22,
+    31,
+    33
    ]
   },
   {
@@ -709,7 +1213,11 @@
     "passport",
     "social security",
     "ssn"
-   ]
+   ],
+   "laws": [
+    "42 U.S.C. 3604"
+   ],
+   "confusable": []
   },
   {
    "id": 43,
@@ -725,7 +1233,9 @@
     "attached",
     "community guidelines",
     "schedule"
-   ]
+   ],
+   "laws": [],
+   "confusable": []
   }
  ]
 }

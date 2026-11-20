@@ -8,7 +8,8 @@ const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 const replayDemo = import.meta.env.VITE_REPLAY_DEMO === 'true'
 const riskLabels = { high: '高风险', medium: '中风险', low: '低风险' }
 const lawLevels = { national: '国家法律', municipal: 'Urbana 市条例', state: '伊利诺伊州法', federal: '美国联邦法' }
-const categoryLabels = { illegal: '违法/无效', risk: '风险', verify: '待核实', missing: '缺失' }
+// "illegal" is the label reports used before Nov 2026 for the same finding.
+const categoryLabels = { conflict: '与条文不一致', illegal: '与条文不一致', risk: '风险', verify: '待核实', missing: '缺失' }
 // Problems every tenant meets come first; the backend already sorts cards in this order.
 const tierGroups = [['universal', '每个人都会碰上'], ['common', '常见情况'], ['rare', '少见情况'], [null, '清单之外']]
 
@@ -23,6 +24,7 @@ function RiskReport({ docId }) {
   const [analyzing, setAnalyzing] = useState(false)
   const [error, setError] = useState('')
   const [jurisdiction, setJurisdiction] = useState('unknown')
+  const [pipeline, setPipeline] = useState('single')
   const pendingRequest = useRef(null)
 
   useEffect(() => () => {
@@ -34,6 +36,12 @@ function RiskReport({ docId }) {
 
   function handleJurisdictionChange(e) {
     setJurisdiction(e.target.value)
+    setReport(null)
+    setError('')
+  }
+
+  function handlePipelineChange(e) {
+    setPipeline(e.target.value)
     setReport(null)
     setError('')
   }
@@ -50,7 +58,7 @@ function RiskReport({ docId }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         // The report is written in the interface language; quoted clauses stay in the contract's language.
-        body: JSON.stringify({ doc_id: docId, jurisdiction, output_language: language }),
+        body: JSON.stringify({ doc_id: docId, jurisdiction, output_language: language, pipeline }),
         signal: controller.signal,
       })
       let data
@@ -91,6 +99,11 @@ function RiskReport({ docId }) {
             <option value="us_il">{t("美国 · 伊利诺伊州（Urbana 以外，如 Champaign）")}</option>
           </select>
         </label>
+        <label className="region-control">{t("分析方式：")}<select value={pipeline} onChange={handlePipelineChange} disabled={analyzing}>
+            <option value="single">{t("一次分析整份合同")}</option>
+            <option value="per_item">{t("逐项检查（新，约 40 次调用）")}</option>
+          </select>
+        </label>
         <button className="primary-button" onClick={handleAnalyze} disabled={!docId || analyzing}>
           {analyzing ? t("分析中...") : t("分析风险")}<Icon name="arrow" size={16} />
         </button>
@@ -105,12 +118,14 @@ function RiskReport({ docId }) {
         <section aria-label={t("合同风险报告")}>
           <div className="report-header">
             <div className="score-tile" aria-label={t("风险提示评分：{score}/10", { score: report.risk_score })}>
-              <h3>{t("风险提示评分")}</h3><p className="score-value">{report.risk_score}<span>/ 10</span></p><small>{t("提示性评分，非违法概率")}</small>
+              <h3>{t("风险提示评分")}</h3><p className="score-value">{report.risk_score}<span>/ 10</span></p><small>{t("提示性评分，不是法律结论")}</small>
             </div>
             <div className="report-summary"><h2>{t("这份合同，需要关注什么？")}</h2><p className="content-language-note">{t(replayDemo ? "报告、回答和引用原文保留原有语言。" : "报告和回答使用生成时的界面语言；引用的合同原文保持原文语言。")}</p><p>{report.summary}</p>
               {report.grounding?.cards_dropped > 0 && <p className="dropped-note"><Icon name="info" size={13} />{t("有 {count} 张卡片没通过检查（格式不对，或引用的原文在合同里找不到），已去掉；这些清单项请自己对照合同核实。", { count: report.grounding.cards_dropped })}</p>}
               {report.grounding?.truncated && <p className="dropped-note"><Icon name="info" size={13} />{t("模型输出太长，中途被截断；报告保留了截断前写完整的卡片，后面的清单项可能没检查到，请对照清单自己核实。")}</p>}
               {report.grounding?.cards_capped > 0 && <p className="dropped-note"><Icon name="info" size={13} />{t("同一清单项最多保留 3 张卡，另外 {count} 张（多是收费表逐行出的卡）已去掉。", { count: report.grounding.cards_capped })}</p>}
+              {report.grounding?.items_failed?.length > 0 && <p className="dropped-note"><Icon name="info" size={13} />{t("第 {items} 项没能完成检查，请对照清单自己核实。", { items: report.grounding.items_failed.join('、') })}</p>}
+              {report.grounding?.pipeline === 'per_item' && <p className="content-language-note">{t("逐项检查：{judged} 项交给模型判断，共 {calls} 次调用；风险评分按卡片类别用固定公式计算。", { judged: Object.values(report.grounding.item_verdicts || {}).filter(v => !['missing', 'not_found'].includes(v)).length, calls: report.grounding.calls })}</p>}
               <details className="scope-details"><summary>{t("本次法条范围与适用条件")}</summary><p>{t(report.legal_scope)}</p></details>
             </div>
           </div>
@@ -122,7 +137,7 @@ function RiskReport({ docId }) {
               {cards.map((card, index) => (
             <article key={index} className={`risk-card risk-${card.risk_level}${card.category ? ` category-${card.category}` : ''}`}>
               <div className="risk-card-heading"><span className="risk-badge">{t(card.category ? categoryLabels[card.category] : riskLabels[card.risk_level])}</span><h3>{card.title}</h3></div>
-              {card.checklist_item && <p className="checklist-label">{t("清单第 {n} 项", { n: card.checklist_item })}{card.checklist_name ? ` · ${card.checklist_name}` : ''}</p>}
+              {card.checklist_item && <p className="checklist-label">{t("清单第 {n} 项", { n: card.checklist_item })}{card.checklist_name ? ` · ${card.checklist_name}` : ''}{card.also_items?.length > 0 ? ` · ${t("也涉及第 {items} 项", { items: card.also_items.join('、') })}` : ''}{card.pages?.length > 0 ? ` · ${t("第 {pages} 页", { pages: card.pages.join('–') })}` : ''}</p>}
               {card.category === 'missing' ? (
                 <p className="quote-status missing"><Icon name="info" size={13} />{t("租约里没有找到这项约定")}</p>
               ) : (
@@ -131,7 +146,7 @@ function RiskReport({ docId }) {
                   <p className={`quote-status${card.verified ? '' : ' unverified'}`}><Icon name={card.verified ? 'check' : 'info'} size={13} />{card.verified ? t("引用已匹配合同原文") : t("引用未逐字匹配，请回到合同核对")}</p>
                 </>
               )}
-              {card.category_downgraded && <p className="downgrade-note">{t("模型判为违法，但没有可核对的法条，已改为待核实。")}</p>}
+              {card.category_downgraded && <p className="downgrade-note">{t("模型标为与条文不一致，但没有可核对的法条，已改为待核实。")}</p>}
               <p className="risk-explanation">{card.explanation}</p>
               <p className="risk-suggestion"><strong>{t("建议：")}</strong>{card.suggestion}</p>
               {card.legal_basis.length === 0 && <p className="no-law">{t("暂无可核对的法条依据。")}</p>}

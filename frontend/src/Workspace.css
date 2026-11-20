@@ -107,7 +107,7 @@
 .risk-group + .risk-group { margin-top: 18px; }
 .risk-group-heading { display: flex; align-items: baseline; gap: 8px; margin: 16px 0 4px; font-size: 13px; color: #334155; }
 .risk-group-heading span { color: #64748b; font-size: 10px; font-weight: 500; }
-.risk-card.category-illegal { --risk: #a3342b; --risk-bg: #fbeae7; }
+.risk-card.category-conflict, .risk-card.category-illegal { --risk: #a3342b; --risk-bg: #fbeae7; }
 .risk-card.category-verify { --risk: #6b4a9b; --risk-bg: #f2edf9; }
 .risk-card.category-risk { --risk: #89601f; --risk-bg: #fcf5e7; }
 .risk-card.category-missing { --risk: #456d9e; --risk-bg: #edf3fb; }

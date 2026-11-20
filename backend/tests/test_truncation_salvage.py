@@ -41,12 +41,12 @@ def test_retry_names_the_items_that_ran_away():
 
 def test_one_item_keeps_its_three_strongest_cards():
     quote = "Tenant forfeits the security deposit if late."
-    cards = [card(16, "risk", quote, "low"), card(16, "risk", quote, "medium"), card(16, "illegal", quote, "high", basis=["URBANA-12.5-20"]),
+    cards = [card(16, "risk", quote, "low"), card(16, "risk", quote, "medium"), card(16, "conflict", quote, "high", basis=["URBANA-12.5-20"]),
              card(16, "verify", quote, "high"), card(16, "risk", quote, "high"), card(1, quote=quote)]
     client, _ = stub(cards)
     result = analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
     kept = [(c.category, c.risk_level) for c in result.cards if c.checklist_item == 16]
-    assert kept == [("illegal", "high"), ("verify", "high"), ("risk", "high")]
+    assert kept == [("conflict", "high"), ("verify", "high"), ("risk", "high")]
     assert result.grounding.cards_capped == 2 and any(c.checklist_item == 1 for c in result.cards)
 
 

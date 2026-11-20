@@ -15,22 +15,22 @@ def quoted(n):
     return [card(i + 1, quote=SENTENCES[i % len(SENTENCES)], title=f"卡片{i + 1}") for i in range(n)]
 
 
-def test_urbana_choice_is_the_premise_for_illegal():
+def test_urbana_choice_is_the_premise_for_conflict():
     client, calls = stub([])
     result = analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
     system = calls[0]["messages"][0]["content"]
-    assert "即声明房产位于 Urbana 市界内" in system and "category 用 illegal" in system
+    assert "即声明房产位于 Urbana 市界内" in system and "category 用 conflict" in system
     assert "前提：房产在 Urbana 市界内" in system
     assert "按天累计或按欠款比例" in system and "单个固定服务费" in system
     assert "不得凭地址、邮编、合同自述或用户地区选择" not in system
     assert "假定房产位于 Urbana 市界内" in result.legal_scope
 
 
-def test_illegal_with_an_urbana_ordinance_survives_grounding():
+def test_conflict_with_an_urbana_ordinance_survives_grounding():
     holdover = "A holdover fee of $200 per day applies."
-    client, _ = stub([card(23, "illegal", quote=holdover, basis=["URBANA-12.5-10"], title="逾期每天罚 $200")])
+    client, _ = stub([card(23, "conflict", quote=holdover, basis=["URBANA-12.5-10"], title="逾期每天罚 $200")])
     result = analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
-    assert result.cards[0].category == "illegal" and not result.cards[0].category_downgraded
+    assert result.cards[0].category == "conflict" and not result.cards[0].category_downgraded
 
 
 def test_absence_is_refused_when_the_item_does_not_take_missing_cards():
@@ -113,3 +113,11 @@ def test_frontend_explains_the_urbana_premise():
     assert hint in report and f"'{hint}':" in messages
     scope = analyze_contract.__globals__["ground_analysis"]  # keep the import used
     assert scope
+
+
+def test_reports_point_out_differences_without_legal_conclusions():
+    client, calls = stub([])
+    analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
+    system = calls[0]["messages"][0]["content"]
+    assert "category 只能是 conflict、risk、verify、missing" in system and "不下法律结论" in system
+    assert "illegal、unlawful、void、unenforceable" in system and "category 用 illegal" not in system

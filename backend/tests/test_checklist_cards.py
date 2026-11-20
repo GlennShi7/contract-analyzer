@@ -76,13 +76,13 @@ def test_malformed_category_cards_are_corrected_once(bad):
     assert "减少卡片数量" not in calls[1]["messages"][-1]["content"]
 
 
-def test_illegal_without_a_supplied_statute_is_downgraded_to_verify():
-    cards = [card(23, "illegal", quote="A holdover fee of $200 per day applies.", basis=["URBANA-12.5-10"]),
-             card(3, "illegal", quote="Carpets must be professionally shampooed at Tenant's expense.", basis=["Made-up Act 9"])]
+def test_conflict_without_a_supplied_statute_is_downgraded_to_verify():
+    cards = [card(23, "conflict", quote="A holdover fee of $200 per day applies.", basis=["URBANA-12.5-10"]),
+             card(3, "conflict", quote="Carpets must be professionally shampooed at Tenant's expense.", basis=["Made-up Act 9"])]
     client, _ = stub(cards)
     result = analyze_contract(LEASE, client, jurisdiction="us_il_urbana")
     by_item = {c.checklist_item: c for c in result.cards}
-    assert by_item[23].category == "illegal" and not by_item[23].category_downgraded
+    assert by_item[23].category == "conflict" and not by_item[23].category_downgraded
     assert by_item[3].category == "verify" and by_item[3].category_downgraded and by_item[3].legal_basis == []
 
 
@@ -90,7 +90,7 @@ def test_cards_are_ordered_by_how_often_tenants_meet_them():
     cards = [card(15, "risk", quote="Monthly rent is $500."),                                  # rare
              card(23, "risk", quote="A holdover fee of $200 per day applies."),                # common
              card(7, "risk", quote="Tenant shall pay a $10 monthly portal fee.", level="low"),  # universal
-             card(3, "illegal", quote="Carpets must be professionally shampooed at Tenant's expense.", basis=["URBANA-12.5-20"]),  # universal
+             card(3, "conflict", quote="Carpets must be professionally shampooed at Tenant's expense.", basis=["URBANA-12.5-20"]),  # universal
              card(None, "risk", quote="Landlord and tenant agree.")]                          # outside the checklist
     client, _ = stub(cards)
     result = analyze_contract(LEASE, client, jurisdiction="us_il_urbana")

@@ -44,6 +44,11 @@ const analysisResult = { risk_score: 3, summary: 'ORIGINAL_SUMMARY', grounding: 
   legal_sources: [{ id: 'law1', law: 'Synthetic law', article: 'Section 1', text: '<script>window.reportInjected = true</script>',
     source_url: 'https://www.ilga.gov/', checked_on: '2026-10-30', authority_level: 'state', applicability: 'Synthetic condition' }],
   legal_scope: 'Synthetic scope', disclaimer: 'Synthetic disclaimer' };
+const perItemResult = { ...analysisResult, risk_score: 7, summary: 'PER_ITEM_SUMMARY',
+  grounding: { pipeline: 'per_item', item_verdicts: { 4: 'problem', 5: 'no_problem', 18: 'missing', 23: 'failed' }, items_failed: [23], calls: 4 },
+  cards: [{ title: 'Late fee base differs', category: 'conflict', checklist_item: 4, checklist_name: 'Late fees', tier: 'common',
+    clause_text: 'A late fee of 5% of the entire balance.', risk_level: 'high', explanation: 'Clause says balance; provision says monthly rent.',
+    suggestion: 'Ask Tenant Union.', verified: true, legal_basis: ['law1'], also_items: [29], pages: [1, 2] }] };
 const malformedReports = {
   missing: undefined, null: null, cards: { ...analysisResult, cards: {} }, score: { ...analysisResult, risk_score: '3' },
   summary: { ...analysisResult, summary: { text: 'wrong type' } },
@@ -91,6 +96,7 @@ const api = createServer(async (req, res) => {
       return;
     }
     if (analysisMode === 'error') { res.writeHead(502); res.end(JSON.stringify({ detail: '分析服务暂时不可用，请稍后重试' })); return; }
+    if (analysisMode === 'perItem') { res.end(JSON.stringify({ doc_id: payload.doc_id, result: perItemResult })); return; }
     if (analysisMode === 'empty') { res.end(JSON.stringify({ doc_id: payload.doc_id, result: { ...analysisResult, cards: [], legal_sources: [] } })); return; }
     if (analysisMode === 'html') { res.end('<h1>Unavailable</h1>'); return; }
     if (Object.hasOwn(malformedReports, analysisMode)) { res.end(JSON.stringify({ doc_id: payload.doc_id, result: malformedReports[analysisMode] })); return; }
@@ -368,6 +374,7 @@ try {
   if (!(await evaluate('document.querySelector(".clause-quote").textContent === "Original contract clause." && document.querySelector(".source-text").textContent === "<script>window.reportInjected = true</script>"'))) throw new Error('Valid report content changed');
   if (analysisRequests.at(-1).doc_id !== 'b'.repeat(64) || analysisRequests.at(-1).jurisdiction !== 'us_il_urbana') throw new Error('Wrong analysis payload');
   if (analysisRequests.at(-1).output_language !== 'en') throw new Error('Analysis did not request the English interface language');
+  if (analysisRequests.at(-1).pipeline !== 'single') throw new Error('Analysis did not default to the single-pass pipeline');
   if (!(await evaluate('document.querySelector(".risk-card.category-missing .quote-status")?.textContent.includes("The lease does not state this.") && !document.querySelector(".risk-card.category-missing .clause-quote")'))) throw new Error('Missing-term card rendered incorrectly');
   if (await evaluate('[...document.querySelectorAll(".risk-group-heading")].map(h => h.firstChild.textContent).join("|")') !== 'Every tenant meets these|Outside the checklist') throw new Error('Cards not grouped by how often tenants meet them');
   if (await evaluate('document.querySelector(".risk-card.category-missing .checklist-label")?.textContent') !== 'Checklist item 18 · No notice before entry') throw new Error('Checklist label missing');
@@ -388,6 +395,24 @@ try {
   await until('document.querySelector(".retrieval-panel [role=alert]")?.textContent.includes("incomplete")');
   if (await evaluate('Boolean(document.querySelector(".retrieval-item"))')) throw new Error('Malformed retrieval rendered');
   retrievalMode = 'ok';
+  analysisMode = 'perItem';
+  await evaluate(`(() => { const select = document.querySelectorAll('.analysis-toolbar select')[1];
+    Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set.call(select, 'per_item');
+    select.dispatchEvent(new Event('change', { bubbles: true })); })()`);
+  await evaluate('document.querySelector(".risk-panel .primary-button").click()');
+  await until('document.querySelector(".report-summary")?.textContent.includes("PER_ITEM_SUMMARY")');
+  if (analysisRequests.at(-1).pipeline !== 'per_item') throw new Error('Per-item pipeline not requested');
+  if (!(await evaluate('document.querySelector(".risk-card.category-conflict .risk-badge")?.textContent === "Differs from the cited law"'))) throw new Error('Conflict label missing');
+  if (!(await evaluate('document.querySelector(".risk-card.category-conflict .checklist-label")?.textContent === "Checklist item 4 · Late fees · also item 29 · p. 1–2"'))) throw new Error('Per-item card details missing');
+  if (!(await evaluate('[...document.querySelectorAll(".dropped-note")].some(n => n.textContent.includes("Item(s) 23 could not be checked"))'))) throw new Error('Unchecked item note missing');
+  if (!(await evaluate('document.body.textContent.includes("3 items judged by the model in 4 calls")'))) throw new Error('Per-item run note missing');
+  analysisMode = 'ok';
+  await evaluate(`(() => { const select = document.querySelectorAll('.analysis-toolbar select')[1];
+    Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set.call(select, 'single');
+    select.dispatchEvent(new Event('change', { bubbles: true })); })()`);
+  if (await evaluate('Boolean(document.querySelector(".report-header"))')) throw new Error('Changing the analysis mode kept the old report');
+  await evaluate('document.querySelector(".risk-panel .primary-button").click()');
+  await until('document.querySelector(".report-summary")?.textContent.includes("ORIGINAL_SUMMARY")');
   const beforeAnalysisLanguage = analysisRequests.length;
   await evaluate('document.querySelector("[data-language-toggle]").click()');
   await until('document.documentElement.lang === "zh-CN"');
@@ -412,7 +437,7 @@ try {
   await until('Boolean(document.querySelector(".report-header"))');
   if (await evaluate('document.querySelectorAll(".risk-card").length !== 0 || Boolean(document.querySelector(".risk-panel [role=alert]"))')) throw new Error('Valid zero-card report rejected');
   if (browserErrors.length) throw new Error('Browser errors: ' + browserErrors.join('\n'));
-  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['18 malformed analysis payloads rejected without page failure; retry remains available', 'missing-term cards, checklist labels, frequency groups, dropped-card, truncation and per-item cap notes rendered', 'retrieval preview: summary, keyword highlight, pages, literal text; malformed result rejected', 'valid risk and law text preserved literally', 'analysis duplicate blocked', 'pending analysis aborted on file change', 'foreign analysis rejected', 'analysis HTML and 502 errors allow retry', 'analysis region hint (including Illinois outside Urbana) and report reset', 'language toggle preserves original report', 'analysis requests the current interface language', 'client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width', 'home widths 320/390/768/1200', 'labeled file picker', 'English default UI', 'language preference survives reload', 'existing errors relocalize', 'unknown service detail preserved under an English fallback', 'language switch preserves answers and sends no request', 'suggestion only prefills and focuses without request'], requests, analysisRequests }, null, 2));
+  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['18 malformed analysis payloads rejected without page failure; retry remains available', 'missing-term cards, checklist labels, frequency groups, dropped-card, truncation and per-item cap notes rendered', 'retrieval preview: summary, keyword highlight, pages, literal text; malformed result rejected', 'per-item pipeline request, conflict label, also-item and page labels, unchecked-item note', 'valid risk and law text preserved literally', 'analysis duplicate blocked', 'pending analysis aborted on file change', 'foreign analysis rejected', 'analysis HTML and 502 errors allow retry', 'analysis region hint (including Illinois outside Urbana) and report reset', 'language toggle preserves original report', 'analysis requests the current interface language', 'client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width', 'home widths 320/390/768/1200', 'labeled file picker', 'English default UI', 'language preference survives reload', 'existing errors relocalize', 'unknown service detail preserved under an English fallback', 'language switch preserves answers and sends no request', 'suggestion only prefills and focuses without request'], requests, analysisRequests }, null, 2));
   console.log('PASS: actual contract Q&A UI checks; no paid API calls.');
   console.log('Artifacts:', out);
 } finally {

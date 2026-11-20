@@ -69,7 +69,7 @@ function Upload({ onUploaded, document }) {
         <strong>{selectedFile ? selectedFile.name : t("选择一份 PDF 合同")}</strong>
         <small>{selectedFile ? t("点击更换文件") : t("点击此处选择文件 · 需要含可读取文字")}</small>
       </label>
-      <p className="upload-limits" id="upload-limits">{t("支持含文字的 PDF：最多 20 MiB、200 页、提取文字 200000 字符。")}</p>
+      <p className="upload-limits" id="upload-limits">{t("支持含文字的 PDF：最多 20 MiB、200 页、提取文字 300000 字符。")}</p>
       <div className="upload-actions">
         <button className="primary-button" onClick={handleUpload} disabled={!selectedFile || uploading}>
           {uploading ? t("上传中...") : t("上传")}<Icon name="arrow" size={16} />

@@ -2,8 +2,9 @@ import pdfplumber
 
 MAX_PDF_PAGES = 200
 # Real student leases often append required disclosures (lead-paint and radon pamphlets, ordinance
-# summaries); a 48-page Urbana lease extracts to about 120,000 characters.
-MAX_DOCUMENT_CHARS = 200_000
+# summaries); a 48-page Urbana lease extracts to about 120,000 characters and a 56-page national student-housing
+# contract to about 220,000. The single-call analysis has its own lower limit (main.SINGLE_CALL_MAX_CHARS).
+MAX_DOCUMENT_CHARS = 300_000
 # pdfplumber's default (3) glues words together in PDFs that position each word without a space
 # character ("holdharmlesstheLessor"); 1.5 restores the spaces and leaves normally spaced PDFs unchanged.
 X_TOLERANCE = 1.5

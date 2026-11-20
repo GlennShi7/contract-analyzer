@@ -1,7 +1,7 @@
 // Validate only the fields consumed by the report UI; preserve the response verbatim.
 const text = value => typeof value === 'string' && value.trim().length > 0
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value)
-const categories = ['illegal', 'risk', 'verify', 'missing']
+const categories = ['conflict', 'illegal', 'risk', 'verify', 'missing']
 const tiers = ['universal', 'common', 'rare']
 
 function sourceLink(value) {
@@ -36,6 +36,8 @@ export function isRenderableReport(report) {
     (card.checklist_item === undefined || card.checklist_item === null || Number.isInteger(card.checklist_item)) &&
     (card.checklist_name === undefined || card.checklist_name === null || typeof card.checklist_name === 'string') &&
     ['high', 'medium', 'low'].includes(card.risk_level) && typeof card.verified === 'boolean' &&
+    (card.also_items === undefined || (Array.isArray(card.also_items) && card.also_items.every(Number.isInteger))) &&
+    (card.pages === undefined || (Array.isArray(card.pages) && card.pages.every(Number.isInteger))) &&
     Array.isArray(card.legal_basis) && card.legal_basis.every(id => text(id) && ids.has(id)))
 }
 

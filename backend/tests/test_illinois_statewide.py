@@ -47,19 +47,19 @@ def test_prompt_offers_state_law_only_and_forbids_city_ordinances():
     system = calls[0]["messages"][0]["content"]
     laws = json.loads(system.split("可引用的法条：", 1)[1])
     assert laws and not any(law["id"].startswith("URBANA") or law["authority_level"] == "municipal" for law in laws)
-    assert "没有提供任何城市条例" in system and "不能标 illegal" in system
+    assert "没有提供任何城市条例" in system and "不能标 conflict" in system
     assert "逐项检查以下 43 项清单" in system and "禁止套用芝加哥" not in system
     assert result.legal_scope == SCOPE
 
 
-def test_citing_urbana_ordinance_statewide_cannot_make_a_card_illegal():
+def test_citing_urbana_ordinance_statewide_cannot_make_a_card_conflict():
     holdover = "A holdover fee of $200 per day applies."
-    client, _ = stub([card(23, "illegal", quote=holdover, basis=["URBANA-12.5-10"], title="逾期每天罚 $200"),
-                      card(11, "illegal", basis=["765 ILCS 705/1"], title="免除房东过失责任")])
+    client, _ = stub([card(23, "conflict", quote=holdover, basis=["URBANA-12.5-10"], title="逾期每天罚 $200"),
+                      card(11, "conflict", basis=["765 ILCS 705/1"], title="免除房东过失责任")])
     result = analyze_contract(LEASE, client, jurisdiction="us_il")
     by_item = {c.checklist_item: c for c in result.cards}
     assert by_item[23].category == "verify" and by_item[23].category_downgraded and by_item[23].legal_basis == []
-    assert by_item[11].category == "illegal" and by_item[11].legal_basis == ["765 ILCS 705/1"]
+    assert by_item[11].category == "conflict" and by_item[11].legal_basis == ["765 ILCS 705/1"]
     assert [s.id for s in result.legal_sources] == ["765 ILCS 705/1"]
     assert result.legal_sources[0].jurisdiction == "us_il"
 
