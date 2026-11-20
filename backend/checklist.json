@@ -184,6 +184,8 @@
     "not be liable",
     "not liable",
     "not responsible",
+    "not be responsible",
+    "not be held responsible",
     "release",
     "liability"
    ]
@@ -301,7 +303,12 @@
     "enter the dwelling",
     "right of access",
     "access to the premises",
-    "access to the unit"
+    "access to the unit",
+    "enter said premises",
+    "enter the leased premises",
+    "may enter",
+    "right to enter",
+    "permission to enter"
    ]
   },
   {
@@ -371,7 +378,12 @@
     "domestic violence",
     "sexual violence",
     "cancel",
-    "terminat"
+    "terminat",
+    "right to terminate",
+    "terminate this lease",
+    "release from lease",
+    "break the lease",
+    "break your lease"
    ]
   },
   {

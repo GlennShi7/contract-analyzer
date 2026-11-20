@@ -73,13 +73,13 @@ def test_upload_uses_safe_temporary_path_and_cleans_it(api, pdf_factory, monkeyp
     import main
     client, _ = api
     observed = []
-    original = main.extract_text
+    original = main.extract_pages
 
     def parse(path):
         observed.append(Path(path))
         return original(path)
 
-    monkeypatch.setattr(main, "extract_text", parse)
+    monkeypatch.setattr(main, "extract_pages", parse)
     content = b"not a PDF" if kind == "invalid" else pdf_factory("" if kind == "blank" else "Lease text.")
     result = client.post("/upload", files={"file": ("../../outside.pdf", content, "application/pdf")})
     assert result.status_code == (200 if kind == "valid" else 400)

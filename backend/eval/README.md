@@ -76,3 +76,17 @@ The [final implementation check](FINAL_ENFORCEMENT_REVIEW_2026-10-29.md) used th
 ## Additional local-only review
 
 The [five final-report findings](final_reasoning_audit_2026-10-29.json) are now checked by `python -m eval.reasoning_review` as a separate audit. Contract-fact checks use actual contract excerpts rather than unnecessary statutory IDs. The latest prompt separates municipal guidance from Chinese/unknown profiles and housing topics from employment analysis; this was initially verified with captured mock requests; the October 30 batch above now adds live evidence for that snapshot. The final full-contract live artifact continues to identify the earlier 9843ce0 code snapshot. Both paid authorizations remain exhausted.
+
+## Per-item retrieval (phase 1 of the per-item pipeline)
+
+`checklist_retrieval_eval.py` measures whether, for each checklist item, the segments that `segmenter.py` and
+`retrieval.py` select reach the pages a human marked as relevant. No model call. Real leases and answer keys hold
+personal information, so both are passed from outside the repository:
+
+    cd backend
+    python -m eval.checklist_retrieval_eval ~/leases/lease_a.pdf ~/leases/lease_a_key.json --k 3 5 8 --show 8
+
+A hit means one of the top-k segments lies on a key page. That is a lenient test (a page holds about four segments; the
+script prints the random-draw rate next to each number), so check the specific clauses of missed or doubtful items by
+hand. The lease used to tune the keywords is a development set; report results on a lease that was not used for tuning.
+The same retrieval is shown in the web UI under "Per-item retrieval preview" (`POST /retrieve`).

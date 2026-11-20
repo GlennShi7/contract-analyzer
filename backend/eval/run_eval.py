@@ -15,26 +15,14 @@ from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
-import re
 import time
 
 from analyzer import AnalysisOutputError, analyze_contract, model_name
 from parser import extract_pages
+from segmenter import is_informational_page  # noqa: F401  re-exported for the tests and callers
 
 BACKEND = Path(__file__).resolve().parents[1]
 PRIVATE = Path(__file__).resolve().parent / "private"
-# Pamphlets and question-and-answer summaries repeat statutes; they are not lease terms.
-INFO_MARKERS = re.compile(r"protect your family|\bepa\b|radon guide|iema|what (?:happens|if|is|are|can|does)\b[^?]{0,120}\?", re.I)
-SIGNED_FORM = re.compile(r"lessor's disclosure|tenant's acknowledgment|lessee's acknowledgment|by signing below", re.I)
-
-
-def is_informational_page(text: str) -> bool:
-    """Two or more pamphlet markers, and not a disclosure form that the tenant signs."""
-    if SIGNED_FORM.search(text):
-        return False
-    return len(INFO_MARKERS.findall(text)) >= 2
-
-
 def build_text(pages: list[str], *, drop_info_pages: bool) -> tuple[str, list[int]]:
     dropped = [i for i, page in enumerate(pages, 1) if drop_info_pages and is_informational_page(page)]
     kept = [page for i, page in enumerate(pages, 1) if i not in dropped]

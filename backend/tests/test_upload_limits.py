@@ -28,7 +28,7 @@ def test_oversized_upload_is_rejected_before_copying_or_parsing(api, monkeypatch
         raise AssertionError('An oversized declared file must not be copied or parsed')
 
     monkeypatch.setattr(main.tempfile, 'NamedTemporaryFile', forbidden)
-    monkeypatch.setattr(main, 'extract_text', forbidden)
+    monkeypatch.setattr(main, 'extract_pages', forbidden)
     assert client.post('/upload', files={'file': ('large.pdf', b'x' * 11)}).status_code == 413
     assert not calls
 
@@ -106,7 +106,7 @@ def test_wrapped_password_error_is_explained(api, monkeypatch):
         except PDFPasswordIncorrect as error:
             raise PdfminerException(error)
 
-    monkeypatch.setattr(main, 'extract_text', encrypted)
+    monkeypatch.setattr(main, 'extract_pages', encrypted)
     response = client.post('/upload', files={'file': ('encrypted.pdf', b'fixture')})
     assert response.status_code == 400
     assert '先解锁' in response.json()['detail']

@@ -14,11 +14,13 @@ from pdfminer.pdfdocument import PDFPasswordIncorrect
 from pdfplumber.utils.exceptions import MalformedPDFException, PdfminerException
 from pydantic import BaseModel, Field
 
-from analyzer import CJK, AnalysisOutputError, AnalysisResult, Jurisdiction, OutputLanguage, analyze_contract, model_name
+from analyzer import CJK, AnalysisOutputError, AnalysisResult, Jurisdiction, OutputLanguage, analyze_contract, load_checklist, model_name
 from chunker import chunk_text
-from documents import DOC_ID_PATTERN, load_document, save_document
+from documents import DOC_ID_PATTERN, load_document, load_pages, save_document
 from embedder import EmbeddingUnavailableError, search_chunks, store_chunks
-from parser import MAX_DOCUMENT_CHARS, PDFLimitError, extract_text
+from parser import MAX_DOCUMENT_CHARS, PDFLimitError, extract_pages
+from retrieval import DEFAULT_TOP_K, retrieve_items
+from segmenter import PAGE_SEPARATOR, segment_pages, segment_text
 
 load_dotenv(Path(__file__).resolve().parent / ".env")
 MAX_UPLOAD_BYTES = 20 * 1024 * 1024
@@ -57,6 +59,10 @@ class AnalysisResponse(ContractRequest):
     result: AnalysisResult
 
 
+class RetrievalRequest(ContractRequest):
+    top_k: int = Field(default=DEFAULT_TOP_K, ge=1, le=12)
+
+
 class AskRequest(ContractRequest):
     model_config = {"str_strip_whitespace": True}
     question: str = Field(min_length=1, max_length=4000)
@@ -92,6 +98,35 @@ def analyze(request: AnalysisRequest):
     return {"doc_id": request.doc_id, "result": result}
 
 
+@app.post("/retrieve")
+def retrieve(request: RetrievalRequest):
+    """Phase 1 of the per-item pipeline: which segments each checklist item would be judged on. No model call."""
+    text = contract_text(request.doc_id)
+    try:
+        pages = load_pages(request.doc_id)
+    except (OSError, UnicodeError, ValueError):
+        pages = None
+    # Pages saved with the text must reproduce it exactly, or offsets would point at the wrong place.
+    if pages is not None and PAGE_SEPARATOR.join(pages) != text:
+        pages = None
+    segments = segment_pages(pages) if pages is not None else segment_text(text)
+    results = retrieve_items(segments, load_checklist(), top_k=request.top_k)
+    used = {hit.segment.id for result in results for hit in result.hits}
+    return {
+        "doc_id": request.doc_id,
+        "pages_known": pages is not None,
+        "pages_total": len(pages) if pages is not None else None,
+        "segments_total": len(segments),
+        "method": "keywords+bm25",
+        "segments": {segment.id: segment.as_dict() for segment in segments if segment.id in used},
+        "items": [
+            result.as_dict() | {"hits": [{"segment": hit.segment.id, "score": round(hit.score, 3), "keywords": hit.keywords}
+                                         for hit in result.hits]}
+            for result in results
+        ],
+    }
+
+
 @app.post("/upload")
 def upload(file: UploadFile = File(...)):
     if file.size is not None and file.size > MAX_UPLOAD_BYTES:
@@ -110,7 +145,8 @@ def upload(file: UploadFile = File(...)):
                 handle.write(block)
                 digest.update(block)
         try:
-            text = extract_text(str(temporary))
+            pages = extract_pages(str(temporary))
+            text = PAGE_SEPARATOR.join(pages)
         except PDFLimitError as exc:
             raise HTTPException(status_code=413, detail=str(exc)) from None
         except (OSError, ValueError, EOFError, PSException, MalformedPDFException, PdfminerException) as exc:
@@ -122,7 +158,7 @@ def upload(file: UploadFile = File(...)):
         doc_id = digest.hexdigest()
         chunks = chunk_text(text)
         n_chunks = store_chunks(chunks, doc_id)
-        save_document(doc_id, text)
+        save_document(doc_id, text, pages)
     except (EmbeddingUnavailableError, ChromaError):
         raise HTTPException(status_code=503, detail=INDEX_UNAVAILABLE) from None
     except OSError:

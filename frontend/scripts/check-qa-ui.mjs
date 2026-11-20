@@ -20,6 +20,22 @@ const analysisRequests = [];
 let analysisMode = 'ok';
 let delayedAnalysis;
 let analysisAborted = false;
+const retrievalRequests = [];
+let retrievalMode = 'ok';
+const retrievalResult = {
+  pages_known: true, pages_total: 3, segments_total: 9, method: 'keywords+bm25',
+  segments: {
+    s2: { id: 's2', pages: [1], heading: '1.4 SECURITY DEPOSIT', section: null, text: 'The security deposit will be forfeited for cleaning charges.' },
+    s7: { id: 's7', pages: [2, 3], heading: null, section: '2.5 PARKING', text: '<b>Lessor will not be responsible</b> for vehicle damage.' },
+  },
+  items: [
+    { id: 1, name_zh: '押金退还与扣款', name_en: 'Deposit return and deductions', tier: 'universal', absent_means: 'none', status: 'found',
+      hits: [{ segment: 's2', score: 3.1, keywords: ['security deposit', 'forfeit'] }] },
+    { id: 11, name_zh: '免除房东过失责任', name_en: 'Waiving landlord negligence', tier: 'rare', absent_means: 'none', status: 'found',
+      hits: [{ segment: 's7', score: 4.5, keywords: ['not be responsible'] }] },
+    { id: 24, name_zh: '法定披露（含铅油漆）', name_en: 'Required disclosures (lead paint)', tier: 'common', absent_means: 'missing', status: 'absent', hits: [] },
+  ],
+};
 const analysisResult = { risk_score: 3, summary: 'ORIGINAL_SUMMARY', grounding: { cards_dropped: 2, truncated: true, cards_capped: 4 },
   cards: [{ title: 'Synthetic risk', clause_text: 'Original contract clause.', risk_level: 'medium', explanation: 'Synthetic explanation',
     suggestion: 'Synthetic suggestion', verified: true, legal_basis: ['law1'] },
@@ -80,6 +96,13 @@ const api = createServer(async (req, res) => {
     if (Object.hasOwn(malformedReports, analysisMode)) { res.end(JSON.stringify({ doc_id: payload.doc_id, result: malformedReports[analysisMode] })); return; }
     res.end(JSON.stringify({ doc_id: analysisMode === 'foreign' ? 'c'.repeat(64) : payload.doc_id,
       result: { ...analysisResult, summary: analysisMode === 'foreign' ? 'FOREIGN_REPORT_MUST_NOT_RENDER' : analysisResult.summary } }));
+    return;
+  }
+  if (req.url === '/retrieve') {
+    const payload = JSON.parse(Buffer.concat(chunks).toString());
+    retrievalRequests.push(payload);
+    if (retrievalMode === 'malformed') { res.end(JSON.stringify({ doc_id: payload.doc_id, ...retrievalResult, items: [{ ...retrievalResult.items[0], hits: [{ segment: 's99', keywords: [] }] }] })); return; }
+    res.end(JSON.stringify({ doc_id: payload.doc_id, ...retrievalResult }));
     return;
   }
   if (req.url !== '/ask') { res.writeHead(404); res.end('{}'); return; }
@@ -351,6 +374,20 @@ try {
   if (!(await evaluate('document.querySelector(".dropped-note")?.textContent.startsWith("2 card(s) failed checks")'))) throw new Error('Dropped-card note missing');
   if (!(await evaluate('[...document.querySelectorAll(".dropped-note")].some(n => n.textContent.startsWith("The model\'s output ran too long"))'))) throw new Error('Truncation note missing');
   if (!(await evaluate('[...document.querySelectorAll(".dropped-note")].some(n => n.textContent.includes("4 more (mostly one card per fee-schedule line)"))'))) throw new Error('Per-item cap note missing');
+  const beforeRetrievalAsks = analysisRequests.length + requests.length;
+  await evaluate('document.querySelector(".retrieval-panel button").click()');
+  await until('document.querySelectorAll(".retrieval-item").length === 3');
+  if (retrievalRequests.at(-1)?.doc_id !== 'b'.repeat(64) || analysisRequests.length + requests.length !== beforeRetrievalAsks) throw new Error('Retrieval preview sent the wrong request');
+  if (!(await evaluate('document.querySelector(".retrieval-summary").textContent === "Split into 9 segments; 2 items have related clauses, 1 may be missing, 0 have no match."'))) throw new Error('Retrieval summary wrong');
+  await evaluate('document.querySelectorAll(".retrieval-item")[1].open = true');
+  if (!(await evaluate('document.querySelectorAll(".retrieval-item")[1].querySelector("mark")?.textContent === "not be responsible" && !document.querySelector(".retrieval-item b")'))) throw new Error('Retrieval keyword highlight or literal text wrong');
+  if (!(await evaluate('document.querySelectorAll(".retrieval-item")[1].querySelector(".retrieval-hit-meta").textContent.includes("p. 2–3") && document.querySelectorAll(".retrieval-item")[1].textContent.includes("2.5 PARKING (cont.)")'))) throw new Error('Retrieval page or section label missing');
+  if (!(await evaluate('document.querySelectorAll(".retrieval-item")[2].querySelector(".retrieval-badge").textContent === "May be missing"'))) throw new Error('Absent status label missing');
+  retrievalMode = 'malformed';
+  await evaluate('document.querySelector(".retrieval-panel button").click()');
+  await until('document.querySelector(".retrieval-panel [role=alert]")?.textContent.includes("incomplete")');
+  if (await evaluate('Boolean(document.querySelector(".retrieval-item"))')) throw new Error('Malformed retrieval rendered');
+  retrievalMode = 'ok';
   const beforeAnalysisLanguage = analysisRequests.length;
   await evaluate('document.querySelector("[data-language-toggle]").click()');
   await until('document.documentElement.lang === "zh-CN"');
@@ -375,7 +412,7 @@ try {
   await until('Boolean(document.querySelector(".report-header"))');
   if (await evaluate('document.querySelectorAll(".risk-card").length !== 0 || Boolean(document.querySelector(".risk-panel [role=alert]"))')) throw new Error('Valid zero-card report rejected');
   if (browserErrors.length) throw new Error('Browser errors: ' + browserErrors.join('\n'));
-  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['18 malformed analysis payloads rejected without page failure; retry remains available', 'missing-term cards, checklist labels, frequency groups, dropped-card, truncation and per-item cap notes rendered', 'valid risk and law text preserved literally', 'analysis duplicate blocked', 'pending analysis aborted on file change', 'foreign analysis rejected', 'analysis HTML and 502 errors allow retry', 'analysis region hint (including Illinois outside Urbana) and report reset', 'language toggle preserves original report', 'analysis requests the current interface language', 'client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width', 'home widths 320/390/768/1200', 'labeled file picker', 'English default UI', 'language preference survives reload', 'existing errors relocalize', 'unknown service detail preserved under an English fallback', 'language switch preserves answers and sends no request', 'suggestion only prefills and focuses without request'], requests, analysisRequests }, null, 2));
+  await writeFile(path.join(out, 'checks.json'), JSON.stringify({ mode: 'local mock API; no model API calls', checks: ['18 malformed analysis payloads rejected without page failure; retry remains available', 'missing-term cards, checklist labels, frequency groups, dropped-card, truncation and per-item cap notes rendered', 'retrieval preview: summary, keyword highlight, pages, literal text; malformed result rejected', 'valid risk and law text preserved literally', 'analysis duplicate blocked', 'pending analysis aborted on file change', 'foreign analysis rejected', 'analysis HTML and 502 errors allow retry', 'analysis region hint (including Illinois outside Urbana) and report reset', 'language toggle preserves original report', 'analysis requests the current interface language', 'client 20 MiB limit with no upload request', 'HTML 413 readable', 'index 503 readable', 'incomplete upload response rejected', 'duplicate upload blocked', 'upload required', 'trimmed questions', 'whitespace rejected', 'two questions retained with independent API payloads', 'per-turn errors preserve earlier answers', 'clearing local history sends no request', 'document-scoped answer and sources', 'literal text rendering', '409/502/404 errors', 'foreign source rejected', 'blank answer rejected', 'invalid JSON', 'duplicate submit blocked', 'file change clears history and aborts pending fetch', 'new document ID sent', 'mobile width', 'home widths 320/390/768/1200', 'labeled file picker', 'English default UI', 'language preference survives reload', 'existing errors relocalize', 'unknown service detail preserved under an English fallback', 'language switch preserves answers and sends no request', 'suggestion only prefills and focuses without request'], requests, analysisRequests }, null, 2));
   console.log('PASS: actual contract Q&A UI checks; no paid API calls.');
   console.log('Artifacts:', out);
 } finally {

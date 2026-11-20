@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Upload from './components/Upload'
 import RiskReport from './components/RiskReport'
+import RetrievalPreview from './components/RetrievalPreview'
 import ContractQuestions from './components/ContractQuestions'
 import Icon from './components/Icon'
 import { useLanguage } from './language'
@@ -70,6 +71,7 @@ function App() {
               <>
                 <div className="document-ready" role="status"><span className="ready-mark"><Icon name="check" size={16} /></span><span><strong>{document.filename}</strong><small>{t("已导入。现在可以核对风险，或直接向这份合同提问。")}</small></span></div>
                 <RiskReport key={`risk-${document.doc_id}`} docId={document.doc_id} />
+                {!replayDemo && <RetrievalPreview key={`retrieval-${document.doc_id}`} docId={document.doc_id} />}
                 <ContractQuestions key={`questions-${document.doc_id}`} docId={document.doc_id} />
               </>
             ) : (

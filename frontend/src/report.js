@@ -38,3 +38,16 @@ export function isRenderableReport(report) {
     ['high', 'medium', 'low'].includes(card.risk_level) && typeof card.verified === 'boolean' &&
     Array.isArray(card.legal_basis) && card.legal_basis.every(id => text(id) && ids.has(id)))
 }
+
+// /retrieve: segments keyed by id, items that point at them. Fields the preview renders must have the right types.
+export function isRenderableRetrieval(data) {
+  if (!object(data) || !Number.isInteger(data.segments_total) || typeof data.pages_known !== 'boolean' ||
+      !object(data.segments) || !Array.isArray(data.items)) return false
+  const segmentOk = segment => object(segment) && typeof segment.text === 'string' && Array.isArray(segment.pages) &&
+    segment.pages.every(Number.isInteger) && [segment.heading, segment.section].every(v => v === null || v === undefined || typeof v === 'string')
+  if (!Object.values(data.segments).every(segmentOk)) return false
+  return data.items.every(item => object(item) && Number.isInteger(item.id) && text(item.name_zh) && text(item.name_en) &&
+    ['found', 'absent', 'no_match'].includes(item.status) && Array.isArray(item.hits) &&
+    item.hits.every(hit => object(hit) && text(hit.segment) && hit.segment in data.segments &&
+      Array.isArray(hit.keywords) && hit.keywords.every(text)))
+}
