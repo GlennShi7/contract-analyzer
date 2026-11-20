@@ -97,8 +97,9 @@ def test_overlong_summary_is_trimmed_not_fatal():
     assert len(result.summary) <= 2000 and result.attempts == 1
 
 
-def test_output_budget_halves_runaway_cost():
-    assert analyzer.DEFAULT_MAX_OUTPUT_TOKENS == 16384
+def test_output_budget_leaves_room_for_a_full_english_report():
+    # A completed 47-card English report on a 48-page lease used about 6,100 output tokens.
+    assert 8000 <= analyzer.DEFAULT_MAX_OUTPUT_TOKENS <= 12000
 
 
 def test_failed_generations_keep_their_raw_text(tmp_path, pdf_factory):

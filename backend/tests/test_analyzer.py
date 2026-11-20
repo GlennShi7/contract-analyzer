@@ -152,12 +152,21 @@ def test_invalid_json_is_corrected_once():
     assert "未通过校验" in calls[1]["messages"][-1]["content"]
 
 
-@pytest.mark.parametrize("output,finish", [("{}", "stop"), (None, "stop"), (json.dumps(sample_output()), "length")])
+@pytest.mark.parametrize("output,finish", [("{}", "stop"), (None, "stop"), ('{"contract_type": "lease", "risk_score": 7, "summary": "押金', "length")])
 def test_two_invalid_responses_stop_without_a_third_call(output, finish):
     client, calls = stub_client([(output, finish), (output, finish)])
     with pytest.raises(AnalysisOutputError):
         analyze_contract("出租人和承租人约定：押金由出租人决定是否退还。", client)
     assert len(calls) == 2
+
+
+def test_cut_off_output_keeps_complete_cards_after_one_retry():
+    # Both attempts hit the length limit with one complete card: no third call, a truncated report instead of an error.
+    client, calls = stub_client([(json.dumps(sample_output()), "length"), (json.dumps(sample_output()), "length")])
+    report = analyze_contract("出租人和承租人约定：押金由出租人决定是否退还。", client)
+    assert len(calls) == 2 and report.grounding.truncated
+    assert "过长被截断" in calls[1]["messages"][-1]["content"]
+    assert len(report.cards) == 1
 
 
 def test_model_is_configurable_without_a_key_in_source(monkeypatch):

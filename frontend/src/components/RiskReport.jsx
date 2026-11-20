@@ -109,6 +109,8 @@ function RiskReport({ docId }) {
             </div>
             <div className="report-summary"><h2>{t("这份合同，需要关注什么？")}</h2><p className="content-language-note">{t(replayDemo ? "报告、回答和引用原文保留原有语言。" : "报告和回答使用生成时的界面语言；引用的合同原文保持原文语言。")}</p><p>{report.summary}</p>
               {report.grounding?.cards_dropped > 0 && <p className="dropped-note"><Icon name="info" size={13} />{t("有 {count} 张卡片没通过检查（格式不对，或引用的原文在合同里找不到），已去掉；这些清单项请自己对照合同核实。", { count: report.grounding.cards_dropped })}</p>}
+              {report.grounding?.truncated && <p className="dropped-note"><Icon name="info" size={13} />{t("模型输出太长，中途被截断；报告保留了截断前写完整的卡片，后面的清单项可能没检查到，请对照清单自己核实。")}</p>}
+              {report.grounding?.cards_capped > 0 && <p className="dropped-note"><Icon name="info" size={13} />{t("同一清单项最多保留 3 张卡，另外 {count} 张（多是收费表逐行出的卡）已去掉。", { count: report.grounding.cards_capped })}</p>}
               <details className="scope-details"><summary>{t("本次法条范围与适用条件")}</summary><p>{t(report.legal_scope)}</p></details>
             </div>
           </div>

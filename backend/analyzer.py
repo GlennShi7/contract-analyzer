@@ -21,11 +21,16 @@ CHECKLIST_SIZE = 43
 # Only a guard against a model stuck in a loop.
 MAX_CARDS = 100
 # DeepSeek allows far more output; this only caps runaway generations. English reports run about twice the tokens of Chinese.
-DEFAULT_MAX_OUTPUT_TOKENS = 16384
+DEFAULT_MAX_OUTPUT_TOKENS = 10000
 # A few broken cards (bad format or a quote the contract lacks) are dropped at once; a larger share means the output is
 # systematically off, so retry. After the retry, broken cards are dropped unless they are the majority.
 DROP_WITHOUT_RETRY_SHARE = 0.2
 DROP_AFTER_RETRY_SHARE = 0.5
+# On a real 48-page lease the model listed the fee schedule one line per card (32 cards for one item) until it hit the
+# output limit. Three cards cover the distinct problems one item realistically has; extra cards are cut by code, since
+# the prompt's soft limit was ignored.
+PER_ITEM_CARD_CAP = 3
+UNLISTED_CARD_CAP = 5
 LAWS_DIR = Path(__file__).resolve().parent / "laws"
 CHECKLIST_PATH = Path(__file__).resolve().parent / "checklist.json"
 logger = logging.getLogger(__name__)
@@ -125,6 +130,10 @@ class GroundingMetrics(BaseModel):
     no_action_removed: int = 0
     # Why earlier generations of this report were rejected.
     retry_reasons: list[str] = []
+    # The output hit the length limit; the report keeps the complete cards written before the cut.
+    truncated: bool = False
+    # Cards beyond PER_ITEM_CARD_CAP for one checklist item (usually one fee line each).
+    cards_capped: int = 0
     quote_verification_rate: float | None
     law_references_total: int
     law_references_valid: int
@@ -333,12 +342,88 @@ def parse_analysis(raw: str | None) -> GeneratedAnalysis:
     return GeneratedAnalysis.model_validate_json(unfence(raw))
 
 
+def salvage_truncated(raw: str | None) -> dict | None:
+    """Read a JSON report that was cut off mid-way: the top-level fields and every card that was written completely.
+
+    Returns None unless the summary and at least one complete card survived. Values are decoded one at a time with
+    the standard decoder, so a partial card at the end is simply not returned.
+    """
+    if not isinstance(raw, str):
+        return None
+    text = re.sub(r"^\s*```(?:json)?\s*", "", raw, flags=re.IGNORECASE)
+    start = text.find("{")
+    if start < 0:
+        return None
+    decoder = json.JSONDecoder()
+    data: dict = {}
+
+    def skip(position: int) -> int:
+        while position < len(text) and text[position] in " \t\r\n,":
+            position += 1
+        return position
+
+    position = start + 1
+    while True:
+        position = skip(position)
+        if position >= len(text) or text[position] == "}":
+            break
+        try:
+            key, position = decoder.raw_decode(text, position)
+        except ValueError:
+            break
+        position = skip(position)
+        if not isinstance(key, str) or position >= len(text) or text[position] != ":":
+            break
+        position = skip(position + 1)
+        if key == "cards" and text.startswith("[", position):
+            cards = []
+            position += 1
+            while True:
+                position = skip(position)
+                if position >= len(text):
+                    break
+                if text[position] == "]":
+                    position += 1
+                    break
+                try:
+                    card, position = decoder.raw_decode(text, position)
+                except ValueError:
+                    break
+                cards.append(card)
+            data["cards"] = cards
+            continue
+        try:
+            data[key], position = decoder.raw_decode(text, position)
+        except ValueError:
+            break
+    if not isinstance(data.get("summary"), str) or not data.get("cards"):
+        return None
+    return data
+
+
+def truncation_feedback(cards: list) -> str:
+    """Retry instruction naming the items that ran away, e.g. one card per line of a fee schedule."""
+    counts: dict = {}
+    for card in cards:
+        item = card.get("checklist_item") if isinstance(card, dict) else None
+        counts[item] = counts.get(item, 0) + 1
+    heavy = sorted(((item, n) for item, n in counts.items() if item is not None and n > PER_ITEM_CARD_CAP), key=lambda pair: -pair[1])
+    named = "、".join(f"第 {item} 项 {n} 张" for item, n in heavy[:6])
+    return (f"上一次输出过长被截断（截断前已写 {len(cards)} 张卡{'，其中' + named if named else ''}）。"
+            f"每个清单项最多 {PER_ITEM_CARD_CAP} 张卡；收费表、罚款表等逐行列出的费用合并成一张卡，引文只取最有代表性的一行，其余在 explanation 里概括。"
+            "summary 只写最重要的三到五点，不在 summary 里罗列各项费用。")
+
+
 def parse_analysis_by_card(raw: str | None) -> tuple[GeneratedAnalysis, list[str]]:
     """The report envelope must be valid; a bad card is set aside with its reason instead of sinking the report."""
     text = unfence(raw)
     data = json.loads(text)
     if not isinstance(data, dict) or not isinstance(data.get("cards"), list):
         return GeneratedAnalysis.model_validate_json(text), []
+    return parse_analysis_data(data)
+
+
+def parse_analysis_data(data: dict) -> tuple[GeneratedAnalysis, list[str]]:
     if isinstance(data.get("summary"), str) and len(data["summary"]) > 2000:
         logger.warning("analysis_summary_trimmed chars=%d", len(data["summary"]))
         data["summary"] = trim_summary(data["summary"])
@@ -350,6 +435,10 @@ def parse_analysis_by_card(raw: str | None) -> tuple[GeneratedAnalysis, list[str
             title = item.get("title") if isinstance(item, dict) else None
             reason = "; ".join(f"{'.'.join(map(str, e['loc'])) or 'card'}: {e['msg']}" for e in error.errors(include_input=False))
             rejected.append(f"第 {index} 张《{title or '无标题'}》：{reason}")
+    if len(kept) > MAX_CARDS:
+        # Only reachable with a raised DEEPSEEK_MAX_TOKENS; the per-item cap removes these duplicates anyway.
+        logger.warning("analysis_cards_over_limit count=%d", len(kept))
+        kept = kept[:MAX_CARDS]
     return GeneratedAnalysis.model_validate(data | {"cards": kept}), rejected
 
 
@@ -382,14 +471,12 @@ def match_quote(quote: str, text: str) -> tuple[str, float]:
 
 def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArticle, ...], *, model: str, attempts: int,
                     output_language: OutputLanguage = "zh", use_checklist: bool = True, drop_unverified: bool = False,
-                    rejected_cards: int = 0) -> AnalysisResult:
+                    rejected_cards: int = 0, truncated: bool = False) -> AnalysisResult:
     allowed = {law.id: law for law in laws}
     checklist = load_checklist() if use_checklist else {}
     text_lower = text.lower()
     cards, dropped, blocked = [], [], []
     no_action = 0
-    references_total = 0
-    references_valid = 0
     for card in generated.cards:
         if NO_ACTION.match(card.suggestion or ""):
             no_action += 1
@@ -419,9 +506,24 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
             # Never show a quote the contract does not contain: drop the card, keep the count.
             dropped.append(risk_card)
             continue
-        references_total += len(card.legal_basis)
-        references_valid += sum(reference in allowed for reference in card.legal_basis)
-        cards.append(risk_card)
+        cards.append((risk_card, len(card.legal_basis), sum(reference in allowed for reference in card.legal_basis)))
+    capped = 0
+    if use_checklist:
+        # Keep the strongest cards per item; sorting is stable, so ties keep the model's order.
+        kept, per_item = [], {}
+        for entry in sorted(cards, key=lambda entry: card_priority(entry[0])):
+            item_id = entry[0].checklist_item
+            per_item[item_id] = per_item.get(item_id, 0) + 1
+            if per_item[item_id] <= (PER_ITEM_CARD_CAP if item_id is not None else UNLISTED_CARD_CAP):
+                kept.append(entry)
+            else:
+                capped += 1
+        cards = kept
+    references_total = sum(entry[1] for entry in cards)
+    references_valid = sum(entry[2] for entry in cards)
+    cards = [entry[0] for entry in cards]
+    if capped:
+        logger.warning("analysis_capped_cards count=%d", capped)
     if dropped:
         logger.warning("analysis_dropped_cards count=%d items=%s", len(dropped), [(card.checklist_item, card.title) for card in dropped])
     if blocked:
@@ -432,6 +534,7 @@ def ground_analysis(generated: GeneratedAnalysis, text: str, laws: tuple[LawArti
     verified = sum(card.verified for card in quoted)
     metrics = GroundingMetrics(
         cards_total=len(cards), cards_verified=verified, cards_missing=len(cards) - len(quoted), cards_dropped=len(dropped) + rejected_cards, missing_blocked=blocked, no_action_removed=no_action,
+        truncated=truncated, cards_capped=capped,
         quote_verification_rate=verified / len(quoted) if quoted else None,
         law_references_total=references_total, law_references_valid=references_valid,
         law_reference_validity_rate=references_valid / references_total if references_total else None,
@@ -473,7 +576,8 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
                         if absent else "这份合同不出 missing 卡：清单要求写明的事项在合同里都有相关文字。")
         checklist_rules = (
             f"{missing_rule}summary 不得说合同缺少某事项，除非为该事项出了 missing 卡。"
-            "checklist_item 填对应的清单编号；清单之外但重要的问题填 null。同一清单项有几个不同问题可以出几张卡。"
+            "checklist_item 填对应的清单编号；清单之外但重要的问题填 null。"
+            f"同一清单项最多 {PER_ITEM_CARD_CAP} 张卡，只为确实不同的问题分开出卡；收费表、罚款表等逐行列出的费用合并成一张卡，引文只取最有代表性的一行，其余项目在 explanation 里概括，不得逐行出卡。"
             "只为有问题的条款出卡：没有问题的清单项不出卡，不写“无需处理 / No action needed”这类卡片。卡片总数一般不超过 40 张。"
             f"逐项检查以下 {len(load_checklist())} 项清单：\n{checklist_prompt()}\n"
         )
@@ -536,6 +640,41 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
                 {"role": "user", "content": json.dumps({"contract_text": text}, ensure_ascii=False)}]
     retry_reasons: list[str] = []
     raw_outputs: list[str | None] = []
+    # Complete cards from a first attempt that hit the output limit: shown if the retry fails too, instead of an error.
+    fallback: tuple[GeneratedAnalysis, list[str]] | None = None
+
+    def finish(generated: GeneratedAnalysis, rejected: list[str], attempt: int, truncated: bool) -> AnalysisResult:
+        if generated.contract_type != kind:
+            raise ValueError("contract_type does not match the supplied type")
+        if not output_language_matches(generated, output_language):
+            raise ValueError(f"summary, title, explanation and suggestion must be written in {'Simplified Chinese' if output_language == 'zh' else 'English'}; keep clause_text verbatim")
+        result = ground_analysis(generated, text, laws, model=selected_model, attempts=attempt, output_language=output_language,
+                                 use_checklist=use_checklist, truncated=truncated)
+        unmatched = [card for card in result.cards if card.category != "missing" and not card.verified]
+        total = len(generated.cards) + len(rejected)
+        share = (len(unmatched) + len(rejected)) / total if total else 0.0
+        if share and (share <= DROP_WITHOUT_RETRY_SHARE or (attempt == 2 and share <= DROP_AFTER_RETRY_SHARE)):
+            if rejected:
+                logger.warning("analysis_rejected_cards count=%d reasons=%s", len(rejected), rejected)
+            result = ground_analysis(generated, text, laws, model=selected_model, attempts=attempt, output_language=output_language,
+                                     use_checklist=use_checklist, drop_unverified=True, rejected_cards=len(rejected), truncated=truncated)
+        elif share:
+            problems = [f"{len(unmatched) + len(rejected)}/{total} 张卡片未通过校验。"]
+            if unmatched:
+                names = "；".join(f"第 {card.checklist_item} 项《{card.title}》" if card.checklist_item else f"《{card.title}》" for card in unmatched)
+                problems.append(f"clause_text 在合同原文中找不到：{names}。clause_text 必须逐字复制合同原文，不得改写、拼接或翻译；找不到对应原文的卡片删掉。")
+            if rejected:
+                problems.append(f"格式不对：{'；'.join(rejected)[:1500]}。")
+            problems.append("只有清单标明的缺失事项才用 category missing 且 clause_text 留空。")
+            raise ValueError("".join(problems))
+        if conflict:
+            result.legal_scope = "合同中的地点信息与所选地区不一致，未注入法条；请核实房产地址和地区。"
+        result.grounding.retry_reasons = list(retry_reasons)
+        return result
+
+    def items_covered(generated: GeneratedAnalysis) -> int:
+        return len({card.checklist_item for card in generated.cards})
+
     for attempt in range(1, 3):
         response = client.chat.completions.create(
             model=selected_model, messages=messages, response_format={"type": "json_object"},
@@ -547,36 +686,25 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
                 raise ValueError("Empty choices")
             choice = response.choices[0]
             raw = choice.message.content
-            if getattr(choice, "finish_reason", "stop") != "stop":
+            finish_reason = getattr(choice, "finish_reason", "stop")
+            if finish_reason == "length":
+                # Retrying the same prompt at temperature 0 repeats the runaway, so the retry names the items that ran away
+                # and the complete cards written before the cut are kept as the floor.
+                salvaged = salvage_truncated(raw)
+                if salvaged is None:
+                    raise ValueError("Generation hit the output limit before any complete card")
+                generated, rejected = parse_analysis_data(salvaged)
+                if attempt == 1:
+                    fallback = (generated, rejected)
+                    raise ValueError(truncation_feedback(salvaged["cards"]))
+                if fallback is not None and items_covered(fallback[0]) > items_covered(generated):
+                    generated, rejected = fallback
+                fallback = None
+                return finish(generated, rejected, attempt, truncated=True)
+            if finish_reason != "stop":
                 raise ValueError("Generation did not finish normally")
             generated, rejected = parse_analysis_by_card(raw)
-            if generated.contract_type != kind:
-                raise ValueError("contract_type does not match the supplied type")
-            if not output_language_matches(generated, output_language):
-                raise ValueError(f"summary, title, explanation and suggestion must be written in {'Simplified Chinese' if output_language == 'zh' else 'English'}; keep clause_text verbatim")
-            result = ground_analysis(generated, text, laws, model=selected_model, attempts=attempt, output_language=output_language,
-                                     use_checklist=use_checklist)
-            unmatched = [card for card in result.cards if card.category != "missing" and not card.verified]
-            total = len(generated.cards) + len(rejected)
-            share = (len(unmatched) + len(rejected)) / total if total else 0.0
-            if share and (share <= DROP_WITHOUT_RETRY_SHARE or (attempt == 2 and share <= DROP_AFTER_RETRY_SHARE)):
-                if rejected:
-                    logger.warning("analysis_rejected_cards count=%d reasons=%s", len(rejected), rejected)
-                result = ground_analysis(generated, text, laws, model=selected_model, attempts=attempt, output_language=output_language,
-                                         use_checklist=use_checklist, drop_unverified=True, rejected_cards=len(rejected))
-            elif share:
-                problems = [f"{len(unmatched) + len(rejected)}/{total} 张卡片未通过校验。"]
-                if unmatched:
-                    names = "；".join(f"第 {card.checklist_item} 项《{card.title}》" if card.checklist_item else f"《{card.title}》" for card in unmatched)
-                    problems.append(f"clause_text 在合同原文中找不到：{names}。clause_text 必须逐字复制合同原文，不得改写、拼接或翻译；找不到对应原文的卡片删掉。")
-                if rejected:
-                    problems.append(f"格式不对：{'；'.join(rejected)[:1500]}。")
-                problems.append("只有清单标明的缺失事项才用 category missing 且 clause_text 留空。")
-                raise ValueError("".join(problems))
-            if conflict:
-                result.legal_scope = "合同中的地点信息与所选地区不一致，未注入法条；请核实房产地址和地区。"
-            result.grounding.retry_reasons = retry_reasons
-            return result
+            return finish(generated, rejected, attempt, truncated=False)
         except ValueError as error:
             usage = getattr(response, "usage", None)
             logger.warning("analysis_attempt_failed attempt=%d finish_reason=%s completion_tokens=%s reason=%s", attempt,
@@ -585,6 +713,11 @@ def analyze_contract(text: str, client, *, jurisdiction: Jurisdiction = "unknown
             retry_reasons.append(str(error)[:600])
             raw_outputs.append(raw)
             if attempt == 2:
+                if fallback is not None:
+                    try:
+                        return finish(*fallback, attempt, truncated=True)
+                    except ValueError as fallback_error:
+                        logger.warning("analysis_fallback_failed reason=%s", str(fallback_error)[:600])
                 raise AnalysisOutputError("Invalid structured analysis after one retry", raw_outputs) from error
             if isinstance(error, ValidationError):
                 detail = [{"field": list(item["loc"]), "type": item["type"]} for item in error.errors(include_input=False)]

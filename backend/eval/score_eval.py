@@ -114,6 +114,8 @@ def score_run(record: dict, gold: dict[int, str], checklist: dict[int, dict], ma
     out["dropped"] = grounding.get("cards_dropped", 0)
     out["missing_blocked"] = grounding.get("missing_blocked", [])
     out["retries"] = len(grounding.get("retry_reasons", []))
+    out["truncated"] = bool(grounding.get("truncated", False))
+    out["capped"] = grounding.get("cards_capped", 0)
     illegal_hits = [i for i in hits if gold[i] == "违法/无效"]
     out["illegal_hits_with_law"] = sum(any(c.get("legal_basis") for c in by_item[i]) for i in illegal_hits)
     out["illegal_hits"] = len(illegal_hits)
@@ -154,7 +156,7 @@ def report(scores: list[dict], gold: dict[int, str], checklist: dict[int, dict],
             lines.append(f"- 类别一致 {s['category_exact']}/{s['category_total']}；说过头（判违法但答案不是）：{s['overclaim'] or '无'}；"
                          f"说轻了（答案违法但没判违法）：{s['underclaim'] or '无'}")
         lines.append(f"- 违法项命中且附法条：{s['illegal_hits_with_law']}/{s['illegal_hits']}")
-        lines.append(f"- 没通过检查被去掉 {s['dropped']} 张；缺失卡被关键词拦下 {len(s['missing_blocked'])} 张；重试 {s['retries']} 次")
+        lines.append(f"- 没通过检查被去掉 {s['dropped']} 张；缺失卡被关键词拦下 {len(s['missing_blocked'])} 张；重试 {s['retries']} 次；每项超过 3 张被截掉 {s.get('capped', 0)} 张{'；输出被截断，只保留截断前的卡' if s.get('truncated') else ''}")
         if s["unmapped_cards"]:
             lines.append(f"- 未映射的卡片：{s['unmapped_cards']}（先用 --write-mapping 生成映射并确认）")
         if s["other_cards"]:
